@@ -64,6 +64,12 @@ theorem lap_sub_closedOrbit {r : ℂ} (hr : r ≠ 1) (d z : ℂ) :
   unfold lap at h ⊢
   linear_combination h
 
+/-- **GDE-2** What a lap moves an offset by is `r - 1` times its offset from the closed orbit, so
+it is nothing only there. -/
+theorem lap_sub_self {r : ℂ} (hr : r ≠ 1) (d z : ℂ) :
+    lap r d z - z = (r - 1) * (z - closedOrbit r d) := by
+  linear_combination lap_sub_closedOrbit hr d z
+
 /-- **GDE-3** After `n` laps the offset from the closed orbit has turned by `r ^ n`. -/
 theorem iterate_lap_sub_closedOrbit {r : ℂ} (hr : r ≠ 1) (d z : ℂ) (n : ℕ) :
     (lap r d)^[n] z - closedOrbit r d = r ^ n * (z - closedOrbit r d) := by
