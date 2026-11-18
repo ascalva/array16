@@ -417,7 +417,7 @@
 2026-11-15 22:25:46   [finalist] afc38714c4c751ed ran 7 s  score -6.38  worst -3.01 dB  x=40 0.1 1.5 8 22 0.4 12
 2026-11-15 22:25:53   [finalist] 541573a392ad5fe2 ran 7 s  score -5.97  worst -2.56 dB  x=40 0.1 1.5 8 22 0.4 12
 2026-11-15 22:25:53 search: winner [38.3, 0.12, 1.0, 12.8, 22.8, 0.31, 4.9] robust score -9.85 (start -5.97)
-2026-11-15 22:25:54 report: wrote /Users/ascalva/Documents/code/sdr_array/array16/experiments/vivaldi/summary.md
+2026-11-15 22:25:54 report: wrote experiments/vivaldi/summary.md
 2026-11-15 22:25:54 check: winner on the finer row mesh
 2026-11-15 22:25:54   [check] 616b3ba2f68b61b1 cached  score -6.19
 2026-11-15 22:26:10   [check] 96d87b431938da8d ran 16 s  score -8.65  worst -5.00 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
@@ -433,5 +433,5 @@
 2026-11-15 22:34:17   [check] 284ac613851bb71e ran 102 s  score -5.93  worst -2.85 dB  x=40 0.1 1.5 8 22 0.4 12
 2026-11-15 22:34:17 check: 6 x 6 tile, winner, eps_r 4.4
 2026-11-15 22:35:48   [check] aaa0e594e69f9f87 ran 90 s  score -9.13  worst -5.02 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
-2026-11-15 22:35:49 report: wrote /Users/ascalva/Documents/code/sdr_array/array16/experiments/vivaldi/summary.md
+2026-11-15 22:35:49 report: wrote experiments/vivaldi/summary.md
 2026-11-15 22:35:49 === all: finished ===

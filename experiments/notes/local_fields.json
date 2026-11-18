@@ -17,7 +17,7 @@
    {
     "topic": "1. Degrees of freedom: numbers",
     "claim": "Panel (100 mm square): D/lambda 0.81 at 2.44 GHz and 1.93 at 5.8 GHz; pi*A/lambda^2 = 2.1 and 11.8; SVD of the 16-source operator over a 0.3 m cube centred 0.2 m in front gives 4/6/8 modes within 10/20/30 dB at 2.44 GHz and 13/16/16 at 5.8 GHz. Whip plate (two rings, 450 mm): D/lambda 0.60/1.37/2.13/3.45 at 0.4/0.915/1.42/2.3 GHz; pi*A/lambda^2 = 0.9/4.7/11.2/29.4; SVD modes within 20 dB over a 0.6x0.6x0.5 m box: 6/12/16/16 (within 10 dB: 3/8/13/16). Modes beyond pi*A/lambda^2 are weak (superdirective/evanescent) and cost drive power and tolerance.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_results.json (key dof); scalar point sources, no coupling: estimate",
+    "source": "scratch/local_fields/theory/theory_results.json (key dof); scalar point sources, no coupling: estimate",
     "confidence": "medium"
    },
    {
@@ -29,7 +29,7 @@
    {
     "topic": "1. Rev B transmit constraint and what per-element control adds",
     "claim": "On transmit rev B has 4 coherent channels: panel = 4 complex quadrant weights (3 relative) times 16 elements with 4-bit delays (16 states each, RMS phase error <= 11.4 deg per REDESIGN.md section 3), no per-element amplitude; whips transmit on X0-X3 only, i.e. 4 elements. Independent per-element complex control would add: amplitude tapers (needed for exact zero placement, extended quiet zones, superoscillation, low sidelobes), 15 rather than about 3 continuous relative degrees of freedom, and 16 independent waveforms for time reversal. On receive, all 16 weights exist in software (whips in 4 slots; panel via delay toggles for stationary scenes), and by reciprocity the receive sensitivity map equals the transmit field map, with no emission limits.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 2-5, 7 ; reciprocity derivation",
+    "source": "REDESIGN.md sections 2-5, 7 ; reciprocity derivation",
     "confidence": "medium"
    },
    {
@@ -59,7 +59,7 @@
    {
     "topic": "2. Quiet zones: tolerance",
     "claim": "With rev B's 3 deg and 0.26 dB rms residual (error vector 0.06, -24 dB per element) and an error-aware design (minimise w^H(A + eps^2 diag A)w), mean level in a quiet ball relative to a bright point about one wavelength away: plate 2.3 GHz -36/-35/-32/-29 dB for radius 0.1/0.2/0.35/0.5 lambda (bright-point cost 1.1/2.0/4.3/6.4 dB); panel 5.8 GHz -36/-35/-33/-32 dB (cost 0.6/0.9/2.2/3.4 dB); panel 2.44 GHz -32/-31/-28/-24 dB (cost 4.0/4.8/6.1/8.9 dB); a plain focus gives only -9 to -19 dB there. A naive unregularised design is much worse with errors (as poor as -8 dB at 0.2 lambda on the panel at 5.8 GHz, with 28 dB bright-point cost). A quiet zone is not a shield: it cancels only the array's own field, not third-party signals.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_results2.json (key quiet_robust) and theory_results.json (key quiet)",
+    "source": "scratch/local_fields/theory/theory_results2.json (key quiet_robust) and theory_results.json (key quiet)",
     "confidence": "medium"
    },
    {
@@ -107,7 +107,7 @@
    {
     "topic": "3. Own link test (inconclusive)",
     "claim": "A crude linear design (minimise field energy on two interlinked target rings relative to the surrounding box, error-aware loading) made the ring parallel to the array a clean vortex loop for 16 elements at radius about 0.5 lambda (22-23 of 24 stations with winding of one sign, plate 2.3 GHz and panel 5.8 GHz) but never the ring standing on edge (0-6 of 24), and it also failed for 144- and 256-element reference arrays on 8 lambda (9-16 of 24). Darkness on a curve is not the same as a vortex line along it, so this test neither proves nor disproves link feasibility; the polynomial constructions of the optics papers and a line-tracing check are the right tools.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_results3.json (also theory_results2.json, where a symmetric geometry produced degenerate nodal planes)",
+    "source": "scratch/local_fields/theory/theory_results3.json (also theory_results2.json, where a symmetric geometry produced degenerate nodal planes)",
     "confidence": "low"
    },
    {
@@ -143,25 +143,25 @@
    {
     "topic": "6. Transmit and exposure limits",
     "claim": "FCC 15.249 allows 50 mV/m at 3 m in 902-928, 2400-2483.5 and 5725-5875 MHz, equivalent to (E*d)^2/30 = 0.75 mW (-1.25 dBm) EIRP; the limit is measured at 3 m in the strongest direction, so near-field focusing does not relax it. At that level the field 0.2 m away is about 0.75 V/m, 1.5e-4 mW/cm^2 (far-field formula used in the near field: estimate), about 6,700 times below the FCC general-population exposure limit of 1.0 mW/cm^2 above 1.5 GHz (f/1500 mW/cm^2 at 300-1500 MHz: 0.27 at 400 MHz, 0.61 at 915 MHz; 30-minute averaging). Even at 18.75 dBm EIRP (15.245 level used in REDESIGN.md) it is about 7.5 V/m, 0.015 mW/cm^2. Power through a 50 mm spot is microwatts and radiation pressure about 5e-12 Pa: these fields can carry information and be sensed, not push, heat or confine anything.",
-    "source": "https://www.law.cornell.edu/cfr/text/47/15.249 ; https://www.law.cornell.edu/cfr/text/47/1.1310 ; /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md section 7 ; estimate: E = sqrt(30*EIRP)/d",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.249 ; https://www.law.cornell.edu/cfr/text/47/1.1310 ; REDESIGN.md section 7 ; estimate: E = sqrt(30*EIRP)/d",
     "confidence": "medium"
    },
    {
     "topic": "Relation to the sibling numerical study",
     "claim": "An independent full-vector script (experiments/local_fields.py, with interim results in the scratch folder) reports matching figures where they overlap: pi*A/lambda^2 of 2.1 and 11.8 for the panel, far-field distances 0.163 and 0.387 m, panel 5.8 GHz spot 52 mm at z = 100 mm, a quiet-zone error floor of -22 dB, and time-reversal gains of 7.3 dB (4 antennas, 1 frequency) and 14.8 dB (4 antennas, 8 frequencies), consistent with the N x N_f scaling used here. experiments/fields_study.md did not exist when this was written; only experiments/fields/tables.md (OAM purity tables) did, and it is not repeated here.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/results_1_2_q_4_5_6.json ; /Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md",
+    "source": "scratch/local_fields/results_1_2_q_4_5_6.json ; experiments/fields/tables.md",
     "confidence": "medium"
    }
   ],
   "files": [
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_checks.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_results.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_checks2.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_results2.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_checks3.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/theory/theory_results3.json",
-   "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields.py"
+   "scratch/local_fields/theory/theory_checks.py",
+   "scratch/local_fields/theory/theory_results.json",
+   "scratch/local_fields/theory/theory_checks2.py",
+   "scratch/local_fields/theory/theory_results2.json",
+   "scratch/local_fields/theory/theory_checks3.py",
+   "scratch/local_fields/theory/theory_results3.json",
+   "REDESIGN.md",
+   "experiments/local_fields.py"
   ],
   "open_questions": [
    "Hopf link / trefoil feasibility is argued from mode order, aperture and the acoustic experiment's pixel minimums, not proven: my linear 'dark curve' test failed even for 256-element reference arrays, so it is inconclusive. A proper test needs the braided-polynomial (Milnor) construction projected onto the array's 16 patterns plus 3-D line tracing; the sibling script's 'curves' section may settle it.",
@@ -174,7 +174,7 @@
   ]
  },
  "investigate:simulate": {
-  "summary": "Simulation lens, complete. Script /Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields.py runs in 9.5 min (OMP_NUM_THREADS=2); outputs are in /Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/. A draft of the script from an interrupted earlier attempt was already there; I reviewed it, fixed it and ran it. fields_study.md did not exist, so there was nothing to de-duplicate against.\n\n**Short answer to the owner.** Fields do not twist \"into each other\": Maxwell's equations in vacuum are linear, so the field is the sum of 16 fixed element patterns and the only controls are 16 complex numbers. What is real is interference structure: bright spots, nulls, and dark vortex lines the phase winds around. These can be placed and steered locally, but they are patterns in a wave that keeps radiating outward, not self-contained objects.\n\n**Model.** Exact Hertzian-dipole fields with all near-field terms, ground images, no mutual coupling, 3 deg / 0.26 dB element errors. It is not a full-wave result.\n\n**What works with rev B hardware**\n- **Steerable vortex line:** a charge-1 dark line along the beam axis, steered to 15 and 30 deg, lands within about 1 deg at z = 0.2-0.4 m, at 2.4 and 5.8 GHz. Rev B's quantised delays move it by 2.5 mm or less. Charge 2 splits into two charge-1 lines 22 mm apart at 5.8 GHz.\n- **Tilted straight vortex line via the optimiser:** success on the panel (16 and 32 elements) and on 16 whips; unit charge along the whole line, miss 0.05 lambda or less.\n- **Point null:** exact in the model, -34.5 dB with errors (5.8 GHz panel), costing 2.5 dB at the bright point 80 mm away.\n- **Quiet ball, radius lambda/4 (13 mm at 5.8 GHz):** about -25 dB with errors, costing 6 dB. Under rev B's constraint (4 channel weights, 16 delay states), evolve+climb reaches -23.5 dB against -25.5 dB unconstrained, so independent per-element amplitude adds about 2 dB here. At 2.4 GHz the panel manages only about -7 dB.\n- **Two or three spots:** 5.8 GHz panel -3.5 dB each for two (ideal -3.0), -3.3 to -6.0 dB for three.\n\n**What does not work**\n- **A focal spot bounded in depth at 0.2-0.5 m.** The panel is in its far field there (2D\u00b2/lambda = 0.09 m at 2.4 GHz, 0.22 m at 5.8 GHz); focusing gains 0.01-0.31 dB over an ordinary beam. Lateral width is 95 / 141 / 234 mm at 0.2 / 0.3 / 0.5 m (5.8 GHz), and the field always rises towards the array. The 450 mm whip ring at 2.3 GHz gains +12 / +6 / +2 dB over a beam, with a 93 mm spot at 0.2 m, but its axial maximum still sits closer in (0.157 m when aimed at 0.3 m).\n- **Ring, linked rings, trefoil from the real arrays.** All fail with the 16-element panel, the 32-element 8x4 panel and 16 whips. The panel's best ring is a closed loop that misses by up to 0.18 lambda with correct charge on 77 % of it.\n- **Hypothetical surrounding array (dipoles on a 250 mm sphere, 5.8 GHz).** 32 dipoles make the ring but not the link or trefoil. 64 dipoles make all three: linking number 1.0, trefoil traced as one closed loop, miss 0.09 lambda or less. Those lines sit 26-27 dB below a plain focus, so knots need an aperture surrounding the volume and several times more elements.\n\n**Optimiser.** The first-stage score is a ratio of quadratic forms, so a generalised eigenvector solves it nearly directly; climb/evolve matched or slightly beat it in some cases and random search was always far worse. reselect caught climb overfitting the noise (panel line: 0.33 after climb against 0.26 direct on fresh draws).\n\n**Superoscillation.** Spot narrowed from 141 mm to 38 mm (5.8 GHz), but spot power falls 23.7 dB and sidelobes sit 19 dB above it.\n\n**Time reversal (toy 5 x 4 x 2.6 m room, 2.3 GHz, target 2.8 m away).** With 16 whips, time reversal gives +6.2 dB at the target over free-space weights and a 68 x 57 mm spot (about lambda/2), where free-space weights put the brightest point 200 mm off target. With the four transmit whips: +3.9 dB, with a sidelobe 3 dB brighter than the target.\n\n**Exposure (estimate).** About 4.2 uW/cm\u00b2 per mW radiated at 0.3 m (5.8 GHz); at rev B's +6.2 dBm EIRP that is roughly 0.5 uW/cm\u00b2, about 33 dB below the FCC 1 mW/cm\u00b2 general-population limit.\n\n**Not done:** dual-polarisation structure was only demonstrated for one hand-built excitation; the curves.png suptitle overlaps the top-row titles.",
+  "summary": "Simulation lens, complete. Script experiments/local_fields.py runs in 9.5 min (OMP_NUM_THREADS=2); outputs are in experiments/local_fields/. A draft of the script from an interrupted earlier attempt was already there; I reviewed it, fixed it and ran it. fields_study.md did not exist, so there was nothing to de-duplicate against.\n\n**Short answer to the owner.** Fields do not twist \"into each other\": Maxwell's equations in vacuum are linear, so the field is the sum of 16 fixed element patterns and the only controls are 16 complex numbers. What is real is interference structure: bright spots, nulls, and dark vortex lines the phase winds around. These can be placed and steered locally, but they are patterns in a wave that keeps radiating outward, not self-contained objects.\n\n**Model.** Exact Hertzian-dipole fields with all near-field terms, ground images, no mutual coupling, 3 deg / 0.26 dB element errors. It is not a full-wave result.\n\n**What works with rev B hardware**\n- **Steerable vortex line:** a charge-1 dark line along the beam axis, steered to 15 and 30 deg, lands within about 1 deg at z = 0.2-0.4 m, at 2.4 and 5.8 GHz. Rev B's quantised delays move it by 2.5 mm or less. Charge 2 splits into two charge-1 lines 22 mm apart at 5.8 GHz.\n- **Tilted straight vortex line via the optimiser:** success on the panel (16 and 32 elements) and on 16 whips; unit charge along the whole line, miss 0.05 lambda or less.\n- **Point null:** exact in the model, -34.5 dB with errors (5.8 GHz panel), costing 2.5 dB at the bright point 80 mm away.\n- **Quiet ball, radius lambda/4 (13 mm at 5.8 GHz):** about -25 dB with errors, costing 6 dB. Under rev B's constraint (4 channel weights, 16 delay states), evolve+climb reaches -23.5 dB against -25.5 dB unconstrained, so independent per-element amplitude adds about 2 dB here. At 2.4 GHz the panel manages only about -7 dB.\n- **Two or three spots:** 5.8 GHz panel -3.5 dB each for two (ideal -3.0), -3.3 to -6.0 dB for three.\n\n**What does not work**\n- **A focal spot bounded in depth at 0.2-0.5 m.** The panel is in its far field there (2D\u00b2/lambda = 0.09 m at 2.4 GHz, 0.22 m at 5.8 GHz); focusing gains 0.01-0.31 dB over an ordinary beam. Lateral width is 95 / 141 / 234 mm at 0.2 / 0.3 / 0.5 m (5.8 GHz), and the field always rises towards the array. The 450 mm whip ring at 2.3 GHz gains +12 / +6 / +2 dB over a beam, with a 93 mm spot at 0.2 m, but its axial maximum still sits closer in (0.157 m when aimed at 0.3 m).\n- **Ring, linked rings, trefoil from the real arrays.** All fail with the 16-element panel, the 32-element 8x4 panel and 16 whips. The panel's best ring is a closed loop that misses by up to 0.18 lambda with correct charge on 77 % of it.\n- **Hypothetical surrounding array (dipoles on a 250 mm sphere, 5.8 GHz).** 32 dipoles make the ring but not the link or trefoil. 64 dipoles make all three: linking number 1.0, trefoil traced as one closed loop, miss 0.09 lambda or less. Those lines sit 26-27 dB below a plain focus, so knots need an aperture surrounding the volume and several times more elements.\n\n**Optimiser.** The first-stage score is a ratio of quadratic forms, so a generalised eigenvector solves it nearly directly; climb/evolve matched or slightly beat it in some cases and random search was always far worse. reselect caught climb overfitting the noise (panel line: 0.33 after climb against 0.26 direct on fresh draws).\n\n**Superoscillation.** Spot narrowed from 141 mm to 38 mm (5.8 GHz), but spot power falls 23.7 dB and sidelobes sit 19 dB above it.\n\n**Time reversal (toy 5 x 4 x 2.6 m room, 2.3 GHz, target 2.8 m away).** With 16 whips, time reversal gives +6.2 dB at the target over free-space weights and a 68 x 57 mm spot (about lambda/2), where free-space weights put the brightest point 200 mm off target. With the four transmit whips: +3.9 dB, with a sidelobe 3 dB brighter than the target.\n\n**Exposure (estimate).** About 4.2 uW/cm\u00b2 per mW radiated at 0.3 m (5.8 GHz); at rev B's +6.2 dBm EIRP that is roughly 0.5 uW/cm\u00b2, about 33 dB below the FCC 1 mW/cm\u00b2 general-population limit.\n\n**Not done:** dual-polarisation structure was only demonstrated for one hand-built excitation; the curves.png suptitle overlaps the top-row titles.",
   "findings": [
    {
     "topic": "Physics: superposition, no field-field interaction",
@@ -185,19 +185,19 @@
    {
     "topic": "Degrees of freedom",
     "claim": "Independent field shapes in a 4-wavelength cube (participation number of singular values): panel 4x4 at 2.4 GHz 3.4 (4 modes within 10 dB); panel at 5.8 GHz 8.2 (11 within 10 dB); 8x4 panel 14.4; 16 whips at 0.9 GHz 9.2, at 2.3 GHz 12.6; 32 / 64 dipoles surrounding the volume 25.3 / 50.3. A one-sided small aperture wastes most of its excitations; a surrounding one uses nearly all.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/results.json (dof); framework: Miller, Appl. Opt. 39, 1681 (2000) https://www.doi.org/10.1364/AO.39.001681",
+    "source": "experiments/local_fields/results.json (dof); framework: Miller, Appl. Opt. 39, 1681 (2000) https://www.doi.org/10.1364/AO.39.001681",
     "confidence": "medium"
    },
    {
     "topic": "Focal spot at 0.2-0.5 m",
     "claim": "The 75 mm panel cannot focus at 0.2-0.5 m: gain over an ordinary beam is +0.05/+0.02/+0.01 dB at 2.4 GHz and +0.31/+0.14/+0.05 dB at 5.8 GHz (2D^2/lambda = 0.09 and 0.218 m). Lateral FWHM at 5.8 GHz is 95/141/234 mm at 0.2/0.3/0.5 m; at 2.4 GHz 190/277/455 mm. No axial maximum at the aim point: the field rises monotonically towards the array (peak at about 50 mm).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 2; axial check in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/axial.py",
+    "source": "experiments/local_fields/run.log section 2; axial check in scratch/local_fields/axial.py",
     "confidence": "high"
    },
    {
     "topic": "Focal spot, whips",
     "claim": "16 whips (rings of 225/112 mm) at 2.3 GHz gain +12.2/+6.1/+2.3 dB over a beam at 0.2/0.3/0.5 m; spot 93 mm at 0.2 m; aimed at 0.3 m the axial maximum is at 0.157 m with 230 mm depth (FWHM), so the focus is pulled towards the array. At 0.9 GHz: +5.9/+3.1/+0.6 dB, spot 172 mm at 0.2 m. The best polarisation at the focus switches from vertical (0.2 m) to horizontal (0.3 m and beyond) at 2.3 GHz. Only X0-X3 transmit in rev B, and 2.3 GHz has no licence-free transmit, so the 16-whip transmit cases are hypothetical or receive-side (by reciprocity).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 2; /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 4, 7",
+    "source": "experiments/local_fields/run.log section 2; REDESIGN.md sections 4, 7",
     "confidence": "medium"
    },
    {
@@ -209,67 +209,67 @@
    {
     "topic": "Simultaneous spots",
     "claim": "5.8 GHz panel, spots 240 mm apart at 0.3 m: two spots at -3.5 dB each relative to a single focus (ideal split -3.0 dB), three at -6.0/-6.0/-3.3 dB (ideal -4.8), brightest point elsewhere in the plane 5-6.6 dB below the spots. 16 whips at 2.3 GHz: -3.1/-3.1 dB and -4.2/-4.6/-5.6 dB, but other points in the plane are as bright as the spots (-0.5 and +1.4 dB): the sparse ring has grating-lobe-like clutter.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 3, spots.png",
+    "source": "experiments/local_fields/run.log section 3, spots.png",
     "confidence": "medium"
    },
    {
     "topic": "Quiet zone",
     "claim": "5.8 GHz panel, bright point A at (0,0,0.3 m), quiet point B 80 mm away: a point null is exact in the model and -34.5 dB re A with 3 deg / 0.26 dB errors, costing 2.5 dB at A; the field recovers to -24 dB at 0.1 lambda (5 mm) and -13 dB at 0.35 lambda (18 mm) from B. A quiet ball of radius lambda/4 (13 mm): -25.6 dB mean with errors at 6.1 dB cost; radius lambda/2: -23.9 dB at 9.3 dB cost. At 2.4 GHz the panel only reaches -16 dB (lambda/4 ball) at 10.9 dB cost.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 4, quiet_zone.png",
+    "source": "experiments/local_fields/run.log section 4, quiet_zone.png",
     "confidence": "medium"
    },
    {
     "topic": "Rev B constraint vs independent per-element control",
     "claim": "With rev B's control (4 complex channel weights by quadrant, 16 delay states per element) evolve+climb with reselect reaches -23.5 dB for the lambda/4 quiet ball at 5.8 GHz against -25.5 dB for the unconstrained loaded least-squares solution (random search -17.8 dB); snapping the unconstrained solution to rev B's states gives -25.2 dB. Independent per-element amplitude and phase is therefore worth about 2 dB here. At 2.4 GHz the search reached -7.6 dB, slightly better than the loaded unconstrained reference (-6.5 dB), i.e. the task itself is the limit. Vortex beams survive the delay quantisation with at most 2.5 mm shift.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log sections 4 and 6",
+    "source": "experiments/local_fields/run.log sections 4 and 6",
     "confidence": "medium"
    },
    {
     "topic": "Superoscillation",
     "claim": "Forcing zeros closer than the diffraction spot narrows it but costs power exponentially: 5.8 GHz panel at 0.3 m, spot 141 -> 84 -> 59 -> 38 mm with spot power 0 / -7.5 / -15.1 / -23.7 dB and sidelobes +0 / +2.8 / +10.7 / +19.3 dB relative to the spot. 16 whips at 2.3 GHz: 78 -> 47 -> 33 -> 21 mm (0.60 -> 0.16 lambda) at -6.7 / -14.5 / -23.2 dB. The narrowed width survives 3 deg errors (38.8 against 37.6 mm).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 5; concept: Berry and Popescu, J. Phys. A 39, 6965 (2006), cited in https://eprints.soton.ac.uk/343083/1/4912.pdf; Rogers et al., Nature Materials 11, 432 (2012) https://www.doi.org/10.1038/NMAT3280",
+    "source": "experiments/local_fields/run.log section 5; concept: Berry and Popescu, J. Phys. A 39, 6965 (2006), cited in https://eprints.soton.ac.uk/343083/1/4912.pdf; Rogers et al., Nature Materials 11, 432 (2012) https://www.doi.org/10.1038/NMAT3280",
     "confidence": "medium"
    },
    {
     "topic": "Steerable vortex line",
     "claim": "Phasing the 16 panel elements exp(i*azimuth) plus a steering phase gives a charge-1 dark line on the beam axis; steered to 15 and 30 deg it is found at 15.0-15.2 and 30.0-30.2 deg for z = 0.2-0.4 m at 5.8 GHz and 14.4-14.9 / 29.1-29.8 deg at 2.4 GHz. Charge 2 is unstable and appears as two charge-1 lines 22 mm apart (5.8 GHz) or 57 mm apart (2.4 GHz). Phase winding is shown in four planes in vortex_slices.png.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 6, vortex_slices.png; phase singularities: Nye and Berry, Proc. R. Soc. A 336, 165 (1974) https://research-information.bris.ac.uk/en/publications/dislocations-in-wave-trains/",
+    "source": "experiments/local_fields/run.log section 6, vortex_slices.png; phase singularities: Nye and Berry, Proc. R. Soc. A 336, 165 (1974) https://research-information.bris.ac.uk/en/publications/dislocations-in-wave-trains/",
     "confidence": "high"
    },
    {
     "topic": "Polarisation structure (hypothetical dual-pol panel)",
     "claim": "With both polarisations (32 excitations; rev B has one), superposing an l=0 beam in one circular polarisation and an l=1 beam in the other puts a C point (pure circular polarisation, index +1/2) on the axis at z = 0.1-0.3 m, with the polarisation ellipse orientation rotating around it. The longitudinal field is 14-26 % of the transverse field within 50 mm of the axis, so near the array the field is genuinely three-component. One hand-built example only; not optimised.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 7, polarisation.png",
+    "source": "experiments/local_fields/run.log section 7, polarisation.png",
     "confidence": "medium"
    },
    {
     "topic": "Vortex line on a target curve: straight tilted line",
     "claim": "Success for every array: 16-element panel (charge correct on 100 % of the line, 86 % under element errors, max miss 0.034 lambda), 32-element 8x4 panel (100 % / 100 %, 0.031 lambda), 16 whips at 2.3 GHz (100 % / 98 %, 0.047 lambda). The field next to the line is 20-29 dB below what the same excitation norm gives at a plain focus.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 8, results.json (curves)",
+    "source": "experiments/local_fields/run.log section 8, results.json (curves)",
     "confidence": "high"
    },
    {
     "topic": "Vortex line on a target curve: ring",
     "claim": "Fails for the real geometries. 16-element panel: a closed vortex loop exists near the target but misses by up to 0.176 lambda with correct charge on 77 % of the ring (27 % under errors). 32-element 8x4 panel: 60 % charge, max miss 0.33 lambda, no closed loop on target. 16 whips: 71 %, 0.28 lambda. Succeeds with 32 and 64 dipoles surrounding the volume (100 % charge, max miss 0.051 and 0.038 lambda, one closed loop).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 8, curves.png",
+    "source": "experiments/local_fields/run.log section 8, curves.png",
     "confidence": "high"
    },
    {
     "topic": "Vortex line on a target curve: linked rings and trefoil (stretch goal)",
     "claim": "Fail with the 16-element panel, the 32-element panel and 16 whips (charge correct on 15-47 % of the curve, misses 0.5-1.3 lambda), and with 32 surrounding dipoles (link: 92 % charge, one of two loops; trefoil 80 %). Succeed only with 64 dipoles on a sphere around the volume: Hopf link with two closed loops, linking number 1.0, max miss 0.069 lambda; trefoil as one closed loop following the target once, max miss 0.094 lambda, charge correct 99-100 % under element errors. These lines sit 26-27 dB below a plain focus. Tracing is on a lambda/20 grid by code separate from the score, validated on a synthetic Hopf link (linking number +1.000).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 8, curves.png; optics precedent: Dennis et al., Nature Physics 6, 118 (2010) https://eprints.gla.ac.uk/41285 and Leach et al., Nature 432, 165 (2004) https://research-information.bris.ac.uk/en/publications/knotted-threads-of-darkness/",
+    "source": "experiments/local_fields/run.log section 8, curves.png; optics precedent: Dennis et al., Nature Physics 6, 118 (2010) https://eprints.gla.ac.uk/41285 and Leach et al., Nature 432, 165 (2004) https://research-information.bris.ac.uk/en/publications/knotted-threads-of-darkness/",
     "confidence": "medium"
    },
    {
     "topic": "Optimiser behaviour",
     "claim": "The first-stage score (share of the first azimuthal harmonic on small circles around the curve) is a ratio of quadratic forms, so a generalised eigenvector solves the pooled version directly. climb/evolve (51,264 + 13,617 evaluations, 8 error draws per generation) matched or slightly beat it in several cases (e.g. 64-sphere line 0.0053 against 0.0095; whips ring 0.377 against 0.460) but never turned a failure into a success; random search was far worse everywhere (0.39-0.73). reselect on 16 fresh draws caught climb overfitting the noise: panel line 0.333 after climb against 0.259 for its starting point. A second-stage climb on a worst-point score did not rescue any case in the main run; in a side test it gave the 64-dipole link correct topology from the raw eigenvector.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/results.json (curves: scores, polish); side test /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/local_fields/dbg2.py",
+    "source": "experiments/local_fields/results.json (curves: scores, polish); side test scratch/local_fields/dbg2.py",
     "confidence": "medium"
    },
    {
     "topic": "Time-reversal focusing in a toy room",
     "claim": "Scalar image-source room 5 x 4 x 2.6 m, wall reflection 0.7, image order 3, 2.3 GHz, target 2.8 m from the array. 16 whips: time-reversal weights give +6.2 dB at the target over free-space weights (+6.5 dB over 20 MHz), a 68 x 57 mm spot (about lambda/2, against no resolvable spot in a 0.6 m patch for free-space weights), target-to-mean-background 9.0 dB (10.6 dB with 20 MHz); free-space weights in the room put the brightest point 200 mm off target at +3.9 dB. Four whips (rev B's transmit set): +3.9 dB, but a sidelobe 3 dB brighter than the target 31-54 mm away. Multipath acts as extra aperture, but the channel to the target point must be measured (a probe or transmitter there).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log section 9, time_reversal.png; experiments: Lerosey et al., PRL 92, 193904 (2004) https://link.aps.org/doi/10.1103/PhysRevLett.92.193904; Science 315, 1120 (2007), reported at https://physicstoday.aip.org/news/time-reversed-microwaves-beat-the-diffraction-limit",
+    "source": "experiments/local_fields/run.log section 9, time_reversal.png; experiments: Lerosey et al., PRL 92, 193904 (2004) https://link.aps.org/doi/10.1103/PhysRevLett.92.193904; Science 315, 1120 (2007), reported at https://physicstoday.aip.org/news/time-reversed-microwaves-beat-the-diffraction-limit",
     "confidence": "medium"
    },
    {
@@ -281,21 +281,21 @@
    {
     "topic": "Model limits",
     "claim": "Elements are Hertzian dipoles (panel: y-directed, 13 mm over an infinite ground; whips: quarter-wave cosine current in 4 segments on an infinite ground), with no mutual coupling, no finite-ground diffraction and no Vivaldi pattern; the scalar field used for vortices is E_y (panel) or E_z (whips). Self-tests pass (radiated power of a dipole within 1e-6 of the closed form; far and quasi-static limits). The environment has no scipy, so the generalised eigen-solver and nearest-neighbour search are numpy implementations inside the script. Results are model results, not openEMS or measurement.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields.py (docstring, selftest)",
+    "source": "experiments/local_fields.py (docstring, selftest)",
     "confidence": "high"
    }
   ],
   "files": [
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields.py",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/results.json",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/run.log",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/focus.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/spots.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/quiet_zone.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/vortex_slices.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/polarisation.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/curves.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/local_fields/time_reversal.png"
+   "experiments/local_fields.py",
+   "experiments/local_fields/results.json",
+   "experiments/local_fields/run.log",
+   "experiments/local_fields/focus.png",
+   "experiments/local_fields/spots.png",
+   "experiments/local_fields/quiet_zone.png",
+   "experiments/local_fields/vortex_slices.png",
+   "experiments/local_fields/polarisation.png",
+   "experiments/local_fields/curves.png",
+   "experiments/local_fields/time_reversal.png"
   ],
   "open_questions": [
    "A draft of local_fields.py from an interrupted earlier attempt already existed (the task called the file new). I reviewed and fixed it rather than rewriting: replaced scipy imports with numpy code (scipy is not installed in .env, contrary to the task text), corrected the steering-phase sign, made the superoscillation section use one scalar component throughout, offset the tracing grid, added a tracer self-test, split success into geometry and topology, and added a worst-point second stage.",

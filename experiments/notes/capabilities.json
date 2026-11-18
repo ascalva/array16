@@ -5,13 +5,13 @@
    {
     "topic": "Radio camera: resolution and pixel count",
     "claim": "HPBW = 0.886*lambda/D gives 25.4 deg at 915 MHz (16 whips on a 655 mm lambda/2 grid), 62.4 deg at 2.44 GHz and 26.2 deg at 5.8 GHz (100 mm panel). A +-60 deg field holds about 4 beams at 2.44 GHz and about 21 at 5.8 GHz, capped at 16 degrees of freedom. A moving element against a fixed reference over a 1 m baseline sharpens this to 18.8 / 7.0 / 3.0 deg (2 m: 9.4 / 3.5 / 1.5 deg). Bottleneck: aperture. Smallest fix: baseline synthesis on the planned turntable or a rail. Comparable hobby projects exist: QuadRF (4 coherent antennas, 4.9-6 GHz) and ESPARGOS (8 ESP32 patches, 2.4 GHz).",
-    "source": "Derivation in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/feasibility.py section A; examples https://www.crowdsupply.com/scale-rf/quadrf and https://hackaday.com/2025/02/15/octet-of-esp32s-lets-you-see-wifi-like-never-before",
+    "source": "Derivation in scratch/capabilities/feasibility.py section A; examples https://www.crowdsupply.com/scale-rf/quadrf and https://hackaday.com/2025/02/15/octet-of-esp32s-lets-you-see-wifi-like-never-before",
     "confidence": "high"
    },
    {
     "topic": "Radio camera: frame rate and sensitivity",
     "claim": "Four channels measure all 120 pairs of 16 elements in exactly 20 slots of 4 (the lines of the affine plane AG(2,4); verified: 120 of 120 pairs, each once). At 1 ms per slot that is 50 frames/s; the firmware minimum of 15 us per slot would allow about 3,300 frames/s with no sensitivity. Each pair gets 1/20 of the time, a 6.5 dB loss against 16 ADCs. 5-sigma pixel sensitivity, S_min = 5*k*Tsys*B/(Ae*sqrt(B*tau)) with B = 20 MHz: minimum EIRP visible at 100 m in a 20 ms frame is -56.5 dBm at 915 MHz, -39.7 dBm at 2.44 GHz and -39.9 dBm at 5.8 GHz with four channels (-63.0 / -46.2 / -46.4 dBm with 16 ADCs); a 1 s frame is 8.5 dB better. Image dynamic range from calibration is about N/sigma^2: 37.7 dB at 3 deg residual, 47 dB at 1 deg. Bursty sources break the switched covariance. Bottleneck: four channels. Smallest fix: accept the 20-slot schedule for steady emitters; 16 ADCs for bursty ones.",
-    "source": "Derivation, feasibility.py section A; hardware gains and noise figures from /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 4-5",
+    "source": "Derivation, feasibility.py section A; hardware gains and noise figures from REDESIGN.md sections 4-5",
     "confidence": "medium"
    },
    {
@@ -23,7 +23,7 @@
    {
     "topic": "Passive radar: DVB-T aircraft",
     "claim": "Bistatic equation with coherent gain B*T (65.8 dB for 7.61 MHz and 0.5 s), 50 kW ERP at 666 MHz, one 2 dBi whip, 13 dB threshold, 5 dB loss. Thermal noise alone gives an equivalent range sqrt(Rt*Rr) of 210 km (100 m^2), 118 km (10 m^2), 66 km (1 m^2). The direct path at a 30 km baseline is -37.4 dBm, 67 dB above noise. With an assumed 60 dB ADC range the 10 m^2 figure falls to 77 km, and with a 50 dB cancellation residual to 44 km; at a 10 km baseline it is 26 km. The range cell is c/B = 39 m. REDESIGN's 5-10 km for 10 m^2 is conservative. Real limits also include the radio horizon and the transmitter's downward-tilted vertical pattern. Bottleneck: ADC dynamic range against the direct path; digital nulling after the ADC does not help. Smallest fix: a Yagi with 20 dB rejection of the transmitter on the surveillance port, which restores about 170-185 km equivalent range for 10 m^2. Trials used 50-63 kW transmitters 32-61 km away.",
-    "source": "Derivation, /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/passive_radar.py; trial parameters: https://www.sto.nato.int/publications/STO%20Meeting%20Proceedings/STO-MP-SET-311/MP-SET-311-MSS-048.pdf and https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9003249/; ADC range and cross-sections are estimates",
+    "source": "Derivation, scratch/capabilities/passive_radar.py; trial parameters: https://www.sto.nato.int/publications/STO%20Meeting%20Proceedings/STO-MP-SET-311/MP-SET-311-MSS-048.pdf and https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9003249/; ADC range and cross-sections are estimates",
     "confidence": "medium"
    },
    {
@@ -65,7 +65,7 @@
    {
     "topic": "Two-site interferometry at 1420 MHz: fringe SNR",
     "claim": "SNR = S*sqrt(2*B*tau)/sqrt(SEFD1*SEFD2) with B = 20 MHz and per-whip SEFD of 1.19e8 Jy. Cas A (about 1650 Jy in 2026, my extrapolation from 1768 Jy at 0.6 %/yr): 1.40*sqrt(tau) with 16 coherent whips per site (4.4 in 10 s, 14 in 100 s); 0.35*sqrt(tau) with rev B's four (1.1 in 10 s, 21 in one coherent hour); 0.088*sqrt(tau) with one whip. Cyg A is 6 % lower. The quiet Sun (70 sfu) gives 37*sqrt(tau) with one whip per site. The Sun resolves out at a 28 m baseline (visibility 0.78 at 10 m, 0.30 at 20 m), Cas A at about 177 m and Cyg A at about 440 m, so the Sun's diameter is measurable on a garden-scale baseline. Fringe spacing is 73 arcmin at 10 m and 7.3 arcmin at 100 m. Bottleneck: four channels for Cas A; nothing for the Sun.",
-    "source": "Derivation, feasibility.py section I; whip Tsys and SEFD from /Users/ascalva/Documents/code/sdr_array/array16/experiments/topology/results.json; Cas A 1768 Jy at 1.4 GHz: https://arxiv.org/pdf/2002.10431; decline 0.6 %/yr: https://arxiv.org/pdf/1801.04887",
+    "source": "Derivation, feasibility.py section I; whip Tsys and SEFD from experiments/topology/results.json; Cas A 1768 Jy at 1.4 GHz: https://arxiv.org/pdf/2002.10431; decline 0.6 %/yr: https://arxiv.org/pdf/1801.04887",
     "confidence": "medium"
    },
    {
@@ -89,15 +89,15 @@
    {
     "topic": "Stepped-frequency near-field imaging, 2.3-6 GHz",
     "claim": "Stitching 3.7 GHz gives c/2B = 4.1 cm range cells; 370 steps of 10 MHz give 15 m unambiguous range and take about 3.7 s at 5 ms calibration plus 5 ms dwell per step. At a Part 15.209-level EIRP of -41.2 dBm, a 0.01 m^2 target at 1 m returns -104.4 dBm against -140.6 dBm of noise in 1 kHz: 36 dB per step. Cross-range lambda*R/(2L) at the 4.15 GHz centre is 18 cm at 0.5 m with the 100 mm panel, 1.8 cm with a 1 m rail, 7.2 cm at 2 m. Bottleneck: the AD9361's phase is random after each retune, and REDESIGN notes 51 % of 2.3-6 GHz is restricted for intentional radiation, so over the air the spectrum is gapped and sidelobes rise. Smallest fix: the existing PN calibration at every step (already planned), and an absorber-lined or shielded enclosure when the full band is wanted.",
-    "source": "Derivation, feasibility.py section L; restricted-band share from /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md section 6",
+    "source": "Derivation, feasibility.py section L; restricted-band share from REDESIGN.md section 6",
     "confidence": "medium"
    }
   ],
   "files": [
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/feasibility.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/feasibility_out.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/passive_radar.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/passive_radar_out.txt"
+   "scratch/capabilities/feasibility.py",
+   "scratch/capabilities/feasibility_out.txt",
+   "scratch/capabilities/passive_radar.py",
+   "scratch/capabilities/passive_radar_out.txt"
   ],
   "open_questions": [
    "What is the AD9361's usable instantaneous dynamic range in the bladeRF at 20 MSPS with manual gain? I assumed 60 dB; it sets the passive-radar range and the GNSS nulling headroom, and step 0 of the build order (two bladeRFs and a splitter) can measure it.",
@@ -284,7 +284,7 @@
    {
     "topic": "Ground-based InSAR: rev B fit",
     "claim": "At 5.8 GHz the displacement precision is 0.29/0.09/0.03 mm at 20/30/40 dB SNR, and phase wraps every 12.9 mm (lambda/4). Range cells are 7.5 m at 20 MHz and 1.0 m at the licence-free 150 MHz (5725-5875 MHz, stepped with recalibration). A 1 m rail gives 1.5 deg cross-range resolution against the panel's 26 deg beam. The conducted loopback gives a per-scan TX-RX phase reference; the atmosphere (about 2 mm per 10 N-units over 100 m two-way) needs corner reflectors.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section E)",
+    "source": "scratch/capabilities/catalogue/fit_estimates_out.txt (section E)",
     "confidence": "medium"
    },
    {
@@ -308,7 +308,7 @@
    {
     "topic": "Vital signs: rev B fit",
     "claim": "At 5.8 GHz a 4 mm chest motion swings the phase 56 deg and a 0.3 mm heartbeat 4.2 deg (23 and 1.8 deg at 2.44 GHz). Even at FCC 15.249 EIRP with the 15.5 dBi panel, a 0.5 m2 torso gives about 65-93 dB SNR in 1 kHz at 1-5 m, so TX leakage and clutter, not noise, set the limit. Rev B's 20-56 MHz cannot reach WiTrack-class range resolution, which needs 1.69 GHz sweeps.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section G)",
+    "source": "scratch/capabilities/catalogue/fit_estimates_out.txt (section G)",
     "confidence": "medium"
    },
    {
@@ -356,7 +356,7 @@
    {
     "topic": "UHF RFID: rev B fit",
     "claim": "The tag power-up link limits range: about 0.28 m at the 15.249 average limit (-1.25 dBm EIRP), about 2.0 m with 4 whips at +15.9 dBm, and about 21 m only at the 15.247 frequency-hopping limit (1 W conducted, gain above 6 dBi deducted). Readers need a PA and hopping, so rev B is better used as a receive-only tag-direction listener beside a COTS reader (RF-IDraw style).",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section F); rule text https://www.law.cornell.edu/cfr/text/47/15.247",
+    "source": "scratch/capabilities/catalogue/fit_estimates_out.txt (section F); rule text https://www.law.cornell.edu/cfr/text/47/15.247",
     "confidence": "medium"
    },
    {
@@ -374,7 +374,7 @@
    {
     "topic": "Satellite tracking: rev B fit",
     "claim": "L-band weather satellites need about 20 dBi (GOES HRIT is fixed but needs a dish or grid; HRPT also needs tracking). Rev B gives at most about 7.8 dBi at once from 4 whips (16 ports cannot be summed at once, and the panel starts at 2.3 GHz), or about 16 dBi with 4 helices on X0-X3: not feasible as built. 435 MHz amateur LEO satellites and GNSS (+6 dB beam, nulls on terrestrial interference) do fit.",
-    "source": "estimate: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section H); HRPT/GOES practice https://www.rtl-sdr.com/building-a-tracking-mount-for-hrpt-weather-satellite-reception/",
+    "source": "estimate: scratch/capabilities/catalogue/fit_estimates_out.txt (section H); HRPT/GOES practice https://www.rtl-sdr.com/building-a-tracking-mount-for-hrpt-weather-satellite-reception/",
     "confidence": "medium"
    },
    {
@@ -398,7 +398,7 @@
    {
     "topic": "Multistatic: rev B fit",
     "claim": "GNSS PPS jitter of 20/5/1 ns gives 6.0/1.5/0.3 m per range difference, while the bandwidth bound for a 20 MHz signal at 0 dB SNR over 1 ms is about 4 cm: timing dominates. Two rev B arrays need GNSS-disciplined 10 MHz plus PPS-tagged triggers and over-the-air calibration against known transmitters (the ATLAS / mlat-server / DICHASUS practice) to approach metre or sub-metre TDOA; AoA cross-fixes come free.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section D)",
+    "source": "scratch/capabilities/catalogue/fit_estimates_out.txt (section D)",
     "confidence": "medium"
    },
    {
@@ -410,7 +410,7 @@
    {
     "topic": "VLBI-style interferometry: rev B fit",
     "claim": "With independent references at separate sites, phase stays within 1 rad for about 0.1 s at 1.42 GHz with a TCXO (sigma_y 1e-9), about 11 s with an OCXO GPSDO (1e-11) and about 56 s with rubidium (2e-12), and roughly 4x shorter at 5.8 GHz. Separate-site rev B pairs can fringe on the Sun but not integrate on faint sources unless an OCXO or rubidium is added; cabled boards (A CLKOUT to B CLKIN) avoid the problem.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section C)",
+    "source": "scratch/capabilities/catalogue/fit_estimates_out.txt (section C)",
     "confidence": "medium"
    },
    {
@@ -422,7 +422,7 @@
    {
     "topic": "Hydrogen line: rev B fit",
     "claim": "One whip (beam-diluted T_A about 5 K, assumed) gives about 16 sigma per 10 kHz channel in 60 s. A 16-whip beam synthesised from the snapshot covariance has about 27 deg resolution on the 0.45 m plate (6 deg with a 2 m layout) and is limited by bandpass ripple, not noise. Because the sky is stationary, a switched array can image HI without 16 ADCs, which would be uncommon among hobby arrays; the PN calibration source must be muted during observations.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section B)",
+    "source": "scratch/capabilities/catalogue/fit_estimates_out.txt (section B)",
     "confidence": "medium"
    },
    {
@@ -434,7 +434,7 @@
    {
     "topic": "Solar/continuum: rev B fit",
     "claim": "Whip-whip Sun fringes come out at about 5.7 sigma in 0.1 s and 18 sigma in 1 s at 20 MHz (quiet Sun 50 sfu assumed); panel-panel at 2.44 and 5.8 GHz gives 26 and 36 sigma in 1 s. Cas A gives about 3 sigma per hour on whips and about 2 sigma per hour on panels, so not practical. The Sun, plus e-CALLISTO-band (45-870 MHz) solar bursts on the external ports, are the realistic radio-astronomy targets besides HI.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section A); https://www.dlr.de/en/so/research-transfer/research-infrastructure/instruments/callisto-solar-spectrometers",
+    "source": "scratch/capabilities/catalogue/fit_estimates_out.txt (section A); https://www.dlr.de/en/so/research-transfer/research-infrastructure/instruments/callisto-solar-spectrometers",
     "confidence": "medium"
    },
    {
@@ -446,7 +446,7 @@
    {
     "topic": "Meteor scatter: rev B fit",
     "claim": "Poor fit: meteor work lives at 30-150 MHz, below rev B's 0.4 GHz floor, and underdense-trail echoes scale roughly as lambda^3, so they are about 28 dB weaker at 433 MHz than at 50 MHz. Only large meteors or head echoes would show.",
-    "source": "estimate: lambda^3 forward-scatter scaling, /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section I)",
+    "source": "estimate: lambda^3 forward-scatter scaling, scratch/capabilities/catalogue/fit_estimates_out.txt (section I)",
     "confidence": "medium"
    },
    {
@@ -494,13 +494,13 @@
    {
     "topic": "Rev B structure: snapshot switching",
     "claim": "With 16 whips on 4 channels, every pair is seen in only 1 of 20 slots, so the 120 baselines carry as much signal as sqrt(6) full-time baselines, the same as a fixed 4-element array and 6.5 dB below 16 ADCs (sqrt(120)). Switching buys aperture (resolution, sidelobes), not sensitivity: good for stationary sky and steady carriers, unusable for nulling, transients or per-pulse radar.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section A)",
+    "source": "scratch/capabilities/catalogue/fit_estimates_out.txt (section A)",
     "confidence": "high"
    },
    {
     "topic": "Rev B structure: fixed port groups",
     "claim": "Rev B's external selector takes one port per fixed group per slot (groups {0,6,11,13} {1,7,10,12} {2,4,9,15} {3,5,8,14}), so only 96 of 120 pairs are ever simultaneous (16 slots cover them). The lambda/2 grid then loses 2 of 24 baseline vectors; the two-ring layout (assuming ports 0-7 outer, 8-15 inner) loses 12 of 64. A swap search found a port-to-whip relabelling that loses only 2, which is a free wiring fix for covariance imaging.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/snapshot_coverage_out.txt ; groups from REDESIGN.md section 4",
+    "source": "scratch/capabilities/catalogue/snapshot_coverage_out.txt ; groups from REDESIGN.md section 4",
     "confidence": "high"
    },
    {
@@ -511,11 +511,11 @@
    }
   ],
   "files": [
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/snapshot_coverage.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/snapshot_coverage_out.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/tools/pdf2txt.py"
+   "scratch/capabilities/catalogue/fit_estimates.py",
+   "scratch/capabilities/catalogue/fit_estimates_out.txt",
+   "scratch/capabilities/catalogue/snapshot_coverage.py",
+   "scratch/capabilities/catalogue/snapshot_coverage_out.txt",
+   "scratch/capabilities/catalogue/tools/pdf2txt.py"
   ],
   "open_questions": [
    "The parallel feasibility output reports 'AG(2,4): 120 of 120 pairs' for the radio camera. Rev B's fixed external groups allow only 96 of 120 pairs at once. Which assumption do control.py's Latin-square/Paley-20 schedules make?",
@@ -539,7 +539,7 @@
    {
     "topic": "Gap in REDESIGN's radiated-calibration interlock (TV bands, 216-960 MHz)",
     "claim": "15.209 bars fundamental emissions of intentional radiators in 54-72, 76-88, 174-216 and 470-806 MHz at any level. Its 216-960 MHz limit is 200 uV/m at 3 m, which is -49.2 dBm EIRP, not the -41.25 dBm that applies above 960 MHz. REDESIGN sections 6 and 8 refuse radiated calibration only in 15.205 bands and cap MANIFOLD mode at -41 dBm EIRP. Fix: add 470-806 MHz to the refusal list and cap CAL-ANT/probe radiation at -49 dBm EIRP below 960 MHz.",
-    "source": "https://www.law.cornell.edu/cfr/text/47/15.209 ; /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 6 and 8 ; derivation in bounds_estimates.json part15_eirp_dbm",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.209 ; REDESIGN.md sections 6 and 8 ; derivation in bounds_estimates.json part15_eirp_dbm",
     "confidence": "high"
    },
    {
@@ -707,7 +707,7 @@
    {
     "topic": "REDESIGN consistency: build hours",
     "claim": "The build-order steps in REDESIGN section 12 add up to 630 h (40+30+60+180+180+100+40), but section 1 says 520 hours.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 1 and 12",
+    "source": "REDESIGN.md sections 1 and 12",
     "confidence": "high"
    },
    {
@@ -718,10 +718,10 @@
    }
   ],
   "files": [
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/bounds_estimates.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/bounds_estimates.json",
-   "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/topology/results.json"
+   "scratch/capabilities/bounds_estimates.py",
+   "scratch/capabilities/bounds_estimates.json",
+   "REDESIGN.md",
+   "experiments/topology/results.json"
   ],
   "open_questions": [
    "Where will the array operate? Line A matters for 420-430 MHz, the National Radio Quiet Zone needs coordination, and line of sight to a NEXRAD or airport radar drives limiter and blanking needs. US or EU profile?",

@@ -5,13 +5,13 @@
    {
     "topic": "Correction: fields do not bend light in vacuum",
     "claim": "Lab 'knotted' fields were made of light itself, shaped by holograms or spatial light modulators. Maxwell's equations in vacuum are linear, so RF and light superpose without interacting. The only vacuum coupling is QED light-by-light scattering: sigma = 973/(10125 pi) alpha^4 (omega/m)^6 (reduced Compton wavelength)^2 = 1.2e-63 cm^2 at 532 nm and 7e-66 cm^2 at 1 eV, against Thomson 6.65e-25 cm^2. It has been observed only at GeV energies (ATLAS, Pb+Pb, 8.2 sigma, fiducial cross-section 120 nb).",
-    "source": "Derivation in /Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light.py; formula per https://arxiv.org/pdf/1106.0592 (the search snippet showed pi^2 where I used pi; a factor of 3 that does not change the conclusion); ATLAS: https://link.springer.com/article/10.1038/nphys4208 and https://pos.sissa.it/398/322/pdf",
+    "source": "Derivation in experiments/beyond_rf/rf_light.py; formula per https://arxiv.org/pdf/1106.0592 (the search snippet showed pi^2 where I used pi; a factor of 3 that does not change the conclusion); ATLAS: https://link.springer.com/article/10.1038/nphys4208 and https://pos.sissa.it/398/322/pdf",
     "confidence": "high"
    },
    {
     "topic": "Vacuum birefringence scale for this array",
     "claim": "QED predicts an index change of 4e-24 per T^2. The array's field at 0.3 m (12.6 mW total, 15.5 dBi: 0.40 W/m^2, 17 V/m peak, 58 nT) gives 1.3e-38, a 1.6e-31 rad phase over 1 m at 532 nm. PVLAS with 2.5 T measured (12 +/- 17)e-23 against a prediction of 2.5e-23, so the effect is still undetected in the best experiment.",
-    "source": "https://arxiv.org/pdf/2005.12913 plus derivation in rf_light.py (results in /Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light_results.json)",
+    "source": "https://arxiv.org/pdf/2005.12913 plus derivation in rf_light.py (results in experiments/beyond_rf/rf_light_results.json)",
     "confidence": "high"
    },
    {
@@ -112,9 +112,9 @@
    }
   ],
   "files": [
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light.py",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light_results.json",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light.png"
+   "experiments/beyond_rf/rf_light.py",
+   "experiments/beyond_rf/rf_light_results.json",
+   "experiments/beyond_rf/rf_light.png"
   ],
   "open_questions": [
    "None of the parallel studies named in the task (local_fields.md, field_uses.md, fields_study.md, capabilities.md) existed as files, so overlap with them could not be checked; only code and figures for local_fields and fields were present.",
@@ -129,7 +129,7 @@
   ]
  },
  "investigate:matter": {
-  "summary": "Lens: RF, matter and the microwave microscope. New script, results and four figures are in /Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/ (matter_microscope.py; numpy only, scipy is not installed). No existing files were changed. The parallel notes local_fields.md, field_uses.md, fields_study.md and capabilities.md were not present, so nothing was cross-checked against them.\n\nCorrection to state plainly: the knotted fields in optics labs were made OF light; RF does not bend light in vacuum. RF acts on light only through matter. The cleanest in-band route is NV-diamond ODMR: 2.87 GHz at about +8 dBm changes the red fluorescence of a diamond under green light, and a published LED build costs under EUR 100.\n\n1. Forces at this power are negligible in free space. All 16 channels (50.6 mW) give a radiation force of 0.17-0.34 nN. Focused into one half-wave spot at 6 GHz this is at most 8 mW/cm2, 247 V/m peak. Dielectrophoresis on a 1 mm bead is 5e-14 N against 5e-6 N of weight (1e-8); on a 1 um particle in water it is 1e-20 N against 4e-15 N thermal. Ponderomotive energy is 2e-6 eV. The exception is microelectrodes: +5 dBm across a 10 um gap gives 8e4 V/m and about 1.3 pN on a 1 um bead (300 times thermal) with 0.1 K heating. Heating is real but small: 0.7 K/min in 1 mL of water if all 50 mW is absorbed, 14 K/min at 1 W.\n\n2. Spin resonance is in band. Electron resonance is 28.04 MHz/mT: 14.3 mT at 0.4 GHz, 87.4 mT at 2.45 GHz, 214 mT at 6 GHz, all neodymium-magnet fields. The SDR can sweep frequency at fixed field; the DPPH line is about 5.6 MHz wide. Estimated signal for a few mg of DPPH at 2.45 GHz: 7 % reflection change in a loop-gap resonator (Q 200, fill 0.05), -55 dB on a microstrip resonator, -89 dB on a bare shorted line (needs field modulation). Proton NMR would need 9.4 T at 0.4 GHz, so it is out of band. A YIG sphere resonates from about 1.63 GHz (61 mT) to 6 GHz (214 mT) with Q of 700-2100.\n\n3. Material detection. Water (Debye, 25 C) is 77.2 - j9.2 at 2.45 GHz and 72.3 - j20.2 at 5.8 GHz; plastics, wood, ice and concrete sit at 2-5, so moisture dominates contrast. A DIY SMA open-ended probe is reported good to 3 % up to 6 GHz. A split-ring probe (model fitted to Isakov 2017) shifts 114 MHz per unit permittivity at 2.5 and 14 MHz at 25; 0.1 % frequency repeatability gives 0.02 in permittivity near 3.\n\nNear-field microscopy: labs reach 100 nm to 1 um. For a quarter-wave coax tip at 2.45 GHz, a 50 um tip shifts 1.6 MHz on PTFE, 3.9 MHz on FR-4, 18 MHz on water, with a noise floor near 8 kHz (permittivity step about 0.01). The decisive limit is lift-off: a 0.76 um gap change mimics a 5 % permittivity change, so a hobby build must scan in contact.\n\nArray imaging (back-projection, point target): the panel at 6 GHz resolves 30 mm at 50 mm, 72 mm at 150 mm, 234 mm at 500 mm; 2.45 GHz gives 84 and 207 mm. Stepped 2.3-6 GHz gives about 45-60 mm in range. Carrying one element over 200 mm on a printer bed gives 14 mm at 50 mm (about a quarter wave) and 25 mm at 150 mm. Ground radar (estimate, 70 dB two-way loss): 1-3 m at 0.4-0.9 GHz in moist soil, 0.4-0.75 m at 2.45 GHz, under 0.2 m at 5.8 GHz. The 16 external ports match the Dartmouth 16-monopole tomography layout (0.5-2 GHz), but only X0-X3 transmit.\n\nBest two builds (costs are my estimates):\n- Scanning microwave microscope, about $40-90 plus an existing 3D printer: needle tip or split ring, directional coupler, two coherent receive channels. Expect 0.1-0.3 mm resolution with a needle in contact (about 1/1000 wavelength), 0.2-2 mm with a ring, permittivity to 5-8 %.\n- Spin-resonance bench, about $60-150: magnets on a screw yoke, resonator, modulation coil, DPPH; add NV diamond and a YIG sphere. Expect DPPH at signal-to-noise above 100 with mg samples.\n\nSafety: the public exposure limit is 1 mW/cm2 above 1.5 GHz. The panel's main beam meets it beyond 14 cm at 6 GHz (6 cm at 2.45 GHz); a 1 W amplifier into 6 dBi needs 18 cm. Unmodulated carriers radiated under Part 15.249 are limited to about -1 dBm EIRP, so probe and resonator work should stay cabled or shielded. For ODMR prefer LEDs; a 532 nm laser above 5 mW is Class 3B and needs OD4+ eyewear.",
+  "summary": "Lens: RF, matter and the microwave microscope. New script, results and four figures are in experiments/beyond_rf/ (matter_microscope.py; numpy only, scipy is not installed). No existing files were changed. The parallel notes local_fields.md, field_uses.md, fields_study.md and capabilities.md were not present, so nothing was cross-checked against them.\n\nCorrection to state plainly: the knotted fields in optics labs were made OF light; RF does not bend light in vacuum. RF acts on light only through matter. The cleanest in-band route is NV-diamond ODMR: 2.87 GHz at about +8 dBm changes the red fluorescence of a diamond under green light, and a published LED build costs under EUR 100.\n\n1. Forces at this power are negligible in free space. All 16 channels (50.6 mW) give a radiation force of 0.17-0.34 nN. Focused into one half-wave spot at 6 GHz this is at most 8 mW/cm2, 247 V/m peak. Dielectrophoresis on a 1 mm bead is 5e-14 N against 5e-6 N of weight (1e-8); on a 1 um particle in water it is 1e-20 N against 4e-15 N thermal. Ponderomotive energy is 2e-6 eV. The exception is microelectrodes: +5 dBm across a 10 um gap gives 8e4 V/m and about 1.3 pN on a 1 um bead (300 times thermal) with 0.1 K heating. Heating is real but small: 0.7 K/min in 1 mL of water if all 50 mW is absorbed, 14 K/min at 1 W.\n\n2. Spin resonance is in band. Electron resonance is 28.04 MHz/mT: 14.3 mT at 0.4 GHz, 87.4 mT at 2.45 GHz, 214 mT at 6 GHz, all neodymium-magnet fields. The SDR can sweep frequency at fixed field; the DPPH line is about 5.6 MHz wide. Estimated signal for a few mg of DPPH at 2.45 GHz: 7 % reflection change in a loop-gap resonator (Q 200, fill 0.05), -55 dB on a microstrip resonator, -89 dB on a bare shorted line (needs field modulation). Proton NMR would need 9.4 T at 0.4 GHz, so it is out of band. A YIG sphere resonates from about 1.63 GHz (61 mT) to 6 GHz (214 mT) with Q of 700-2100.\n\n3. Material detection. Water (Debye, 25 C) is 77.2 - j9.2 at 2.45 GHz and 72.3 - j20.2 at 5.8 GHz; plastics, wood, ice and concrete sit at 2-5, so moisture dominates contrast. A DIY SMA open-ended probe is reported good to 3 % up to 6 GHz. A split-ring probe (model fitted to Isakov 2017) shifts 114 MHz per unit permittivity at 2.5 and 14 MHz at 25; 0.1 % frequency repeatability gives 0.02 in permittivity near 3.\n\nNear-field microscopy: labs reach 100 nm to 1 um. For a quarter-wave coax tip at 2.45 GHz, a 50 um tip shifts 1.6 MHz on PTFE, 3.9 MHz on FR-4, 18 MHz on water, with a noise floor near 8 kHz (permittivity step about 0.01). The decisive limit is lift-off: a 0.76 um gap change mimics a 5 % permittivity change, so a hobby build must scan in contact.\n\nArray imaging (back-projection, point target): the panel at 6 GHz resolves 30 mm at 50 mm, 72 mm at 150 mm, 234 mm at 500 mm; 2.45 GHz gives 84 and 207 mm. Stepped 2.3-6 GHz gives about 45-60 mm in range. Carrying one element over 200 mm on a printer bed gives 14 mm at 50 mm (about a quarter wave) and 25 mm at 150 mm. Ground radar (estimate, 70 dB two-way loss): 1-3 m at 0.4-0.9 GHz in moist soil, 0.4-0.75 m at 2.45 GHz, under 0.2 m at 5.8 GHz. The 16 external ports match the Dartmouth 16-monopole tomography layout (0.5-2 GHz), but only X0-X3 transmit.\n\nBest two builds (costs are my estimates):\n- Scanning microwave microscope, about $40-90 plus an existing 3D printer: needle tip or split ring, directional coupler, two coherent receive channels. Expect 0.1-0.3 mm resolution with a needle in contact (about 1/1000 wavelength), 0.2-2 mm with a ring, permittivity to 5-8 %.\n- Spin-resonance bench, about $60-150: magnets on a screw yoke, resonator, modulation coil, DPPH; add NV diamond and a YIG sphere. Expect DPPH at signal-to-noise above 100 with mg samples.\n\nSafety: the public exposure limit is 1 mW/cm2 above 1.5 GHz. The panel's main beam meets it beyond 14 cm at 6 GHz (6 cm at 2.45 GHz); a 1 W amplifier into 6 dBi needs 18 cm. Unmodulated carriers radiated under Part 15.249 are limited to about -1 dBm EIRP, so probe and resonator work should stay cabled or shielded. For ODMR prefer LEDs; a 532 nm laser above 5 mW is Class 3B and needs OD4+ eyewear.",
   "findings": [
    {
     "topic": "Correction: RF and light",
@@ -146,7 +146,7 @@
    {
     "topic": "Radiation pressure",
     "claim": "All 16 channels at +5 dBm (50.6 mW) give 0.17 nN on an absorber and 0.34 nN on a mirror; 1 W gives 3.3-6.7 nN. A 1 mm water bead weighs 5.1 uN, so this is negligible without a torsion balance.",
-    "source": "derivation F = P/c, /Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/matter_results.json (forces)",
+    "source": "derivation F = P/c, experiments/beyond_rf/matter_results.json (forces)",
     "confidence": "high"
    },
    {
@@ -194,7 +194,7 @@
    {
     "topic": "NMR is out of band",
     "claim": "Protons resonate at 42.58 MHz/T, so 0.4 GHz needs 9.4 T and the bladeRF's 47 MHz floor needs 1.1 T. A 0.5 T permanent magnet puts protons at 21 MHz, below the board's 330 MHz high-pass filter.",
-    "source": "derivation, matter_results.json (esr.proton_field_T_for); filter value from /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md section 3",
+    "source": "derivation, matter_results.json (esr.proton_field_T_for); filter value from REDESIGN.md section 3",
     "confidence": "high"
    },
    {
@@ -260,7 +260,7 @@
    {
     "topic": "Panel imaging resolution",
     "claim": "Back-projection of a point target with all 16 elements transmitting and receiving: at 6 GHz the width is 30 mm at 50 mm range, 72 mm at 150 mm, 234 mm at 500 mm; at 2.45 GHz 84 mm and 207 mm at 50 and 150 mm. Using only the four quadrant channels changes this little (45 vs 45 mm, 111 vs 102 mm wideband). Half a wavelength is 25 mm at 6 GHz and 61 mm at 2.45 GHz.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/matter_results.json (imaging), imaging_psf.png",
+    "source": "experiments/beyond_rf/matter_results.json (imaging), imaging_psf.png",
     "confidence": "medium"
    },
    {
@@ -307,12 +307,12 @@
    }
   ],
   "files": [
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/matter_microscope.py",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/matter_results.json",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/probe_shift.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/imaging_psf.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/spin_resonance.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/water_debye.png"
+   "experiments/beyond_rf/matter_microscope.py",
+   "experiments/beyond_rf/matter_results.json",
+   "experiments/beyond_rf/probe_shift.png",
+   "experiments/beyond_rf/imaging_psf.png",
+   "experiments/beyond_rf/spin_resonance.png",
+   "experiments/beyond_rf/water_debye.png"
   ],
   "open_questions": [
    "Can rev B switch single panel elements on transmit and receive (via SW_CAL and the per-amplifier load switches), and with what isolation? The 16 x 16 imaging numbers assume yes; the quadrant-only case is given as the fallback.",

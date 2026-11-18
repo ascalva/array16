@@ -76,5 +76,5 @@
   1 uA, 100 eV, 3 mm beam: its own field 1.01 V/m against 5.9e+04 V/m of magnetic guiding; magnetic self-attraction is 3.9e-04 of the electric self-repulsion
   a neutral plasma column of 1e15 particles/m at 2 eV pinches itself at 113 A
 
-done in 167 s; results in /Users/ascalva/Documents/code/sdr_array/array16/experiments/accelerator
+done in 167 s; results in experiments/accelerator
 .env/bin/python experiments/accelerator_study.py  165.82s user 1.23s system 99% cpu 2:47.27 total

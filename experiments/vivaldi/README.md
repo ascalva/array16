@@ -5,7 +5,7 @@ Everything here is written by `experiments/vivaldi_openems.py`. The study text i
 ## Check progress
 
 ```
-cd /Users/ascalva/Documents/code/sdr_array/array16
+# from the repository root
 .env/bin/python experiments/vivaldi_openems.py status
 tail -f experiments/vivaldi/run.log
 ```
@@ -18,7 +18,7 @@ far with its parameters, the rate, and a rough ETA.
 The same command does both:
 
 ```
-cd /Users/ascalva/Documents/code/sdr_array/array16
+# from the repository root
 .env/bin/python experiments/vivaldi_openems.py launch
 ```
 

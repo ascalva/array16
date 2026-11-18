@@ -7,5 +7,5 @@
 2026-11-15 21:44:45   [validate] 8de71f121348c6db ran 55 s  score -6.08  worst -2.67 dB  x=40 0.1 1.5 8 22 0.4 12
 2026-11-15 21:44:48   [validate] bf3ab7480c21166c ran 3 s  score -6.08  worst -2.66 dB  x=40 0.1 1.5 8 22 0.4 12
 2026-11-15 21:44:48 validate: gates {'mesh': True, 'boundary': True, 'passive': True, 'engine': True, 'end': True} -> trustworthy=True
-2026-11-15 21:44:49 report: wrote /Users/ascalva/Documents/code/sdr_array/array16/experiments/vivaldi/summary.md
+2026-11-15 21:44:49 report: wrote experiments/vivaldi/summary.md
 EXIT 0

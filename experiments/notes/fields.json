@@ -11,7 +11,7 @@
    {
     "topic": "Static field in ordinary antenna materials",
     "claim": "In copper the magnetic (Hall) correction to conductivity is omega_c*tau = 4.4e-3 at 1 T, 8.8e-4 at 0.2 T, 4.4e-5 at 10 mT, so a magnet does not change how copper or FR-4 handle RF.",
-    "source": "estimate: omega_c = eB/m with copper tau = 2.5e-14 s; /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/magnets.py",
+    "source": "estimate: omega_c = eB/m with copper tau = 2.5e-14 s; scratch/fields/magnets.py",
     "confidence": "medium"
    },
    {
@@ -83,7 +83,7 @@
    {
     "topic": "Circulator in the radar path: verdict",
     "claim": "Not worth it. A single-antenna radar through a circulator leaks transmit power at about the antenna return loss (-10 to -15 dB) or the circulator isolation (14-23 dB), whichever is worse, versus the >=60 dB that rev B gets from a horn 1.5 m aside; REDESIGN.md section 7 states isolation and nulling matter more than power. One circulator also covers only one band.",
-    "source": "derivation; /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md section 7",
+    "source": "derivation; REDESIGN.md section 7",
     "confidence": "high"
    },
    {
@@ -124,9 +124,9 @@
    }
   ],
   "files": [
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/magnets.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/itu.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/pdftxt.py"
+   "scratch/fields/magnets.py",
+   "scratch/fields/itu.txt",
+   "scratch/fields/pdftxt.py"
   ],
   "open_questions": [
    "Where will the IMU/magnetometer sit relative to gimbal motors, encoders with magnets, and steel mounts? The 0.5 m / 1 m distances above assume a 10 mm NdFeB magnet; motor stray fields need the motor's own data or a measurement.",
@@ -139,7 +139,7 @@
   ]
  },
  "investigate:extremes": {
-  "summary": "Wrote and ran /Users/ascalva/Documents/code/sdr_array/array16/experiments/fields_study.py (11 s; no existing file touched). All numbers below are from idealised models (thin-dipole induced-EMF for whips, cos^1.5 uncoupled flares for the panel), not full-wave runs.\n\n**Owner's two questions**\n- **Sun:** it does rotate (about 25 days at the equator, about 35 at the poles), and that differential rotation is what winds its field. The analogy that holds is \"currents make the field; change the currents and the field structure changes\". An array's fields superpose linearly, so beams and nulls are exactly constructive and destructive interference.\n- **Magnets:** no. A static field does not steer radio waves in air; the vacuum effect is about 5e-23 rad over 0.1 m at 1 T. Magnets matter only inside ferrites and plasmas (circulators, ferrite phase shifters, ionosphere, sunspots). On this build a 10 mm N42 cube puts about 207 \u00b5T at 0.1 m and 1.7 \u00b5T at 0.5 m on the magnetometer, roughly a 5\u00b0 heading error at 0.5 m. The one useful magnet is inside a bought circulator or isolator.\n\n**(a) Electronic polarisation rotation is the one addition worth making.**\n- The V-only panel loses 3 dB on circular or unpolarised signals, 6 dB at 60\u00b0 tilt, and everything at 90\u00b0.\n- Two V and two H quadrant channels measure tilt to 2.0\u00b0 median (5.2\u00b0 at the 95th percentile) and ellipticity to 1.9\u00b0 in one capture, with no polarisation loss. With 0.1 dB / 1\u00b0 calibration this becomes 0.7\u00b0.\n- If V and H flares share a combiner, the existing 4-bit delay states already give quadrature: axial ratio is at most 1.03 dB over 2.3-6 GHz (median 0.20 dB).\n- A linear polarisation spun at 8 kHz is one line at \u00b18 kHz in each circular hand. With 0/180 switches only, the wanted line is -3.9 dB and the worst image -13.5 dB.\n- Cost (my estimate): about $40-60 for crossed cards plus a V/H switch per element, against about $233 and 4.6 W for 16 more full cells.\n\n**(b) Pseudo-Doppler is already inside rev B and is worse than what rev B does.** Commutating one receiver round a ring yields phase mode l = 1 taken in time. Its bias is 3.4-13.8\u00b0 on rev B's 4-whip rings and it gives up 6-12 dB against simultaneous channels. Time-modulated tricks are limited by the 15 \u00b5s slot to signals of a few kHz (my estimate).\n\n**(c) Vortex beams: no new capability; one free use.**\n- A ring of N makes |l| < N/2, and purity collapses once k\u00b7a exceeds about N - |l|. The 225 mm ring of 8 is pure only up to about 0.9 GHz (l = 1 purity 18 % at 2.3 GHz); 16 on that ring stay pure to 2.3 GHz.\n- Whips have a null on the ring axis, so their \"vortex\" is just circular-array phase modes.\n- Ring-to-ring, the singular vectors are the OAM modes, and mode power falls as D^-2(|l|+1): l = 1 is -18 dB at 10 m and -38 dB at 100 m.\n- The free use: l = 1 from the four panel quadrants is the monopulse difference pair (purity 99 % at 2.44 GHz, 85 % at 5.8 GHz), useful for tracking.\n\n**(d) Superdirectivity: a modest win at 0.4 GHz, none worth having on the panel.**\n- Two whips: 6.7 dBi at 0.25 \u03bb (Q 12, 5.7 % bandwidth, 33 \u03a9), rising only to 7.4 dBi at 0.1 \u03bb (Q 50, 1.4 %, 6.8 \u03a9).\n- Four whips at 0.25 \u03bb: 11.9 dBi lossless, 10.3 dBi with 2 \u03a9 loss, 11.5 dBi with 3\u00b0 / 0.5 dB errors, Q 141. At 0.1 \u03bb it is 12.7 dBi on paper, but Q is 25,000 and gain falls to 4.4 dBi with those errors.\n- On receive, a 0.25 \u03bb pair beats a \u03bb/2 pair by 1.3-1.9 dB only when external noise is 3-10 times receiver noise. Rev B's 4-whip rings already sit at 0.25-0.45 \u03bb spacing.\n- Panel at 2.44 GHz: 13.6 dBi against 10.6 dBi uniform, but at 10-13 dB lower white-noise gain; nothing to gain at 5.8 GHz.\n\n**(e) Near field.** The reactive zone is 119 mm at 0.4 GHz and 8 mm at 6 GHz. The far field starts at 0.39 m for the panel at 5.8 GHz and 3.1 m for the plate at 2.3 GHz. Wavefront curvature across the plate exceeds 3\u00b0 inside 23 m at 2.3 GHz, so indoor range is measurable and close calibration sources need the spherical correction. A passive 0.5 m flat plate at 10 m + 10 m, 5.8 GHz, returns about -0.3 dB relative to the direct path; a switchable surface is not worth building.",
+  "summary": "Wrote and ran experiments/fields_study.py (11 s; no existing file touched). All numbers below are from idealised models (thin-dipole induced-EMF for whips, cos^1.5 uncoupled flares for the panel), not full-wave runs.\n\n**Owner's two questions**\n- **Sun:** it does rotate (about 25 days at the equator, about 35 at the poles), and that differential rotation is what winds its field. The analogy that holds is \"currents make the field; change the currents and the field structure changes\". An array's fields superpose linearly, so beams and nulls are exactly constructive and destructive interference.\n- **Magnets:** no. A static field does not steer radio waves in air; the vacuum effect is about 5e-23 rad over 0.1 m at 1 T. Magnets matter only inside ferrites and plasmas (circulators, ferrite phase shifters, ionosphere, sunspots). On this build a 10 mm N42 cube puts about 207 \u00b5T at 0.1 m and 1.7 \u00b5T at 0.5 m on the magnetometer, roughly a 5\u00b0 heading error at 0.5 m. The one useful magnet is inside a bought circulator or isolator.\n\n**(a) Electronic polarisation rotation is the one addition worth making.**\n- The V-only panel loses 3 dB on circular or unpolarised signals, 6 dB at 60\u00b0 tilt, and everything at 90\u00b0.\n- Two V and two H quadrant channels measure tilt to 2.0\u00b0 median (5.2\u00b0 at the 95th percentile) and ellipticity to 1.9\u00b0 in one capture, with no polarisation loss. With 0.1 dB / 1\u00b0 calibration this becomes 0.7\u00b0.\n- If V and H flares share a combiner, the existing 4-bit delay states already give quadrature: axial ratio is at most 1.03 dB over 2.3-6 GHz (median 0.20 dB).\n- A linear polarisation spun at 8 kHz is one line at \u00b18 kHz in each circular hand. With 0/180 switches only, the wanted line is -3.9 dB and the worst image -13.5 dB.\n- Cost (my estimate): about $40-60 for crossed cards plus a V/H switch per element, against about $233 and 4.6 W for 16 more full cells.\n\n**(b) Pseudo-Doppler is already inside rev B and is worse than what rev B does.** Commutating one receiver round a ring yields phase mode l = 1 taken in time. Its bias is 3.4-13.8\u00b0 on rev B's 4-whip rings and it gives up 6-12 dB against simultaneous channels. Time-modulated tricks are limited by the 15 \u00b5s slot to signals of a few kHz (my estimate).\n\n**(c) Vortex beams: no new capability; one free use.**\n- A ring of N makes |l| < N/2, and purity collapses once k\u00b7a exceeds about N - |l|. The 225 mm ring of 8 is pure only up to about 0.9 GHz (l = 1 purity 18 % at 2.3 GHz); 16 on that ring stay pure to 2.3 GHz.\n- Whips have a null on the ring axis, so their \"vortex\" is just circular-array phase modes.\n- Ring-to-ring, the singular vectors are the OAM modes, and mode power falls as D^-2(|l|+1): l = 1 is -18 dB at 10 m and -38 dB at 100 m.\n- The free use: l = 1 from the four panel quadrants is the monopulse difference pair (purity 99 % at 2.44 GHz, 85 % at 5.8 GHz), useful for tracking.\n\n**(d) Superdirectivity: a modest win at 0.4 GHz, none worth having on the panel.**\n- Two whips: 6.7 dBi at 0.25 \u03bb (Q 12, 5.7 % bandwidth, 33 \u03a9), rising only to 7.4 dBi at 0.1 \u03bb (Q 50, 1.4 %, 6.8 \u03a9).\n- Four whips at 0.25 \u03bb: 11.9 dBi lossless, 10.3 dBi with 2 \u03a9 loss, 11.5 dBi with 3\u00b0 / 0.5 dB errors, Q 141. At 0.1 \u03bb it is 12.7 dBi on paper, but Q is 25,000 and gain falls to 4.4 dBi with those errors.\n- On receive, a 0.25 \u03bb pair beats a \u03bb/2 pair by 1.3-1.9 dB only when external noise is 3-10 times receiver noise. Rev B's 4-whip rings already sit at 0.25-0.45 \u03bb spacing.\n- Panel at 2.44 GHz: 13.6 dBi against 10.6 dBi uniform, but at 10-13 dB lower white-noise gain; nothing to gain at 5.8 GHz.\n\n**(e) Near field.** The reactive zone is 119 mm at 0.4 GHz and 8 mm at 6 GHz. The far field starts at 0.39 m for the panel at 5.8 GHz and 3.1 m for the plate at 2.3 GHz. Wavefront curvature across the plate exceeds 3\u00b0 inside 23 m at 2.3 GHz, so indoor range is measurable and close calibration sources need the spherical correction. A passive 0.5 m flat plate at 10 m + 10 m, 5.8 GHz, returns about -0.3 dB relative to the direct path; a switchable surface is not worth building.",
   "findings": [
    {
     "topic": "Owner question: the Sun",
@@ -168,31 +168,31 @@
    {
     "topic": "(a) What rev B already does",
     "claim": "Rev B already moves beams and nulls without motion: 4-bit true-time delays per flare, 0/180 polarity per channel, four coherent channels for digital beams and three nulls, and Latin-square port selection. What it cannot do is change polarisation: one linear polarisation loses 3 dB on circular or unpolarised signals, 6 dB at 60 deg tilt, 11.7 dB at 75 deg, and everything at 90 deg.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 3, 9 ; /Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 3a",
+    "source": "REDESIGN.md sections 3, 9 ; experiments/fields/tables.md table 3a",
     "confidence": "high"
    },
    {
     "topic": "(a) Electronic polarisation rotation",
     "claim": "With two V and two H quadrant channels, one 64-sample capture at 20 dB per element gives tilt error 2.0 deg median / 5.2 deg at the 95th percentile and ellipticity error 1.9 / 5.1 deg, with median recovered power 0.0 dB. The error is set by the 0.5 dB / 3 deg residual and -20 dB cross-polar, not by SNR (0 dB SNR: 2.8 / 8.5 deg). With 0.1 dB / 1 deg and -30 dB cross-polar it is 0.7 / 2.0 deg.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 3e",
+    "source": "experiments/fields/tables.md table 3e",
     "confidence": "medium"
    },
    {
     "topic": "(a) Electronic polarisation rotation",
     "claim": "Mechanical roll (rotation_study) needs at least 3 roll angles and reaches 0.3 deg only if source power is steady between captures; with 1 dB power change it degrades to 2.7-3.6 deg. Dual-pol measures in one capture and is immune to source fading.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables_quick.md table e2 ; fields/tables.md table 3e",
+    "source": "experiments/rotation/tables_quick.md table e2 ; fields/tables.md table 3e",
     "confidence": "medium"
    },
    {
     "topic": "(a) Electronic polarisation rotation",
     "claim": "If a V and an H flare feed the same combiner, the existing delay states (38.5/52.5/117.5/139 ps) already supply quadrature: best state pair is within 6.7 deg of 90 deg everywhere in 2.3-6 GHz, axial ratio at most 1.03 dB, median 0.20 dB. No new phase shifter is needed for analogue circular polarisation. The channel residual of 0.7 dB / 4.2 deg between two channels adds about 0.95 dB axial ratio (25 dB cross-hand rejection).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md tables 3b, 3c ; assumes state delay = sum of selected bits",
+    "source": "experiments/fields/tables.md tables 3b, 3c ; assumes state delay = sum of selected bits",
     "confidence": "medium"
    },
    {
     "topic": "(a) Electronic polarisation rotation",
     "claim": "A linear polarisation turned at f_rot with weights (cos, sin) on V and H is exactly one line at +f_rot in one circular hand and -f_rot in the other, each -3.0 dB. With only 0/180 switches (four states per turn) the wanted line is -3.9 dB and the strongest images are -13.5 dB (3rd) and -17.9 dB (5th).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md section 3d",
+    "source": "experiments/fields/tables.md section 3d",
     "confidence": "high"
    },
    {
@@ -204,7 +204,7 @@
    {
     "topic": "(b) Pseudo-Doppler",
     "claim": "Commutating one receiver round a ring gives, in its first harmonic, exactly phase mode l = 1 of the ring (N j J1(kr) e^{j phi0} plus aliases J_(N-1)). Worst bearing bias before lookup correction: 3.4 / 7.2 / 13.8 deg for 4 whips at r = 0.18 / 0.25 / 0.32 wavelengths (rev B's rings), 8.2 deg for 8 whips on 225 mm at 0.915 GHz, unusable at 2.3 GHz. It also costs 6 / 9 / 12 dB of SNR against 4 / 8 / 16 simultaneous elements. Rev B's coherent time-multiplexed sampling gets the same information without these losses.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 4a ; https://en.wikipedia.org/wiki/Doppler_radio_direction_finding",
+    "source": "experiments/fields/tables.md table 4a ; https://en.wikipedia.org/wiki/Doppler_radio_direction_finding",
     "confidence": "high"
    },
    {
@@ -216,55 +216,55 @@
    {
     "topic": "(c) OAM modes from a ring",
     "claim": "A ring of N elements makes modes |l| < N/2; |l| = N/2 is a standing pattern (50 % purity). Purity over the half space collapses once k a exceeds about N - |l|. For N = 8: l = 1..3 are 100 % pure at k a = 2, 100/99/94 % at k a = 4, 51/44/50 % at k a = 8. For N = 16: all of l = 1..6 are at least 99 % at k a = 8.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 1a ; derivation: AF = N sum_q j^(l+qN) J_(l+qN)(k a sin theta) e^{j(l+qN) phi}",
+    "source": "experiments/fields/tables.md table 1a ; derivation: AF = N sum_q j^(l+qN) J_(l+qN)(k a sin theta) e^{j(l+qN) phi}",
     "confidence": "high"
    },
    {
     "topic": "(c) OAM on the project's rings",
     "claim": "The 225 mm ring of 8 (k a = 1.89 / 4.31 / 6.70 / 10.85 at 0.4 / 0.915 / 1.42 / 2.3 GHz) gives pure vortices only up to about 0.9 GHz: l = 1 half-space purity for transverse elements is 100 / 100 / 81 / 29 %. Sixteen elements on that ring stay at 98-100 % to 2.3 GHz. The vortex cone half-angle for l = 1 narrows from 25 deg at 0.915 GHz to 10 deg at 2.3 GHz, and peak directivity is 2-6 dB below the same ring fed in phase. Whips have a null on the ring axis, so their vortex is really the circular-array phase modes seen at the horizon.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 1b",
+    "source": "experiments/fields/tables.md table 1b",
     "confidence": "high"
    },
    {
     "topic": "(c) OAM link capacity",
     "claim": "For two facing rings of 8 at 225 mm, 2.3 GHz (Rayleigh distance 3.1 m), the channel matrix is circulant, so its singular vectors are the OAM modes: OAM multiplexing is ordinary MIMO. Mode power relative to l = 0 is -8.6 / -22.3 dB (l = 1 / 2) at 3 m, -18.3 / -42.6 dB at 10 m, -38.3 / -82.6 dB at 100 m; fitted far-field slopes are D^-2, -4, -6, -8, -10 for l = 0..4. No capacity beyond MIMO in the far field.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 1d ; https://lup.lub.lu.se/search/files/4023050/2339120.pdf (Edfors and Johansson 2012)",
+    "source": "experiments/fields/tables.md table 1d ; https://lup.lub.lu.se/search/files/4023050/2339120.pdf (Edfors and Johansson 2012)",
     "confidence": "high"
    },
    {
     "topic": "(c) OAM: what is useful",
     "claim": "The l = 1 mode formed from the four panel quadrants is exactly the monopulse difference pair (A - C) + j(B - D): on-axis null, phase equal to the azimuth of the pointing error. Purity is 99 / 96 / 85 % at 2.44 / 3.5 / 5.8 GHz with cone half-angles 39 / 32 / 20 deg. It costs no hardware and gives a two-axis tracking error signal for a gimbal following the Sun or a satellite. l = 2 from four quadrants is not a vortex (50 % purity).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 1c",
+    "source": "experiments/fields/tables.md table 1c",
     "confidence": "high"
    },
    {
     "topic": "(d) Superdirective whip rows, 0.4 GHz",
     "claim": "Two whips end-fire (dipole model; add 3 dB over ideal ground): 6.7 dBi at 0.25 wavelength (R_eff 33 ohm, Q 12, 5.7 % bandwidth), 7.4 dBi at 0.1 wavelength (6.8 ohm, Q 50, 1.4 %, 77 % efficient with 2 ohm loss), limit 7.5 dBi. Ordinary end-fire at lambda/2 is 4.4 dBi. Model check: half-wave Z11 = 73.1 + 42.5j, Z12 at lambda/2 = -12.5 - 29.9j, both textbook values; the 7.5 dBi limit agrees with the roughly 7 dB reported for two-element supergain arrays.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 2a ; https://arxiv.org/abs/0708.1988",
+    "source": "experiments/fields/tables.md table 2a ; https://arxiv.org/abs/0708.1988",
     "confidence": "medium"
    },
    {
     "topic": "(d) Superdirective whip rows, 0.4 GHz",
     "claim": "Three and four elements are only practical near 0.25 wavelength. N = 4 at 0.25: 11.9 dBi lossless, R_eff 3.0 ohm, Q 141 (0.5 % bandwidth), 10.3 dBi with 2 ohm loss, 11.5 dBi mean with 3 deg / 0.5 dB errors. N = 4 at 0.1: 12.7 dBi on paper, R_eff 0.01 ohm, Q about 25,000, 8.2 dBi with 2 ohm loss and 4.4 dBi with 3 deg errors. N = 3 at 0.1: 10.4 dBi, Q 989, 8.2 dBi with errors.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 2a",
+    "source": "experiments/fields/tables.md table 2a",
     "confidence": "medium"
    },
    {
     "topic": "(d) Superdirectivity on receive",
     "claim": "With an LNA per whip, the SNR gain is 10 log N whenever receiver noise dominates, whatever the spacing. Close spacing helps only when external noise dominates: for external/receiver noise ratio 3-10, a 0.25 wavelength pair gives 3.8-4.3 dB against 2.4-2.5 dB at lambda/2, and four whips 6.5-7.3 dB against 4.9-5.1 dB. Below 0.15 wavelength it gets worse again. Rev B's 4-whip rings (r/lambda 0.18-0.32, adjacent spacing 0.25-0.45 wavelength) are already near this optimum.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 2b ; noise ratio at 0.4 GHz is an estimate extrapolated from ITU-R P.372 (valid to 250 MHz) https://www.itu.int/dms_pubrec/itu-r/rec/p/R-REC-P.372-15-202109-I!!PDF-E.pdf",
+    "source": "experiments/fields/tables.md table 2b ; noise ratio at 0.4 GHz is an estimate extrapolated from ITU-R P.372 (valid to 250 MHz) https://www.itu.int/dms_pubrec/itu-r/rec/p/R-REC-P.372-15-202109-I!!PDF-E.pdf",
     "confidence": "medium"
    },
    {
     "topic": "(d) Superdirectivity on the panel",
     "claim": "Idealised (no coupling): at 2.44 GHz broadside uniform weights give 10.6 dBi (above the 9.2 dBi 4 pi A / lambda^2 figure because a 0.8-wavelength aperture collects beyond its edges); optimum weights give 13.6 dBi but at -13 dB white-noise gain (-9.9 dB for the error-robust design). At 3.5 GHz the gain is +1.2 dB for -3 dB; at 5.8 GHz there is nothing (17.0 dBi either way). Since the panel is receiver-noise limited, this trades 3 dB of directivity for about 10 dB of SNR: useful only as a narrower beam against interference.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 2c",
+    "source": "experiments/fields/tables.md table 2c",
     "confidence": "medium"
    },
    {
     "topic": "(d) Chu / Harrington limits",
     "claim": "Harrington normal gain (ka)^2 + 2ka: 7.2 dBi for one whip plus image (ka 1.49), 8.6 dBi for the 133 mm 4-whip ring (ka 1.86), 10.3 dBi for the whole plate at 0.4 GHz (ka 2.43), 12.7 dBi for the active panel at 2.3 GHz (ka 3.41), 19.6 dBi at 5.8 GHz. Chu Q bound 1/(ka)^3 + 1/ka is below 1 for all of them, so the Q penalty comes from the superdirective current set, not from element size.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md table 2d ; https://nvlpubs.nist.gov/nistpubs/jres/64D/jresv64Dn1p1_A1b.pdf ; McLean 1996 doi 10.1109/8.496253",
+    "source": "experiments/fields/tables.md table 2d ; https://nvlpubs.nist.gov/nistpubs/jres/64D/jresv64Dn1p1_A1b.pdf ; McLean 1996 doi 10.1109/8.496253",
     "confidence": "high"
    },
    {
@@ -287,12 +287,12 @@
    }
   ],
   "files": [
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields_study.py",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/results.json",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/oam.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/superdirective.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/polarisation.png"
+   "experiments/fields_study.py",
+   "experiments/fields/tables.md",
+   "experiments/fields/results.json",
+   "experiments/fields/oam.png",
+   "experiments/fields/superdirective.png",
+   "experiments/fields/polarisation.png"
   ],
   "open_questions": [
    "Dual-pol panel: is a V/H select switch per element (two quadrants V, two H at once) acceptable, or is simultaneous dual-pol on all 16 elements wanted? The latter needs about $233 and 4.6 W more and breaks the 5 V / 3 A budget.",
@@ -323,7 +323,7 @@
    {
     "topic": "Construct and destruct: frozen-in flux and reconnection, and the antenna contrast",
     "claim": "At large magnetic Reynolds number, the field and the plasma move together (Alfv\u00e9n's theorem). The approximation breaks down in current sheets, where reconnection rearranges field topology and turns magnetic energy into kinetic energy (flares, CMEs). In vacuum the field equations are linear, so array16 can only superpose and steer interference patterns. Nothing can reconnect or release stored field energy; the only stored energy is reactive near-field energy, whose cost the fields study already quantified (superdirectivity).",
-    "source": "https://en.wikipedia.org/wiki/Alfv%C3%A9n%27s_theorem ; https://en.wikipedia.org/wiki/Magnetic_reconnection ; /Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md section 2",
+    "source": "https://en.wikipedia.org/wiki/Alfv%C3%A9n%27s_theorem ; https://en.wikipedia.org/wiki/Magnetic_reconnection ; experiments/fields/tables.md section 2",
     "confidence": "high"
    },
    {
@@ -335,7 +335,7 @@
    {
     "topic": "Which coronal layer array16 sees at each frequency (derived)",
     "claim": "The gyrofrequency is 2.7992 MHz per gauss (27.99 GHz per tesla). At 2695 MHz, gyroresonance comes from the layer where |B| = 481 G (s=2) or 321 G (s=3); at 4995 MHz from 892 or 595 G; at 1420 MHz from 254 or 169 G. Plasma emission at 2695 MHz needs n_e = 9.0e10 cm^-3 (2.25e10 for the second harmonic), which only dense flare loops have. At 408 MHz it needs 2.1e9 (5.2e8). In effect, the array's frequency selects a coronal field strength.",
-    "source": "derivation: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/sun_tables.txt table G1 (f_B = eB/2 pi m_e, f_p = 8.98 kHz sqrt(n_e))",
+    "source": "derivation: scratch/fields/sun/sun_tables.txt table G1 (f_B = eB/2 pi m_e, f_p = 8.98 kHz sqrt(n_e))",
     "confidence": "high"
    },
    {
@@ -347,13 +347,13 @@
    {
     "topic": "What F10.7 is and how DRAO measures it",
     "claim": "F10.7 is the solar flux in a 100 MHz band centred on 2800 MHz, averaged over an hour, measured three times a day (17/20/23 UT; 18/20/22 UT in winter). It uses two 1.8 m dishes on equatorial mounts at DRAO Penticton, calibrated against a reference horn to about 1 %; measurements have run since 1947, and 1 sfu = 1e-22 W m^-2 Hz^-1. It is the quiet-Sun free-free emission plus the slowly varying component (free-free over plage and gyroresonance over spots, with a broad spectral peak near 10 cm), plus any bursts. The beam must taper by no more than about 1 % across the disk.",
-    "source": "https://doi.org/10.1002/swe.20064 (Tapping 2013; text at /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/tapping2013.txt) ; https://www.spaceweather.gov/phenomena/f107-cm-radio-emissions",
+    "source": "https://doi.org/10.1002/swe.20064 (Tapping 2013; text at scratch/fields/sun/tapping2013.txt) ; https://www.spaceweather.gov/phenomena/f107-cm-radio-emissions",
     "confidence": "high"
    },
    {
     "topic": "F10.7 range in sfu (measured)",
     "claim": "8,044 DRAO noon values from 2004-10-28 to 2026-11-15: minimum 64.0 sfu (2019-10-21). The solar-minimum years have a median of 69-70 and a 1st percentile near 65. The 2024 maximum year has a median of 182.5 and a 99th percentile of 304. Burst-contaminated noon values reach 401-939 sfu (for example 573.4 on 2006-12-06). Observed/adjusted ranges 0.966-1.035 (Earth-Sun distance). The cycle-25 smoothed peak was October 2024 (sunspot number 160.9, F10.7 194.5). SWPC says F10.7 varies 'from below 50 to above 300 sfu' over a cycle.",
-    "source": "https://www.spaceweather.gc.ca/solar_flux_data/daily_flux_values/fluxtable.txt ; https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json ; computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/sun_tables.txt A2-A3",
+    "source": "https://www.spaceweather.gc.ca/solar_flux_data/daily_flux_values/fluxtable.txt ; https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json ; computed in scratch/fields/sun/sun_tables.txt A2-A3",
     "confidence": "high"
    },
    {
@@ -425,19 +425,19 @@
    {
     "topic": "Polarisation of the Sun (data)",
     "claim": "NoRP has measured total flux and circular polarisation (Stokes I and V) at 1, 2, 3.75, 9.4, 17, 35 and 80 GHz, with 3.75 GHz running for over 70 years; 100 ms FITS data since 1994 are open via SDAS. Radio-loud flares usually exceed a few tens of percent circular polarisation. Whole-disk polarisation outside flares is mostly near 0 % even at high activity, because Hale's law makes the hemispheres cancel; it varies most at 3.75 GHz, since the gyroresonance spectrum peaks at 3-6 GHz. JVLA found gyroresonance was only 8 % of the full-Sun flux at 2.8 GHz.",
-    "source": "https://arxiv.org/abs/2402.11848 (Shimojo et al. 2024; text at /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/arxiv2402.11848.txt)",
+    "source": "https://arxiv.org/abs/2402.11848 (Shimojo et al. 2024; text at scratch/fields/sun/arxiv2402.11848.txt)",
     "confidence": "high"
    },
    {
     "topic": "What the single-polarisation panel can and cannot measure",
     "claim": "The Sun's linear polarisation (Q, U) is effectively zero. The estimated coronal rotation measure is 2.6e4 to 2.6e8 rad/m\u00b2, spreading the polarisation angle by 2.4 to 2.4e4 rad across 10 MHz at 2695 MHz. So one linear polarisation measures exactly I/2 and the V-pol panel has no flux bias. But a circular wave gives half power at every roll angle, so Stokes V is invisible however the panel is rotated. The rotation study's roll method recovers linear polarisation only.",
-    "source": "derivation in sun_tables.txt F3; https://www.frontiersin.org/articles/10.3389/fspas.2020.00057/full ; /Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md section e",
+    "source": "derivation in sun_tables.txt F3; https://www.frontiersin.org/articles/10.3389/fspas.2020.00057/full ; experiments/rotation/tables.md section e",
     "confidence": "high"
    },
    {
     "topic": "What dual polarisation would add",
     "claim": "Two orthogonal linear feeds, cross-correlated, give V = 2 Im<XY*>, which reveals the sense of polarisation (x versus o mode, hence magnetic polarity and emission mechanism), plus sqrt(2) better sensitivity. With feed leakage d, an unpolarised Sun gives a false V of up to 2|d| I: 20 % at -20 dB and 6.3 % at -30 dB, falling to 2 % or 0.6 % once d is solved to 10 % by rolling the antenna against a linear source such as CAL-ANT. That is enough for flares (tens of %) but marginal for the quiet Sun (a few %). The cheapest route is a dual-polarised or \u00b145\u00b0 slant antenna on two external ports; the fields study's V+H quadrant scheme would also work.",
-    "source": "derivation in sun_tables.txt F1; /Users/ascalva/Documents/code/sdr_array/array16/experiments/fields/tables.md sections 3a-3e",
+    "source": "derivation in sun_tables.txt F1; experiments/fields/tables.md sections 3a-3e",
     "confidence": "medium"
    },
    {
@@ -449,7 +449,7 @@
    {
     "topic": "Ionospheric Faraday rotation (where Earth's magnetic field does act)",
     "claim": "RM = 2.63e-13 \u00b7 TEC \u00b7 B_parallel (SI units). With B_parallel = 40 \u00b5T, a linear wave rotates 16-330\u00b0 at 408 MHz, 1.3-27\u00b0 at 1420 MHz and 0.4-7.5\u00b0 at 2695 MHz for 5-100 TECU. ITU-R P.531 gives up to 108\u00b0 at 1 GHz for about 30\u00b0 elevation. This matters for linearly polarised satellites and radar echoes received by the V-pol panel at UHF, but not for the Sun.",
-    "source": "sun_tables.txt F2 ; https://www.itu.int/rec/R-REC-P.531/en (P.531-8 Table 3; text at /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/itu.txt)",
+    "source": "sun_tables.txt F2 ; https://www.itu.int/rec/R-REC-P.531/en (P.531-8 Table 3; text at scratch/fields/itu.txt)",
     "confidence": "high"
    },
    {
@@ -478,23 +478,23 @@
    }
   ],
   "files": [
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/sun_study.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/sun_tables.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/sun_results.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/run.log",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/data/fluxtable.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/data/json_solar-radio-flux.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/data/json_f107_cm_flux.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/data/json_solar-cycle_observed-solar-cycle-indices.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/data/events/edited_events.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/data/alerts.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/data/ips",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/data/cfr/lii_2106.html",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/tapping2013.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/arxiv2402.11848.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/pycallisto.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/sun/hardwarex_mag.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/fields/itu.txt"
+   "scratch/fields/sun/sun_study.py",
+   "scratch/fields/sun/sun_tables.txt",
+   "scratch/fields/sun/sun_results.json",
+   "scratch/fields/sun/run.log",
+   "scratch/fields/sun/data/fluxtable.txt",
+   "scratch/fields/sun/data/json_solar-radio-flux.json",
+   "scratch/fields/sun/data/json_f107_cm_flux.json",
+   "scratch/fields/sun/data/json_solar-cycle_observed-solar-cycle-indices.json",
+   "scratch/fields/sun/data/events/edited_events.json",
+   "scratch/fields/sun/data/alerts.json",
+   "scratch/fields/sun/data/ips",
+   "scratch/fields/sun/data/cfr/lii_2106.html",
+   "scratch/fields/sun/tapping2013.txt",
+   "scratch/fields/sun/arxiv2402.11848.txt",
+   "scratch/fields/sun/pycallisto.txt",
+   "scratch/fields/sun/hardwarex_mag.txt",
+   "scratch/fields/itu.txt"
   ],
   "open_questions": [
    "Does preselector band B3 (HFCN-1200+ followed by LFCN-2750+) pass 2690-2700 MHz with low loss, and does any band pass 2750-2850 MHz (the F10.7 band)? Both Mini-Circuits datasheets returned HTTP 403, so the band edges are unchecked.",

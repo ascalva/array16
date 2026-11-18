@@ -185,7 +185,7 @@
    {
     "topic": "Budget: shared-LO receiver",
     "claim": "8-channel shared-LO I/Q receiver (ADL5380 + AFE5832LP + LMX2572 + GVA-84+ tree + ECP5-class FPGA with USB 3): ~$420 in parts (~$52/ch), 13.5 W at the rails, 15.9 W from USB-C at 85 % conversion. That is over the 15 W budget before any front end.",
-    "source": "estimate: computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/budget.py from the cited part figures; FPGA+USB3 $60 / 1.5 W and $12/ch PCB+passives assumed",
+    "source": "estimate: computed in scratch/receiver_study/budget.py from the cited part figures; FPGA+USB3 $60 / 1.5 W and $12/ch PCB+passives assumed",
     "confidence": "medium"
    },
    {
@@ -197,7 +197,7 @@
    {
     "topic": "Budget: system power",
     "claim": "The rev B front end alone draws 6.0 W (16 external ports) or 7.3 W (panel, QAMP), 13.3 W with everything on. Adding a shared-LO bank gives ~22 W (8 channels, external ports) to ~36.5 W (16 channels, panel), so USB-PD at 9 V/3 A (27 W) or higher would be needed instead of 5 V/3 A.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md (section 10) plus estimate from budget.py",
+    "source": "REDESIGN.md (section 10) plus estimate from budget.py",
     "confidence": "medium"
    },
    {
@@ -654,19 +654,19 @@
    {
     "topic": "Ethernet vs rev B data rate",
     "claim": "Rev B's 2 channels x 20 MSPS x 4 bytes per radio = 1.28 Gbit/s, above Gigabit Ethernet; GbE at about 900 Mbit/s gives about 28 MSPS total, so about 14 MSPS per channel at most",
-    "source": "estimate: arithmetic in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/offshelf/costs.py",
+    "source": "estimate: arithmetic in scratch/receiver_study/offshelf/costs.py",
     "confidence": "high"
    },
    {
     "topic": "Alignment without trigger",
     "claim": "Rev B's 1023-chip PN at 2 Mchip/s resolves only +/-256 us; radios with no trigger or PPS (the Pluto family) would need a longer code, e.g. 2^15-1 chips for +/-8.2 ms",
-    "source": "estimate: arithmetic in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/offshelf/costs.py",
+    "source": "estimate: arithmetic in scratch/receiver_study/offshelf/costs.py",
     "confidence": "high"
    },
    {
     "topic": "Channel-count cost",
     "claim": "Radios only, to 6 GHz: 8 RX costs $720-1,280 (4x Pluto-class clones), $1,240-1,680 (4x B220 mini) or $2,160 (4x bladeRF); 16 RX costs $1,440-2,560 (8x clones) or $4,320 (8x bladeRF)",
-    "source": "estimate: unit prices above times units, /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/offshelf/costs.py",
+    "source": "estimate: unit prices above times units, scratch/receiver_study/offshelf/costs.py",
     "confidence": "medium"
    }
   ],
@@ -867,7 +867,7 @@
    {
     "topic": "Build vs buy (estimate)",
     "claim": "Two self-built 2x2 AD9361+FPGA+FX3 boards would cost about $1,790-2,445 for a first spin (parts $1,070-1,360, fab and assembly $250-450, plus 35% US DDP) against $1,080 for two bladeRF xA4 (1.7-2.3x), with a likely respin adding about $900-1,270.",
-    "source": "estimate: RFIC, FPGA and FX3 prices above, $80-150 of other parts per board, JLCPCB fee table, Forsten's $330 for two assembled 6-layer boards, 35% DDP on PCBA value; script /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/calc/build_vs_buy.py",
+    "source": "estimate: RFIC, FPGA and FX3 prices above, $80-150 of other parts per board, JLCPCB fee table, Forsten's $330 for two assembled 6-layer boards, 35% DDP on PCBA value; script scratch/receiver_study/calc/build_vs_buy.py",
     "confidence": "medium"
    },
    {
@@ -997,7 +997,7 @@
    {
     "topic": "Data rates",
     "claim": "Rev B's own load is 4 ch x 20 MS/s x 16-bit I/Q = 320 MB/s (160 MB/s per bladeRF). At 61.44 MS/s the same 4 channels need 491.5 MB/s (8-bit), 737.3 (12-bit packed) or 983.0 MB/s (16-bit).",
-    "source": "estimate: channels x fs x 2 x bits/8, computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/scripts/rates.py",
+    "source": "estimate: channels x fs x 2 x bits/8, computed in scratch/scripts/rates.py",
     "confidence": "high"
    },
    {
@@ -1063,13 +1063,13 @@
    {
     "topic": "Host driver on Mac",
     "claim": "Measured on this Mac (Apple M2 Pro, loopback): a plain Python recv_into receiver saturates at about 100-150k datagrams/s, i.e. 146-223 MB/s with 1472 B datagrams and 0.85-0.89 GB/s with 8972 B. 1 GbE (81k frames/s) is fine in Python; 10 GbE needs a C receiver and jumbo frames.",
-    "source": "estimate: measured with /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/scripts/udp_bench2.py (loopback, no NIC cost)",
+    "source": "estimate: measured with scratch/scripts/udp_bench2.py (loopback, no NIC cost)",
     "confidence": "medium"
    },
    {
     "topic": "DDC on host",
     "claim": "Measured on one M2 Pro core (numpy with Accelerate), a downconverter of NCO + 64-tap FIR, decimate by 8, costs 59% of a core for 4 ch x 20 MS/s, 176% for 4 x 61.44, 118% for 16 x 10 and 238% for 16 x 20. The int16-to-complex64 conversion alone is 5-20%.",
-    "source": "estimate: measured with /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/scripts/ddc_bench.py",
+    "source": "estimate: measured with scratch/scripts/ddc_bench.py",
     "confidence": "medium"
    },
    {

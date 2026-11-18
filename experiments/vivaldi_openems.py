@@ -46,6 +46,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import tempfile
 import json
 import math
 import os
@@ -64,9 +65,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 OUT = os.path.join(HERE, "vivaldi")
 EVALS = os.path.join(OUT, "evals.jsonl")
-SCRATCH = os.environ.get(
-    "VIVALDI_SCRATCH",
-    "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/vivaldi_runs")
+SCRATCH = os.environ.get("VIVALDI_SCRATCH", os.path.join(tempfile.gettempdir(), "array16_vivaldi_runs"))
 sys.path.insert(0, REPO)
 
 # ----------------------------------------------------------------------------- fixed quantities

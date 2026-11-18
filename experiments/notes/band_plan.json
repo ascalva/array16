@@ -1,29 +1,29 @@
 {
  "investigate:lattice": {
-  "summary": "Lattice lens: a lattice buys beamforming economy, not direction-finding (DF) performance, and periodic 3-D lattices do not help a 16-element array. Script: /Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice_study.py (full run 363 s); outputs in /Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/. No existing repository file was modified.\n\n**Principle.** A periodic array's array factor returns to full height at every reciprocal-lattice point G. A grating lobe enters real space when |G| <= (1+sin scan)/lambda. Two directions inside a field of view of half-angle t become indistinguishable when |G| <= 2 sin(t)/lambda. Only the shortest G per element matters.\n\n**2-D panel (16 active elements).**\n- **Equilateral triangular lattice:** shortest G is 1.1547/spacing, so spacing can be 15.5 % larger or elements 13.4 % fewer for the same grating-lobe-free cone. This reproduces Sharp 1961.\n- **Staggering rev B's cards by half a pitch (25 x 25 mm):** this is an isosceles lattice, and its shortest G is unchanged. Grating-lobe-free frequency on a 60 degree cone stays 6.43 GHz (6.00 GHz at 90 degrees); only scans along the cards improve, to 7.9 GHz. It gives essentially no benefit.\n- **True triangular lattice with cards still 25 mm apart:** flare pitch 28.87 mm, alternate cards shifted 14.43 mm. It has the same limits as the square 25 mm panel (6.43 / 6.00 GHz; DF unambiguous to 6.92 GHz within 60 degrees), with 15.5 % more aperture (+0.62 dB) and about 5-8 % smaller DF error (95th percentile 0.64 versus 0.67 degrees at 6 GHz).\n- **Square panel of the same area (26.9 mm):** grating-free only to 5.98 / 5.58 GHz, with ambiguity level 0.88 at 6 GHz.\n- **Delays:** the triangular 28.9 mm panel needs 363 ps for 60 degrees on its worst azimuth, against 347.5 ps available (the square needs 306 ps). Worst quantisation loss at 5.8 GHz is 0.44 dB versus 0.30 dB.\n- **Risk:** Ellgardt and Wikstrom 2009 report that single-polarised tapered slots on a triangular grid support guided modes that cause scan blindness, so the usable enlargement is under 15 %. This is from the abstract; I did not read the full paper.\n- **Verdict:** +0.6 dB is not worth a new blindness risk on a hobby panel. Restricting band or scan pays far more: the square pitch allowed is lambda/(1+sin scan), which is 30.0 mm at 5.85 GHz for 45 degree scan and 46.2 mm at 3.8 GHz for 45 degrees. A triangular lattice is 15.5 % larger again.\n\n**16 whips, 0.4-2.3 GHz azimuth DF** (same check model and conditions as the layout search; \"clean\" means gross errors <= 0.5 % for sources up to 15 and 30 degrees elevation).\n\n| Layout | Clean range | Nominal 95th percentile error | Worst gross errors |\n| --- | --- | --- | --- |\n| Square 4x4, 113 mm | 0.4-1.30 GHz | 1.45 deg at 0.4, 0.48 deg at 1.2 GHz | 30 % above 1.35 GHz |\n| Square 4x4, 85 mm | to 1.75 GHz | 1.9 deg at 0.4 GHz | 24 % |\n| Triangular, 120 mm | to 1.40 GHz | 1.37 deg at 0.4 GHz | 35 % |\n| Triangular, 75 mm | whole band | 2.19-0.45 deg | 1.5 % (0 dB, 5 deg residual) |\n| Two rings of 8, 225/112 mm (rev B) | whole band | 1.42-0.24 deg | 0.0 % |\n| Searched, random16 | whole band | 1.26-0.23 deg | 0.3 % |\n\n- Lattices fail at c|G|/2: 1.33 GHz for the 113 mm square and 1.44 GHz for the 120 mm triangular lattice. Below that, the 113 mm lattice only matches the two rings.\n- The 75 mm triangular lattice is the one lattice that survives the band (its ambiguity frequency is 2.31 GHz, and 75 mm is also the plate's minimum spacing), but it is about 1.5-1.9 times less accurate than the rings.\n- For DF with few elements a lattice never wins. It is useful only for real-time fan beams (the lambda/2 grids already in rev B) or below a chosen top frequency.\n\n**3-D lattices.**\n- **Shortest G times nearest-neighbour spacing:** simple cubic 1.000; body-centred cubic, face-centred cubic and hexagonal close-packed 1.2247 (close-packed also has a -6 dB partial lobe at 1.1547).\n- **Elements per volume for the same ambiguity-free frequency:** body-centred cubic needs 29.3 % fewer than cubic, face-centred and close-packed 23 % fewer. Body-centred cubic is the 3-D analogue of Sharp's result (Petersen and Middleton 1962); the percentages are my derivation.\n- **16-element pieces:** ambiguity level passes 0.9 at spacing/lambda of 0.43-0.45 (cubic), 0.47 (planar square), 0.54 (planar triangular), 0.55-0.56 (body-centred, face-centred, close-packed). The aperture is only 2-2.3 spacings per axis, against 3-3.5 for a planar 4x4.\n- **Verdict:** a 3-D lattice aliases exactly as a planar one does and spends elements on depth. The gain from 3-D is non-coplanarity (elevation, full sphere), not periodicity. Whips on a ground plate cannot be stacked, and end-fire Vivaldis would shadow each other.\n- **Where periodic lattices pay:** MIMO-radar virtual arrays, where a filled uniform virtual grid is the aim, and large arrays with many elements. The sonar and ultrasound usage was only weakly sourced.",
+  "summary": "Lattice lens: a lattice buys beamforming economy, not direction-finding (DF) performance, and periodic 3-D lattices do not help a 16-element array. Script: experiments/lattice_study.py (full run 363 s); outputs in experiments/lattice/. No existing repository file was modified.\n\n**Principle.** A periodic array's array factor returns to full height at every reciprocal-lattice point G. A grating lobe enters real space when |G| <= (1+sin scan)/lambda. Two directions inside a field of view of half-angle t become indistinguishable when |G| <= 2 sin(t)/lambda. Only the shortest G per element matters.\n\n**2-D panel (16 active elements).**\n- **Equilateral triangular lattice:** shortest G is 1.1547/spacing, so spacing can be 15.5 % larger or elements 13.4 % fewer for the same grating-lobe-free cone. This reproduces Sharp 1961.\n- **Staggering rev B's cards by half a pitch (25 x 25 mm):** this is an isosceles lattice, and its shortest G is unchanged. Grating-lobe-free frequency on a 60 degree cone stays 6.43 GHz (6.00 GHz at 90 degrees); only scans along the cards improve, to 7.9 GHz. It gives essentially no benefit.\n- **True triangular lattice with cards still 25 mm apart:** flare pitch 28.87 mm, alternate cards shifted 14.43 mm. It has the same limits as the square 25 mm panel (6.43 / 6.00 GHz; DF unambiguous to 6.92 GHz within 60 degrees), with 15.5 % more aperture (+0.62 dB) and about 5-8 % smaller DF error (95th percentile 0.64 versus 0.67 degrees at 6 GHz).\n- **Square panel of the same area (26.9 mm):** grating-free only to 5.98 / 5.58 GHz, with ambiguity level 0.88 at 6 GHz.\n- **Delays:** the triangular 28.9 mm panel needs 363 ps for 60 degrees on its worst azimuth, against 347.5 ps available (the square needs 306 ps). Worst quantisation loss at 5.8 GHz is 0.44 dB versus 0.30 dB.\n- **Risk:** Ellgardt and Wikstrom 2009 report that single-polarised tapered slots on a triangular grid support guided modes that cause scan blindness, so the usable enlargement is under 15 %. This is from the abstract; I did not read the full paper.\n- **Verdict:** +0.6 dB is not worth a new blindness risk on a hobby panel. Restricting band or scan pays far more: the square pitch allowed is lambda/(1+sin scan), which is 30.0 mm at 5.85 GHz for 45 degree scan and 46.2 mm at 3.8 GHz for 45 degrees. A triangular lattice is 15.5 % larger again.\n\n**16 whips, 0.4-2.3 GHz azimuth DF** (same check model and conditions as the layout search; \"clean\" means gross errors <= 0.5 % for sources up to 15 and 30 degrees elevation).\n\n| Layout | Clean range | Nominal 95th percentile error | Worst gross errors |\n| --- | --- | --- | --- |\n| Square 4x4, 113 mm | 0.4-1.30 GHz | 1.45 deg at 0.4, 0.48 deg at 1.2 GHz | 30 % above 1.35 GHz |\n| Square 4x4, 85 mm | to 1.75 GHz | 1.9 deg at 0.4 GHz | 24 % |\n| Triangular, 120 mm | to 1.40 GHz | 1.37 deg at 0.4 GHz | 35 % |\n| Triangular, 75 mm | whole band | 2.19-0.45 deg | 1.5 % (0 dB, 5 deg residual) |\n| Two rings of 8, 225/112 mm (rev B) | whole band | 1.42-0.24 deg | 0.0 % |\n| Searched, random16 | whole band | 1.26-0.23 deg | 0.3 % |\n\n- Lattices fail at c|G|/2: 1.33 GHz for the 113 mm square and 1.44 GHz for the 120 mm triangular lattice. Below that, the 113 mm lattice only matches the two rings.\n- The 75 mm triangular lattice is the one lattice that survives the band (its ambiguity frequency is 2.31 GHz, and 75 mm is also the plate's minimum spacing), but it is about 1.5-1.9 times less accurate than the rings.\n- For DF with few elements a lattice never wins. It is useful only for real-time fan beams (the lambda/2 grids already in rev B) or below a chosen top frequency.\n\n**3-D lattices.**\n- **Shortest G times nearest-neighbour spacing:** simple cubic 1.000; body-centred cubic, face-centred cubic and hexagonal close-packed 1.2247 (close-packed also has a -6 dB partial lobe at 1.1547).\n- **Elements per volume for the same ambiguity-free frequency:** body-centred cubic needs 29.3 % fewer than cubic, face-centred and close-packed 23 % fewer. Body-centred cubic is the 3-D analogue of Sharp's result (Petersen and Middleton 1962); the percentages are my derivation.\n- **16-element pieces:** ambiguity level passes 0.9 at spacing/lambda of 0.43-0.45 (cubic), 0.47 (planar square), 0.54 (planar triangular), 0.55-0.56 (body-centred, face-centred, close-packed). The aperture is only 2-2.3 spacings per axis, against 3-3.5 for a planar 4x4.\n- **Verdict:** a 3-D lattice aliases exactly as a planar one does and spends elements on depth. The gain from 3-D is non-coplanarity (elevation, full sphere), not periodicity. Whips on a ground plate cannot be stacked, and end-fire Vivaldis would shadow each other.\n- **Where periodic lattices pay:** MIMO-radar virtual arrays, where a filled uniform virtual grid is the aim, and large arrays with many elements. The sonar and ultrasound usage was only weakly sourced.",
   "findings": [
    {
     "topic": "Sharp's triangular-lattice result",
     "claim": "An equilateral triangular arrangement needs 13.4 % fewer elements than a square one when the beam scans within a cone about the normal (5.7-13.4 % for a square pyramid of scan). Equivalent to 15.5 % larger spacing. Reproduced numerically: shortest reciprocal vector 1.1547/spacing, element ratio 0.866.",
-    "source": "https://doi.org/10.1109/TAP.1961.1144967 (abstract via https://www.bohrium.com/paper-details/a-triangular-arrangement-of-planar-array-elements-that-reduces-the-number-needed/812351807132008449-20293); /Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (theory)",
+    "source": "https://doi.org/10.1109/TAP.1961.1144967 (abstract via https://www.bohrium.com/paper-details/a-triangular-arrangement-of-planar-array-elements-that-reduces-the-number-needed/812351807132008449-20293); experiments/lattice/results.json (theory)",
     "confidence": "high"
    },
    {
     "topic": "Staggering rev B's cards by half a pitch",
     "claim": "With card spacing 25 mm and flare pitch 25 mm, a half-pitch stagger gives an isosceles lattice whose shortest reciprocal vector is unchanged (1/25 mm). Grating-lobe-free frequency on a cone stays 6.43 GHz at 60 deg and 6.00 GHz at 90 deg; only scans along the cards improve (7.9 GHz at 60 deg). Sidelobe and DF results are the same as the square panel within noise.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (panel)",
+    "source": "experiments/lattice/results.json (panel)",
     "confidence": "high"
    },
    {
     "topic": "True triangular panel on 25 mm card spacing",
     "claim": "Flare pitch 28.87 mm with alternate cards shifted 14.43 mm is an equilateral lattice with the same limits as square 25 mm (grating-free 6.43/6.00 GHz at 60/90 deg; DF unambiguous to 6.92 GHz within 60 deg), 15.5 % more aperture (+0.62 dB) and 95th percentile DF error 0.64 vs 0.67 deg at 6 GHz (1.55 vs 1.69 deg at 2.4 GHz). A square panel of the same area (26.9 mm) is grating-free only to 5.98/5.58 GHz and has ambiguity level 0.88 at 6 GHz.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (panel); isotropic elements, no coupling",
+    "source": "experiments/lattice/results.json (panel); isotropic elements, no coupling",
     "confidence": "medium"
    },
    {
     "topic": "4-bit delays on a triangular panel",
     "claim": "With rev B's delay set (38.5/52.5/117.5/139 ps, 347.5 ps maximum), the triangular 28.9 mm panel needs 363 ps for 60 deg on its worst azimuth (square 25 mm: 306 ps; staggered 25x25: 332 ps). Worst quantisation loss at 5.8 GHz and 60 deg is 0.44 dB vs 0.30 dB for the square; mean 0.26 vs 0.22 dB. The delay set would need about 15 ps more range, or scan limited to about 56 deg on that diagonal.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (panel, ttd_5p8GHz)",
+    "source": "experiments/lattice/results.json (panel, ttd_5p8GHz)",
     "confidence": "medium"
    },
    {
@@ -35,31 +35,31 @@
    {
     "topic": "Pitch allowed by restricting band and scan",
     "claim": "Maximum square pitch lambda/(1+sin scan): 6.0 GHz 25.0/26.8/29.3 mm for 90/60/45 deg; 5.85 GHz 25.6/27.5/30.0 mm; 5.0 GHz 30.0/32.1/35.1 mm; 3.8 GHz 39.4/42.3/46.2 mm; 2.4835 GHz 60.4/64.7/70.7 mm. A triangular lattice allows 15.5 % more. Dropping the top band or scan range buys far more aperture per element than the lattice choice.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (max_square_pitch_mm); formula is standard grating-lobe geometry",
+    "source": "experiments/lattice/results.json (max_square_pitch_mm); formula is standard grating-lobe geometry",
     "confidence": "high"
    },
    {
     "topic": "16-whip lattices versus rings and searched layouts",
     "claim": "On the 500 mm plate, lattices give gross DF errors above c|G|/2: square 113 mm clean 0.4-1.30 GHz then up to 30 %; square 85 mm clean to 1.75 GHz (24 %); triangular 120 mm clean to 1.40 GHz (35 %). Two rings of 8 (225/112 mm) and random16 are clean over 0.4-2.3 GHz (0.0 % and 0.3 % worst, including 0 dB / 5 deg residual). Below its limit the 113 mm lattice matches the two rings (95th percentile 1.45/0.63/0.48 deg vs 1.42/0.63/0.47 deg at 0.4/0.9/1.2 GHz); it never beats them.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (whips); /Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/whips.png",
+    "source": "experiments/lattice/results.json (whips); experiments/lattice/whips.png",
     "confidence": "high"
    },
    {
     "topic": "The one lattice that covers 0.4-2.3 GHz",
     "claim": "A triangular lattice at 75 mm (the plate's minimum spacing) has its azimuth ambiguity frequency at 2.31 GHz and is clean over the whole band (gross errors 0.2/0.2/1.5 % worst for nominal/elevated/stress), but its 95th percentile error is 2.19-0.45 deg vs 1.42-0.24 deg for the two rings, because its RMS radius is 119 mm vs 178 mm.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (whips)",
+    "source": "experiments/lattice/results.json (whips)",
     "confidence": "high"
    },
    {
     "topic": "3-D lattices: reciprocal vectors and density",
     "claim": "Shortest full-height reciprocal vector times nearest-neighbour spacing: simple cubic 1.000, BCC 1.2247, FCC 1.2247, HCP 1.2247 (plus a -6 dB partial lobe at 1.1547). Elements per volume for the same ambiguity-free frequency relative to cubic: BCC 0.707 (29.3 % fewer), FCC and HCP 0.770 (23 % fewer). BCC is the optimal 3-D sampling lattice (Petersen and Middleton 1962); the percentages are computed here, and a 2014 survey notes they have been misreported in the literature.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (theory); https://doi.org/10.1016/S0019-9958(62)90633-2; https://eprints.cs.univie.ac.at/4183",
+    "source": "experiments/lattice/results.json (theory); https://doi.org/10.1016/S0019-9958(62)90633-2; https://eprints.cs.univie.ac.at/4183",
     "confidence": "medium"
    },
    {
     "topic": "3-D lattices with 16 elements",
     "claim": "Ambiguity level (highest false peak over true peak, any two directions on the sphere) passes 0.9 at spacing/lambda of 0.43 (cubic 2x2x4), 0.45 (cubic compact), 0.47 (planar square 4x4), 0.54 (planar triangular), 0.55 (BCC), 0.56 (FCC, HCP). A 16-element 3-D piece spans only 2.0-2.3 spacings per axis (HCP 1.6 in depth) against 3.0-3.5 for a planar 4x4, so it has a smaller aperture in every direction and aliases at essentially the same spacing as the planar triangular lattice.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json (lattices_3d); /Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/lattices_3d.png",
+    "source": "experiments/lattice/results.json (lattices_3d); experiments/lattice/lattices_3d.png",
     "confidence": "high"
    },
    {
@@ -82,13 +82,13 @@
    }
   ],
   "files": [
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice_study.py",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/results.json",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/run.log",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/panel.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/panel_layouts.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/whips.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/lattice/lattices_3d.png"
+   "experiments/lattice_study.py",
+   "experiments/lattice/results.json",
+   "experiments/lattice/run.log",
+   "experiments/lattice/panel.png",
+   "experiments/lattice/panel_layouts.png",
+   "experiments/lattice/whips.png",
+   "experiments/lattice/lattices_3d.png"
   ],
   "open_questions": [
    "Does a triangular-grid connected Vivaldi panel at 28.9 mm flare pitch show the E-plane scan blindness Ellgardt reports inside 2.3-6 GHz and +/-60 deg? Only an openEMS unit-cell model can say; the script uses isotropic elements with no coupling.",
@@ -105,67 +105,67 @@
    {
     "topic": "Study status",
     "claim": "experiments/band_plan_study.py (new file, 672 lines, imports evolve_layout, wideband_study and array16.evolve read-only) had already run to completion: part 1 took 232 s, parts 2-3 took 1310 s (about 26 min total, OMP_NUM_THREADS=4). results.json contains part1, part2 (sets, single, relaxed; budget 6000) and part3. A fresh-seed re-check (4000 trials) reproduced the key rows to within a few percent.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/results.json; /Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/run_parts23.log; /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/lens_sim/spot.py",
+    "source": "experiments/band_plan/results.json; experiments/band_plan/run_parts23.log; scratch/band_plan/lens_sim/spot.py",
     "confidence": "high"
    },
    {
     "topic": "Geometry -> bands: windows",
     "claim": "DF windows (p95 nominal within the limit and gross errors <= 1 % for sources 0-15 and 0-30 deg up): rings16_225_112mm <= 2 deg over 0.30-2.72 GHz and <= 1 deg over 0.56-2.72 GHz; random8 <= 2 deg over 0.44-2.50 GHz, never <= 1 deg; 25 mm 4x4 panel <= 2 deg over 1.87-6.50 GHz, <= 1 deg over 3.63-6.50 GHz, <= 5 deg from 0.78 GHz; half-wave 4x4 whip grids: 164 mm pitch 0.30-0.88 GHz, 95 mm pitch 0.34-1.52 GHz.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
+    "source": "experiments/band_plan/tables.txt",
     "confidence": "high"
    },
    {
     "topic": "Geometry -> bands: tiling",
     "claim": "rings16 plus the 25 mm panel tile 0.30-6.50 GHz at <= 2 deg with a 1.87-2.72 GHz overlap, so rev B's 2.3 GHz crossover is inside the overlap. At <= 1 deg there is a gap at 2.72-3.63 GHz (panel p95 is 1.07 deg at 3.6 GHz) and below 0.56 GHz.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
+    "source": "experiments/band_plan/tables.txt",
     "confidence": "high"
    },
    {
     "topic": "Geometry -> bands: accuracy at the bands",
     "claim": "p95 error, sources 0-15 deg up: rings16 1.32 deg at 433 MHz, 0.64 at 915, 0.37 at 1575, 0.24 at 2440. Panel 8.70 deg at 433, 4.21 at 915, 1.57 at 2440, 1.07 at 3600, 0.66 at 5800. At 2.44 GHz the 500 mm whip plate is about 6x more accurate than the 100 mm panel, in azimuth only.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
+    "source": "experiments/band_plan/tables.txt",
     "confidence": "high"
    },
    {
     "topic": "Geometry -> bands: beams",
     "claim": "Windows with peak sidelobe <= -6 dB and beamwidth <= 60 deg: panel 2.50-6.23 GHz (directivity 9.9 dBi at 2.44, 13.0 at 3.5, 16.7 at 5.8 GHz with a cos element; beamwidth 61, 44, 27 deg); rings16 only 0.61-0.92 GHz (sidelobes about -3.6 dB from 1.5 GHz up); random8 none; half-wave grids 0.42-0.75 GHz (164 mm) and 0.72-1.28 GHz (95 mm). Half-wave grids become fully ambiguous (0 dB grating lobe on the horizon) just above their design frequency; the 164 mm grid already shows 1.1 % gross errors at 915 MHz.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
+    "source": "experiments/band_plan/tables.txt",
     "confidence": "high"
    },
    {
     "topic": "Whips' upper frequency limit is the estimator",
     "claim": "Above 2.5-2.7 GHz the whip layouts have 0 % gross errors for sources 0-15 deg up (rings16 p95 0.10 deg at 5.8 GHz) but 13 % at 3.6 GHz and 32 % at 5.8 GHz for sources 0-30 deg up, because the azimuth-only estimator assumes the horizon. With an az+el Bartlett scan (1 deg grids, 600 trials) rings16, random8 and random16 all give 0.0 % gross errors and azimuth p95 of 0.47-0.61 deg at 2.44, 3.6 and 5.8 GHz. Idealised: isotropic elements, no coupling, and rev B's whips and calibration are only specified to 2.3 GHz.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/lens_sim/spot.py (output in this session)",
+    "source": "scratch/band_plan/lens_sim/spot.py (output in this session)",
     "confidence": "medium"
    },
    {
     "topic": "Bands -> geometry: 16 whips, sets A and B",
     "claim": "Set {433, 915, 2440 MHz}: rings16 worst-band p95 is 1.33 deg nominal / 3.34 stress; the layouts optimised for the set give 1.19-1.24 / 2.98-3.14 (6-11 % better; fresh seed 1.32 vs 1.21). Set {915, 1575, 2440}: 0.63 / 1.59 against 0.59-0.61 / 1.48-1.49 (3-7 %). Gross-error rates are 0.0-0.3 % for both, indistinguishable at 3000 trials. The cherry-picked layouts still hold p95 <= 1.4 deg over 0.4-2.3 GHz.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
+    "source": "experiments/band_plan/tables.txt",
     "confidence": "high"
    },
    {
     "topic": "Bands -> geometry: single-band bound",
     "claim": "For 433 MHz alone the best 16-whip layout is all whips on the 240 mm rim: p95 1.00 deg against 1.33 for rings16 (25 % better), but that ring has 11.5 % gross errors at 2.44 GHz for sources 0-30 deg up. For 2.44 GHz alone the optimised layout (0.27 deg) is no better than rings16 (0.24 deg). So the most cherry-picking can gain in accuracy on this plate is about 25 % in one band.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
+    "source": "experiments/band_plan/tables.txt",
     "confidence": "high"
    },
    {
     "topic": "Bands -> geometry: set {2440, 5800}",
     "claim": "With the azimuth-only estimator rings16 has 34 % gross errors at 5.8 GHz (sources 0-30 deg up). Optimising for the set under the 75 mm spacing rule reaches 9.1 % (fresh seed 9.6 %); relaxing the rule to 30 mm reaches 0.2 % (fresh seed 0.1 %) at the cost of nominal p95 1.0 deg against 0.24 deg at 2.44 GHz. The az+el estimator removes the problem without changing the layout.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt; scratch spot.py",
+    "source": "experiments/band_plan/tables.txt; scratch spot.py",
     "confidence": "high"
    },
    {
     "topic": "Bands -> geometry: 8 whips",
     "claim": "Cherry-picking trades rather than gains. Set A: gross errors at 2.44 GHz 0.9 % -> 0.0 % and stress p95 there 1.72 -> 1.05 deg, but 433 MHz stress p95 5.15 -> 5.55 deg. Set B: worst nominal p95 0.99 -> 1.28 deg (worse), gross 0.9 % -> 0.0 %. Random search beat hill-climbing from the full-band layout in 4 of 6 set searches.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
+    "source": "experiments/band_plan/tables.txt",
     "confidence": "high"
    },
    {
     "topic": "Panel pitch",
     "claim": "25.0 mm (rev B), 25.4 mm (half-wave at 5.9 GHz) and 27.2 mm (grating-lobe-free to +/-60 deg at 5.9 GHz) are equivalent: 16.7 / 16.9 / 17.5 dBi and p95 0.70 / 0.69 / 0.63 deg at 5.8 GHz; 27.2 mm cuts the grating-lobe-free scan at 5.8 GHz to 64 deg. A 60 mm pitch (top band 2.5 GHz) gives 16.8 dBi against 10.1 dBi, beamwidth 26.5 against 60.3 deg and p95 0.62 against 1.49 deg at 2.44 GHz, with a 360 mm 6x6 tile against 150 mm, and is ambiguous above about 2.7 GHz (27.6 % gross errors at 3.5 GHz, 73 % at 5.8 GHz).",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
+    "source": "experiments/band_plan/tables.txt",
     "confidence": "high"
    },
    {
@@ -194,15 +194,15 @@
    }
   ],
   "files": [
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan_study.py",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/results.json",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/fom_vs_frequency.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/cherry_layouts.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/panel_pitch.png",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/run.log",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/run_parts23.log",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/lens_sim/spot.py"
+   "experiments/band_plan_study.py",
+   "experiments/band_plan/tables.txt",
+   "experiments/band_plan/results.json",
+   "experiments/band_plan/fom_vs_frequency.png",
+   "experiments/band_plan/cherry_layouts.png",
+   "experiments/band_plan/panel_pitch.png",
+   "experiments/band_plan/run.log",
+   "experiments/band_plan/run_parts23.log",
+   "scratch/band_plan/lens_sim/spot.py"
   ],
   "open_questions": [
    "Should the whip plate's DF estimator scan elevation as well as azimuth? In the idealised model that lifts the fixed layouts' gross-error ceiling from about 2.7 GHz to at least 5.8 GHz, but it is untested with real whip patterns, coupling, or calibration above 2.3 GHz, and was run at only 600 trials on a 1 deg grid.",
@@ -231,13 +231,13 @@
    {
     "topic": "US licence-free power (15.249 / 15.245 / 15.231)",
     "claim": "15.249 limits 902-928, 2400-2483.5 and 5725-5875 MHz to 50 mV/m at 3 m, which is -1.25 dBm EIRP average. 15.245 field-disturbance sensors (perimeter protection excluded) get 500 mV/m, or +18.75 dBm EIRP average, in 902-928, 2435-2465 and 5785-5815 MHz. Their harmonics below 17.7 GHz must meet 15.209, so the 11.6 GHz harmonic of a 5.8 GHz radar needs about 60 dB of suppression. 15.231 at 433.92 MHz allows only control bursts, released within 5 s, at about -14.4 dBm EIRP average (10,997 uV/m); at 315 MHz it is about -19.6 dBm.",
-    "source": "https://www.law.cornell.edu/cfr/text/47/15.245 ; https://www.law.cornell.edu/cfr/text/47/15.249 ; https://www.law.cornell.edu/cfr/text/47/15.231 ; conversions in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/reg_metrics.json",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.245 ; https://www.law.cornell.edu/cfr/text/47/15.249 ; https://www.law.cornell.edu/cfr/text/47/15.231 ; conversions in scratch/band_plan/reg_metrics.json",
     "confidence": "high"
    },
    {
     "topic": "US 15.247 for beam steering (missing from REDESIGN)",
     "claim": "Under 15.247, digitally modulated systems (6 dB bandwidth of at least 500 kHz) in 902-928, 2400-2483.5 and 5725-5850 MHz may use 1 W conducted.\n- Antenna gain above 6 dBi reduces that power dB for dB, which caps EIRP at 36 dBm. Fixed point-to-point links at 5725-5850 MHz need no reduction.\n- At 2.4 GHz, transmitters with multiple directional beams count array gain as 10 log N plus the element gain and lose 1 dB per 3 dB above 6 dBi. For 16 elements of 6 dBi that is 26 dBm conducted, 44 dBm EIRP.\n- Spectral density is capped at 8 dBm per 3 kHz.\nREDESIGN section 7 assumes 15.249 and backs off 9.3/7.5 dB. Under 15.247, PN/BPSK-coded steering would need no back-off: at the 36 dBm EIRP cap, each of 16 coherent 6 dBi elements may carry +5.9 dBm.",
-    "source": "https://www.law.cornell.edu/cfr/text/47/15.247 ; per-element powers in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/band_hw.json",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.247 ; per-element powers in scratch/band_plan/band_hw.json",
     "confidence": "medium"
    },
    {
@@ -255,7 +255,7 @@
    {
     "topic": "Restricted-band share per set",
     "claim": "47 CFR 15.205 restricted bands cover 47.5 % of 0.4-6 GHz, where radiated calibration is refused. By set: S1 (2.4+5.8) and S3 (433+868/915+2.4+5.8) 0 %; S2 5.0 % (only the 400-410 MHz radiosonde slice, receive-only); S4 29.1 %.",
-    "source": "https://www.law.cornell.edu/cfr/text/47/15.205 ; computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/catalogue.json",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.205 ; computed in scratch/band_plan/catalogue.json",
     "confidence": "high"
    },
    {
@@ -291,25 +291,25 @@
    {
     "topic": "Band sets defined",
     "claim": "Four band sets are defined (occupied bandwidth; widest piece as a fraction of its centre frequency):\n- S1, 2.4 + 5.8 GHz (2400-2483.5 and 5650-5925 MHz): 358 MHz; widest piece 4.8 %.\n- S2, 400-450 + 863-928 + 2400-2483.5 MHz: 198 MHz.\n- S3, 420-450 + 863-928 + 2.4 + 5.8 GHz: 454 MHz; widest piece 7.3 %.\n- S4, S3 plus 400-406, 470-694, 975-1095, 1164-1300, 1400-1427 and 1525-1590 MHz: 1,046 MHz.\nRev B covers 5,600 MHz.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/catalogue.json ; chart band_sets.png",
+    "source": "scratch/band_plan/catalogue.json ; chart band_sets.png",
     "confidence": "high"
    },
    {
     "topic": "Narrowing does not help the whip layout",
     "claim": "The sibling geometry study finds rev B's two rings (16 whips at 225/112 mm) good from 0.30 to 2.72 GHz. Their 95th-percentile direction errors are 1.32, 0.66, 0.64 and 0.24\u00b0 at 433, 868, 915 and 2440 MHz. A layout optimised for 433/915/2440 only is barely better (1.24\u00b0 against 1.33\u00b0). Whips at 5.8 GHz fail for sources 0-30\u00b0 up (32 % gross errors), so 5.8 GHz needs the panel.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt (sibling simulation)",
+    "source": "experiments/band_plan/tables.txt (sibling simulation)",
     "confidence": "high"
    },
    {
     "topic": "Band-specific panel aperture at 2.4 GHz",
     "claim": "Rev B's 25 mm panel is 100 mm wide, 0.8 wavelength at 2.44 GHz: 9.2 dBi at most, 6.4 dBi realised, 62\u00b0 beam. A 2.4 GHz-only 4x4 at half-wavelength pitch (60.4 mm, 241 mm aperture) reaches 16.9 dBi (about 16.2 dBi realised, estimate) with a 26\u00b0 beam. G/T rises from -20.2 to about -10.3 dB/K. The sibling simulation gives a 95th-percentile direction error of 0.62\u00b0 against 1.49\u00b0. A dual-band element on the 25 mm lattice cannot recover this, because the aperture stays 0.8 wavelength.",
-    "source": "computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/band_hw.json ; REDESIGN.md sections 4-5 ; experiments/band_plan/tables.txt part 3",
+    "source": "computed in scratch/band_plan/band_hw.json ; REDESIGN.md sections 4-5 ; experiments/band_plan/tables.txt part 3",
     "confidence": "medium"
    },
    {
     "topic": "Noise figure and power at 5.8 GHz",
     "claim": "Rev B's panel noise figure at 5.8 GHz is 3.4 dB (5.0 dB in the robust state). A narrowband chain with two SKY65404-31 per element (NF 1.0 dB, 13 dB gain, 10 mA, 4.9-5.9 GHz) gives about 2.2 dB with the conducted cal arm and 1.8 dB without it. The same chain with rev B's PMA3-83LNW+ gives 3.2 dB, so the gain comes from the band LNA, not the filter. G/T at 5.8 GHz improves from -12.5 to about -10.2 to -10.7 dB/K. Panel LNA power falls from about 5.8 W to about 1 W (estimate).",
-    "source": "Skyworks SKY65404-31 datasheet (local copy in scratchpad ds_sky65404) ; cascade in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/band_hw.json",
+    "source": "Skyworks SKY65404-31 datasheet (local copy in scratchpad ds_sky65404) ; cascade in scratch/band_plan/band_hw.json",
     "confidence": "medium"
    },
    {
@@ -327,13 +327,13 @@
    {
     "topic": "Switched lines re-chosen for narrow bands",
     "claim": "Rev B's four delay lines (38.5/52.5/117.5/139 ps) give 11.3\u00b0 RMS and 36\u00b0 worst-case phase error over 2.3-6 GHz. In the ISM bands alone they give 9.8\u00b0/11.4\u00b0 RMS and 28-30\u00b0 worst.\n- Re-chosen for 2.4+5.8 GHz (41.1/82.1/105.9/159.2 ps): 8.1\u00b0 RMS and 18\u00b0 worst at both bands. A state pair within about 7-10\u00b0 of 180\u00b0 remains for direction-finding toggles.\n- Single-band sets approach an ideal 4-bit shifter (6.5\u00b0 RMS / 11.25\u00b0 worst): 2.4 GHz 26.1/52.2/104.6/206.4 ps gives 6.6\u00b0 / 11.7\u00b0; 5.8 GHz gives 7.1\u00b0 / 13.1\u00b0.\n- Three bits give 13-15\u00b0 RMS.\nThe cost is the same $2.6 per element; only the line lengths change. These are lossless-line bounds.",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/phase_states.json (script scripts/phase_states.py)",
+    "source": "scratch/band_plan/phase_states.json (script scripts/phase_states.py)",
     "confidence": "high"
    },
    {
     "topic": "True-time delay is unnecessary within one band",
     "claim": "Steering by phase alone to 45\u00b0 moves the beam by at most 0.98\u00b0 at the 2.4 GHz band edges, 0.74\u00b0 at 5725-5875 MHz, 1.36\u00b0 at 5650-5925 MHz, 0.81\u00b0 at 902-928 MHz and 2.1\u00b0 over 863-928 MHz. Beams are 26-60\u00b0 wide. Over rev B's 2.3-6 GHz the same steering would move the beam about 25\u00b0, which is why rev B needs true-time delay.",
-    "source": "computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/band_hw.json",
+    "source": "computed in scratch/band_plan/band_hw.json",
     "confidence": "high"
    },
    {
@@ -363,7 +363,7 @@
    {
     "topic": "Radar range resolution per band and radio",
     "claim": "Range bins (c/2B) for each allocation:\n- EU 433 MHz (1.74 MHz): 86 m\n- EU 869.40-869.65 MHz: 600 m\n- US 15.245 at 902-928 (26 MHz) and 2435-2465 / 5785-5815 MHz (30 MHz): 5.8 m and 5 m\n- EU 2.4 GHz (83.5 MHz): 1.8 m\n- EU 5.8 GHz (150 MHz): 1.0 m\n- US amateur 5650-5925 MHz: 0.5 m\nThe radios set floors: AD9361 at 56 MHz gives 2.7 m, AD9363 at 20 MHz 7.5 m, AT86RF215 at 2 MHz 75 m.",
-    "source": "computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/band_hw.json",
+    "source": "computed in scratch/band_plan/band_hw.json",
     "confidence": "high"
    },
    {
@@ -375,13 +375,13 @@
    {
     "topic": "S1, 2.4 + 5.8 GHz: hardware",
     "claim": "S1 keeps rev B's core and four channels but drops the 16 external whip front ends. A two-filter bank (BFCN-2450+ / BFCN-5750+) and cavity filters on RADAR OUT replace B1-B5 and the radar bank. Two variants:\n- S1a keeps the Vivaldi tile with re-chosen lines.\n- S1b uses two patch tiles: 5.8 GHz at 25.5 mm (RO4003C/PTFE patches, 76-84 % efficient, 16.1-16.6 dBi in antenna_study) and 2.4 GHz at 60.4 mm.\nThe 5.8 GHz half still needs AD9361 radios. S1 loses everything below 2.4 GHz (LoRa/ELRS/tyre-sensor direction finding, ADS-B/GNSS/sonde calibration, TV passive radar), n78 and 5.1-5.35 GHz.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/antenna_study.md ; Mini-Circuits datasheets above ; cost_effort.json",
+    "source": "experiments/antenna_study.md ; Mini-Circuits datasheets above ; cost_effort.json",
     "confidence": "medium"
    },
    {
     "topic": "S2, sub-GHz + 2.4 GHz: hardware",
     "claim": "S2 needs only whips; one fixed ring layout covers all its bands. Fixed SAW filters for 433 and 863-928 MHz plus BFCN-2450+ replace B1-B5, and no tile or panel phase lines are needed. Two radio routes:\n- S2a: two 2x2 AD9363 boards.\n- S2b: one AT86RF215 per whip, i.e. 16 coherent receivers in both bands at once and 16 transmitters, giving full digital beamforming and nulling, behind an ECP5 FPGA and a USB 3 bridge.\nS2 loses 5.8 GHz and high-gain 2.4 GHz beams, unless a 60 mm 2.4 GHz tile is added. With the AT86RF215 it is also limited to 2 MHz bandwidth, so Wi-Fi and DJI signals are seen as 2 MHz slices; that is still enough for direction finding.",
-    "source": "AT86RF215 datasheet ; experiments/band_plan/tables.txt ; /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/cost_effort.json",
+    "source": "AT86RF215 datasheet ; experiments/band_plan/tables.txt ; scratch/band_plan/cost_effort.json",
     "confidence": "medium"
    },
    {
@@ -393,13 +393,13 @@
    {
     "topic": "Cost and effort against rev B",
     "claim": "All figures are estimates against rev B's $2,630 all-in (boards $1,300 + calibration kit $250 + 2 bladeRFs $1,080) and 520 h:\n- S1a: about -$335, -70 h\n- S1b: about -$123, -100 h, with +10 dB G/T at 2.44 GHz and about 5 W less\n- S2a: about -$1,315 (radio price unverified), -200 h\n- S2b: about -$1,580, but +100 h of FPGA and radio-board work\n- S3: about -$228, -100 h, 5 W less\n- S4: about -$228, -90 h",
-    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/cost_effort.json (itemised; anchors from REDESIGN.md section 10)",
+    "source": "scratch/band_plan/cost_effort.json (itemised; anchors from REDESIGN.md section 10)",
     "confidence": "low"
    },
    {
     "topic": "Rev B effort figure is inconsistent",
     "claim": "REDESIGN.md gives 520 hours in its headline (section 1), but its build-order steps (section 12: 40+30+60+180+180+100+40 h) sum to 630 h. The 100 h of host software is described as running 'across steps 1-5'.",
-    "source": "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md",
+    "source": "REDESIGN.md",
     "confidence": "high"
    },
    {
@@ -416,23 +416,23 @@
    }
   ],
   "files": [
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/catalogue.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/band_sets.png",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/phase_states.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/band_hw.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/cost_effort.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/reg_metrics.json",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/scripts/catalogue2.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/scripts/phase_states.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/scripts/band_hw.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/scripts/cost_effort.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/scripts/reg_metrics.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/scripts/bands.py",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/dl_at86rf215/at86rf215.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/dl_mcl",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/dl_erc7003/rec7003.txt",
-   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/band_plan/dl_lora/rp002.txt",
-   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/band_plan/tables.txt"
+   "scratch/band_plan/catalogue.json",
+   "scratch/band_plan/band_sets.png",
+   "scratch/band_plan/phase_states.json",
+   "scratch/band_plan/band_hw.json",
+   "scratch/band_plan/cost_effort.json",
+   "scratch/band_plan/reg_metrics.json",
+   "scratch/band_plan/scripts/catalogue2.py",
+   "scratch/band_plan/scripts/phase_states.py",
+   "scratch/band_plan/scripts/band_hw.py",
+   "scratch/band_plan/scripts/cost_effort.py",
+   "scratch/band_plan/scripts/reg_metrics.py",
+   "scratch/band_plan/scripts/bands.py",
+   "scratch/band_plan/dl_at86rf215/at86rf215.txt",
+   "scratch/band_plan/dl_mcl",
+   "scratch/band_plan/dl_erc7003/rec7003.txt",
+   "scratch/band_plan/dl_lora/rp002.txt",
+   "experiments/band_plan/tables.txt"
   ],
   "open_questions": [
    "Prices not verified. Microchip, DigiKey, Mouser, Arrow, LCSC, the Mini-Circuits store and analog.com refused or timed out, and the shared web-search budget was used up before this run. Affected parts: AT86RF215 (estimated $6-10), SX1255/SX1257, PSA4-5043+, SKY65404-31 (about $1.06 from earlier session notes), sub-GHz SAW filters, Mini-Circuits LTCC and cavity filters, HMC649A (about $169), and Pluto-class 2x2 AD9363 boards (sibling survey $180-235, no URL).",
