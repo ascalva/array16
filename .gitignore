@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.hypothesis/
+
+# Environments. `.venv` is uv's, built from uv.lock. `.env` is the older hand-made one; it also holds the
+# openEMS Python modules, which are not on PyPI (experiments/vivaldi/README.md).
+.venv/
+.env/
+
+# Build output (regenerable: firmware/README.md)
+firmware/build/
+
+# Runtime leftovers
+*.pid
+
+# OS
+.DS_Store
