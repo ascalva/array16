@@ -1,0 +1,1944 @@
+{
+ "checks": [
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.30 mm, tracked 4.51 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.64 mm, tracked 5.46 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.81 mm, tracked 3.08 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.98 mm, tracked 2.96 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.47 mm, tracked 6.31 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.31 mm, tracked 5.31 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil-shallow axis rho=+0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.36 mm, tracked 5.80 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil-shallow matched rho=+0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.95 mm, tracked 3.41 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil-shallow matched rho=-0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.59 mm, tracked 4.59 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil-shallow matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted 6.54 mm, and it was lost"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.66 mm, tracked 1.63 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.12 mm, tracked 2.12 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.60 mm, tracked 1.63 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.15 mm, tracked 1.17 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 3.25 mm, tracked 3.31 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 3.58 mm, tracked 3.62 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.85 mm, tracked 2.92 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.15 mm, tracked 2.16 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.95 mm, tracked 5.07 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.27 mm, tracked 5.35 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.10 mm, tracked 4.25 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 3.39 mm, tracked 3.47 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 6.66 mm, tracked 6.83 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.35 mm, tracked 5.59 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.64 mm, tracked 4.82 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.99 mm, tracked 2.91 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.79 mm, tracked 2.79 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.62 mm, tracked 1.62 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.40 mm, tracked 1.40 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.52 mm, tracked 5.38 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.57 mm, tracked 5.61 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.76 mm, tracked 2.76 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.78 mm, tracked 2.82 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.15 mm, tracked 4.15 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.17 mm, tracked 4.30 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.54 mm, tracked 5.54 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "figure-eight matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.56 mm, tracked 5.83 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.30 mm, tracked 4.51 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.64 mm, tracked 5.46 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.81 mm, tracked 3.08 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.98 mm, tracked 2.96 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.47 mm, tracked 6.31 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.31 mm, tracked 5.31 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.66 mm, tracked 1.63 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.12 mm, tracked 2.12 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.60 mm, tracked 1.63 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.15 mm, tracked 1.17 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 3.25 mm, tracked 3.31 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix axis rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 3.58 mm, tracked 3.62 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.85 mm, tracked 2.92 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "helix matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.15 mm, tracked 2.16 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=40",
+   "passed": true,
+   "said": "predicted 5.47 mm, tracked 6.37 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=60 steps=20",
+   "passed": true,
+   "said": "predicted 5.47 mm, tracked 6.31 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil-fine-curve matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.46 mm, tracked 6.30 mm"
+  },
+  {
+   "criterion": "C1 reach",
+   "ident": "trefoil-fine-winding matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 5.47 mm, tracked 6.31 mm"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 60.58 mm), tracked lost after 3.24 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 65.08 mm), tracked lost after 3.04 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 123.41 mm), tracked lost after 1.59 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 127.92 mm), tracked lost after 1.54 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 186.24 mm), tracked lost after 1.07 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 190.75 mm), tracked lost after 1.05 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 249.07 mm), tracked lost after 0.80 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 253.58 mm), tracked lost after 0.79 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 374.73 mm), tracked lost after 0.53 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "ring axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 379.24 mm), tracked lost after 0.53 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 4.30 mm), tracked held after 19.66 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.64 mm), tracked held after 20.82 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.81 mm), tracked held after 19.66 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.98 mm), tracked held after 20.84 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.47 mm), tracked held after 19.01 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.31 mm), tracked held after 21.37 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 13.75 mm), tracked lost after 0.65 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 14.63 mm), tracked lost after 0.63 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 8.12 mm), tracked held after 18.39 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 7.81 mm), tracked held after 21.85 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 18.48 mm), tracked lost after 0.41 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 19.35 mm), tracked lost after 0.41 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 27.94 mm), tracked lost after 0.29 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 28.80 mm), tracked lost after 0.30 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=+0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.36 mm), tracked held after 19.18 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow matched rho=+0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.95 mm), tracked held after 19.22 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow matched rho=-0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 4.59 mm), tracked held after 21.50 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 12.41 mm), tracked lost after 1.86 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 16.04 mm), tracked lost after 1.60 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted held (reach 6.54 mm), tracked lost after 5.39 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 8.08 mm), tracked held after 22.55 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 26.51 mm), tracked lost after 0.82 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 29.98 mm), tracked lost after 0.75 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 40.60 mm), tracked lost after 0.56 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 43.99 mm), tracked lost after 0.53 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 54.70 mm), tracked lost after 0.40 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 58.08 mm), tracked lost after 0.38 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 82.89 mm), tracked lost after 0.27 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-shallow axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 86.27 mm), tracked lost after 0.27 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 1.66 mm), tracked held after 20.16 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.12 mm), tracked held after 20.18 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 1.60 mm), tracked held after 20.16 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 1.15 mm), tracked held after 20.19 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 3.25 mm), tracked held after 20.13 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 3.58 mm), tracked held after 20.18 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.85 mm), tracked held after 20.13 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.15 mm), tracked held after 20.19 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 4.95 mm), tracked held after 20.09 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.27 mm), tracked held after 20.18 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 4.10 mm), tracked held after 20.09 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 3.39 mm), tracked held after 20.18 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 6.66 mm), tracked held after 20.05 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 6.98 mm), tracked held after 20.16 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.35 mm), tracked held after 20.05 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 4.64 mm), tracked held after 20.16 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=+3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 7.84 mm), tracked held after 19.93 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=-3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 7.14 mm), tracked held after 20.10 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.99 mm), tracked held after 20.25 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.79 mm), tracked held after 20.03 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 1.62 mm), tracked held after 20.25 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 1.40 mm), tracked held after 20.03 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.52 mm), tracked held after 20.35 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.57 mm), tracked held after 19.90 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.76 mm), tracked held after 20.36 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.78 mm), tracked held after 19.91 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 8.30 mm), tracked held after 20.45 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 8.34 mm), tracked held after 19.77 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 4.15 mm), tracked held after 20.45 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 4.17 mm), tracked held after 19.79 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.54 mm), tracked held after 20.54 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.56 mm), tracked held after 19.66 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 16.61 mm), tracked lost after 0.34 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost (reach 16.65 mm), tracked lost after 0.35 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=+3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 8.31 mm), tracked held after 20.71 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "figure-eight matched rho=-3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 8.33 mm), tracked held after 19.38 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 4.30 mm), tracked held after 19.66 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.64 mm), tracked held after 20.82 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.81 mm), tracked held after 19.66 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.98 mm), tracked held after 20.84 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.47 mm), tracked held after 19.01 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.31 mm), tracked held after 21.37 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 1.66 mm), tracked held after 20.16 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.12 mm), tracked held after 20.18 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 1.60 mm), tracked held after 20.16 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 1.15 mm), tracked held after 20.19 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 3.25 mm), tracked held after 20.13 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix axis rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 3.58 mm), tracked held after 20.18 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.85 mm), tracked held after 20.13 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "helix matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 2.15 mm), tracked held after 20.19 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=40",
+   "passed": true,
+   "said": "predicted held (reach 5.47 mm), tracked held after 19.00 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=60 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.47 mm), tracked held after 56.99 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-fine-curve matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.46 mm), tracked held after 19.01 laps"
+  },
+  {
+   "criterion": "C2 held or lost",
+   "ident": "trefoil-fine-winding matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted held (reach 5.47 mm), tracked held after 19.01 laps"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "trefoil axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.48 at +0\u00b0 mm, fitted 1.67 at -0\u00b0 mm (0.18 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "trefoil axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted -163.9\u00b0, fitted -152.5\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "trefoil axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.67 at +180\u00b0 mm, fitted 2.61 at -180\u00b0 mm (0.06 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "trefoil axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted +163.9\u00b0, fitted +161.9\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "trefoil-shallow axis rho=+0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.41 at +0\u00b0 mm, fitted 2.71 at -0\u00b0 mm (0.29 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "trefoil-shallow axis rho=+0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -52.3\u00b0, fitted -49.2\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "trefoil-shallow axis rho=-0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.50 at +180\u00b0 mm, fitted 4.18 at -180\u00b0 mm (0.32 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "trefoil-shallow axis rho=-0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted +52.3\u00b0, fitted +53.1\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 0.97 at -180\u00b0 mm, fitted 0.98 at -180\u00b0 mm (0.01 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -123.2\u00b0, fitted -125.8\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 0.40 at -0\u00b0 mm, fitted 0.49 at -1\u00b0 mm (0.09 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted +123.2\u00b0, fitted +134.7\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.42 at -180\u00b0 mm, fitted 1.40 at -180\u00b0 mm (0.02 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -123.2\u00b0, fitted -122.5\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 0.86 at -0\u00b0 mm, fitted 1.05 at -1\u00b0 mm (0.19 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted +123.2\u00b0, fitted +137.3\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.88 at -180\u00b0 mm, fitted 1.80 at -180\u00b0 mm (0.09 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -123.2\u00b0, fitted -118.8\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted 1.31 at -0\u00b0 mm, fitted 1.64 at -0\u00b0 mm (0.32 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted +123.2\u00b0, fitted +139.8\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.34 at -180\u00b0 mm, fitted 2.17 at -180\u00b0 mm (0.17 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted -123.2\u00b0, fitted -115.1\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "figure-eight axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.38 at +90\u00b0 mm, fitted 1.35 at +90\u00b0 mm (0.03 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "figure-eight axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -142.4\u00b0, fitted -140.4\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "figure-eight axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.40 at -90\u00b0 mm, fitted 1.39 at -90\u00b0 mm (0.00 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "figure-eight axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted +142.4\u00b0, fitted +145.2\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "figure-eight axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.76 at +90\u00b0 mm, fitted 2.69 at +90\u00b0 mm (0.07 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "figure-eight axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -142.4\u00b0, fitted -137.9\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "figure-eight axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.78 at -90\u00b0 mm, fitted 2.80 at -90\u00b0 mm (0.02 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "figure-eight axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted +142.4\u00b0, fitted +147.7\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "figure-eight axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.15 at +90\u00b0 mm, fitted 4.00 at +90\u00b0 mm (0.15 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "figure-eight axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -142.4\u00b0, fitted -135.5\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "figure-eight axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 4.17 at -90\u00b0 mm, fitted 4.24 at -90\u00b0 mm (0.07 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "figure-eight axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted +142.4\u00b0, fitted +150.1\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "trefoil axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.48 at +0\u00b0 mm, fitted 1.67 at -0\u00b0 mm (0.18 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "trefoil axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted -163.9\u00b0, fitted -152.5\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "trefoil axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 2.67 at +180\u00b0 mm, fitted 2.61 at -180\u00b0 mm (0.06 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "trefoil axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted +163.9\u00b0, fitted +161.9\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 0.97 at -180\u00b0 mm, fitted 0.98 at -180\u00b0 mm (0.01 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -123.2\u00b0, fitted -125.8\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 0.40 at -0\u00b0 mm, fitted 0.49 at -1\u00b0 mm (0.09 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": false,
+   "said": "predicted +123.2\u00b0, fitted +134.7\u00b0"
+  },
+  {
+   "criterion": "C3 closed orbit",
+   "ident": "helix axis rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted 1.42 at -180\u00b0 mm, fitted 1.40 at -180\u00b0 mm (0.02 mm apart)"
+  },
+  {
+   "criterion": "C4 turn per lap",
+   "ident": "helix axis rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted -123.2\u00b0, fitted -122.5\u00b0"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 1.48 mm from the axis, crossings stray 0.34 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 2.67 mm from the axis, crossings stray 0.04 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "closed orbit 3.56 mm from the axis, crossings stray 1.15 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 4.74 mm from the axis, crossings stray 0.52 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil-shallow matched rho=+0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 2.41 mm from the axis, crossings stray 0.51 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil-shallow matched rho=-0.2500mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 4.50 mm from the axis, crossings stray 0.39 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 0.06 mm from the axis, crossings stray 0.06 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 0.97 mm from the axis, crossings stray 0.03 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 0.40 mm from the axis, crossings stray 0.18 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 1.42 mm from the axis, crossings stray 0.03 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "closed orbit 0.86 mm from the axis, crossings stray 0.37 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 1.88 mm from the axis, crossings stray 0.12 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "closed orbit 1.31 mm from the axis, crossings stray 0.59 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 2.34 mm from the axis, crossings stray 0.26 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "figure-eight matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 1.38 mm from the axis, crossings stray 0.05 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "figure-eight matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 1.40 mm from the axis, crossings stray 0.01 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "figure-eight matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 2.76 mm from the axis, crossings stray 0.14 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "figure-eight matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 2.78 mm from the axis, crossings stray 0.03 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "figure-eight matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 4.15 mm from the axis, crossings stray 0.28 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "figure-eight matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 4.17 mm from the axis, crossings stray 0.13 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "figure-eight matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 5.54 mm from the axis, crossings stray 0.45 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "figure-eight matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 5.56 mm from the axis, crossings stray 0.27 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 1.48 mm from the axis, crossings stray 0.34 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 2.67 mm from the axis, crossings stray 0.04 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": false,
+   "said": "closed orbit 3.56 mm from the axis, crossings stray 1.15 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 4.74 mm from the axis, crossings stray 0.52 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 0.06 mm from the axis, crossings stray 0.06 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 0.97 mm from the axis, crossings stray 0.03 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 0.40 mm from the axis, crossings stray 0.18 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "helix matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "closed orbit 1.42 mm from the axis, crossings stray 0.03 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=40",
+   "passed": false,
+   "said": "closed orbit 3.56 mm from the axis, crossings stray 1.21 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=60 steps=20",
+   "passed": false,
+   "said": "closed orbit 3.56 mm from the axis, crossings stray 1.17 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil-fine-curve matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "closed orbit 3.55 mm from the axis, crossings stray 1.16 mm from it"
+  },
+  {
+   "criterion": "C5 matched launch",
+   "ident": "trefoil-fine-winding matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": false,
+   "said": "closed orbit 3.56 mm from the axis, crossings stray 1.16 mm from it"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 3.27, tracked 3.24"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 3.04, tracked 3.04"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 1.60, tracked 1.59"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 1.55, tracked 1.54"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 1.06, tracked 1.07"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 1.04, tracked 1.05"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 0.80, tracked 0.80"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 0.78, tracked 0.79"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 0.53, tracked 0.53"
+  },
+  {
+   "criterion": "C6 ring",
+   "ident": "ring axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "predicted lost at lap 0.52, tracked 0.53"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "trefoil axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 4.508 mm against 4.508 mm; turn -152.55\u00b0 against -152.55\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "trefoil axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 5.460 mm against 5.460 mm; turn +161.91\u00b0 against +161.91\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "trefoil matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 3.077 mm against 3.077 mm; turn -152.35\u00b0 against -152.35\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "trefoil matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 2.957 mm against 2.957 mm"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "trefoil axis rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 9.904 mm against 9.927 mm"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "trefoil axis rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 10.004 mm against 9.954 mm"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "trefoil matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 6.309 mm against 6.309 mm; turn -149.71\u00b0 against -149.71\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "trefoil matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 5.313 mm against 5.313 mm; turn +167.84\u00b0 against +167.83\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "helix axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 1.631 mm against 1.631 mm"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "helix axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 2.121 mm against 2.121 mm; turn -125.77\u00b0 against -125.77\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "helix matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 1.626 mm against 1.626 mm"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "helix matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 1.167 mm against 1.167 mm"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "helix axis rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 3.314 mm against 3.314 mm; turn +134.73\u00b0 against +134.73\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "helix axis rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 3.622 mm against 3.622 mm; turn -122.46\u00b0 against -122.45\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "helix matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 2.924 mm against 2.924 mm; turn +133.12\u00b0 against +133.51\u00b0"
+  },
+  {
+   "criterion": "C8 scaling",
+   "ident": "helix matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 2.161 mm against 2.161 mm"
+  },
+  {
+   "criterion": "C10 systematics",
+   "ident": "trefoil axis rho=+1.0000mm B=20mT laps=20 steps=40",
+   "passed": true,
+   "said": "reach 9.925 mm against 9.927 mm"
+  },
+  {
+   "criterion": "C10 systematics",
+   "ident": "trefoil-fine-curve axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 9.900 mm against 9.927 mm"
+  },
+  {
+   "criterion": "C10 systematics",
+   "ident": "trefoil-fine-winding axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 9.967 mm against 9.927 mm"
+  },
+  {
+   "criterion": "C10 systematics",
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=40",
+   "passed": true,
+   "said": "reach 6.366 mm against 6.309 mm; turn -149.79\u00b0 against -149.71\u00b0"
+  },
+  {
+   "criterion": "C10 systematics",
+   "ident": "trefoil-fine-curve matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 6.303 mm against 6.309 mm; turn -149.82\u00b0 against -149.71\u00b0"
+  },
+  {
+   "criterion": "C10 systematics",
+   "ident": "trefoil-fine-winding matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "reach 6.312 mm against 6.309 mm; turn -149.68\u00b0 against -149.71\u00b0"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+6.7446mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 10.2 mm), now lost (reach 10.2 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+6.7446mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 44.7 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+11.6831mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+11.6831mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 91.4 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+21.3377mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 11.9 mm), now lost (reach 11.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+21.3377mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 182.7 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+36.9940mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 13.0 mm), now lost (reach 13.0 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+36.9940mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 330.7 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+3.3723mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+3.3723mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 12.8 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+5.8416mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 10.1 mm), now lost (reach 10.1 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+5.8416mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 36.1 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+10.6688mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 10.1 mm), now lost (reach 10.1 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+10.6688mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 81.8 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+18.4970mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 11.5 mm), now lost (reach 11.5 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+18.4970mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 155.8 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+1.6861mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run held (reach 5.5 mm), now held (reach 5.5 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+1.6861mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run held, theory held (reach 5.6 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+2.9208mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run held (reach 8.8 mm), now held (reach 8.8 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+5.3344mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 10.0 mm), now lost (reach 10.0 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+5.3344mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 31.3 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "trefoil-single first-run rho=+9.2485mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 10.2 mm), now lost (reach 10.2 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "trefoil-single first-run rho=+9.2485mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 68.4 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+6.7446mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 10.0 mm), now lost (reach 10.0 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+6.7446mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 631.4 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+11.6831mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+11.6831mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 1252.0 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+21.3377mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 10.3 mm), now lost (reach 10.3 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+21.3377mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 2465.2 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+36.9940mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 13.3 mm), now lost (reach 13.3 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+36.9940mm B=5mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 4432.6 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+3.3723mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+3.3723mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 207.7 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+5.8416mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+5.8416mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 518.0 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+10.6688mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+10.6688mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 1124.6 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+18.4970mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 10.1 mm), now lost (reach 10.1 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+18.4970mm B=10mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 2108.3 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+1.6861mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run held (reach 6.5 mm), now held (reach 6.5 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+1.6861mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run held, theory held (reach 4.7 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+2.9208mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+2.9208mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 151.0 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+5.3344mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+5.3344mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 454.2 mm)"
+  },
+  {
+   "criterion": "C11 first run, this tracker",
+   "ident": "ring-single first-run rho=+9.2485mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost (reach 9.9 mm), now lost (reach 9.9 mm)"
+  },
+  {
+   "criterion": "C11 first run, the theory",
+   "ident": "ring-single first-run rho=+9.2485mm B=20mT laps=20 steps=20",
+   "passed": true,
+   "said": "first run lost, theory lost (reach 946.1 mm)"
+  }
+ ],
+ "integrity": {
+  "benches": [
+   "local"
+  ],
+  "commits": [
+   "6c058dfadd51"
+  ],
+  "measured": 132,
+  "predictions_match_the_code": true,
+  "records_from_other_predictions": 0,
+  "records_from_uncommitted_code": 0,
+  "records_made_before_registration": 0,
+  "shots": 142
+ },
+ "summary": {
+  "C1 reach": {
+   "failed": [
+    "trefoil-shallow matched rho=+0.5000mm B=20mT laps=20 steps=20: predicted 6.54 mm, and it was lost"
+   ],
+   "judged": 55,
+   "passed": 54
+  },
+  "C10 systematics": {
+   "failed": [],
+   "judged": 6,
+   "passed": 6
+  },
+  "C11 first run, the theory": {
+   "failed": [],
+   "judged": 23,
+   "passed": 23
+  },
+  "C11 first run, this tracker": {
+   "failed": [],
+   "judged": 24,
+   "passed": 24
+  },
+  "C2 held or lost": {
+   "failed": [
+    "trefoil-shallow matched rho=+0.5000mm B=20mT laps=20 steps=20: predicted held (reach 6.54 mm), tracked lost after 5.39 laps"
+   ],
+   "judged": 93,
+   "passed": 92
+  },
+  "C3 closed orbit": {
+   "failed": [
+    "helix axis rho=+2.0000mm B=20mT laps=20 steps=20: predicted 1.31 at -0\u00b0 mm, fitted 1.64 at -0\u00b0 mm (0.32 mm apart)"
+   ],
+   "judged": 22,
+   "passed": 21
+  },
+  "C4 turn per lap": {
+   "failed": [
+    "trefoil axis rho=+0.5000mm B=20mT laps=20 steps=20: predicted -163.9\u00b0, fitted -152.5\u00b0",
+    "helix axis rho=+1.0000mm B=20mT laps=20 steps=20: predicted +123.2\u00b0, fitted +134.7\u00b0",
+    "helix axis rho=+1.5000mm B=20mT laps=20 steps=20: predicted +123.2\u00b0, fitted +137.3\u00b0",
+    "helix axis rho=+2.0000mm B=20mT laps=20 steps=20: predicted +123.2\u00b0, fitted +139.8\u00b0",
+    "helix axis rho=-2.0000mm B=20mT laps=20 steps=20: predicted -123.2\u00b0, fitted -115.1\u00b0",
+    "trefoil axis rho=+0.5000mm B=40mT laps=20 steps=20: predicted -163.9\u00b0, fitted -152.5\u00b0",
+    "helix axis rho=+1.0000mm B=40mT laps=20 steps=20: predicted +123.2\u00b0, fitted +134.7\u00b0"
+   ],
+   "judged": 22,
+   "passed": 15
+  },
+  "C5 matched launch": {
+   "failed": [
+    "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=20: closed orbit 3.56 mm from the axis, crossings stray 1.15 mm from it",
+    "helix matched rho=+1.5000mm B=20mT laps=20 steps=20: closed orbit 0.86 mm from the axis, crossings stray 0.37 mm from it",
+    "helix matched rho=+2.0000mm B=20mT laps=20 steps=20: closed orbit 1.31 mm from the axis, crossings stray 0.59 mm from it",
+    "trefoil matched rho=+1.0000mm B=40mT laps=20 steps=20: closed orbit 3.56 mm from the axis, crossings stray 1.15 mm from it",
+    "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=40: closed orbit 3.56 mm from the axis, crossings stray 1.21 mm from it",
+    "trefoil matched rho=+1.0000mm B=20mT laps=60 steps=20: closed orbit 3.56 mm from the axis, crossings stray 1.17 mm from it",
+    "trefoil-fine-curve matched rho=+1.0000mm B=20mT laps=20 steps=20: closed orbit 3.55 mm from the axis, crossings stray 1.16 mm from it",
+    "trefoil-fine-winding matched rho=+1.0000mm B=20mT laps=20 steps=20: closed orbit 3.56 mm from the axis, crossings stray 1.16 mm from it"
+   ],
+   "judged": 34,
+   "passed": 26
+  },
+  "C6 ring": {
+   "failed": [],
+   "judged": 10,
+   "passed": 10
+  },
+  "C7 a twist without a knot (C1 to C5 on the helix and the figure-eight)": {
+   "failed": [
+    "helix axis rho=+1.0000mm B=20mT laps=20 steps=20: predicted +123.2\u00b0, fitted +134.7\u00b0",
+    "helix axis rho=+1.5000mm B=20mT laps=20 steps=20: predicted +123.2\u00b0, fitted +137.3\u00b0",
+    "helix axis rho=+2.0000mm B=20mT laps=20 steps=20: predicted 1.31 at -0\u00b0 mm, fitted 1.64 at -0\u00b0 mm (0.32 mm apart)",
+    "helix axis rho=+2.0000mm B=20mT laps=20 steps=20: predicted +123.2\u00b0, fitted +139.8\u00b0",
+    "helix axis rho=-2.0000mm B=20mT laps=20 steps=20: predicted -123.2\u00b0, fitted -115.1\u00b0",
+    "helix axis rho=+1.0000mm B=40mT laps=20 steps=20: predicted +123.2\u00b0, fitted +134.7\u00b0",
+    "helix matched rho=+1.5000mm B=20mT laps=20 steps=20: closed orbit 0.86 mm from the axis, crossings stray 0.37 mm from it",
+    "helix matched rho=+2.0000mm B=20mT laps=20 steps=20: closed orbit 1.31 mm from the axis, crossings stray 0.59 mm from it"
+   ],
+   "judged": 131,
+   "passed": 123
+  },
+  "C8 scaling": {
+   "failed": [],
+   "judged": 16,
+   "passed": 16
+  },
+  "C9 against the field (C1 to C5 on the shots sent backwards)": {
+   "failed": [
+    "helix axis rho=-2.0000mm B=20mT laps=20 steps=20: predicted -123.2\u00b0, fitted -115.1\u00b0"
+   ],
+   "judged": 83,
+   "passed": 82
+  }
+ }
+}
