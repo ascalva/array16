@@ -1,5 +1,7 @@
 # array16
 
+[![ci](https://github.com/ascalva/array16/actions/workflows/ci.yml/badge.svg)](https://github.com/ascalva/array16/actions/workflows/ci.yml)
+
 A phased-array software radio designed in code, and a set of numerical physics experiments on what its fields, and
 the electrodes and coils one could put beside it, can do to charged particles.
 
@@ -19,7 +21,7 @@ written down before the run that tests it, and the mathematics the code relies o
 | Redesign for 0.4-6 GHz | `REDESIGN.md` | A draft that waits on the owner's decisions (its section 13). Nothing in `hw/` has changed for it. The antenna simulation in `experiments/vivaldi/summary.md` found the element's match at the low end worse than the draft assumes. |
 | Design studies | `experiments/*.md` | `antenna_study.md` and `wideband_study.md` passed a review by independent agents, not by a human expert; `evolve_study.md` is complete; `field_uses.md` is a draft. |
 | Research notes | `experiments/notes/` | **Unreviewed.** Investigators' reports whose review step never ran. Each file says so: treat every number in them as a lead to verify. They cite some files by absolute path on the machine that made them, and scratch files that were not kept. |
-| Particles in fields | `array16/particles.py`, `docs/LAWS.md`, `formal/` | The kernel is calibrated against closed forms, its laws are proved, and the first experiment on it is being set up. The earlier run in `experiments/accelerator/` has two known faults, described below. |
+| Particles in fields | `array16/particles/`, `array16/lab.py`, `docs/LAWS.md`, `formal/` | The kernel is calibrated against closed forms and its laws are proved. Experiment 1 is done: registered, run and reported (`experiments/guide_study.md`). The earlier run in `experiments/accelerator/` has two known faults, described below, and is not yet redone on the kernel. |
 
 ## What the particle work has shown so far
 
@@ -34,18 +36,24 @@ written down before the run that tests it, and the mathematics the code relies o
   momentum is a 100 eV electron's: the field lines rise 10.8 mm per lap where the electron's drift is 10.6 mm
   the other way. So the ring "held" 100 eV by coincidence, and the knot's advantage could not be told apart from
   the same effect. One figure panel is also labelled with a field at which every electron was lost.
-- **There is now a theory to test instead.** To first order, one lap round a guide field is the map
-  `z ↦ exp(iα)·(z + ρG + H)` on the electron's offset `z` from the axis. `α` is how far the curve turns a
-  frame carried round it, which is 2π times the curve's writhe, less whole turns: zero for any planar ring, about
-  −164° for the trefoil used here. The laws of that map are proved (`docs/LAWS.md`, GDE-1 to GDE-7). With a turn there is
-  exactly one closed orbit and every orbit stays on a circle about it. Without one every lap adds the same drift
-  and nothing stays. Whether an electron in a real coil's field obeys the map is a hypothesis (GDE-H1), and the
-  next experiment tests it, with its predictions committed before the run.
+- **It is the twist that holds an electron, not the knot** (`experiments/guide_study.md`). To first order, one
+  lap round a guide field is the map `z ↦ exp(iα)·(z + ρG + H)` on the electron's offset from the axis, where
+  `α` is how far the curve turns a frame carried round it: zero for any flat ring, not zero for a knot or for an
+  unknotted curve that leaves the plane. The laws of that map are proved (`docs/LAWS.md`, GDE-1 to GDE-7).
+  Tested on five guides by criteria committed before the run: the flat ring lost every electron at the predicted
+  lap; a trefoil, a helix wound on a torus and a lifted figure-eight all held them; and the unknotted helix held
+  four times the gyroradius the trefoil did.
+- **The first-order theory is a design tool, not yet a law.** It called held or lost correctly in 92 cases of
+  93 and the reach within 15 % in 54 of 55. It failed its registered test on the turn per lap, which is off by
+  up to 16.5°. Read after the run, most of that error is one term, ρ × (the curve's bending) / 2, matching to
+  2 % with nothing fitted. That is the next experiment's hypothesis and not yet a result.
+- **A knot costs bending.** A knotted curve's total curvature exceeds 4π, so its bending exceeds 16π² over its
+  length, four times a circle's; an unknot has no such floor (ledger CUR-2, proved from the cited theorem).
 
 ## Run it
 
     uv sync --extra dev                  # the environment, from uv.lock
-    uv run pytest                        # 114 tests, about 10 s
+    uv run pytest                        # 150 tests, about 12 s
     uv run ruff check && uv run mypy     # lint and strict types, for the files named in pyproject.toml
     (cd formal && lake exe cache get) && ./formal/check.sh    # the proofs; needs elan, and about 7 GB for Mathlib
 
@@ -64,7 +72,13 @@ A first session with the simulated board:
     sim.sources = [Source(25, 30, -75, kind="qpsk")]
     print(arr.locate(blind=True))             # about (25, 30) degrees
 
-The studies are scripts that write their results beside them:
+An experiment on the harness has three steps, and the second refuses to start until the first is committed:
+
+    uv run python experiments/guide_study.py predict     # the theory's predictions, for every shot
+    uv run python experiments/guide_study.py run         # the measurements not yet on file; --bench NAME
+    uv run python experiments/guide_study.py report      # the verdicts, by criteria fixed beforehand
+
+The older studies are scripts that write their results beside them:
 
     uv run python experiments/virtual_bringup.py     # statistics over 40 simulated boards
     uv run python experiments/antenna_study.py       # patches, coupling, scanning, direction finding (about 75 s)
@@ -79,7 +93,9 @@ openEMS with its Python modules, which are on no package index (`experiments/viv
    known in closed form before any experiment uses them: gyration, the E×B drift and its known step error,
    Mathieu's stability boundary, Ampère's law round a winding, writhe against holonomy.
 2. **Predict, then run.** The theory's prediction, and what would count as its failure, are committed before the
-   run that tests them. The history is the evidence of the order.
+   run that tests them. `array16.lab` enforces it: it will not measure until the predictions are committed, and
+   it stores with every measurement the commit, the bench and the versions that made it. What is found by
+   looking at the results afterwards is kept apart and called a hypothesis.
 3. **Keep a case that must fail.** A ring beside every knot, a single-wire winding beside every return-wound
    one, a false statement beside every law. A check that has never been seen to fail has not been tested.
 4. **Label every claim.** `docs/LAWS.md` gives each law one row: its statement, the code that relies on it, a
@@ -91,6 +107,9 @@ openEMS with its Python modules, which are on no package index (`experiments/viv
    whether nature follows the model, which is what experiments are for.
 6. **Report what was left out.** No space charge, no collisions, no image charges, filament coils, thin-wire
    electrodes. These are upper bounds on what hardware would do.
+7. **One experiment, any bench.** An experiment asks for what it needs by role, a radio or a positioner or only
+   processes, and a bench file says what plays each role: a simulator today, the hardware later
+   (`benches/README.md`). Moving from simulation to the real thing is a change of bench and not of experiment.
 
 New Python is typed (`mypy --strict`), linted and formatted (`ruff`) and tested, and runs through `uv`. The files
 held to that are named in `pyproject.toml`; the older ones join the list as they are brought up to it.
@@ -103,8 +122,10 @@ held to that are named in `pyproject.toml`; the older ones join the list as they
 | `array16/control.py`, `dsp.py`, `api.py` | Beam states and snapshot schedules; alignment, decoding and direction finding; `Array`, the object a user holds |
 | `array16/sim.py`, `antenna.py`, `fwsim.py` | The simulated board, scene and radios; coupled patches; the controller's reference model |
 | `array16/evolve.py` | Search by small changes that keep what works |
-| `array16/particles.py` | Charged particles in prescribed fields: the Boris step, closed curves, rods and windings, the first-order theory of a guide field, tracking |
-| `tests/` | The virtual bench, the firmware against its model, the particle kernel against closed forms, the ledger against the code |
+| `array16/particles/` | Charged particles in prescribed fields: the Boris step, one loop for every tracker, closed curves, rods and windings, the first-order theory of a guide field |
+| `array16/lab.py` | The experiment harness: predict, run, report; benches; provenance |
+| `benches/` | Resource setups: compute, and devices by role |
+| `tests/` | The virtual bench, the firmware against its model, the particle kernel against closed forms, the harness on a toy experiment, the ledger against the code |
 | `firmware/` | The RP2040 beam controller: a portable core, and PIO, DMA, clocks and USB around it |
 | `hw/` | The circuit as a script (`design.py`), the KiCad project it generates, and the 26 schematic pages |
 | `experiments/` | The studies: each a script, its outputs and, where finished, a written report |
