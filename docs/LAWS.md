@@ -84,3 +84,11 @@ and GDE-H2 the correction experiment 1 pointed to.
 |---|---|---|---|---|---|---|
 | ROD-1 | across the axis the field of four thin rods of line charge `±λ` at distance `r₀` changes as `g·(−a, +b)` on the frame's axes with `g = 2λ/(π·ε₀·r₀²)`, and has no part along the axis (thin rods on rings of radius 40 to 100 r₀, by central differences 0.04 r₀ either side: to 0.2 %) | the quadrupole term of `Σ ±ln(z − z_j)`: the first power of `z` that survives four alternating charges on a circle is `z²` | `array16/particles/rods.py::QuadRods.gradient`, `array16/particles/rods.py::QuadRods.field_all` | Claim | `tests/test_particles.py::test_rod_1_four_thin_rods_make_a_quadrupole_of_the_stated_gradient` | — |
 | ROD-2 | bent to radius `R`, the rods leave a field `λ/(2π·ε₀·R)` on their centre line, toward the centre of the bend and independent of `r₀`; so the field's null lies `r₀²/(4R)` inside the centre line (rings of radius 10 to 100 r₀: both to 1.5 %). Measured; the derivation is to be written | the outer rod is longer than the inner one by `2r₀/R`, a first-order imbalance of charge | `array16/particles/rods.py::QuadRods.field_all` | Claim | `tests/test_particles.py::test_rod_2_a_bend_moves_the_null_inward_by_a_quarter_of_r0_squared_over_the_radius` | — |
+
+## VI. Radio-frequency guides
+
+`array16/particles/rf.py`: the pseudo-potential and the quadrupole guide's numbers.
+
+| law | statement | structure | anchor | label | falsifier | formal |
+|---|---|---|---|---|---|---|
+| RFG-1 | a quadrupole well `D` eV deep at Mathieu's `q` takes a drive `V₀ = 8D/q` volts, whatever the particle, the frequency and the size; and that drive gives that `q` where `f·r₀ = √(2·\|q/m\|·V₀/q)/2π`. So volts set the depth, and frequency times electrode distance follows from the volts (ℝ: algebra from `q = 2\|q/m\|g/ω²`, `ω_sec = qω/(2√2)` and `g = V₀/r₀²`; binary64: to 1e-9 relative; the secular frequency itself is first order in `q`, INT-3) | Mathieu's equation in the pseudo-potential limit | `array16/particles/rf.py::volts_for_depth`, `array16/particles/rf.py::frequency_times_distance`, `array16/particles/rf.py::quadrupole_depth_ev` | Claim | `tests/test_particles.py::test_rfg_1_volts_set_the_depth_and_frequency_times_distance_follows`, `tests/test_particles.py::test_rfg_1_numbers_for_an_electron` | — |

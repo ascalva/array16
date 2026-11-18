@@ -52,6 +52,17 @@ def quadrupole_depth_ev(q: float, f: float, r0: float, qm: float = QM_E) -> floa
     return _w(secular_frequency(q, f)) ** 2 * r0**2 / (2 * abs(qm))
 
 
+def volts_for_depth(depth_ev: float, q: float) -> float:
+    """The drive V0 (volts, peak; the quadrupole's potential is V0 (a^2 - b^2) / (2 r0^2)) that makes a well
+    depth_ev deep at Mathieu's q: 8 depth / q, whatever the frequency and the size (RFG-1)."""
+    return 8 * depth_ev / q
+
+
+def frequency_times_distance(volts: float, q: float, qm: float = QM_E) -> float:
+    """The product f r0 (Hz m) at which the drive V0 gives Mathieu's q: sqrt(2 |q/m| V0 / q) / (2 pi) (RFG-1)."""
+    return math.sqrt(2 * abs(qm) * volts / q) / (2 * math.pi)
+
+
 def bend_limit_ev(depth_ev: float, bend_radius: float, r0: float) -> float:
     """The kinetic energy (eV) at which a guide's bend pushes a particle half way to r0: the centrifugal force
     2 W / R against the guide's restoring force at r0 / 2, depth x R / (2 r0). An estimate of the most a guide

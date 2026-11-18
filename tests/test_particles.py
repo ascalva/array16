@@ -278,6 +278,25 @@ def test_quadrupole_numbers_agree_with_each_other() -> None:
     assert n == pytest.approx(1.12e15, rel=0.01)
 
 
+@settings(max_examples=200, deadline=None)
+@given(st.floats(0.01, 1e4), st.floats(0.05, 0.9), st.floats(1e-4, 1e-2), st.sampled_from([1.0, 1836.15, 1e9]))
+def test_rfg_1_volts_set_the_depth_and_frequency_times_distance_follows(
+    depth: float, q: float, r0: float, mass: float
+) -> None:
+    # Whatever the particle and the size: a well `depth` deep at Mathieu's q takes V0 = 8 depth / q, and that
+    # drive gives that q where f r0 = sqrt(2 |q/m| V0 / q) / 2 pi.
+    qm = pt.QM_E / mass
+    volts = pt.volts_for_depth(depth, q)
+    f = pt.frequency_times_distance(volts, q, qm) / r0
+    assert pt.mathieu_q(volts / r0**2, f, qm) == pytest.approx(q, rel=1e-9)
+    assert pt.quadrupole_depth_ev(q, f, r0, qm) == pytest.approx(depth, rel=1e-9)
+
+
+def test_rfg_1_numbers_for_an_electron() -> None:
+    assert pt.volts_for_depth(1.0, 0.3) == pytest.approx(26.7, rel=1e-2)
+    assert pt.frequency_times_distance(pt.volts_for_depth(1.0, 0.3), 0.3) == pytest.approx(0.891e6, rel=1e-2)  # GHz mm
+
+
 def test_rod_1_four_thin_rods_make_a_quadrupole_of_the_stated_gradient() -> None:
     # Across the axis the field changes as g (-a, +b) on the frame's axes, g = 2 lam / (pi eps0 r0^2), with
     # nothing along the axis: by central differences, on rings of several radii.

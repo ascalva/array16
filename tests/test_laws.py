@@ -70,7 +70,7 @@ def declarations() -> dict[str, str | None]:
 
 def test_the_ledger_has_rows_with_distinct_ids_and_known_labels() -> None:
     laws = [row.law for row in rows()]
-    assert len(laws) >= 20
+    assert len(laws) >= 21
     assert len(set(laws)) == len(laws)
     assert {row.label for row in rows()} <= LABELS
     assert all(("-H" in row.law) == (row.label == "Hypothesis") for row in rows())

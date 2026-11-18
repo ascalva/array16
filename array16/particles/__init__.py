@@ -25,12 +25,14 @@ from .push import cross, push
 from .rf import (
     bend_limit_ev,
     field_for_depth,
+    frequency_times_distance,
     gradient_for_q,
     mathieu_q,
     ponderomotive_ev,
     quadrupole_depth_ev,
     secular_frequency,
     space_charge_limit,
+    volts_for_depth,
 )
 from .rods import QuadRods
 from .tracking import Flight, GuideTrack, GuideWatch, Launch, Observer, PathRecorder, integrate, track_guide
@@ -67,6 +69,7 @@ __all__ = [
     "cross",
     "energy_of",
     "field_for_depth",
+    "frequency_times_distance",
     "gradient_for_q",
     "integrate",
     "magnetic",
@@ -84,5 +87,6 @@ __all__ = [
     "track_guide",
     "uniform",
     "v_of",
+    "volts_for_depth",
     "window",
 ]
