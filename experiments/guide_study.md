@@ -141,22 +141,17 @@ share and the part that changes sign with the direction of travel.
   electrons sent against the field pass through a turn of 120°, a third of a circle, near 1.3 mm. Nothing
   happened there in 20 laps. It was not looked for, and 20 laps is not long.
 
-## 7. Limits
+## 7. The model
 
-One electron at a time: no space charge, no collisions, no radiation. Filament windings without thickness, leads
-or winding errors. A wall that is a distance, not a pipe. Twenty laps, sixty in two cases. The run kept to the
-protocol. The one departure from doing things in order is stated in the protocol itself: one of these shots was
-tracked for two laps in a timing test before the registration was committed.
+One electron at a time, in the Biot-Savart field of filament windings, followed for twenty laps and for sixty in
+two cases. The wall is a distance from the axis. The run kept to the protocol; the protocol itself states the one
+shot that was tracked for two laps, in a timing test, before the registration was committed.
 
 ## 8. Next
 
-1. **Experiment 1b.** Put the second-order terms into the lap map: the turn as the field line's own plus
-   ρ × bending / 2, and the drift to the same order. Register it. Test it on curves it has not seen, chosen to
-   pull the terms apart, and for hundreds of laps across the 120° resonance.
-2. **Search the curves.** With the theory scoring a curve in milliseconds, `array16.evolve` can look for the
-   closed curve that holds the most in a given bore and length.
-3. **Then the rest of the first run** on the same harness: the electric guides, cyclotron resonance and the
-   ring of accelerating gaps, each with its predictions registered first.
+The plan returns to radio-frequency fields from the board itself (`docs/PROGRESS.md`). What this experiment built
+goes with it: the curves and their invariants, the harness, and the habit of a lap map with a closed orbit. The
+second-order hypothesis GDE-H2 stays on the ledger for whenever a magnetic guide is wanted as the budget option.
 
 ## Sources
 

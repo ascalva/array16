@@ -22,5 +22,6 @@ reports about itself through `identity()`: a serial number, a firmware version.
 | `local` | compute only; needs no file |
 | `simulated` | compute, and the simulated board, radios and room as the `array` |
 
-No hardware driver exists yet. One is a class with the same methods as the simulator it replaces
-(`array16/backend.py` for the `array`), named in a bench file here.
+A hardware driver is a class with the same methods as the simulator it replaces (`array16/backend.py` for the
+`array`), named in a bench file here: a HackRF or a pair of bladeRFs as the `array`, a microcontroller as a
+`controller`, a stepper stage as a `positioner`. Drivers build on open-source tools only.
