@@ -1,0 +1,26 @@
+name = "formal"
+version = "0.1.0"
+keywords = ["math", "physics"]
+defaultTargets = ["Array16"]
+# `lake lint` runs the environment linters over the library, and a pinned Mathlib supports only the
+# toolchain it is built with.
+lintDriver = "batteries/runLinter"
+lintDriverArgs = ["Array16"]
+fixedToolchain = true
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+autoImplicit = false
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+weak.linter.style.header = false # Mathlib's copyright header is Mathlib's convention
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.36.0-rc2"
+
+# The models and the proofs of the laws in docs/LAWS.md. Nothing in it runs at build time.
+[[lean_lib]]
+name = "Array16"
