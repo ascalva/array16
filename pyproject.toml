@@ -34,6 +34,8 @@ include = [
     "tests/conftest.py",
     "experiments/guide_study.py",
     "experiments/guide_posthoc.py",
+    "experiments/accelerator_study.py",
+    "tests/test_accelerator_study.py",
     "tests/test_guide_record.py",
 ]
 
@@ -54,5 +56,7 @@ files = [
     "tests/conftest.py",
     "experiments/guide_study.py",
     "experiments/guide_posthoc.py",
+    "experiments/accelerator_study.py",
+    "tests/test_accelerator_study.py",
     "tests/test_guide_record.py",
 ]

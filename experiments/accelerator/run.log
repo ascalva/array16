@@ -1,80 +1,58 @@
 
-== scales ==
-  0.40 GHz: ponderomotive depth 2.0e-06 eV at 17 V/m (array at 0.3 m), 4.2e-04 eV at 247 V/m (all power in one spot); needs 2 kV/m for 25 meV, 12 kV/m for 1 eV; cyclotron resonance at 14.3 mT
-  2.45 GHz: ponderomotive depth 5.4e-08 eV at 17 V/m (array at 0.3 m), 1.1e-05 eV at 247 V/m (all power in one spot); needs 12 kV/m for 25 meV, 73 kV/m for 1 eV; cyclotron resonance at 87.5 mT
-  5.80 GHz: ponderomotive depth 9.6e-09 eV at 17 V/m (array at 0.3 m), 2.0e-06 eV at 247 V/m (all power in one spot); needs 27 kV/m for 25 meV, 174 kV/m for 1 eV; cyclotron resonance at 207.2 mT
-  gap voltage for an assumed shunt resistance of 0.25-1 Mohm (estimate): {'3.2 mW': [40, 80], '1000 mW': [707, 1414]} V
-  magnetic rigidity B*rho (T m): {'100 eV': '3.37e-05', '1000.0 eV': '1.07e-04', '10000.0 eV': '3.39e-04', '100000.0 eV': '1.12e-03'}
-  electron mean free path (estimate, 1e-19 m^2): {'1013 mbar': '4e-07 m', '0.001 mbar': '0.4 m', '1e-05 mbar': '40 m', '1e-07 mbar': '4e+03 m'}
+== scales: the field a pseudo-potential of a given depth takes (electron) ==
+  0.433 GHz: 25 meV takes   2.1 kV/m, 1 eV  13.0, 100 eV    130. At +15.9 dBm EIRP the field 0.3 m away is 5.1 V/m (1.5e-07 eV); 1 eV is 13 V across a millimetre
+  2.440 GHz: 25 meV takes  11.6 kV/m, 1 eV  73.1, 100 eV    731. At +8.1 dBm EIRP the field 0.3 m away is 2.1 V/m (8.1e-10 eV); 1 eV is 73 V across a millimetre
+  5.800 GHz: 25 meV takes  27.5 kV/m, 1 eV 173.8, 100 eV   1738. At +6.2 dBm EIRP the field 0.3 m away is 1.7 V/m (9.2e-11 eV); 1 eV is 174 V across a millimetre
+  a resonant gap of shunt resistance 0.25-1 Mohm (an estimate) makes 40-80 V from 3.2 mW; 707-1414 V from 1000 mW
+  an electron's mean free path (cross-section 1e-19 m^2, an estimate): 4e-07 m at 1013 mbar, 0.4 m at 0.001 mbar, 40 m at 1e-05 mbar, 4e+03 m at 1e-07 mbar
 
-== validate ==
-  gyration: diameter 6.731 mm (theory 6.745), velocity angle after 50 turns -1.1e-13 rad: pass
-  Mathieu: growth at q = 0.85 1.0x (stable), at q = 1.0 7.7e+10x (unstable); beta at q = 0.2 0.1426 (first order 0.1414): pass
-  dust (10 um glass, 60 Hz, r0 6 mm, air): V, Mathieu q, held?, sag simulated / damped pseudo-potential (mm)
-        250 V  q    1.7  held    -3.432 /   -3.187
-        500 V  q    3.3  held    -0.897 /   -0.797
-       1000 V  q    6.6  held    -0.268 /   -0.199
-       2000 V  q   13.2  held    -0.140 /   -0.050
-       4000 V  q   26.5  LOST    -2.430 /   -0.012
-       8000 V  q   52.9  LOST    -0.028 /   -0.003
-      16000 V  q  105.9  LOST    -0.019 /   -0.001
-      32000 V  q  211.7  LOST    -0.006 /   -0.000
+== damping: a 10 um glass grain in air, ideal quadrupole at 60 Hz, r0 6 mm ==
+     volts   Mathieu q   held    sag tracked / predicted (mm)
+        250        1.7   held     -3.432 /   -3.187
+        500        3.3   held     -0.897 /   -0.797
+       1000        6.6   held     -0.268 /   -0.199
+       2000       13.2   held     -0.140 /   -0.050
+       4000       26.5   LOST     -2.430 /   -0.012
+       8000       52.9   LOST     -0.028 /   -0.003
+      16000      105.9   LOST     -0.014 /   -0.001
+      32000      211.7   LOST     -0.006 /   -0.000
 
-== ecr ==
-  E0      17 V/m: peak energy     48.2 eV after 10.037 us (uniform field); field off by -1e-3/-1e-4/+1e-4/+1e-3/+1e-2: 0.1 / 9.1 / 14.6 / 0.1 / 0.0
-  E0     250 V/m: peak energy    289.4 eV after 1.672 us (uniform field); field off by -1e-3/-1e-4/+1e-4/+1e-3/+1e-2: 22.2 / 225.6 / 361.2 / 24.3 / 0.2
-  E0    1000 V/m: peak energy    729.3 eV after 0.664 us (uniform field); field off by -1e-3/-1e-4/+1e-4/+1e-3/+1e-2: 242.5 / 662.8 / 799.0 / 1526.3 / 3.7
-  E0   10000 V/m: peak energy   3388.0 eV after 0.048 us (uniform field); field off by -1e-3/-1e-4/+1e-4/+1e-3/+1e-2: 2742.5 / 3320.2 / 3456.6 / 4102.1 / 402.3
-  cross-check at 30 kV/m: full orbit 7069 eV, rotating-wave 7056 eV (0.2 % apart)
-  one pass through the resonance layer of a 50 mm-gradient magnet, 5 eV electron: energy step (eV) {'17': '9.78e-05', '1000': '3.38e-01', '10000': '3.38e+01'}
+== dust: quadrupole guide on a trefoil knot, 10 um glass grains in air ==
+  knot 814 mm long, tightest bend 51 mm, steepest slope 0.48; rods +/-500 V at 60 Hz
+  travelling wave 7.0 kV/m (34 V on a 30 mm period) moving at 5 cm/s
+     charge x0.5: held, 0.56 laps, first lap in nan s, reach 1.31 mm of 6, mean height -0.833 mm
+     charge x1.0: held, 1.38 laps, first lap in 16.6 s, reach 0.60 mm of 6, mean height -0.249 mm
+     charge x2.0: held, 1.38 laps, first lap in 16.6 s, reach 0.70 mm of 6, mean height -0.131 mm
+  (39 s)
 
-== dust: trefoil quadrupole guide, 10 um glass spheres in air ==
-  knot: length 814 mm, tightest bend 51 mm, steepest slope 0.48; rods +/-500 V at 60 Hz; conveyor wave 7.0 kV/m (34 V on 30 mm), 5 cm/s
-     charge x0.5: held, laps 0.56, lap time nan s, largest offset 1.31 mm of 6, mean height offset -0.832 mm
-     charge x1.0: held, laps 1.38, lap time 16.6 s, largest offset 0.60 mm of 6, mean height offset -0.249 mm
-     charge x2.0: held, laps 1.38, lap time 16.6 s, largest offset 0.69 mm of 6, mean height offset -0.131 mm
-  (87 s)
-  grains closer than 0.65 mm along the guide buckle from a line into a zigzag (their own fields): more than 1247 grains on this knot
+== electrons: quadrupole guide on a trefoil knot at 1 GHz ==
+  knot 277 mm long, tightest bend 16.6 mm, rods 0.5 mm from the axis
+   q 0.3: 13 V between rods, secular 106 MHz, depth 0.32 eV, bend estimate of the most held 5.2 eV
+       0.5 eV: held after   5.0 laps, reach    45 um
+       1.0 eV: held after   7.1 laps, reach    55 um
+       2.0 eV: held after   9.9 laps, reach   152 um
+       4.0 eV: LOST after   0.5 laps, reach   401 um
+       8.0 eV: LOST after   0.0 laps, reach   403 um
+   q 0.6: 25 V between rods, secular 212 MHz, depth 1.26 eV, bend estimate of the most held 20.9 eV
+       0.5 eV: held after   5.0 laps, reach    66 um
+       1.0 eV: held after   7.1 laps, reach    66 um
+       2.0 eV: held after  10.0 laps, reach    66 um
+       4.0 eV: held after  14.1 laps, reach    67 um
+       8.0 eV: held after  19.9 laps, reach   167 um
+      16.0 eV: LOST after   0.1 laps, reach   409 um
+      32.0 eV: LOST after   0.0 laps, reach   424 um
+  (31 s)
 
-== rfguide: trefoil quadrupole guide at 1 GHz, electrons in vacuum ==
-  knot: length 277 mm, tightest bend 16.6 mm, rods 0.5 mm from the axis
-   q 0.3: rod-to-rod 13 V, secular 106 MHz, depth 0.32 eV, centrifugal estimate of the largest energy 5.2 eV
-       0.5 eV: held after   5.0 laps, largest offset    43 um
-       1.0 eV: held after   7.1 laps, largest offset    53 um
-       2.0 eV: held after   9.9 laps, largest offset   145 um
-       4.0 eV: LOST after   0.5 laps, largest offset   423 um
-       8.0 eV: LOST after   0.0 laps, largest offset   425 um
-   q 0.6: rod-to-rod 25 V, secular 212 MHz, depth 1.26 eV, centrifugal estimate of the largest energy 20.9 eV
-       0.5 eV: held after   5.0 laps, largest offset    63 um
-       1.0 eV: held after   7.1 laps, largest offset    60 um
-       2.0 eV: held after  10.0 laps, largest offset    59 um
-       4.0 eV: held after  14.1 laps, largest offset    61 um
-       8.0 eV: held after  19.9 laps, largest offset   153 um
-      16.0 eV: LOST after   0.1 laps, largest offset   462 um
-      32.0 eV: LOST after   0.0 laps, largest offset   601 um
-  (26 s)
+== ring: four gaps on a closed path, one chirp, fixed phase steps ==
+  a continuous 50 eV beam, 4 gaps of 0.5 V, harmonic 13, 90 deg between gaps: chirp 58.5 -> 112.6 MHz in 21 us (135 laps)
+  reaches 185 eV; 45 % captured, 1.6 eV rms spread
 
-== solenoid: a winding on a trefoil knot, electrons in vacuum ==
-  trefoil knot: length 932 mm, tightest bend 44 mm, winding radius 11 mm, 180 turns; axis field 0.2393 mT/A (ideal 0.2427), ripple 0.97-1.01, along the axis 0.999
-        5 mT ( 20.9 A in 180 turns): 100 eV LOST 0.1 laps, 10.2 mm; 300 eV LOST 0.0 laps, 9.9 mm; 1000 eV LOST 0.0 laps, 11.9 mm; 3000 eV LOST 0.0 laps, 13.0 mm
-       10 mT ( 41.8 A in 180 turns): 100 eV LOST 0.8 laps, 9.9 mm; 300 eV LOST 0.1 laps, 10.1 mm; 1000 eV LOST 0.1 laps, 10.1 mm; 3000 eV LOST 0.0 laps, 11.5 mm
-       20 mT ( 83.6 A in 180 turns): 100 eV held 20.5 laps, 5.5 mm; 300 eV held 33.0 laps, 8.8 mm; 1000 eV LOST 0.1 laps, 10.0 mm; 3000 eV LOST 0.1 laps, 10.2 mm
-  plain ring, same length: length 932 mm, tightest bend 148 mm, winding radius 11 mm, 180 turns; axis field 0.2433 mT/A (ideal 0.2427), ripple 1.00-1.00, along the axis 1.000
-        5 mT ( 20.6 A in 180 turns): 100 eV LOST 0.3 laps, 10.0 mm; 300 eV LOST 0.1 laps, 9.9 mm; 1000 eV LOST 0.1 laps, 10.3 mm; 3000 eV LOST 0.1 laps, 13.3 mm
-       10 mT ( 41.1 A in 180 turns): 100 eV LOST 0.9 laps, 9.9 mm; 300 eV LOST 0.4 laps, 9.9 mm; 1000 eV LOST 0.2 laps, 9.9 mm; 3000 eV LOST 0.1 laps, 10.1 mm
-       20 mT ( 82.2 A in 180 turns): 100 eV held 19.9 laps, 6.5 mm; 300 eV LOST 1.3 laps, 9.9 mm; 1000 eV LOST 0.4 laps, 9.9 mm; 3000 eV LOST 0.2 laps, 9.9 mm
-  continuous 10 mT winding (estimate): 2.2 A/mm^2, 25 W, 2.6 kg of copper
+== own: the particles' own fields ==
+  the 1 GHz guide at q 0.3 holds up to 2.8e+14 electrons/m^3: 2.2e+06 per metre in a beam 50 um in radius, 0.6 uA at 8 eV
+  the 1 GHz guide at q 0.6 holds up to 1.1e+15 electrons/m^3: 8.8e+06 per metre in a beam 50 um in radius, 2.4 uA at 8 eV
+  1e+05 electrons circulating at 185 eV: 0.14 uA, about -98 dBm on a 50 ohm pickup coupling 30 % (an estimate)
+  1e+06 electrons circulating at 185 eV: 1.39 uA, about -78 dBm on a 50 ohm pickup coupling 30 % (an estimate)
+  1e+07 electrons circulating at 185 eV: 13.87 uA, about -58 dBm on a 50 ohm pickup coupling 30 % (an estimate)
+  grains closer than 0.65 mm along the 60 Hz guide buckle from a line into a zigzag
 
-== ring: four gaps, one chirp, fixed phase offsets ==
-  injected 50 eV continuous beam, 4 gaps of 0.5 V at harmonic 13: chirp 58.5 -> 112.6 MHz in 21 us (135 laps); synchronous energy 185 eV; captured 45 % with 1.6 eV rms spread
-     1e+05 electrons circulating: 0.14 uA; about -98 dBm on a 50 ohm pickup coupling 30 % (estimate)
-     1e+06 electrons circulating: 1.39 uA; about -78 dBm on a 50 ohm pickup coupling 30 % (estimate)
-     1e+07 electrons circulating: 13.87 uA; about -58 dBm on a 50 ohm pickup coupling 30 % (estimate)
-
-== selffield ==
-  Brillouin limit: 5 mT: 1.2e+14 /m^3 (3 mA in a 3 mm 100 eV beam), 10 mT: 4.9e+14 /m^3 (13 mA in a 3 mm 100 eV beam), 20 mT: 1.9e+15 /m^3 (52 mA in a 3 mm 100 eV beam)
-  1 uA, 100 eV, 3 mm beam: its own field 1.01 V/m against 5.9e+04 V/m of magnetic guiding; magnetic self-attraction is 3.9e-04 of the electric self-repulsion
-  a neutral plasma column of 1e15 particles/m at 2 eV pinches itself at 113 A
-
-done in 167 s; results in experiments/accelerator
-.env/bin/python experiments/accelerator_study.py  165.82s user 1.23s system 99% cpu 2:47.27 total
+done in 73 s
