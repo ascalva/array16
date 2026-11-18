@@ -1,0 +1,55 @@
+name: ci
+
+# Two jobs, both run on every push to main and every pull request.
+#   python: the lint, type and test gates over uv's locked environment.
+#   lean:   formal/check.sh, the gate for the proofs behind docs/LAWS.md.
+# The firmware's emulator tests skip here (they need a built image and rp2040js), and the openEMS and KiCad
+# scripts are not run: neither tool is on the runner.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v8.3.2 # exact tag, as in the owner's other repositories
+        with:
+          python-version: "3.14"
+      - name: environment from uv.lock
+        run: uv sync --frozen --extra dev
+      - name: format and lint (the files named in pyproject.toml)
+        run: |
+          uv run ruff format --check
+          uv run ruff check
+      - name: types (strict, the files named in pyproject.toml)
+        run: uv run mypy
+      - name: tests, with the laws ledger checked against the code
+        run: uv run pytest -q
+
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: leanprover/lean-action@v1.7.0 # exact tag: elan, the toolchain, the Mathlib cache
+        with:
+          lake-package-directory: formal
+          auto-config: "false" # check.sh builds, so every gate runs in one step
+          use-mathlib-cache: "true"
+          use-github-cache: "false"
+      - name: formal gate (build, lint, unfinished proofs, axioms)
+        run: ./formal/check.sh

@@ -29,6 +29,7 @@ include = [
     "array16/particles.py",
     "tests/test_particles.py",
     "tests/test_laws.py",
+    "tests/conftest.py",
 ]
 
 [tool.ruff.lint]
@@ -41,4 +42,5 @@ files = [
     "array16/particles.py",
     "tests/test_particles.py",
     "tests/test_laws.py",
+    "tests/conftest.py",
 ]
