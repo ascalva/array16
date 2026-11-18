@@ -18,3 +18,25 @@ packages = ["array16"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+# Lint and type checks cover only the files written to that standard (from 2026-11-17 on). Older files are not
+# covered yet: add each one to both lists when it is brought up to it. 120 columns is the width the older files
+# were written to (almost none of their lines pass it; one in eight passes 100).
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+include = [
+    "array16/particles.py",
+    "tests/test_particles.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "C4", "NPY", "PT", "RUF"]
+
+[tool.mypy]
+strict = true
+follow_imports = "silent"
+files = [
+    "array16/particles.py",
+    "tests/test_particles.py",
+]
