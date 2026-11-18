@@ -6,6 +6,7 @@
   push         push: one relativistic Boris step
   curves       ClosedCurve: tangents, twist-free axes, holonomy, writhe
   rods         QuadRods: four thin rods along a curve
+  rf           the pseudo-potential, and a quadrupole guide's Mathieu q, secular frequency, depth and limits
   coils        Coil: a filament winding round a curve, and its Biot-Savart field
   optics       GuideOptics: the first-order theory of a guide field; orbit_circle, window
   tracking     integrate: the general loop with observers; track_guide: electrons round a closed guide
@@ -21,6 +22,16 @@ from .fields import BField, Fields, magnetic, scaled, superpose, together, unifo
 from .kinematics import energy_of, rigidity, v_of
 from .optics import GuideOptics, OrbitFit, orbit_circle, window
 from .push import cross, push
+from .rf import (
+    bend_limit_ev,
+    field_for_depth,
+    gradient_for_q,
+    mathieu_q,
+    ponderomotive_ev,
+    quadrupole_depth_ev,
+    secular_frequency,
+    space_charge_limit,
+)
 from .rods import QuadRods
 from .tracking import Flight, GuideTrack, GuideWatch, Launch, Observer, PathRecorder, integrate, track_guide
 
@@ -52,14 +63,22 @@ __all__ = [
     "PathRecorder",
     "QuadRods",
     "Winding",
+    "bend_limit_ev",
     "cross",
     "energy_of",
+    "field_for_depth",
+    "gradient_for_q",
     "integrate",
     "magnetic",
+    "mathieu_q",
     "orbit_circle",
+    "ponderomotive_ev",
     "push",
+    "quadrupole_depth_ev",
     "rigidity",
     "scaled",
+    "secular_frequency",
+    "space_charge_limit",
     "superpose",
     "together",
     "track_guide",

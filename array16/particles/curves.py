@@ -177,7 +177,8 @@ class ClosedCurve:
         return st, adv
 
     def offset(self, x: Arr, st: IntArr) -> tuple[Arr, Arr]:
-        """Each particle's displacement from the curve at its station, across the tangent: vectors and lengths."""
+        """Each particle's displacement from the curve at its station, across the tangent: vectors and lengths.
+        It is measured from the tangent line at the station, so it is true to step^2 / (8 x bend radius)."""
         T = self.tangents
         d = x - self.points[st]
         d = d - (d * T[st]).sum(1)[:, None] * T[st]

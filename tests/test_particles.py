@@ -135,6 +135,31 @@ def test_integrate_refuses_arrays_of_the_wrong_shape() -> None:
         pt.integrate(np.zeros((2, 3)), np.zeros((2, 3)), np.ones(3), 1e-3, 1, still)
 
 
+def test_guide_watch_times_laps_and_stops_what_passes_the_wall() -> None:
+    # The watch alone, shown two points moving round a circle: one on it, one drifting outward.
+    ring = ClosedCurve.circle(0.1, 360)
+    watch = pt.GuideWatch(ring, wall=5e-3, count=2)
+    alive = np.ones(2, dtype=np.bool_)
+    period, steps = 2.0, 1000
+    for step in range(2 * steps + 30):
+        t = (step + 1) * period / steps
+        angle = 2 * math.pi * t / period
+        radius = np.array([0.1, 0.1 + 2e-3 * t])  # the second leaves at 1 mm a lap
+        x = np.stack([radius * math.cos(angle), radius * math.sin(angle), np.zeros(2)], 1)
+        alive &= ~watch(step, t, x, np.zeros((2, 3)), alive)
+    assert watch.times[0] == pytest.approx([period, 2 * period], abs=2 * period / 360)
+    assert watch.laps[0] == pytest.approx(2.03, abs=0.01)
+    # a point on the circle lies off the tangent at the nearest station by up to step^2 / (8 R): the watch's grain
+    grain = (ring.length / len(ring)) ** 2 / (8 * 0.1)
+    assert abs(watch.crossings[0][0]) <= grain
+    assert watch.reach[0] <= grain
+    assert bool(alive[0])
+    assert not alive[1]  # it passed 5 mm during its second lap
+    assert watch.reach[1] == pytest.approx(5e-3, abs=1e-4)
+    assert len(watch.times[1]) == 1
+    assert watch.crossings[1][0] == pytest.approx(4e-3, abs=1e-4)  # 4 mm outward, along the first axis
+
+
 # ---- closed curves --------------------------------------------------------------------------------------------
 def test_torus_knot_is_closed_and_evenly_spaced() -> None:
     knot = ClosedCurve.torus_knot(0.060, 0.028, 600)
@@ -225,6 +250,76 @@ def test_cur_3_total_curvature_is_two_pi_on_a_ring_and_past_four_pi_on_a_knot() 
 
 def test_trefoil_has_writhe_of_magnitude_between_three_and_four() -> None:
     assert 3.0 < abs(ClosedCurve.torus_knot(0.060, 0.028, 600).writhe) < 4.0
+
+
+# ---- radio-frequency confinement ------------------------------------------------------------------------------
+def test_pseudo_potential_numbers_for_an_electron() -> None:
+    assert pt.ponderomotive_ev(pt.field_for_depth(1.0, 0.4e9), 0.4e9) == pytest.approx(1.0)
+    assert pt.field_for_depth(1.0, 0.4e9) == pytest.approx(11.99e3, rel=1e-3)  # V/m
+    assert pt.field_for_depth(1.0, 2.45e9) == pytest.approx(73.4e3, rel=1e-3)
+    assert pt.field_for_depth(0.025, 5.8e9) == pytest.approx(27.5e3, rel=1e-3)
+    # half the frequency, four times the depth; and a proton, 1836 times heavier, gets 1836 times less
+    assert pt.ponderomotive_ev(1e3, 1e9) == pytest.approx(4 * pt.ponderomotive_ev(1e3, 2e9))
+    assert pt.ponderomotive_ev(1e3, 1e9, pt.QM_E / 1836.15) == pytest.approx(pt.ponderomotive_ev(1e3, 1e9) / 1836.15)
+
+
+def test_quadrupole_numbers_agree_with_each_other() -> None:
+    f, r0 = 1e9, 0.5e-3
+    for q in (0.3, 0.6):
+        g = pt.gradient_for_q(q, f)
+        assert pt.mathieu_q(g, f) == pytest.approx(q)
+        assert pt.quadrupole_depth_ev(q, f, r0) == pytest.approx(q * g * r0**2 / 8)  # the textbook q V0 / 8
+    assert pt.secular_frequency(0.6, f) == pytest.approx(212.1e6, rel=1e-3)
+    assert pt.quadrupole_depth_ev(0.6, f, r0) == pytest.approx(1.263, rel=1e-3)
+    assert pt.bend_limit_ev(1.263, 16.6e-3, r0) == pytest.approx(20.97, rel=1e-3)
+    # the beam's own field at the limiting density equals the guide's restoring field, at any radius
+    n, w_sec = pt.space_charge_limit(0.6, f), 2 * math.pi * pt.secular_frequency(0.6, f)
+    assert n * pt.E / (2 * pt.EPS0) == pytest.approx(w_sec**2 / abs(pt.QM_E))
+    assert n == pytest.approx(1.12e15, rel=0.01)
+
+
+def test_rod_1_four_thin_rods_make_a_quadrupole_of_the_stated_gradient() -> None:
+    # Across the axis the field changes as g (-a, +b) on the frame's axes, g = 2 lam / (pi eps0 r0^2), with
+    # nothing along the axis: by central differences, on rings of several radii.
+    lam = 1e-9
+    for radius, r0, points in ((0.2, 5e-3, 2000), (0.1, 5e-3, 2000), (0.2, 2e-3, 4000)):
+        ring = ClosedCurve.circle(radius, points)
+        rods, delta = pt.QuadRods.along(ring, r0), 0.04 * r0
+        a, b, T = rods.frame.a[0], rods.frame.b[0], ring.tangents[0]
+        e = rods.field_all(ring.points[0] + delta * np.array([a, -a, b, -b]), lam)
+        g = rods.gradient(lam)
+        assert rods.line_charge(g) == pytest.approx(lam)
+        assert -(e[0] - e[1]) @ a / (2 * delta) == pytest.approx(g, rel=2e-3)
+        assert +(e[2] - e[3]) @ b / (2 * delta) == pytest.approx(g, rel=2e-3)
+        assert float(np.abs(e @ T).max()) < 1e-6 * g * delta
+    assert pt.QuadRods.along(ring, r0).volts(lam, 25e-6) == pytest.approx(lam * math.log(80) / (math.pi * pt.EPS0))
+
+
+def test_rod_2_a_bend_moves_the_null_inward_by_a_quarter_of_r0_squared_over_the_radius() -> None:
+    # Bent to radius R the rods leave a field lam / (2 pi eps0 R) on their centre line, toward the centre of
+    # the bend, whatever r0. With ROD-1's gradient the null lies r0^2 / (4 R) inside the centre line.
+    lam = 1e-9
+    for radius, r0, points in ((0.2, 5e-3, 2000), (0.1, 5e-3, 2000), (0.2, 2e-3, 4000), (0.05, 5e-3, 2000)):
+        ring = ClosedCurve.circle(radius, points)
+        rods = pt.QuadRods.along(ring, r0)
+        outward = rods.frame.a[0]  # on a circle the frame's first normal points away from the centre
+        on_axis = rods.field_all(ring.points[:1], lam)[0]
+        assert on_axis @ outward == pytest.approx(-lam / (2 * math.pi * pt.EPS0 * radius), rel=0.015)
+        assert abs(on_axis @ rods.frame.b[0]) < 1e-9 * abs(on_axis @ outward)
+        null = (on_axis @ outward) / rods.gradient(lam)
+        assert null == pytest.approx(-(r0**2) / (4 * radius), rel=0.015)
+
+
+def test_rods_whole_field_is_the_sum_over_every_station() -> None:
+    knot = ClosedCurve.torus_knot(0.060, 0.016, 301)
+    rods = pt.QuadRods.along(knot, 6e-3)
+    rng = np.random.default_rng(3)
+    at = rng.integers(0, len(knot), 20)
+    x = knot.points[at] + 3e-3 * rng.uniform(-1, 1, (20, 1)) * rods.frame.a[at]
+    lam = rng.uniform(0.5, 2.0, 20) * 1e-9
+    every = np.arange(len(knot)) - len(knot) // 2
+    by_station = rods.field(x, at.astype(np.intp), lam, every.astype(np.intp))
+    assert float(np.abs(rods.field_all(x, lam) - by_station).max()) < 1e-11 * float(np.abs(by_station).max())
 
 
 # ---- coils ----------------------------------------------------------------------------------------------------

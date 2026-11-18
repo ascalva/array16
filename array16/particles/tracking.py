@@ -91,7 +91,8 @@ def integrate(
 
 class GuideWatch:
     """Watches particles go round a closed curve: the station each is at, its laps, its largest distance from the
-    curve, and its offset on the curve's axes each time it completes a lap. One further than `wall` is lost."""
+    curve, and its offset on the curve's axes and the time each time it completes a lap. One further than `wall`
+    is lost. `station` is where each particle is now, for fields that need to know."""
 
     def __init__(self, curve: ClosedCurve, wall: float, count: int) -> None:
         self.curve, self.wall = curve, wall
@@ -99,6 +100,7 @@ class GuideWatch:
         self.advance: Arr = np.zeros(count)
         self.reach: Arr = np.zeros(count)
         self.crossings: list[list[complex]] = [[] for _ in range(count)]
+        self.times: list[list[float]] = [[] for _ in range(count)]  # when each lap was completed (s)
         self._laps: IntArr = np.zeros(count, dtype=np.intp)
 
     def __call__(self, step: int, t: float, x: Arr, u: Arr, alive: BoolArr) -> BoolArr:
@@ -112,6 +114,7 @@ class GuideWatch:
         for i in np.flatnonzero((laps > self._laps) & alive & inside):
             at = self.station[i]
             self.crossings[i].append(complex(float(across[i] @ e1[at]), float(across[i] @ e2[at])))
+            self.times[i].append(t)
         self._laps = np.maximum(self._laps, laps)
         return ~inside
 
