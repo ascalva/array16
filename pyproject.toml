@@ -2,7 +2,7 @@
 name = "array16"
 version = "0.1.0"
 description = "Host library, controller protocol and simulator for a 4x4 phased-array SDR board at 5.8 GHz"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = ["numpy>=1.26"]
 
 [project.optional-dependencies]
@@ -24,9 +24,11 @@ pythonpath = ["."]
 # were written to (almost none of their lines pass it; one in eight passes 100).
 [tool.ruff]
 line-length = 120
-target-version = "py310"
+target-version = "py311"
 include = [
     "array16/particles/*.py",
+    "array16/lab.py",
+    "tests/test_lab.py",
     "tests/test_particles.py",
     "tests/test_laws.py",
     "tests/conftest.py",
@@ -40,6 +42,8 @@ strict = true
 follow_imports = "silent"
 files = [
     "array16/particles",
+    "array16/lab.py",
+    "tests/test_lab.py",
     "tests/test_particles.py",
     "tests/test_laws.py",
     "tests/conftest.py",

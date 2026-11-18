@@ -1,0 +1,7 @@
+# Compute, and the simulated board, radios and room standing in for the array (array16/backend.py::Backend).
+name = "simulated"
+
+[device.array]
+driver = "array16.sim:SimBackend"
+radio = "quad"
+seed = 0
