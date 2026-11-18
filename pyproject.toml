@@ -6,7 +6,7 @@ requires-python = ">=3.10"
 dependencies = ["numpy>=1.26"]
 
 [project.optional-dependencies]
-dev = ["pytest", "matplotlib"]
+dev = ["pytest", "hypothesis", "matplotlib", "ruff", "mypy"]
 
 [build-system]
 requires = ["setuptools>=68"]
