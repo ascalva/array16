@@ -32,10 +32,13 @@ include = [
     "tests/test_particles.py",
     "tests/test_laws.py",
     "tests/conftest.py",
+    "experiments/guide_study.py",
 ]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM", "C4", "NPY", "PT", "RUF"]
+# The symbols of the physics, wanted as they are in the reports the scripts write.
+allowed-confusables = ["ρ", "α", "×", "−"]
 
 [tool.mypy]
 strict = true
@@ -47,4 +50,5 @@ files = [
     "tests/test_particles.py",
     "tests/test_laws.py",
     "tests/conftest.py",
+    "experiments/guide_study.py",
 ]

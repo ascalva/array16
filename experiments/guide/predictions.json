@@ -1,0 +1,4063 @@
+{
+ "apparatus": {
+  "guides": {
+   "figure-eight": {
+    "axis_reach_at_1mm_mm": 5.524877445771408,
+    "bend_mm": 32.4281703536471,
+    "closed_orbit_per_rho": 2.774136361073412,
+    "drift_per_rho": 5.252337673174849,
+    "knotted": false,
+    "length_mm": 874.6984808612254,
+    "mT_per_A": 0.518539324320878,
+    "matched_reach_at_1mm_mm": 2.764048689873728,
+    "net_turns_along_curve": 3.657286686259101e-07,
+    "shape": "figure-eight",
+    "turn_deg": -142.40444837603326,
+    "wander_mm": 0.019178900255689142,
+    "winding": "return",
+    "writhe": 0.6044345797593781
+   },
+   "helix": {
+    "axis_reach_at_1mm_mm": 3.249314251899182,
+    "bend_mm": 60.05330143160231,
+    "closed_orbit_per_rho": 0.9129380598611595,
+    "drift_per_rho": 1.6061714885280138,
+    "knotted": false,
+    "length_mm": 897.0635435542783,
+    "mT_per_A": 0.5056091387945644,
+    "matched_reach_at_1mm_mm": 2.8484580198662943,
+    "net_turns_along_curve": 2.2111231787070442e-05,
+    "shape": "helix",
+    "turn_deg": 123.205564100662,
+    "wander_mm": 0.900709293346267,
+    "winding": "return",
+    "writhe": -0.6575662375321667
+   },
+   "ring": {
+    "axis_reach_at_1mm_mm": 123.40741340187171,
+    "bend_mm": 148.35652537312646,
+    "closed_orbit_per_rho": null,
+    "drift_per_rho": 6.2830704697474795,
+    "knotted": false,
+    "length_mm": 932.143021994441,
+    "mT_per_A": 0.48655761743576775,
+    "matched_reach_at_1mm_mm": null,
+    "net_turns_along_curve": 4.976012863591216e-06,
+    "shape": "ring",
+    "turn_deg": 0.0,
+    "wander_mm": 0.11269979965389396,
+    "winding": "return",
+    "writhe": 0.0
+   },
+   "ring-single": {
+    "axis_reach_at_1mm_mm": 90.42765547224914,
+    "bend_mm": 148.35652537312646,
+    "closed_orbit_per_rho": null,
+    "drift_per_rho": 6.2830704697474795,
+    "knotted": false,
+    "length_mm": 932.143021994441,
+    "mT_per_A": 0.2432951489232563,
+    "matched_reach_at_1mm_mm": null,
+    "net_turns_along_curve": 0.9999783649965736,
+    "shape": "ring",
+    "turn_deg": 0.0,
+    "wander_mm": 10.804453243359937,
+    "winding": "single",
+    "writhe": 0.0
+   },
+   "trefoil": {
+    "axis_reach_at_1mm_mm": 9.02475440066905,
+    "bend_mm": 43.79223340765509,
+    "closed_orbit_per_rho": 4.150627234255667,
+    "drift_per_rho": 8.219221378942924,
+    "knotted": true,
+    "length_mm": 932.143021994441,
+    "mT_per_A": 0.4866107764138592,
+    "matched_reach_at_1mm_mm": 5.46582685508689,
+    "net_turns_along_curve": 2.5437930268977028e-05,
+    "shape": "trefoil",
+    "turn_deg": -163.87689849141287,
+    "wander_mm": 1.1700907015888795,
+    "winding": "return",
+    "writhe": -3.4554073848576348
+   },
+   "trefoil-fine-curve": {
+    "axis_reach_at_1mm_mm": 9.014618767652756,
+    "bend_mm": 43.78219867779017,
+    "closed_orbit_per_rho": 4.147229812029052,
+    "drift_per_rho": 8.21375371704107,
+    "knotted": true,
+    "length_mm": 932.1430387452951,
+    "mT_per_A": 0.48660962664641,
+    "matched_reach_at_1mm_mm": 5.461295454191201,
+    "net_turns_along_curve": 2.5447474286401974e-05,
+    "shape": "trefoil",
+    "turn_deg": -164.00150932834816,
+    "wander_mm": 1.17353919790004,
+    "winding": "return",
+    "writhe": -3.4555815795930473
+   },
+   "trefoil-fine-winding": {
+    "axis_reach_at_1mm_mm": 9.022640083993315,
+    "bend_mm": 43.79223340765509,
+    "closed_orbit_per_rho": 4.150627234255667,
+    "drift_per_rho": 8.219221378942924,
+    "knotted": true,
+    "length_mm": 932.143021994441,
+    "mT_per_A": 0.4856834512734637,
+    "matched_reach_at_1mm_mm": 5.466711637241513,
+    "net_turns_along_curve": 6.382035693113284e-06,
+    "shape": "trefoil",
+    "turn_deg": -163.87689849141287,
+    "wander_mm": 1.1760279066560217,
+    "winding": "return",
+    "writhe": -3.4554073848576348
+   },
+   "trefoil-shallow": {
+    "axis_reach_at_1mm_mm": 26.505014468336984,
+    "bend_mm": 51.01268543814093,
+    "closed_orbit_per_rho": 13.833751386573901,
+    "drift_per_rho": 12.190339702002865,
+    "knotted": true,
+    "length_mm": 813.8479843746929,
+    "mT_per_A": 0.5572986300915184,
+    "matched_reach_at_1mm_mm": 13.72254529747304,
+    "net_turns_along_curve": 1.2271950240526585e-05,
+    "shape": "shallow trefoil",
+    "turn_deg": -52.284514752598255,
+    "wander_mm": 0.9212614680413342,
+    "winding": "return",
+    "writhe": -3.145604708302867
+   },
+   "trefoil-single": {
+    "axis_reach_at_1mm_mm": 9.337727951766608,
+    "bend_mm": 43.79223340765509,
+    "closed_orbit_per_rho": 4.150627234255668,
+    "drift_per_rho": 8.219221378942924,
+    "knotted": true,
+    "length_mm": 932.143021994441,
+    "mT_per_A": 0.23933295277109148,
+    "matched_reach_at_1mm_mm": 4.669008386249701,
+    "net_turns_along_curve": 0.9998731943148679,
+    "shape": "trefoil",
+    "turn_deg": -163.87689849141287,
+    "wander_mm": 17.464887738644556,
+    "winding": "single",
+    "writhe": -3.4554073848576348
+   }
+  },
+  "wall_mm": 9.899999999999999
+ },
+ "shots": [
+  {
+   "ident": "ring axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 3.27,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.06057670870439693,
+    "step": [
+     -2.311029804037607e-17,
+     0.003028835435219846
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 3.0433333333333334,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.06508470069055265,
+    "step": [
+     -2.311029804037607e-17,
+     -0.0032542350345276336
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 1.605,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.12340741340187171,
+    "step": [
+     -2.311029804037607e-17,
+     0.006170370670093585
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 1.5483333333333333,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.12791540538802745,
+    "step": [
+     -2.311029804037607e-17,
+     -0.006395770269401374
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 1.0633333333333332,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.1862381180993466,
+    "step": [
+     -2.311029804037607e-17,
+     0.009311905904967326
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 1.0383333333333333,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.19074611008550232,
+    "step": [
+     -2.311029804037607e-17,
+     -0.009537305504275114
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.795,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.2490688227968213,
+    "step": [
+     -2.311029804037607e-17,
+     0.012453441139841065
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.7816666666666666,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.25357681478297706,
+    "step": [
+     -2.311029804037607e-17,
+     -0.012678840739148853
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.53,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.37473023219177104,
+    "step": [
+     -2.311029804037607e-17,
+     0.018736511609588547
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.5233333333333333,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.37923822417792674,
+    "step": [
+     -2.311029804037607e-17,
+     -0.018961911208896332
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "ring",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0014844306040191246,
+     1.3156539730511025e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0014844311870524547,
+    "reach": 0.004296502573647241,
+    "step": [
+     -0.0029108398500275554,
+     0.0004096498092907364
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.002666196630236543,
+     1.315653973048096e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0026661969548459983,
+    "reach": 0.005642830056504347,
+    "step": [
+     0.005227159091256215,
+     -0.0007429877346651441
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0014844306040191246,
+     1.3156539730511025e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.002812554986309966,
+    "step": [
+     -0.0029108398500275554,
+     0.0004096498092907364
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.002666196630236543,
+     1.315653973048096e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00297777218094861,
+    "step": [
+     0.005227159091256215,
+     -0.0007429877346651441
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0035597442211469585,
+     1.3156539730526058e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0035597444642747242,
+    "reach": 0.00902475440066905,
+    "step": [
+     -0.0069798393206694405,
+     0.0009859685812686767
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.004741510247364377,
+     1.3156539730465927e-06
+    ],
+    "exit_lap": 1.1033333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.004741510429895391,
+    "reach": 0.010048223354374775,
+    "step": [
+     0.0092961585618981,
+     -0.0013193065066430844
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0035597442211469585,
+     1.3156539730526058e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00546582685508689,
+    "step": [
+     -0.0069798393206694405,
+     0.0009859685812686767
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.004741510247364377,
+     1.3156539730465927e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.005310035494170239,
+    "step": [
+     0.0092961585618981,
+     -0.0013193065066430844
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.005635057838274793,
+     1.3156539730542319e-06
+    ],
+    "exit_lap": 0.7283333333333334,
+    "held": false,
+    "launched": true,
+    "radius": 0.0056350579918619794,
+    "reach": 0.013753063227635066,
+    "step": [
+     -0.011048838791311327,
+     0.001562287353246617
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.006816823864492212,
+     1.3156539730449664e-06
+    ],
+    "exit_lap": 0.5383333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.006816823991453492,
+    "reach": 0.01462641205664992,
+    "step": [
+     0.013365158032539987,
+     -0.0018956252786210246
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.005635057838274793,
+     1.3156539730542319e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.008119137711298014,
+    "step": [
+     -0.011048838791311327,
+     0.001562287353246617
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.006816823864492212,
+     1.3156539730449664e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.007814249978583881,
+    "step": [
+     0.013365158032539987,
+     -0.0018956252786210246
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.007710371455402626,
+     1.3156539730556123e-06
+    ],
+    "exit_lap": 0.43,
+    "held": false,
+    "launched": true,
+    "radius": 0.0077103715676504845,
+    "reach": 0.018481385305711112,
+    "step": [
+     -0.01511783826195321,
+     0.002138606125224557
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.008892137481620046,
+     1.315653973043586e-06
+    ],
+    "exit_lap": 0.395,
+    "held": false,
+    "launched": true,
+    "radius": 0.008892137578950151,
+    "reach": 0.019346103814722657,
+    "step": [
+     0.01743415750318187,
+     -0.002471944050598965
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.007710371455402626,
+     1.3156539730556123e-06
+    ],
+    "exit_lap": 0.14333333333333334,
+    "held": false,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.010772458746577524,
+    "step": [
+     -0.01511783826195321,
+     0.002138606125224557
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.008892137481620046,
+     1.315653973043586e-06
+    ],
+    "exit_lap": 0.12,
+    "held": false,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.010455740405063352,
+    "step": [
+     0.01743415750318187,
+     -0.002471944050598965
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.011860998689658295,
+     1.3156539730588647e-06
+    ],
+    "exit_lap": 0.30833333333333335,
+    "held": false,
+    "launched": true,
+    "radius": 0.01186099876262624,
+    "reach": 0.027938042303273358,
+    "step": [
+     -0.023255837203236984,
+     0.0032912436691804377
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.013042764715875715,
+     1.3156539730403338e-06
+    ],
+    "exit_lap": 0.2833333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.013042764782232251,
+    "reach": 0.028801505815940962,
+    "step": [
+     0.025572156444465644,
+     -0.0036245815945548454
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.011860998689658295,
+     1.3156539730588647e-06
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     -0.023255837203236984,
+     0.0032912436691804377
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.013042764715875715,
+     1.3156539730403338e-06
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     0.025572156444465644,
+     -0.0036245815945548454
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=+0.2500mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0024129789393405464,
+     7.036219001842095e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0024129790419282152,
+    "reach": 0.0053597477969124134,
+    "step": [
+     -0.0009374177320600975,
+     0.0019085336552222458
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.00025,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=-0.2500mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.004503896753946403,
+     7.036219001746874e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.004503896808908117,
+    "reach": 0.009092227016910218,
+    "step": [
+     0.0017481224713451237,
+     -0.003563117770851154
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.00025,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=+0.2500mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0024129789393405464,
+     7.036219001842095e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.002947780909251571,
+    "step": [
+     -0.0009374177320600975,
+     0.0019085336552222458
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.00025,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=-0.2500mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.004503896753946403,
+     7.036219001746874e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00459029823554795,
+    "step": [
+     0.0017481224713451237,
+     -0.003563117770851154
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.00025,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.005871416785984021,
+     7.036219001889706e-07
+    ],
+    "exit_lap": 2.111666666666667,
+    "held": false,
+    "launched": true,
+    "radius": 0.005871416828144524,
+    "reach": 0.012408169739249237,
+    "step": [
+     -0.002280187833762708,
+     0.004644359368258946
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.007962334600589878,
+     7.036219001699262e-07
+    ],
+    "exit_lap": 1.4933333333333334,
+    "held": false,
+    "launched": true,
+    "radius": 0.007962334631678987,
+    "reach": 0.01604147178521955,
+    "step": [
+     0.0030908925730477343,
+     -0.006298943483887854
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.005871416785984021,
+     7.036219001889706e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0065393623352943886,
+    "step": [
+     -0.002280187833762708,
+     0.004644359368258946
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.007962334600589878,
+     7.036219001699262e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.008080128644889426,
+    "step": [
+     0.0030908925730477343,
+     -0.006298943483887854
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.012788292479270973,
+     7.03621900198059e-07
+    ],
+    "exit_lap": 0.8083333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.012788292498627889,
+    "reach": 0.026505014468336984,
+    "step": [
+     -0.004965728037167929,
+     0.010116010794332346
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.014879210293876828,
+     7.036219001599704e-07
+    ],
+    "exit_lap": 0.735,
+    "held": false,
+    "launched": true,
+    "radius": 0.014879210310513591,
+    "reach": 0.02997872833922395,
+    "step": [
+     0.0057764327764529555,
+     -0.011770594909961253
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.012788292479270973,
+     7.03621900198059e-07
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     -0.004965728037167929,
+     0.010116010794332346
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.014879210293876828,
+     7.036219001599704e-07
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     0.0057764327764529555,
+     -0.011770594909961253
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.01970516817255792,
+     7.036219002071394e-07
+    ],
+    "exit_lap": 0.58,
+    "held": false,
+    "launched": true,
+    "radius": 0.019705168185120202,
+    "reach": 0.04060185934605,
+    "step": [
+     -0.00765126824057315,
+     0.015587662220405746
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.02179608598716378,
+     7.03621900152641e-07
+    ],
+    "exit_lap": 0.49666666666666665,
+    "held": false,
+    "launched": true,
+    "radius": 0.021796085998520953,
+    "reach": 0.04399309824524105,
+    "step": [
+     0.008461972979858175,
+     -0.017242246336034654
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.01970516817255792,
+     7.036219002071394e-07
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     -0.00765126824057315,
+     0.015587662220405746
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.02179608598716378,
+     7.03621900152641e-07
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     0.008461972979858175,
+     -0.017242246336034654
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.02662204386584487,
+     7.036219002188543e-07
+    ],
+    "exit_lap": 0.3983333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.02662204387514325,
+    "reach": 0.05469870425747804,
+    "step": [
+     -0.010336808443978373,
+     0.021059313646479144
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.028712961680450726,
+     7.03621900142677e-07
+    ],
+    "exit_lap": 0.375,
+    "held": false,
+    "launched": true,
+    "radius": 0.028712961689071986,
+    "reach": 0.058078705839777214,
+    "step": [
+     0.011147513183263397,
+     -0.022713897762108054
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.02662204386584487,
+     7.036219002188543e-07
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     -0.010336808443978373,
+     0.021059313646479144
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.028712961680450726,
+     7.03621900142677e-07
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     0.011147513183263397,
+     -0.022713897762108054
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.04045579525241877,
+     7.03621900237015e-07
+    ],
+    "exit_lap": 0.28,
+    "held": false,
+    "launched": true,
+    "radius": 0.04045579525853759,
+    "reach": 0.08289239411267546,
+    "step": [
+     -0.015707888850788814,
+     0.032002616498625944
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.04254671306702462,
+     7.036219001245163e-07
+    ],
+    "exit_lap": 0.265,
+    "held": false,
+    "launched": true,
+    "radius": 0.042546713072842746,
+    "reach": 0.08627100514132204,
+    "step": [
+     0.01651859359007384,
+     -0.033657200614254854
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.04045579525241877,
+     7.03621900237015e-07
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     -0.015707888850788814,
+     0.032002616498625944
+    ],
+    "turn": -0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-shallow matched rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.04254671306702462,
+     7.036219001245163e-07
+    ],
+    "exit_lap": null,
+    "held": false,
+    "launched": false,
+    "radius": null,
+    "reach": null,
+    "step": [
+     0.01651859359007384,
+     -0.033657200614254854
+    ],
+    "turn": 0.912536930240388
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "trefoil-shallow",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -5.5488047532454136e-05,
+     -7.714632571977592e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 5.5493410190049555e-05,
+    "reach": 0.0016555846090716675,
+    "step": [
+     8.523027860912605e-05,
+     4.762141806083603e-05
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0009684261073936135,
+     -7.714632571974762e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0009684264146733627,
+    "reach": 0.0021152296727436157,
+    "step": [
+     0.0014981338281405323,
+     0.0008114868579662215
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -5.5488047532454136e-05,
+     -7.714632571977592e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0016000952332898134,
+    "step": [
+     8.523027860912605e-05,
+     4.762141806083603e-05
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0009684261073936135,
+     -7.714632571974762e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0011473684587416826,
+    "step": [
+     0.0014981338281405323,
+     0.0008114868579662215
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.00040098098239812563,
+     -7.714632571979204e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.00040098172452185794,
+    "reach": 0.003249314251899182,
+    "step": [
+     -0.0006212214961565771,
+     -0.00033431130189185673
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0014248951373241933,
+     -7.71463257197289e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0014248953461660576,
+    "reach": 0.0035770438819686732,
+    "step": [
+     0.0022045856029062356,
+     0.0011934195779189144
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.00040098098239812563,
+     -7.714632571979204e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0028484580198662943,
+    "step": [
+     -0.0006212214961565771,
+     -0.00033431130189185673
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0014248951373241933,
+     -7.71463257197289e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00215222426616369,
+    "step": [
+     0.0022045856029062356,
+     0.0011934195779189144
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0008574500123287055,
+     -7.714632571982204e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0008574503593783458,
+    "reach": 0.0049539878187438635,
+    "step": [
+     -0.0013276732709222806,
+     -0.0007162440218445494
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0018813641672547731,
+     -7.714632571969935e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0018813643254260465,
+    "reach": 0.005274744418256283,
+    "step": [
+     0.002911037377671939,
+     0.0015753522978716069
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0008574500123287055,
+     -7.714632571982204e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0040968371020805,
+    "step": [
+     -0.0013276732709222806,
+     -0.0007162440218445494
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0018813641672547731,
+     -7.714632571969935e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00339390530714165,
+    "step": [
+     0.002911037377671939,
+     0.0015753522978716069
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.001313919042259285,
+     -7.714632571981775e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0013139192687403264,
+    "reach": 0.006658661541584422,
+    "step": [
+     -0.0020341250456879833,
+     -0.0010981767417972423
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.002337833197185353,
+     -7.714632571968063e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.002337833324473207,
+    "reach": 0.006979072641562187,
+    "step": [
+     0.003617489152437642,
+     0.0019572850178242998
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.001313919042259285,
+     -7.714632571981775e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00534522106238133,
+    "step": [
+     -0.0020341250456879833,
+     -0.0010981767417972423
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.002337833197185353,
+     -7.714632571968063e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.004641937214827392,
+    "step": [
+     0.003617489152437642,
+     0.0019572850178242998
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.002226857102120445,
+     -7.714632571988946e-07
+    ],
+    "exit_lap": 0.8266666666666667,
+    "held": false,
+    "launched": true,
+    "radius": 0.0022268572357517272,
+    "reach": 0.010068009138302232,
+    "step": [
+     -0.0034470285952193907,
+     -0.0018620421817026275
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0032507712570465125,
+     -7.71463257196432e-07
+    ],
+    "exit_lap": 0.8066666666666666,
+    "held": false,
+    "launched": true,
+    "radius": 0.003250771348587181,
+    "reach": 0.010388400893239964,
+    "step": [
+     0.005030392701969049,
+     0.002721150457729685
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.002226857102120445,
+     -7.714632571988946e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00784199429860192,
+    "step": [
+     -0.0034470285952193907,
+     -0.0018620421817026275
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0032507712570465125,
+     -7.71463257196432e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.007138708919811077,
+    "step": [
+     0.005030392701969049,
+     0.002721150457729685
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596314822e-07,
+     0.0013769803559937164
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.001376980663803702,
+    "reach": 0.00299499112281785,
+    "step": [
+     -0.0008384229883855521,
+     -0.002468574563458328
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596296933e-07,
+     -0.0013971560050796954
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0013971563084447481,
+    "reach": 0.0027926223265695373,
+    "step": [
+     0.000854032247373812,
+     0.002503612712580508
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=+0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596314822e-07,
+     0.0013769803559937164
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0016195930118806047,
+    "step": [
+     -0.0008384229883855521,
+     -0.002468574563458328
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=-0.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596296933e-07,
+     -0.0013971560050796954
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.001397158047789076,
+    "step": [
+     0.000854032247373812,
+     0.002503612712580508
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596324038e-07,
+     0.0027640485365304224
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.002764048689873728,
+    "reach": 0.005524877445771409,
+    "step": [
+     -0.0016846506062652342,
+     -0.0049546682014777466
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596288259e-07,
+     -0.0027842241856164012
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0027842243378485175,
+    "reach": 0.005565077009319711,
+    "step": [
+     0.001700259865253494,
+     0.004989706350599926
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596324038e-07,
+     0.0027640485365304224
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0027640486898737283,
+    "step": [
+     -0.0016846506062652342,
+     -0.0049546682014777466
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=-1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596288259e-07,
+     -0.0027842241856164012
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.002784226078048838,
+    "step": [
+     0.001700259865253494,
+     0.004989706350599926
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596333796e-07,
+     0.004151116717067129
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.004151116819171785,
+    "reach": 0.008297303471489817,
+    "step": [
+     -0.0025308782241449165,
+     -0.007440761839497165
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596277417e-07,
+     -0.004171292366153107
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.004171292467763905,
+    "reach": 0.008337532723377571,
+    "step": [
+     0.002546487483133176,
+     0.007475799988619344
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=+1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596333796e-07,
+     0.004151116717067129
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.004151116819171786,
+    "step": [
+     -0.0025308782241449165,
+     -0.007440761839497165
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=-1.5000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596277417e-07,
+     -0.004171292366153107
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.004171294208250895,
+    "step": [
+     0.002546487483133176,
+     0.007475799988619344
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0015,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596340301e-07,
+     0.005538184897603834
+    ],
+    "exit_lap": 0.8566666666666667,
+    "held": false,
+    "launched": true,
+    "radius": 0.005538184974135831,
+    "reach": 0.011069764746285371,
+    "step": [
+     -0.0033771058420245985,
+     -0.009926855477516582
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596268744e-07,
+     -0.005558360546689813
+    ],
+    "exit_lap": 0.8916666666666667,
+    "held": false,
+    "launched": true,
+    "radius": 0.005558360622944016,
+    "reach": 0.011109988487787848,
+    "step": [
+     0.003392715101012858,
+     0.009961893626638763
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=+2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596340301e-07,
+     0.005538184897603834
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.005538184974135832,
+    "step": [
+     -0.0033771058420245985,
+     -0.009926855477516582
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=-2.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596268744e-07,
+     -0.005558360546689813
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00555836236357459,
+    "step": [
+     0.003392715101012858,
+     0.009961893626638763
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.002,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596357648e-07,
+     0.008312321258677246
+    ],
+    "exit_lap": 0.3466666666666667,
+    "held": false,
+    "launched": true,
+    "radius": 0.008312321309667617,
+    "reach": 0.01661468750148174,
+    "step": [
+     -0.005069561077783963,
+     -0.014899042753555419
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight axis rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596249228e-07,
+     -0.008332496907763226
+    ],
+    "exit_lap": 0.335,
+    "held": false,
+    "launched": true,
+    "radius": 0.008332496958630132,
+    "reach": 0.016654900067082753,
+    "step": [
+     0.005085170336772222,
+     0.0149340809026776
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=+3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596357648e-07,
+     0.008312321258677246
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.008312321309667619,
+    "step": [
+     -0.005069561077783963,
+     -0.014899042753555419
+    ],
+    "turn": -2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "figure-eight matched rho=-3.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -9.207044596249228e-07,
+     -0.008332496907763226
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.008332498699404464,
+    "step": [
+     0.005085170336772222,
+     0.0149340809026776
+    ],
+    "turn": 2.4854264936480726
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "main",
+    "guide": "figure-eight",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.003,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0014844306040191246,
+     1.3156539730511025e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0014844311870524547,
+    "reach": 0.004296502573647241,
+    "step": [
+     -0.0029108398500275554,
+     0.0004096498092907364
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.002666196630236543,
+     1.315653973048096e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0026661969548459983,
+    "reach": 0.005642830056504347,
+    "step": [
+     0.005227159091256215,
+     -0.0007429877346651441
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0014844306040191246,
+     1.3156539730511025e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.002812554986309966,
+    "step": [
+     -0.0029108398500275554,
+     0.0004096498092907364
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.002666196630236543,
+     1.315653973048096e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00297777218094861,
+    "step": [
+     0.005227159091256215,
+     -0.0007429877346651441
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+1.0000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0035597442211469585,
+     1.3156539730526058e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0035597444642747242,
+    "reach": 0.00902475440066905,
+    "step": [
+     -0.0069798393206694405,
+     0.0009859685812686767
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=-1.0000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.004741510247364377,
+     1.3156539730465927e-06
+    ],
+    "exit_lap": 1.1033333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.004741510429895391,
+    "reach": 0.010048223354374775,
+    "step": [
+     0.0092961585618981,
+     -0.0013193065066430844
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0035597442211469585,
+     1.3156539730526058e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00546582685508689,
+    "step": [
+     -0.0069798393206694405,
+     0.0009859685812686767
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.004741510247364377,
+     1.3156539730465927e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.005310035494170239,
+    "step": [
+     0.0092961585618981,
+     -0.0013193065066430844
+    ],
+    "turn": 2.860191446631683
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=+0.5000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -5.5488047532454136e-05,
+     -7.714632571977592e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 5.5493410190049555e-05,
+    "reach": 0.0016555846090716675,
+    "step": [
+     8.523027860912605e-05,
+     4.762141806083603e-05
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=-0.5000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0009684261073936135,
+     -7.714632571974762e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0009684264146733627,
+    "reach": 0.0021152296727436157,
+    "step": [
+     0.0014981338281405323,
+     0.0008114868579662215
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=+0.5000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -5.5488047532454136e-05,
+     -7.714632571977592e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0016000952332898134,
+    "step": [
+     8.523027860912605e-05,
+     4.762141806083603e-05
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=-0.5000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0009684261073936135,
+     -7.714632571974762e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0011473684587416826,
+    "step": [
+     0.0014981338281405323,
+     0.0008114868579662215
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.0005,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=+1.0000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.00040098098239812563,
+     -7.714632571979204e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.00040098172452185794,
+    "reach": 0.003249314251899182,
+    "step": [
+     -0.0006212214961565771,
+     -0.00033431130189185673
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix axis rho=-1.0000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0014248951373241933,
+     -7.71463257197289e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0014248953461660576,
+    "reach": 0.0035770438819686732,
+    "step": [
+     0.0022045856029062356,
+     0.0011934195779189144
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "axis",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=+1.0000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.00040098098239812563,
+     -7.714632571979204e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.0028484580198662943,
+    "step": [
+     -0.0006212214961565771,
+     -0.00033431130189185673
+    ],
+    "turn": 2.150342750333478
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "helix matched rho=-1.0000mm B=40mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0014248951373241933,
+     -7.71463257197289e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00215222426616369,
+    "step": [
+     0.0022045856029062356,
+     0.0011934195779189144
+    ],
+    "turn": -2.150342750333478
+   },
+   "shot": {
+    "field": 0.04,
+    "group": "scaling",
+    "guide": "helix",
+    "laps": 20,
+    "launch": "matched",
+    "rho": -0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+1.0000mm B=20mT laps=20 steps=40",
+   "prediction": {
+    "centre": [
+     0.0035597442211469585,
+     1.3156539730526058e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0035597444642747242,
+    "reach": 0.00902475440066905,
+    "step": [
+     -0.0069798393206694405,
+     0.0009859685812686767
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "systematics",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 40
+   }
+  },
+  {
+   "ident": "trefoil axis rho=+1.0000mm B=20mT laps=60 steps=20",
+   "prediction": {
+    "centre": [
+     0.0035597442211469585,
+     1.3156539730526058e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0035597444642747242,
+    "reach": 0.009025530691534733,
+    "step": [
+     -0.0069798393206694405,
+     0.0009859685812686767
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "systematics",
+    "guide": "trefoil",
+    "laps": 60,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-fine-curve axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0035546951592506726,
+     6.623158616551358e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.003554695220952489,
+    "reach": 0.009014618767652756,
+    "step": [
+     -0.006971895808415616,
+     0.0009784177815814264
+    ],
+    "turn": -2.8623663160198696
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "systematics",
+    "guide": "trefoil-fine-curve",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-fine-winding axis rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.003556745999293903,
+     1.3231386387266086e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.003556746245403099,
+    "reach": 0.009022640083993314,
+    "step": [
+     -0.006973962883740116,
+     0.0009851212940815144
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "systematics",
+    "guide": "trefoil-fine-winding",
+    "laps": 20,
+    "launch": "axis",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=20 steps=40",
+   "prediction": {
+    "centre": [
+     0.0035597442211469585,
+     1.3156539730526058e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00546582685508689,
+    "step": [
+     -0.0069798393206694405,
+     0.0009859685812686767
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "systematics",
+    "guide": "trefoil",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 40
+   }
+  },
+  {
+   "ident": "trefoil matched rho=+1.0000mm B=20mT laps=60 steps=20",
+   "prediction": {
+    "centre": [
+     0.0035597442211469585,
+     1.3156539730526058e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.00546582685508689,
+    "step": [
+     -0.0069798393206694405,
+     0.0009859685812686767
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "systematics",
+    "guide": "trefoil",
+    "laps": 60,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-fine-curve matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0035546951592506726,
+     6.623158616551358e-07
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.005461295454191201,
+    "step": [
+     -0.006971895808415616,
+     0.0009784177815814264
+    ],
+    "turn": -2.8623663160198696
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "systematics",
+    "guide": "trefoil-fine-curve",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-fine-winding matched rho=+1.0000mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.003556745999293903,
+     1.3231386387266086e-06
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.0,
+    "reach": 0.005466711637241513,
+    "step": [
+     -0.006973962883740116,
+     0.0009851212940815144
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "systematics",
+    "guide": "trefoil-fine-winding",
+    "laps": 20,
+    "launch": "matched",
+    "rho": 0.001,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+6.7446mm B=5mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.019174694055293894,
+     1.639516042503879e-05
+    ],
+    "exit_lap": 0.10666666666666667,
+    "held": false,
+    "launched": true,
+    "radius": 0.01717470188079644,
+    "reach": 0.044675316937053615,
+    "step": [
+     -0.0375997478913217,
+     0.0052927057102389674
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.005,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.006744589789509625,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+11.6831mm B=5mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.03967267160797963,
+     1.6395160425053553e-05
+    ],
+    "exit_lap": 0.06166666666666667,
+    "held": false,
+    "launched": true,
+    "radius": 0.03767267517556936,
+    "reach": 0.09137724890820645,
+    "step": [
+     -0.0777894614472608,
+     0.01098503536764494
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.005,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.011683115076365852,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+21.3377mm B=5mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.07974506283416004,
+     1.639516042508476e-05
+    ],
+    "exit_lap": 0.03333333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.07774506456289541,
+    "reach": 0.18267699688669553,
+    "step": [
+     -0.1563580870954386,
+     0.022113219132782982
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.005,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.021337653767640685,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+36.9940mm B=5mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.14472876079427135,
+     1.639516042513282e-05
+    ],
+    "exit_lap": 0.02,
+    "held": false,
+    "launched": true,
+    "radius": 0.14272876173592208,
+    "reach": 0.33073396632321983,
+    "step": [
+     -0.28376949634836485,
+     0.04015932295914738
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.005,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.03699400985372627,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+3.3723mm B=10mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.005177555023183219,
+     1.639516042502862e-05
+    ],
+    "exit_lap": 0.7833333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.0031775973197751576,
+    "reach": 0.01278497670487886,
+    "step": [
+     -0.010156015608110375,
+     0.0014056720052538262
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.01,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.0033722948947548124,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+5.8416mm B=10mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.015426543799526089,
+     1.6395160425035786e-05
+    ],
+    "exit_lap": 0.12,
+    "held": false,
+    "launched": true,
+    "radius": 0.013426553809592312,
+    "reach": 0.03613567144527537,
+    "step": [
+     -0.030250872386079927,
+     0.004251836833956813
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.01,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.005841557538182926,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+10.6688mm B=10mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.03546273941261629,
+     1.6395160425051578e-05
+    ],
+    "exit_lap": 0.06833333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.033462743429042825,
+    "reach": 0.08178546851294088,
+    "step": [
+     -0.06953518521016883,
+     0.009815928716525833
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.01,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.010668826883820343,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+18.4970mm B=10mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.06795458839267195,
+     1.6395160425074624e-05
+    ],
+    "exit_lap": 0.03833333333333333,
+    "held": false,
+    "launched": true,
+    "radius": 0.06595459043044738,
+    "reach": 0.155813925492743,
+    "step": [
+     -0.13324088983663193,
+     0.01883898062970803
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.01,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.018497004926863136,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+1.6861mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     -0.0018210144928721196,
+     1.6395160425023412e-05
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.003821049666783218,
+    "reach": 0.005641883962967265,
+    "step": [
+     0.0035658505334952885,
+     -0.0005378448472387444
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.0016861474473774062,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+2.9208mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.0033034798952993154,
+     1.6395160425026997e-05
+    ],
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": 0.001303583000324443,
+    "reach": 0.008515375291913261,
+    "step": [
+     -0.006481577855489487,
+     0.0008852375671127488
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.002920778769091463,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+5.3344mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.013321577701844417,
+     1.63951604250348e-05
+    ],
+    "exit_lap": 0.13166666666666665,
+    "held": false,
+    "launched": true,
+    "radius": 0.011321589573031964,
+    "reach": 0.031339802990505705,
+    "step": [
+     -0.02612373426753394,
+     0.0036672835083972595
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.005334413441910171,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "trefoil-single first-run rho=+9.2485mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": [
+     0.029567502191872243,
+     1.639516042504564e-05
+    ],
+    "exit_lap": 0.07833333333333334,
+    "held": false,
+    "launched": true,
+    "radius": 0.027567507067200802,
+    "reach": 0.06835394449937002,
+    "step": [
+     -0.05797658658076549,
+     0.008178809464988359
+    ],
+    "turn": -2.860191446631683
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "first-run",
+    "guide": "trefoil-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.009248502463431568,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+6.7446mm B=5mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.30833333333333335,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.6314487612008511,
+    "step": [
+     -2.6372488272409624e-17,
+     0.03157227969366836
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.005,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.006744589789509625,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+11.6831mm B=5mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.155,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 1.2520292391601207,
+    "step": [
+     -2.6372488272409624e-17,
+     0.06260138208761593
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.005,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.011683115076365852,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+21.3377mm B=5mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.08,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 2.465231392038989,
+    "step": [
+     -2.6372488272409624e-17,
+     0.1232615290377993
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.005,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.021337653767640685,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+36.9940mm B=5mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.045,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 4.432630803722038,
+    "step": [
+     -2.6372488272409624e-17,
+     0.22163151762613487
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.005,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.03699400985372627,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+3.3723mm B=10mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.935,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.20768789456059553,
+    "step": [
+     -2.6372488272409624e-17,
+     0.010383913225154211
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.01,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.0033722948947548124,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+5.8416mm B=10mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.375,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.5179731496609569,
+    "step": [
+     -2.6372488272409624e-17,
+     0.025898464422127995
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.01,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.005841557538182926,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+10.6688mm B=10mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.17333333333333334,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 1.1245725363993324,
+    "step": [
+     -2.6372488272409624e-17,
+     0.05622853789721968
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.01,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.010668826883820343,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+18.4970mm B=10mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.09333333333333334,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 2.108271592472343,
+    "step": [
+     -2.6372488272409624e-17,
+     0.10541353219138747
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.01,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.018497004926863136,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+1.6861mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": null,
+    "held": true,
+    "launched": true,
+    "radius": null,
+    "reach": 0.004656757529788843,
+    "step": [
+     -2.6372488272409624e-17,
+     -0.0002102700091028628
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.0016861474473774062,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+2.9208mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 1.285,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.15095336149446126,
+    "step": [
+     -2.6372488272409624e-17,
+     0.007547005589384028
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.002920778769091463,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+5.3344mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.42833333333333334,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.4542452494678414,
+    "step": [
+     -2.6372488272409624e-17,
+     0.022712042326929874
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.005334413441910171,
+    "steps_per_turn": 20
+   }
+  },
+  {
+   "ident": "ring-single first-run rho=+9.2485mm B=20mT laps=20 steps=20",
+   "prediction": {
+    "centre": null,
+    "exit_lap": 0.205,
+    "held": false,
+    "launched": true,
+    "radius": null,
+    "reach": 0.9460929034399375,
+    "step": [
+     -2.6372488272409624e-17,
+     0.047304539474013765
+    ],
+    "turn": null
+   },
+   "shot": {
+    "field": 0.02,
+    "group": "first-run",
+    "guide": "ring-single",
+    "laps": 20,
+    "launch": "first-run",
+    "rho": 0.009248502463431568,
+    "steps_per_turn": 20
+   }
+  }
+ ]
+}
