@@ -1,0 +1,20 @@
+[project]
+name = "array16"
+version = "0.1.0"
+description = "Host library, controller protocol and simulator for a 4x4 phased-array SDR board at 5.8 GHz"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+dev = ["pytest", "matplotlib"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["array16"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

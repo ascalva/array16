@@ -1,0 +1,24 @@
+N = 4 whips
+  ring4_133mm            | nominal: p95 max 174.38, gross max 29.6 %, med 0.45 | elevated: p95 max 174.14, gross max 57.8 %, med 0.75 | stress: p95 max 173.78, gross max 58.9 %, med 1.97
+  ring4_74mm             | nominal: p95 max 169.76, gross max 13.9 %, med 0.72 | elevated: p95 max 174.81, gross max 30.8 %, med 0.79 | stress: p95 max 174.18, gross max 32.5 %, med 2.20
+  ring4_42mm             | nominal: p95 max  12.13, gross max 10.1 %, med 1.23 | elevated: p95 max  12.48, gross max 13.0 %, med 1.26 | stress: p95 max  34.79, gross max 52.1 %, med 3.26
+  N=4: GA 3872 evaluations in 11 s, score 6.02
+  N=4: climb from rev B's middle ring, 3870 evaluations, score 6.99
+  N=4: random search, 3872 evaluations, score 5.81
+  evolved4               | nominal: p95 max 159.97, gross max  5.4 %, med 0.57 | elevated: p95 max 172.78, gross max 15.2 %, med 0.74 | stress: p95 max 174.00, gross max 18.1 %, med 1.53
+  climbed4               | nominal: p95 max   6.41, gross max  0.4 %, med 0.64 | elevated: p95 max   7.24, gross max  3.2 %, med 0.90 | stress: p95 max 140.13, gross max 22.7 %, med 1.75
+  random4                | nominal: p95 max   6.35, gross max  0.4 %, med 0.66 | elevated: p95 max   8.23, gross max  2.4 %, med 1.00 | stress: p95 max  18.61, gross max 25.0 %, med 1.89
+N = 8 whips
+  ring8_225mm            | nominal: p95 max   1.61, gross max  0.0 %, med 0.16 | elevated: p95 max 172.41, gross max 30.3 %, med 0.18 | stress: p95 max 171.67, gross max 30.3 %, med 0.43
+  ring8_112mm            | nominal: p95 max   3.21, gross max  0.0 %, med 0.33 | elevated: p95 max   3.49, gross max  1.0 %, med 0.35 | stress: p95 max   8.42, gross max  2.9 %, med 0.85
+  ring8_78mm             | nominal: p95 max   4.61, gross max  0.0 %, med 0.46 | elevated: p95 max   5.02, gross max  0.1 %, med 0.50 | stress: p95 max  11.89, gross max  9.9 %, med 1.22
+  N=8: GA 8040 evaluations in 36 s, score 3.29
+  N=8: climb from rev B's middle ring, 8037 evaluations, score 2.39
+  N=8: random search, 8040 evaluations, score 1.75
+  evolved8               | nominal: p95 max   1.80, gross max  0.0 %, med 0.19 | elevated: p95 max   1.93, gross max  3.3 %, med 0.21 | stress: p95 max   4.54, gross max  4.3 %, med 0.49
+  climbed8               | nominal: p95 max   2.55, gross max  0.0 %, med 0.28 | elevated: p95 max   3.26, gross max  0.0 %, med 0.50 | stress: p95 max   6.80, gross max  0.4 %, med 0.81
+  random8                | nominal: p95 max   2.20, gross max  0.0 %, med 0.22 | elevated: p95 max   2.47, gross max  0.5 %, med 0.34 | stress: p95 max   5.48, gross max  0.9 %, med 0.63
+N = 16 whips
+  ring16_225mm           | nominal: p95 max   1.14, gross max  0.0 %, med 0.12 | elevated: p95 max   1.26, gross max  4.1 %, med 0.13 | stress: p95 max   2.76, gross max  4.2 %, med 0.29
+  rings16_225_112mm      | nominal: p95 max   1.38, gross max  0.0 %, med 0.14 | elevated: p95 max   1.50, gross max  0.0 %, med 0.16 | stress: p95 max   3.62, gross max  0.1 %, med 0.38
+  N=16: GA 8040 evaluations in 38 s, score 0.92

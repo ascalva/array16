@@ -1,0 +1,246 @@
+{
+ "investigate:simulate": {
+  "summary": "Simulation lens. A previous run of this study had already written experiments/array3d_study.py and finished Part 1 (whips), but stopped before the panel part. I added a --panel-only flag, ran the panel part (151 s) and regenerated all figures and results.json. Part 1 numbers are from the earlier full run (searches 345 s, about 45-80 s per design); I did not re-run them.\n\nCross-check: my covariance model with the azimuth-only estimator reproduces evolve_layout.check() and its stored results.json. Ring of 8 at 225 mm, sources 0-30 deg up: gross errors 6.3 / 21.5 / 27.1 % at 1.6 / 2.0 / 2.3 GHz against 5.4 / 22.7 / 26.4 % from check(). Two rings 225/112 mm: 0 % gross, p95 1.44 deg at 0.4 GHz and 0.27 deg at 2.3 GHz against 1.50 and 0.27 deg.\n\n**Whips, 0.4-2.3 GHz, 16 elements** (3 deg / 0.5 dB cal, 20 dB SNR at horizon, K = 64, 600 trials x 20 frequencies x 3 elevation bins; pooled over the band; bins are 0-10 / 10-30 / 30-60 deg):\n\n| Layout, estimator | Azimuth p95 (deg) | Elevation p95 (deg) | Gross azimuth errors |\n|---|---|---|---|\n| (a) planar rings 225/112, azimuth-only | 0.68 / 0.74 / 168 | none | 0 / 0 / 40 % (61 % in 1-2.3 GHz at 30-60 deg) |\n| (b) same array, joint az+el | 0.68 / 0.73 / 1.02 | 5.8 / 2.2 / 1.0 | 0 % |\n| (c) inner ring raised 300 mm, joint | 0.68 / 0.73 / 1.01 | 0.57 / 0.83 / 0.63 | 0 % |\n| (c) inner ring raised 150 mm, joint | not extracted | 1.09 / 1.03 / 0.85 | 0 % |\n| (c) two stacked 225 mm rings, 300 mm apart, joint | 0.53 / 0.57 / 0.81 | 0.57 / 0.73 / 0.56 | 0 % |\n| (d) evolved 3-D, joint | 0.52 / 0.54 / 0.79 | 0.62 / 0.61 / 0.57 | 0 % |\n| evolved planar (same score, z = 0), joint | 0.51 / 0.54 / 0.76 | 4.9 / 1.7 / 0.75 | 0 % |\n\n- **The planar failure is the estimator, not the geometry.** Searching azimuth and elevation together on the same flat array removes every gross error out to 60 deg. It costs a search grid about 45 times larger (2-D instead of 1-D).\n- **3-D buys elevation accuracy near the horizon.** That is about 10x at 0-10 deg (5.8 to 0.57 deg p95) and 3x at 10-30 deg, with nothing gained above 30 deg. Under stress (5 deg cal, 0 dB SNR) it is 9.1 to 1.3 deg.\n- **3-D does not buy azimuth accuracy.** Raising the inner ring leaves azimuth unchanged. The 20-25 % gain of the stacked and evolved 3-D layouts comes from putting more whips at large radius; the evolved planar layout matches it.\n- **3-D makes the cheap estimator worse.** Every 3-D layout with the azimuth-only estimator has 20-46 % gross errors at 10-30 deg and 62-82 % at 30-60 deg, so 3-D forces the joint estimator and a 3-D calibration.\n- **Optimiser.** At about 8040 evaluations each, re-scored with reselect: evolve 1.32, random search 1.62, climb 1.75, evolved planar 3.38. The hand-drawn stacked rings score 1.31, so the search found nothing better than two stacked rings.\n\n**Panel, 2.3-6 GHz** (4x4 tile, cos^1.3 pattern, usable to 80 deg off boresight):\n\n| Option | Elements built | Azimuth within 3 dB of peak | DF usable (<1 % gross) | Worst-case gain | DF p95 at 2.44 / 3.5 / 5.8 GHz (deg) |\n|---|---|---|---|---|---|\n| One fixed tile | 16 | 31 % | 44 % | none behind | 0.96 / 0.69 / 0.43 at boresight; 4.1 / 2.9 / 1.8 at 75 deg |\n| Tile on a rotator | 16 | 100 % | 100 % | full (6.4 / 10.7 / 15.5 dBi) | 0.96 / 0.69 / 0.43 everywhere |\n| 3-face prism, best tile | 48 | 89 % | 100 % | 3.9 dB below peak at corners | worst 2.1 / 1.5 / 0.94 |\n| 4-face prism, best tile | 64 | 100 % | 100 % | 2.0 dB below peak at corners | worst 1.5 / 1.0 / 0.66 |\n\nUsing all visible tiles coherently (32 elements) gives about +1 dB and p95 of 0.3 / 0.2 / 0.15 deg near the corners, but needs two tiles' worth of channels. The rotator is not instantaneous.\n\n**Model limits.** Ideal identical elements, no mutual coupling, no plate image or edge diffraction, no mast or feed-line scattering, one source, no multipath. Raised whips cannot be monopoles on the plate; they must be sleeve dipoles or carry their own ground planes, with feed lines running through the array. Real 3-D gains will be smaller than simulated. A CRB analysis by Vu, Renaux, Boyer and Marcos compares 3-D with 2-D array geometries (https://hal-centralesupelec.archives-ouvertes.fr/hal-00769344); I read only its abstract.",
+  "findings": [
+   {
+    "topic": "Cross-check",
+    "claim": "array3d_study's covariance model and azimuth-only estimator reproduce evolve_layout.check(): ring of 8 at 225 mm gives 6.3/21.5/27.1 % gross at 1.6/2.0/2.3 GHz against 5.4/22.7/26.4 %; two rings 225/112 give 0 % gross and p95 1.44 to 0.27 deg against 1.50 to 0.27 deg.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+    "confidence": "high"
+   },
+   {
+    "topic": "Planar baseline, azimuth-only",
+    "claim": "Planar rings 225/112 with the azimuth-only estimator: 0 % gross errors for sources 0-30 deg up (p95 0.68-0.74 deg pooled), but 40 % gross at 30-60 deg up (61 % in 1-2.3 GHz, worst frequency 89 %).",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/results.json",
+    "confidence": "high"
+   },
+   {
+    "topic": "Joint estimator on the planar array",
+    "claim": "Searching azimuth and elevation together on the same planar rings gives 0 % gross errors out to 60 deg elevation, azimuth p95 0.68/0.73/1.02 deg (0-10/10-30/30-60 deg bins); elevation p95 is 5.8/2.2/1.0 deg, i.e. poor near the horizon. No hardware change; the search grid is about 45 times larger.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/results.json",
+    "confidence": "high"
+   },
+   {
+    "topic": "3-D benefit: elevation near the horizon",
+    "claim": "Raising the inner ring 300 mm, or stacking two 225 mm rings 300 mm apart, cuts elevation p95 at 0-10 deg from 5.8 to 0.57 deg (about 10x) and at 10-30 deg from 2.2 to 0.7-0.8 deg; a 150 mm raise gives 1.09 deg. Above 30 deg the gain is under 2x. Under stress (5 deg cal, 0 dB SNR) 9.1 becomes 1.3 deg.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/results.json",
+    "confidence": "medium"
+   },
+   {
+    "topic": "3-D does not improve azimuth",
+    "claim": "Raising the inner ring leaves azimuth p95 unchanged (0.68/0.73/1.01 deg). Stacked rings and the evolved 3-D layout reach 0.52-0.53/0.54-0.57/0.79-0.81 deg, but an evolved planar layout matches that (0.51/0.54/0.76 deg): the gain comes from horizontal aperture, not height.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/results.json",
+    "confidence": "high"
+   },
+   {
+    "topic": "3-D cost: estimator",
+    "claim": "All 3-D layouts tested with the azimuth-only estimator (heights ignored) are worse than the planar array: 20-46 % gross errors at 10-30 deg elevation and 62-82 % at 30-60 deg. A 3-D array needs the joint estimator and 3-D calibration.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+    "confidence": "high"
+   },
+   {
+    "topic": "Optimiser in the 500 x 500 x 300 mm volume",
+    "claim": "About 8040 evaluations each, finalists re-scored with reselect: evolve 1.32, random search 1.62, climb from inner-ring-raised start 1.75, evolve restricted to the plate 3.38. Hand designs on the same score: stacked rings 1.31, inner ring +300 mm 1.52, planar rings 3.87. The evolved layout does not beat the hand-drawn stacked rings.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Panel: one fixed tile",
+    "claim": "One 4x4 tile (cos^1.3 pattern, cut at 80 deg) is within 3 dB of boresight gain over 31 % of azimuth and gives usable DF over 44 %; DF p95 grows from 0.96/0.69/0.43 deg at boresight (2.44/3.5/5.8 GHz) to 4.1/2.9/1.8 deg at 75 deg off; nothing behind.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/results.json",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Panel: prisms",
+    "claim": "A 3-face prism (48 elements) gives 360 deg DF with a 3.9 dB gain dip at the corners and worst p95 2.1/1.5/0.94 deg; a 4-face prism (64 elements) dips 2.0 dB with worst p95 1.5/1.0/0.66 deg. Only 16 elements are used per direction unless adjacent tiles are combined (32 elements, about +1 dB, p95 0.3/0.2/0.15 deg near corners).",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/results.json",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Panel: rotator",
+    "claim": "One tile on a rotator gives boresight gain (6.4/10.7/15.5 dBi from REDESIGN.md section 4) and boresight DF accuracy at every azimuth with 16 elements, but not instantaneously.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/results.json",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Why planar elevation is poor near the horizon",
+    "claim": "A horizontal planar array senses elevation only through cos(el), whose slope is sin(el), so elevation error grows roughly as 1/sin(el) toward the horizon; vertical extent adds a sin(el) phase term whose slope cos(el) is largest at the horizon. Consistent with the simulated 5.8 against 1.0 deg.",
+    "source": "estimate: first-principles derivative of the array phase, consistent with results.json",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Literature pointer",
+    "claim": "Vu, Renaux, Boyer and Marcos (Multidim. Syst. Signal Process. 24, 2013) derive closed-form CRBs for 3-D arrays built from ULA branches and compare them with 2-D arrays. I read only the abstract.",
+    "source": "https://hal-centralesupelec.archives-ouvertes.fr/hal-00769344",
+    "confidence": "low"
+   },
+   {
+    "topic": "Model limits",
+    "claim": "The simulation assumes ideal identical elements with no coupling, plate image, edge diffraction, mast or feed-line scattering, and a single source without multipath. Raised whips must be sleeve dipoles or carry their own ground planes, so real 3-D gains will be smaller than simulated.",
+    "source": "estimate: model assumptions stated in /Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d_study.py docstring",
+    "confidence": "medium"
+   }
+  ],
+  "files": [
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d_study.py",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/results.json",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/summary.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/errors_vs_freq.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/layouts.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/convergence.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/panel.png"
+  ],
+  "open_questions": [
+   "Does the owner need elevation of low sources (0-30 deg up) at 0.4-2.3 GHz? That is the only place a 3-D whip layout gives a large gain (about 10x at 0-10 deg); for azimuth DF the joint estimator on the flat plate is enough.",
+   "How much of the simulated 3-D elevation gain survives real raised elements (sleeve dipoles, feed lines through the array, plate image and multipath)? Not modelled; needs an EM model or a measurement.",
+   "For 360 deg coverage at 2.3-6 GHz, is instantaneous coverage needed (prism, 48-64 elements plus switching) or is a rotator with 16 elements acceptable?",
+   "The 3-D search was run once (one seed); the evolve vs random vs climb ranking is not replicated, and evolve only matched the hand-drawn stacked rings.",
+   "The panel comparison is in the azimuth plane only and uses an assumed 170 mm face width and an 80 deg element cut-off; tile-to-tile coupling and prism-edge diffraction are not modelled.",
+   "No tetrahedral layout was simulated as such; the cone 8/5/3 stands in for it."
+  ]
+ },
+ "investigate:literature": {
+  "summary": "Literature lens, with back-of-envelope numbers for array16 (my numbers are estimates; scripts in the scratchpad). The shared web-search budget ran out early, so sources are pages fetched directly and DOIs checked against Crossref; TCI/SPX practice and GA-optimised 3-D DF papers could not be verified.\n\nVerdict. A 3-D layout of the whips buys one thing a horizontal plate cannot: elevation for sources within about 15-20\u00b0 of the horizon, and with it the ability to separate or null two sources at the same azimuth but different elevations. It does not improve azimuth, it is not the cure for today's elevated-source failures, and outdoors ground reflection erodes its elevation advantage. For the panel, 3-D means more faces: roughly one tile per 90-120\u00b0 of azimuth.\n\nWhy the plate is weak near the horizon. A horizontal array measures only the direction cosines (u, v) = cos(el)(cos az, sin az); d(rho)/d(el) = -sin(el) vanishes at the horizon, so the elevation CRB of any planar array diverges in the array plane while a 3-D array's stays finite (Vu et al.; Gazzah and Marcos; Baysal and Moses; Nielsen). For the two-ring plate at 1 GHz (20 dB per whip, 64 samples) the elevation CRB is 1.4/0.55/0.28/0.15\u00b0 at 2/5/10/20\u00b0 up, six times that with the 3\u00b0 calibration residual, and 2-9\u00b0 at the horizon (square-root law). Raising the inner ring 300 mm, or stacking rings, flattens it to 0.04\u00b0 (noise) / 0.24\u00b0 (calibration). The sibling simulation agrees: elevation p95 for sources 0-10\u00b0 up falls from 7.35/4.39\u00b0 to 0.80/0.31\u00b0 (0.4-1/1-2.3 GHz).\n\nAzimuth does not change, because it depends only on the horizontal spread: raised-ring and planar CRBs are identical (0.048\u00b0 noise, 0.29\u00b0 calibration at 1 GHz), and the project's GA found 3-D and planar layouts with the same azimuth p95 (about 0.52\u00b0). With a fixed element count, height takes aperture away (Vu et al.).\n\nToday's failure is an estimator mismatch. Assuming el = 0 leaves a ring of radius r with a phase error k r (1 - cos el): 72\u00b0 for the 225 mm ring at 2 GHz and 30\u00b0 up, a main-lobe loss of 2.4/3.9/5.4 dB at 1.6/2/2.3 GHz, while the single 8-ring's competing peaks are only 0.7-1.7 dB down. A joint azimuth-elevation search on the existing plate removes the mismatch (0 % gross errors up to 60\u00b0 in the sibling run) without adding ambiguity (competing peaks -5.4/-3.6/-2.2 dB at 1/2.3/6 GHz either way). Commercial correlative interferometers work this way.\n\nCosts of 3-D. (1) Ground reflection: a horizontal plate is first-order immune (the image has the same u, v); vertical aperture meets Barton's low-angle problem, an estimated 2-9\u00b0 elevation bias at 0.4-1 GHz for sources 3-20\u00b0 up over average ground. (2) Two levels 300 mm apart alias in elevation above 0.5-1 GHz; competing peaks rise from -3.6 to -1.5 dB at 2.3 GHz. (3) Raised whips lose the plate as ground: sleeve dipoles with chokes, cables through the array, elevation-dependent patterns, a manifold measured over azimuth and elevation. Random-array sidelobes stay near 1/N in any dimension (Lo; Steinberg).\n\nBeamforming. Nulling an interferer 20\u00b0 above a horizon source at the same azimuth costs the plate 24/16/9 dB of the wanted signal at 0.4/1/2.3 GHz, against 7.5/1.1/3.4 dB with the inner ring raised 300 mm.\n\nCommercial practice. Narda's ADFA 2 stacks two 9-element rings for two bands and reports azimuth and elevation; R&S stacks per-band rings on one mast and computes elevation in its correlative interferometer; KrakenSDR gives bearings only. Stacked rings serve bands, not vertical aperture.\n\nPanel. Its boresight is horizontal, so it already measures elevation near the horizon. Full 360\u00b0 needs 3 tiles (\u00b160\u00b0, 3.9 dB scan loss at the edges) or 4 (\u00b145\u00b0, 2.0 dB): about $1,050-1,570 more, still one 16-element tile per direction, channels switched between faces (AN/SPY-1 uses four faces, PAVE PAWS two of \u00b160\u00b0). A turntable covers 360\u00b0 in sequence.\n\nPolarisation is a separate axis: everything here is V-pol. Dual-pol elements or vector sensors (Nehorai and Paldi) address it; 3-D placement does not.",
+  "findings": [
+   {
+    "topic": "Why a horizontal planar array estimates elevation poorly near the horizon (u-v view)",
+    "claim": "A horizontal planar array responds only to the horizontal direction cosines (u, v) = cos(el)(cos az, sin az); the visible region is the unit disc and the horizon is its rim (Van Trees' u-v space). Because d(rho)/d(el) = -sin(el), elevation information vanishes at the horizon. Vu, Renaux, Boyer and Marcos show that a 2-D array's azimuth and elevation CRBs are cosine/sine functions of elevation, that the elevation CRB tends to infinity as the source approaches the array plane, and that a 3-D array's elevation CRB stays finite there. Gazzah and Marcos show that at fixed elevation a planar array's CRBs are cosine functions of azimuth whatever the geometry; geometry sets only their amplitude and extremes.",
+    "source": "https://hal-centralesupelec.archives-ouvertes.fr/hal-00769344 ; https://doi.org/10.1109/TSP.2005.861091 ; https://doi.org/10.1002/0471221104",
+    "confidence": "high"
+   },
+   {
+    "topic": "By how much: elevation CRB, planar plate vs 3-D (estimate)",
+    "claim": "Single-source stochastic CRB (Stoica-Nehorai form), 20 dB per whip at the horizon, 64 samples, cos(el) whip pattern. Planar two rings (225/112 mm): elevation std 3.4/1.4/0.70/0.37\u00b0 (0.4 GHz), 1.38/0.55/0.28/0.15\u00b0 (1 GHz) and 0.60/0.24/0.12/0.065\u00b0 (2.3 GHz) at el 2/5/10/20\u00b0. The first-order floor from a 3\u00b0 per-whip phase residual is about 6x larger (8.2/3.3/1.6/0.83\u00b0 at 1 GHz). At el = 0 the error follows sqrt(2 sigma_rho): 1.6-3.7\u00b0 (noise) to 3.8-9.0\u00b0 (calibration) over 0.4-2.3 GHz. With the inner ring raised 300 mm, or two 225 mm rings 300 mm apart, elevation is flat in el: 0.10/0.04/0.018\u00b0 (noise) and 0.60/0.24/0.10\u00b0 (calibration) at 0.4/1/2.3 GHz. Raised 150 mm: about twice those.",
+    "source": "estimate: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/crb_3d.out (CRB form from https://doi.org/10.1109/29.17564)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Sibling simulation (experiments/array3d) agrees",
+    "claim": "Joint az/el Bartlett, 3\u00b0 calibration, 20 dB, 64 samples. Elevation p95 for sources 0-10\u00b0 up: planar two rings 7.35/4.39\u00b0 (0.4-1/1-2.3 GHz); inner ring +300 mm 0.80/0.31\u00b0; stacked 225/225 mm rings 300 mm apart 0.82/0.31\u00b0; ring of 12 + mast of 4 1.30/0.51\u00b0. For sources 30-60\u00b0 up the planar plate already gives 1.51/0.56\u00b0. Azimuth p95 with the joint estimator: planar 0.95/0.37\u00b0, inner +300 mm 0.97/0.36\u00b0, stacked 0.78/0.29\u00b0 (more horizontal spread, not height).",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+    "confidence": "high"
+   },
+   {
+    "topic": "Azimuth accuracy: height adds nothing",
+    "claim": "Near the horizon, azimuth information comes only from the horizontal spread. For symmetric layouts, azimuth and elevation decouple (Nielsen gives the decoupling conditions for 3-D arrays). Estimate: raising the inner ring 150 or 300 mm leaves the azimuth CRB unchanged at 0.120/0.048/0.021\u00b0 (noise) and 0.71/0.29/0.12\u00b0 (3\u00b0 calibration) at 0.4/1/2.3 GHz. Vu et al. note that for a fixed number of sensors, adding a third-dimension branch reduces aperture and degrades estimation. Project GA: azimuth p95 for 0.4-2.3 GHz, 0-10\u00b0 up: evolved 3-D 0.52\u00b0, evolved planar 0.51\u00b0.",
+    "source": "https://doi.org/10.1109/48.289453 ; https://hal-centralesupelec.archives-ouvertes.fr/hal-00769344 ; estimate: crb_3d.out ; /Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+    "confidence": "high"
+   },
+   {
+    "topic": "Today's elevated-source failure is estimator mismatch, fixable on the planar plate",
+    "claim": "With an el = 0 model, a whip at radius r carries a phase error k r (1 - cos el) cos(az - phi_n), and the main-lobe correlation drops to about J0(k r (1 - cos el)). For the 225 mm ring 30\u00b0 up this is 2.4/3.9/5.4 dB at 1.6/2.0/2.3 GHz (58/72/83\u00b0 peak phase error). For the 112 mm ring it is 0.6/0.9/1.2 dB. The single 8-whip ring's highest wrong-azimuth peak is only -1.7 dB (1 GHz) or -0.7 dB (2.3 GHz) below the main lobe, so the mismatch tips it into gross errors above about 1.6 GHz. The two-ring layout keeps -5.4/-3.6 dB of margin. A joint azimuth-elevation search (over the (u, v) disc) removes the mismatch at no hardware cost: the sibling run shows 0 % gross azimuth errors for sources 0-60\u00b0 up. It adds no ambiguity on the planar layout: competing peaks are -5.4/-3.6/-2.2 dB at 1/2.3/6 GHz for both the azimuth-only and the joint search.",
+    "source": "estimate: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/psl3.out and crb_3d.py ; /Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Isotropic arrays",
+    "claim": "Baysal and Moses derive necessary and sufficient conditions on element positions for a planar or volume array to be isotropic, meaning the single-source DOA CRB is the same at all angles. They also treat a planar array estimating the DOA of a 3-D source. Hawkes and Nehorai defined isotropy through the bound on the mean-square angular error. A planar array can be isotropic in azimuth, but its elevation CRB always scales with 1/sin^2(el), so isotropy over the sphere needs a 3-D array. For array16 isotropy is the wrong goal: sources are 0-30\u00b0 up and the plate blocks everything below.",
+    "source": "https://doi.org/10.1109/TSP.2003.811227 ; https://doi.org/10.1109/48.740154",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Ground reflection: the low-angle problem hurts 3-D layouts, not the plate",
+    "claim": "Barton's low-angle tracking problem: the specular image at -el is coherent with the direct wave and corrupts elevation measurements of low targets. Zoltowski and Lee handle it with maximum likelihood using an explicit model of the symmetric multipath. A horizontal planar array is first-order immune because the image has the same (u, v) and only scales the snapshot. This is exact only for identical element patterns; edge diffraction of the 500 mm plate is not modelled. Estimate: average ground (er 15, 5 mS/m), V-pol, array 2-4 m up, noise-free ML with a free-space model. The planar plate shows 0.0\u00b0 bias. The inner ring +300 mm and the stacked rings show elevation bias up to 2.4/4.1/5.1\u00b0 at 0.4 GHz, 8.9/2.8/2.4\u00b0 at 1 GHz and 4.6/0.7/1.2\u00b0 at 2.3 GHz, for sources 3/10/20\u00b0 up. Azimuth bias stays at or below 0.1\u00b0.",
+    "source": "https://doi.org/10.1109/PROC.1974.9509 ; https://doi.org/10.1109/78.80885 ; estimate: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/crb_3d.out",
+    "confidence": "medium"
+   },
+   {
+    "topic": "3-D sparse/random arrays: sidelobes, grating lobes, ambiguity",
+    "claim": "Random-array theory gives an average sidelobe power of about 1/N (Lo 1964), with a peak sidelobe that grows with the number of independent beam positions (Steinberg 1972). Neither improves because the array is 3-D: for N = 16 the average is about -12 dB. A periodic 3-D lattice has grating lobes only where the Laue/Bragg condition holds, but across 0.4-6 GHz every such condition is met at some frequency. Two levels dz apart alias at sin(el) = sin(el0) +/- lambda/dz. For dz = 300 mm this can happen above 0.5 GHz, for horizon sources above 1 GHz, and at 25.6\u00b0 at 2.3 GHz. Estimate: under the joint search, the wrong-azimuth peaks of the inner-ring +300 mm layout rise to -1.5 dB at 2.3 and 6 GHz, against -3.6/-2.2 dB for the plate. Above 2.3 GHz, every 16-whip layout on the plate has competing peaks only 1.5-4 dB down.",
+    "source": "https://doi.org/10.1109/TAP.1964.1138220 ; https://doi.org/10.1109/TAP.1972.1140162 ; https://en.wikipedia.org/wiki/Laue_equations ; estimate: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/psl3.out",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Receive beamforming: where 3-D helps (estimate)",
+    "claim": "Wanted source on the horizon, strong interferer at the same azimuth; MVDR loss of wanted gain is 10log10(1 - |rho|^2). With the interferer 20\u00b0 up, the planar plate loses 24/16/9.0 dB at 0.4/1/2.3 GHz, the inner ring +300 mm 7.5/1.1/3.4 dB and the stacked rings 7.5/1.1/3.0 dB. With the interferer 30\u00b0 up: planar 17/9.3/3.0 dB, inner +300 mm 4.5/0.0/2.2 dB. 2.3 GHz is non-monotonic because of vertical aliasing. Sources separated in azimuth gain nothing from height. Over ground, a 3-D array needs a second null for each interferer's image; the plate does not.",
+    "source": "estimate: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/null_loss.out",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Commercial DF: Narda",
+    "claim": "ADFA 1: correlative interferometer on a 9-element circular array, 380 mm diameter, 200 MHz-2.7 GHz, vertical polarisation, 1\u00b0 RMS typical in a multipath-free environment. ADFA 2: correlative interferometer on two stacked 9-element circular arrays, 380 mm for 200 MHz-2.7 GHz and 128 mm for 2.7-8 GHz, with Watson-Watt crossed loops below 200 MHz. The datasheet says the ADFA bearing results contain azimuth and elevation information, which helps locate transmitters not in the antenna's plane. A central monopole serves as reference and monitor, and a slim mast's self-resonance can disturb the bearings.",
+    "source": "Narda DF Antennas datasheet NSTS 1221-E0335F, https://www.narda-sts.com (PDF fetched earlier in this session; exact URL not recorded). Text at /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/txt/narda_df.txt",
+    "confidence": "high"
+   },
+   {
+    "topic": "Commercial DF: Rohde & Schwarz (stacked rings are per band)",
+    "claim": "R&S's correlative interferometer compares received complex antenna voltages with stored reference values. Its DDF0xA/E scan speed is quoted 'incl. calculation of elevation', and the DDF05 family computes elevation for HF single-site location. The VHF/UHF DF system stacks ADD153 (20-1300 MHz, 9 elements), ADD050 (20-200 MHz, 9 elements on a 3 m circle) and ADD070 (1.3-3 GHz, 8-element circle, 340 mm) on one mast; ADD195 over ADD071 is another stack. The ADD253 has 9 VHF/UHF and 8 UHF elements. The HF 9-element circular arrays are specified for elevation up to 50\u00b0 (ADD010, 50 m circle) and 85\u00b0 with single-site location (ADD011). ADD597 is dual-polarised (V 20 MHz-8.5 GHz, H 20 MHz-7.5 GHz). Interpretation: rings at different heights cover different bands. Elevation comes from a 2-D correlation on a planar ring, and is specified where a planar ring does it well (skywaves at high elevation).",
+    "source": "R&S Radiomonitoring and Radiolocation Catalog 2007/2008, ch. 3 Direction Finders (rohde-schwarz.com; PDF fetched earlier in this session, text at /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/txt/rs_catalog.txt) ; https://www.rohde-schwarz.com/product/add253.html ; https://www.rohde-schwarz.com/product/add597.html ; https://www.rohde-schwarz.com/product/ddf550.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "KrakenSDR guidance",
+    "claim": "KrakenSDR recommends a uniform circular array with spacing multiplier s between 0.2 and 0.5 (typically 0.33), a good ground plane, and mounting as high as possible away from obstructions. Its wiki discusses bearings only; elevation is not mentioned. When several arrays are used, it suggests spreading them out vertically, for example a smaller array stacked on a larger one.",
+    "source": "https://github.com/krakenrf/krakensdr_docs/wiki/04.-Antenna-Array-Setup ; https://github.com/krakenrf/krakensdr_docs/wiki/03.-Direction-Finding-Background-Theory",
+    "confidence": "high"
+   },
+   {
+    "topic": "Polarisation diversity and vector sensors",
+    "claim": "Arrays of diversely polarised elements can find the direction of arbitrarily polarised sources and estimate their polarisation (Ferrara and Parks 1983; performance analysed by Weiss and Friedlander 1991). A single co-located EM vector sensor (3 dipoles + 3 loops) estimates azimuth and elevation with no aperture (Nehorai and Paldi 1994; Wong and Zoltowski 1997, ESPRIT with one vector sensor). Commercial DF antennas offer H-pol as well as V-pol (R&S ADD597, ADD557SR). Application (estimate): array16's whips and panel are V-pol only, and height offsets add no polarisation diversity. Tilting elements would, but makes the manifold depend on polarisation (two more unknowns per source) and doubles the calibration. A 6-component vector sensor needs more coherent channels than array16's four.",
+    "source": "https://doi.org/10.1109/TAP.1983.1143038 ; https://doi.org/10.1109/78.134397 ; https://doi.org/10.1109/78.275610 ; https://doi.org/10.1109/8.633852 ; https://www.rohde-schwarz.com/product/add557sr.html ; https://www.rohde-schwarz.com/product/add597.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Tetrahedral / multi-face 3-D arrays in practice",
+    "claim": "Luo, Zhang, Yang and Guan (Sensors 2022) built an all-directional regular tetrahedral array of four synchronised UWB transceivers. They processed it as four planar sub-arrays, each solved as a UCA, and needed a TDoA-based cost function to resolve phase ambiguity. In practice, 3-D arrays for full coverage are processed face by face and need extra information to resolve ambiguity.",
+    "source": "https://doi.org/10.3390/s22041532",
+    "confidence": "high"
+   },
+   {
+    "topic": "Conformal and multi-face arrays: practice and costs",
+    "claim": "Fixed-face radars use several faces for wide azimuth coverage. AN/SPY-1 uses four antennas for 360\u00b0. PAVE PAWS has two faces, each steering \u00b160\u00b0 (120\u00b0 per face), covering 240\u00b0. Josefsson and Persson (Wiley-IEEE Press 2006) is the standard reference on conformal arrays. Its costs (from my knowledge of the book, not re-verified here): only the part of the array facing a direction contributes, embedded element patterns differ across the array, and polarisation varies with element orientation. All of these apply to a multi-tile panel.",
+    "source": "https://en.wikipedia.org/wiki/AN/SPY-1 ; https://en.wikipedia.org/wiki/PAVE_PAWS ; https://www.wiley.com/en-us/Conformal+Array+Antenna+Theory+and+Design-p-9780471465843",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Panel (2.3-6 GHz): multi-face vs one tile (estimate)",
+    "claim": "Assuming the cos^1.3 element power pattern used in experiments/array3d_study.py: 3 tiles at \u00b160\u00b0 lose 3.9 dB at the face edges, with the beam twice as broad; 4 tiles at \u00b145\u00b0 lose 2.0 dB, with the beam 1.4x as broad. At $523 per tile (REDESIGN section 10), the extra tiles add $1,046-1,569. Each direction still sees one 16-element tile, and with four radio channels the faces must be switched. A turntable gives 360\u00b0 in sequence. The panel's tile ground is vertical (V-pol cards in vertical planes), so its boresight is horizontal and it already measures elevation near the horizon within its \u00b160\u00b0 field. At 2.3-6 GHz the panel and the whip plate together form a two-plane 3-D array, since the core can mix tile quadrants and external ports across channels.",
+    "source": "estimate: /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 4, 5, 10 ; /Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d_study.py docstring",
+    "confidence": "medium"
+   },
+   {
+    "topic": "GA-optimised 3-D arrays",
+    "claim": "The GA array-geometry work I could verify is planar: Haupt 1994 (thinned arrays) and Haupt 2008 (element spacing of low-sidelobe concentric ring arrays). Gera and Mulgrew (EUSIPCO 2009) relocate elements of a planar array to shape its CRB. I could not verify any GA-optimised 3-D DF array paper because the search budget ran out. In this project, the GA (evolve, climb and random_search with reselect) in a 500 x 500 x 300 mm volume found 3-D layouts with the same azimuth as the GA-planar layouts and about 8x better elevation near the horizon: el p95 0.62 vs 4.93\u00b0 for 0.4-2.3 GHz, 0-10\u00b0 up. Simple shapes did as well (stacked rings 0.57\u00b0).",
+    "source": "https://doi.org/10.1109/8.299602 ; https://doi.org/10.1109/TAP.2007.913176 ; /Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Model errors and calibration cost of going 3-D",
+    "claim": "In practice, model errors and mutual coupling limit DF accuracy more than noise (Swindlehurst and Kailath 1992; Friedlander and Weiss 1991). Estimate: the 3\u00b0 per-whip residual alone makes azimuth about 6x worse than the noise CRB (0.048 to 0.29\u00b0 at 1 GHz). A 3-D layout multiplies the calibration work. The manifold must be measured over azimuth and elevation: four elevations means four times the turntable work. Raised whips are no longer monopoles on the plate, so they need sleeve dipoles with chokes or their own ground discs. Their feed lines and supports sit inside the array, and their patterns depend on elevation and on the plate below.",
+    "source": "https://doi.org/10.1109/78.143447 ; https://doi.org/10.1109/8.76322 ; estimate: engineering judgment",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Transmit steering and radar (estimate)",
+    "claim": "A 300 mm vertical aperture is at most 1 wavelength below 1 GHz, so elevation steering of the four transmit whips gains at most about 2-3 dB of vertical directivity and costs azimuth aperture. Active radar uses the panel and a horn, where 3-D only means more faces. Passive-radar targets (aircraft) are usually well above the horizon, where the plate's elevation is adequate: at 30\u00b0 up the elevation CRB is about 1.7x the azimuth CRB (0.111 vs 0.064\u00b0 at 1 GHz).",
+    "source": "estimate: geometry and /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/crb_3d.out",
+    "confidence": "low"
+   }
+  ],
+  "files": [
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/crb_3d.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/crb_3d.out",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/psl3.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/psl3.out",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/null_loss.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/null_loss.out",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/tools/pdftext.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/txt/narda_df.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/txt/rs_catalog.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/txt/rs_add597.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/array3d/txt/vu3d.txt",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/array3d/run.log",
+   "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md"
+  ],
+  "open_questions": [
+   "What elevation accuracy do commercial single-ring DF antennas (Narda ADFA, R&S correlative interferometers) achieve for sources within 0-20\u00b0 of the horizon? Narda's technical note 'Elevation measurement' (narda-sts.com) was not retrieved.",
+   "Does TCI/SPX, or any other vendor, stack rings at several heights for elevation rather than for bands? Not verified: the shared web-search budget ran out during this run.",
+   "Is there published GA-optimised 3-D DF array work beyond planar GA thinning and ring spacing? Not verified, for the same reason.",
+   "How much of the planar plate's first-order immunity to ground reflection survives on the real 500 mm plate, where edge diffraction gives each whip a different below-horizon response? This needs openEMS or an outdoor test at two mast heights.",
+   "Does the owner need elevation (drones, aircraft, rooftop emitters) or nulling of same-azimuth interferers? If not, a joint azimuth-elevation estimator on the existing planar plate is enough, and height buys nothing.",
+   "A central mast (the sibling's 'ring of 12 + mast of 4') would sit where REDESIGN section 4 puts the centre calibration monopole. Where would that source go?",
+   "Above 2.3 GHz every 16-whip layout on the plate has competing peaks only 1.5-4 dB down (estimate). Should DF there be left to the panel, with the whips used for the 0.4-2.3 GHz band only?"
+  ]
+ }
+}

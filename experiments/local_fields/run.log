@@ -1,0 +1,182 @@
+selftest ok: radiated power of one dipole within 1e-6 of eta k^2 |Il|^2 / 12 pi; far and near limits ok
+selftest ok: tracer finds the two closed loops of a synthetic Hopf link, linking number +1.000
+
+== 1. degrees of freedom: singular values of the map (excitations -> scalar field in a 4-wavelength cube)
+  panel 4x4 2.4 GHz                              N=16  modes within 10/20/40 dB of the strongest: 4/11/15   participation number 3.4
+  panel 4x4 5.8 GHz                              N=16  modes within 10/20/40 dB of the strongest: 11/15/16   participation number 8.2
+  two tiles side by side (8x4) 5.8 GHz           N=32  modes within 10/20/40 dB of the strongest: 18/28/32   participation number 14.4
+  16 whips 0.9 GHz                               N=16  modes within 10/20/40 dB of the strongest: 12/15/16   participation number 9.2
+  16 whips 2.3 GHz                               N=16  modes within 10/20/40 dB of the strongest: 16/16/16   participation number 12.6
+  32 dipoles on a 250 mm sphere 5.8 GHz          N=32  modes within 10/20/40 dB of the strongest: 30/32/32   participation number 25.3
+  64 dipoles on a 250 mm sphere 5.8 GHz          N=64  modes within 10/20/40 dB of the strongest: 59/64/64   participation number 50.3
+  [dof: 0 s]
+
+== 2. focal spot (unit-norm excitation maximising |E|^2 at the point; 'beam' = same aimed at 100 m)
+  panel 4x4 2.4 GHz          focus 0.2 m: FWHM x/y 189.6/175.1 mm, depth None mm (axial peak at None m), gain over beam +0.05 dB, 4.27 V/m = 2.424 uW/cm^2 per mW radiated, E_z share 0.00  [2D^2/lambda = 0.09 m]
+  panel 4x4 2.4 GHz          focus 0.3 m: FWHM x/y 276.8/248.5 mm, depth None mm (axial peak at None m), gain over beam +0.02 dB, 2.94 V/m = 1.148 uW/cm^2 per mW radiated, E_z share 0.00  [2D^2/lambda = 0.09 m]
+  panel 4x4 2.4 GHz          focus 0.5 m: FWHM x/y 454.8/402.4 mm, depth None mm (axial peak at None m), gain over beam +0.01 dB, 1.79 V/m = 0.427 uW/cm^2 per mW radiated, E_z share 0.00  [2D^2/lambda = 0.09 m]
+  panel 4x4 5.8 GHz          focus 0.2 m: FWHM x/y 95.4/94.8 mm, depth None mm (axial peak at None m), gain over beam +0.31 dB, 8.32 V/m = 9.180 uW/cm^2 per mW radiated, E_z share 0.00  [2D^2/lambda = 0.218 m]
+  panel 4x4 5.8 GHz          focus 0.3 m: FWHM x/y 141.2/138.0 mm, depth None mm (axial peak at None m), gain over beam +0.14 dB, 5.64 V/m = 4.229 uW/cm^2 per mW radiated, E_z share 0.00  [2D^2/lambda = 0.218 m]
+  panel 4x4 5.8 GHz          focus 0.5 m: FWHM x/y 233.8/226.6 mm, depth None mm (axial peak at None m), gain over beam +0.05 dB, 3.42 V/m = 1.551 uW/cm^2 per mW radiated, E_z share 0.00  [2D^2/lambda = 0.218 m]
+  16 whips 0.9 GHz           focus 0.2 m: FWHM x/y 172.3/172.3 mm, depth None mm (axial peak at None m), gain over beam +5.92 dB, 2.82 V/m = 1.056 uW/cm^2 per mW radiated, E_z share 1.00  [2D^2/lambda = 1.216 m]
+  16 whips 0.9 GHz           focus 0.3 m: FWHM x/y 362.8/362.8 mm, depth None mm (axial peak at None m), gain over beam +3.07 dB, 1.57 V/m = 0.326 uW/cm^2 per mW radiated, E_z share 1.00  [2D^2/lambda = 1.216 m]
+  16 whips 0.9 GHz           focus 0.5 m: FWHM x/y None/None mm, depth None mm (axial peak at None m), gain over beam +0.59 dB, 0.70 V/m = 0.065 uW/cm^2 per mW radiated, E_z share 1.00  [2D^2/lambda = 1.216 m]
+  16 whips 2.3 GHz           focus 0.2 m: FWHM x/y 93.3/93.3 mm, depth None mm (axial peak at None m), gain over beam +12.15 dB, 2.26 V/m = 0.677 uW/cm^2 per mW radiated, E_z share 1.00  [2D^2/lambda = 3.107 m]
+  16 whips 2.3 GHz           focus 0.3 m: FWHM x/y 124.9/295.1 mm, depth 229.8 mm (axial peak at 0.157 m), gain over beam +6.10 dB, 1.22 V/m = 0.196 uW/cm^2 per mW radiated, E_z share 0.00  [2D^2/lambda = 3.107 m]
+  16 whips 2.3 GHz           focus 0.5 m: FWHM x/y 441.3/176.6 mm, depth None mm (axial peak at None m), gain over beam +2.28 dB, 0.57 V/m = 0.043 uW/cm^2 per mW radiated, E_z share 0.00  [2D^2/lambda = 3.107 m]
+  [focus: 4 s]
+
+== 3. simultaneous spots (dB relative to a single focus at the same point with the same excitation norm)
+  panel 4x4 5.8 GHz          2 spots: ['-3.5', '-3.5'] dB (ideal power split -3.0 dB); brightest point elsewhere in the plane -6.6 dB re spots
+  panel 4x4 5.8 GHz          3 spots: ['-6.0', '-6.0', '-3.3'] dB (ideal power split -4.8 dB); brightest point elsewhere in the plane -5.0 dB re spots
+  16 whips 2.3 GHz           2 spots: ['-3.1', '-3.1'] dB (ideal power split -3.0 dB); brightest point elsewhere in the plane -0.5 dB re spots
+  16 whips 2.3 GHz           3 spots: ['-4.2', '-4.6', '-5.6'] dB (ideal power split -4.8 dB); brightest point elsewhere in the plane 1.4 dB re spots
+  [spots: 3 s]
+
+== 4. quiet zone at B while a bright point is kept at A
+  panel 4x4 5.8 GHz: A=[0.0, 0.0, 0.3] B=[0.08, 0.0, 0.3]  B before: -3.9 dB re A
+    point null: costs -2.5 dB at A; exact -301.0 dB; with 3 deg / 0.26 dB errors -34.5 dB; worst on a shell around B: {'0.02 lambda': -38.0, '0.05 lambda': -30.0, '0.10 lambda': -23.9, '0.20 lambda': -17.7, '0.35 lambda': -12.7}
+    zone radius 0.125 lambda (6 mm), loading 0.0001: mean -47.6 dB, worst -40.6 dB, with errors -25.1 dB re A; costs -10.99 dB at A
+    zone radius 0.125 lambda (6 mm), loading 0.01: mean -30.1 dB, worst -23.2 dB, with errors -28.4 dB re A; costs -3.23 dB at A
+    zone radius 0.25 lambda (13 mm), loading 0.0001: mean -41.2 dB, worst -32.6 dB, with errors -24.7 dB re A; costs -11.42 dB at A
+    zone radius 0.25 lambda (13 mm), loading 0.01: mean -27.5 dB, worst -19.8 dB, with errors -25.6 dB re A; costs -6.11 dB at A
+    zone radius 0.5 lambda (26 mm), loading 0.0001: mean -33.5 dB, worst -22.1 dB, with errors -21.7 dB re A; costs -15.27 dB at A
+    zone radius 0.5 lambda (26 mm), loading 0.01: mean -27.0 dB, worst -16.2 dB, with errors -23.9 dB re A; costs -9.27 dB at A
+    rev B (4 channel weights x 16 delay states), zone lambda/4, with errors: -23.5 dB re A after evolve+climb (random search -17.8 dB; unconstrained -25.5 dB; unconstrained solution snapped to rev B -25.2 dB); costs -5.36 dB at A
+  panel 4x4 2.4 GHz: A=[0.0, 0.0, 0.3] B=[0.08, 0.0, 0.3]  B before: -1.1 dB re A
+    point null: costs -9.14 dB at A; exact -283.0 dB; with 3 deg / 0.26 dB errors -27.4 dB; worst on a shell around B: {'0.02 lambda': -31.0, '0.05 lambda': -23.0, '0.10 lambda': -16.8, '0.20 lambda': -10.5, '0.35 lambda': -5.4}
+    zone radius 0.125 lambda (16 mm), loading 0.0001: mean -31.2 dB, worst -23.1 dB, with errors -12.7 dB re A; costs -23.35 dB at A
+    zone radius 0.125 lambda (16 mm), loading 0.01: mean -21.9 dB, worst -14.6 dB, with errors -20.8 dB re A; costs -9.25 dB at A
+    zone radius 0.25 lambda (31 mm), loading 0.0001: mean -26.2 dB, worst -16.1 dB, with errors -11.0 dB re A; costs -24.96 dB at A
+    zone radius 0.25 lambda (31 mm), loading 0.01: mean -16.6 dB, worst -8.8 dB, with errors -16.2 dB re A; costs -10.89 dB at A
+    zone radius 0.5 lambda (62 mm), loading 0.0001: mean -17.0 dB, worst -4.5 dB, with errors -9.4 dB re A; costs -26.41 dB at A
+    zone radius 0.5 lambda (62 mm), loading 0.01: mean -12.3 dB, worst -2.6 dB, with errors -11.8 dB re A; costs -15.76 dB at A
+    rev B (4 channel weights x 16 delay states), zone lambda/4, with errors: -7.6 dB re A after evolve+climb (random search -4.9 dB; unconstrained -6.5 dB; unconstrained solution snapped to rev B -4.6 dB); costs -6.08 dB at A
+  16 whips 2.3 GHz: A=[0.0, 0.0, 0.3] B=[0.08, 0.0, 0.3]  B before: -5.0 dB re A
+    point null: costs -1.79 dB at A; exact -308.0 dB; with 3 deg / 0.26 dB errors -29.3 dB; worst on a shell around B: {'0.02 lambda': -29.4, '0.05 lambda': -21.5, '0.10 lambda': -15.5, '0.20 lambda': -9.1, '0.35 lambda': -4.1}
+    zone radius 0.125 lambda (16 mm), loading 0.0001: mean -33.7 dB, worst -26.9 dB, with errors -22.1 dB re A; costs -8.45 dB at A
+    zone radius 0.125 lambda (16 mm), loading 0.01: mean -27.1 dB, worst -20.1 dB, with errors -23.0 dB re A; costs -5.09 dB at A
+    zone radius 0.25 lambda (33 mm), loading 0.0001: mean -25.3 dB, worst -16.7 dB, with errors -13.4 dB re A; costs -18.79 dB at A
+    zone radius 0.25 lambda (33 mm), loading 0.01: mean -21.1 dB, worst -12.7 dB, with errors -19.4 dB re A; costs -6.03 dB at A
+    zone radius 0.5 lambda (65 mm), loading 0.0001: mean -15.4 dB, worst -3.9 dB, with errors -7.2 dB re A; costs -23.52 dB at A
+    zone radius 0.5 lambda (65 mm), loading 0.01: mean -11.7 dB, worst -2.6 dB, with errors -11.4 dB re A; costs -7.41 dB at A
+  [quiet: 5 s]
+
+== 5. a spot narrower than the diffraction spot (zeros forced at +-d around the focus, least-norm excitation)
+  panel 4x4 5.8 GHz          zeros at 1.00 FWHM: spot 141.2 mm (2.732 lambda), spot power 0.0 dB re plain focus, brightest sidelobe +0.0 dB re spot, FWHM with errors 141.3 mm
+  panel 4x4 5.8 GHz          zeros at 0.60 FWHM: spot 83.9 mm (1.623 lambda), spot power -7.5 dB re plain focus, brightest sidelobe +2.8 dB re spot, FWHM with errors 83.9 mm
+  panel 4x4 5.8 GHz          zeros at 0.40 FWHM: spot 58.7 mm (1.135 lambda), spot power -15.1 dB re plain focus, brightest sidelobe +10.7 dB re spot, FWHM with errors 58.9 mm
+  panel 4x4 5.8 GHz          zeros at 0.25 FWHM: spot 37.6 mm (0.727 lambda), spot power -23.7 dB re plain focus, brightest sidelobe +19.3 dB re spot, FWHM with errors 38.8 mm
+  16 whips 2.3 GHz           zeros at 1.00 FWHM: spot 77.6 mm (0.596 lambda), spot power 0.0 dB re plain focus, brightest sidelobe +0.0 dB re spot, FWHM with errors 77.6 mm
+  16 whips 2.3 GHz           zeros at 0.60 FWHM: spot 47.2 mm (0.362 lambda), spot power -6.7 dB re plain focus, brightest sidelobe +4.0 dB re spot, FWHM with errors 47.3 mm
+  16 whips 2.3 GHz           zeros at 0.40 FWHM: spot 32.6 mm (0.25 lambda), spot power -14.5 dB re plain focus, brightest sidelobe +11.8 dB re spot, FWHM with errors 32.8 mm
+  16 whips 2.3 GHz           zeros at 0.25 FWHM: spot 20.8 mm (0.159 lambda), spot power -23.2 dB re plain focus, brightest sidelobe +20.3 dB re spot, FWHM with errors 21.7 mm
+  [superosc: 0 s]
+
+== 6. a steerable vortex line (elements phased exp(i l azimuth) plus a steering phase)
+  panel 4x4 5.8 GHz      ideal        l=1 steer  0 deg: vortex at z=0.1: [[-1.3, 1.3]] mm q=[1]; z=0.2: [[-1.3, -1.3]] mm q=[1]; z=0.3: [[1.3, -1.3]] mm q=[1]; z=0.4: [[-1.3, -1.3]] mm q=[1]  -> tilt [-0.7, -0.4, 0.2, -0.2] deg
+  panel 4x4 5.8 GHz      ideal        l=1 steer 15 deg: vortex at z=0.1: [[28.8, -1.3]] mm q=[1]; z=0.2: [[53.7, -1.3]] mm q=[1]; z=0.3: [[81.3, -1.3]] mm q=[1]; z=0.4: [[106.3, -1.3]] mm q=[1]  -> tilt [16.1, 15.0, 15.2, 14.9] deg
+  panel 4x4 5.8 GHz      ideal        l=1 steer 30 deg: vortex at z=0.1: [[58.8, -3.8]] mm q=[1]; z=0.2: [[116.3, -6.3]] mm q=[1]; z=0.3: [[173.8, -6.3]] mm q=[1]; z=0.4: [[231.2, -6.3]] mm q=[1]  -> tilt [30.5, 30.2, 30.1, 30.0] deg
+  panel 4x4 5.8 GHz      ideal        l=2 steer  0 deg: vortex at z=0.1: [[-11.2, 1.3], [11.3, -1.3]] mm q=[1, 1]; z=0.2: [[-11.2, 1.3], [11.3, -1.3]] mm q=[1, 1]; z=0.3: [[-11.2, 1.3], [11.3, -1.3]] mm q=[1, 1]; z=0.4: [[-11.2, 1.3], [11.3, -1.3]] mm q=[1, 1]  -> tilt [0.0, 0.0, 0.0, 0.0] deg
+  panel 4x4 5.8 GHz      rev B delays l=1 steer  0 deg: vortex at z=0.1: [[1.3, -1.3]] mm q=[1]; z=0.2: [[1.3, -1.3]] mm q=[1]; z=0.3: [[1.3, -1.3]] mm q=[1]; z=0.4: [[1.3, -1.3]] mm q=[1]  -> tilt [0.7, 0.4, 0.2, 0.2] deg
+  panel 4x4 5.8 GHz      rev B delays l=1 steer 15 deg: vortex at z=0.1: [[28.8, -1.3]] mm q=[1]; z=0.2: [[53.7, -3.8]] mm q=[1]; z=0.3: [[81.3, -3.8]] mm q=[1]; z=0.4: [[108.8, -3.8]] mm q=[1]  -> tilt [16.1, 15.0, 15.2, 15.2] deg
+  panel 4x4 5.8 GHz      rev B delays l=1 steer 30 deg: vortex at z=0.1: [[58.8, -3.8]] mm q=[1]; z=0.2: [[116.3, -3.8]] mm q=[1]; z=0.3: [[173.8, -3.8]] mm q=[1]; z=0.4: [[231.2, -3.8]] mm q=[1]  -> tilt [30.5, 30.2, 30.1, 30.0] deg
+  panel 4x4 5.8 GHz      rev B delays l=2 steer  0 deg: vortex at z=0.1: [[-11.2, 1.3], [11.3, -1.3]] mm q=[1, 1]; z=0.2: [[-11.2, 1.3], [11.3, -1.3]] mm q=[1, 1]; z=0.3: [[-11.2, 1.3], [11.3, -1.3]] mm q=[1, 1]; z=0.4: [[-11.2, 1.3], [11.3, -1.3]] mm q=[1, 1]  -> tilt [0.0, 0.0, 0.0, 0.0] deg
+  panel 4x4 2.4 GHz      ideal        l=1 steer  0 deg: vortex at z=0.1: [[-1.3, -1.3]] mm q=[1]; z=0.2: [[-1.3, -1.3]] mm q=[1]; z=0.3: [[-1.3, -1.3]] mm q=[1]; z=0.4: [[-1.3, -1.3]] mm q=[1]  -> tilt [-0.7, -0.4, -0.2, -0.2] deg
+  panel 4x4 2.4 GHz      ideal        l=1 steer 15 deg: vortex at z=0.1: [[23.8, -11.2]] mm q=[1]; z=0.2: [[51.3, -8.8]] mm q=[1]; z=0.3: [[78.8, -8.8]] mm q=[1]; z=0.4: [[106.3, -8.8]] mm q=[1]  -> tilt [13.4, 14.4, 14.7, 14.9] deg
+  panel 4x4 2.4 GHz      ideal        l=1 steer 30 deg: vortex at z=0.1: [[48.8, -21.2]] mm q=[1]; z=0.2: [[111.3, -18.7]] mm q=[1]; z=0.3: [[171.3, -18.7]] mm q=[1]; z=0.4: [[228.8, -18.7]] mm q=[1]  -> tilt [26.0, 29.1, 29.7, 29.8] deg
+  panel 4x4 2.4 GHz      ideal        l=2 steer  0 deg: vortex at z=0.1: [[-28.7, 1.3], [28.8, -1.3]] mm q=[1, 1]; z=0.2: [[-28.7, 1.3], [28.8, -1.3]] mm q=[1, 1]; z=0.3: [[-28.7, 1.3], [28.8, -1.3]] mm q=[1, 1]; z=0.4: [[-28.7, 1.3], [28.8, -1.3]] mm q=[1, 1]  -> tilt [0.0, 0.0, 0.0, 0.0] deg
+  panel 4x4 2.4 GHz      rev B delays l=1 steer  0 deg: vortex at z=0.1: [[-1.3, 1.3]] mm q=[1]; z=0.2: [[1.3, 1.3]] mm q=[1]; z=0.3: [[-1.3, 1.3]] mm q=[1]; z=0.4: [[-1.3, 1.3]] mm q=[1]  -> tilt [-0.7, 0.4, -0.2, -0.2] deg
+  panel 4x4 2.4 GHz      rev B delays l=1 steer 15 deg: vortex at z=0.1: [[21.3, -11.2]] mm q=[1]; z=0.2: [[51.3, -11.2]] mm q=[1]; z=0.3: [[76.3, -8.8]] mm q=[1]; z=0.4: [[103.8, -8.8]] mm q=[1]  -> tilt [12.0, 14.4, 14.3, 14.5] deg
+  panel 4x4 2.4 GHz      rev B delays l=1 steer 30 deg: vortex at z=0.1: [[46.3, -21.2]] mm q=[1]; z=0.2: [[111.3, -18.7]] mm q=[1]; z=0.3: [[171.3, -21.2]] mm q=[1]; z=0.4: [[228.8, -21.2]] mm q=[1]  -> tilt [24.8, 29.1, 29.7, 29.8] deg
+  panel 4x4 2.4 GHz      rev B delays l=2 steer  0 deg: vortex at z=0.1: [[-28.7, 1.3], [28.8, -1.3]] mm q=[1, 1]; z=0.2: [[-28.7, 1.3], [28.8, -1.3]] mm q=[1, 1]; z=0.3: [[-28.7, 1.3], [28.8, -1.3]] mm q=[1, 1]; z=0.4: [[-28.7, 1.3], [28.8, -1.3]] mm q=[1, 1]  -> tilt [0.0, 0.0, 0.0, 0.0] deg
+  [vortex: 8 s]
+
+== 7. polarisation structure if the panel had both polarisations (32 excitations; rev B has one)
+  z = 0.1 m: C points (circular polarisation) within 120 mm of the axis: [{'xy_mm': [-1.3, -1.3], 'index': 0.5, 's3_over_s0': 0.97}, {'xy_mm': [53.7, 71.3], 'index': -0.5, 's3_over_s0': -1.0}, {'xy_mm': [71.3, 46.2], 'index': 0.5, 's3_over_s0': -1.0}];  |Ez|/|Et| rms within 50 mm: 0.26
+  z = 0.2 m: C points (circular polarisation) within 120 mm of the axis: [{'xy_mm': [-1.3, 1.3], 'index': 0.5, 's3_over_s0': 1.0}];  |Ez|/|Et| rms within 50 mm: 0.19
+  z = 0.3 m: C points (circular polarisation) within 120 mm of the axis: [{'xy_mm': [1.3, -1.3], 'index': 0.5, 's3_over_s0': 1.0}];  |Ez|/|Et| rms within 50 mm: 0.14
+  [pol: 2 s]
+
+== 8. vortex lines on a target curve (score: 1 - first-harmonic share on circles of radius 0.15 lambda,
+      with 3 deg / 0.26 dB element errors redrawn each generation; check: lines traced on a lambda/20 grid;
+      success = geometry (unit charge on >= 95 % of the target and a vortex line within 0.1 lambda of >= 95 % of it)
+      and topology (closed loops that follow each component once; linking number +-1 for the link))
+  panel 4x4 5.8 GHz                            line     scores {'direct (eigenvector)': 0.2587, 'direct + climb': 0.3325, 'evolve': 0.2932, 'evolve + climb': 0.3563, 'random search': 0.4741}
+      winner: direct (eigenvector); check: charge correct 1.00 (with errors 0.86), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.02/0.027/0.034 lambda, field near the line -29.1 dB re focus, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [6 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 1.00 (with errors 0.86), within 0.1 lambda 1.00, max miss 0.034 lambda, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [6 s]
+  panel 4x4 5.8 GHz                            ring     scores {'direct (eigenvector)': 0.4257, 'direct + climb': 0.4505, 'evolve': 0.4965, 'evolve + climb': 0.5138, 'random search': 0.6509}
+      winner: direct (eigenvector); check: charge correct 0.77 (with errors 0.27), target within 0.1 lambda of a vortex line 0.62, distance median/p90/max 0.076/0.151/0.176 lambda, field near the line -27.1 dB re focus, closed loops on target 1/1; geometry no, topology ok  => FAIL   [11 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 0.77 (with errors 0.27), within 0.1 lambda 0.62, max miss 0.176 lambda, closed loops on target 1/1; geometry no, topology ok  => FAIL   [11 s]
+  panel 4x4 5.8 GHz                            link     scores {'direct (eigenvector)': 0.6304, 'direct + climb': 0.6155, 'evolve': 0.6143, 'evolve + climb': 0.6103, 'random search': 0.6912}
+      winner: evolve + climb; check: charge correct 0.21 (with errors 0.15), target within 0.1 lambda of a vortex line 0.12, distance median/p90/max 0.384/0.814/0.907 lambda, field near the line -17.3 dB re focus, closed loops on target 0/2, linking number None; geometry no, topology no  => FAIL   [18 s]
+      after the worst-point climb (kept): charge correct 0.16 (with errors 0.14), within 0.1 lambda 0.10, max miss 0.944 lambda, closed loops on target 0/2, linking number None; geometry no, topology no  => FAIL   [18 s]
+  panel 4x4 5.8 GHz                            trefoil  scores {'direct (eigenvector)': 0.5615, 'direct + climb': 0.6072, 'evolve': 0.6407, 'evolve + climb': 0.643, 'random search': 0.7297}
+      winner: direct (eigenvector); check: charge correct 0.45 (with errors 0.17), target within 0.1 lambda of a vortex line 0.17, distance median/p90/max 0.155/0.352/0.488 lambda, field near the line -33.2 dB re focus, closed loops on target 0/1; geometry no, topology no  => FAIL   [19 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 0.45 (with errors 0.17), within 0.1 lambda 0.17, max miss 0.488 lambda, closed loops on target 0/1; geometry no, topology no  => FAIL   [19 s]
+  two tiles side by side (8x4) 5.8 GHz         line     scores {'direct (eigenvector)': 0.0923, 'direct + climb': 0.301, 'evolve': 0.1682, 'evolve + climb': 0.1853, 'random search': 0.5177}
+      winner: direct (eigenvector); check: charge correct 1.00 (with errors 1.00), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.02/0.026/0.031 lambda, field near the line -26.9 dB re focus, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [8 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 1.00 (with errors 1.00), within 0.1 lambda 1.00, max miss 0.031 lambda, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [8 s]
+  two tiles side by side (8x4) 5.8 GHz         ring     scores {'direct (eigenvector)': 0.4143, 'direct + climb': 0.4582, 'evolve': 0.4214, 'evolve + climb': 0.4495, 'random search': 0.6328}
+      winner: direct (eigenvector); check: charge correct 0.60 (with errors 0.48), target within 0.1 lambda of a vortex line 0.70, distance median/p90/max 0.067/0.222/0.329 lambda, field near the line -26.6 dB re focus, closed loops on target 0/1; geometry no, topology no  => FAIL   [14 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 0.60 (with errors 0.48), within 0.1 lambda 0.70, max miss 0.329 lambda, closed loops on target 0/1; geometry no, topology no  => FAIL   [14 s]
+  two tiles side by side (8x4) 5.8 GHz         link     scores {'direct (eigenvector)': 0.6692, 'direct + climb': 0.5726, 'evolve': 0.5703, 'evolve + climb': 0.5764, 'random search': 0.7216}
+      winner: evolve finalist; check: charge correct 0.27 (with errors 0.23), target within 0.1 lambda of a vortex line 0.24, distance median/p90/max 0.289/0.835/0.892 lambda, field near the line -19.9 dB re focus, closed loops on target 0/2, linking number None; geometry no, topology no  => FAIL   [20 s]
+      after the worst-point climb (kept): charge correct 0.15 (with errors 0.14), within 0.1 lambda 0.13, max miss 0.969 lambda, closed loops on target 0/2, linking number None; geometry no, topology no  => FAIL   [20 s]
+  two tiles side by side (8x4) 5.8 GHz         trefoil  scores {'direct (eigenvector)': 0.6301, 'direct + climb': 0.5617, 'evolve': 0.594, 'evolve + climb': 0.6101, 'random search': 0.7166}
+      winner: direct + climb; check: charge correct 0.17 (with errors 0.18), target within 0.1 lambda of a vortex line 0.13, distance median/p90/max 0.213/0.608/0.762 lambda, field near the line -25.1 dB re focus, closed loops on target 0/1; geometry no, topology no  => FAIL   [19 s]
+      after the worst-point climb (kept): charge correct 0.01 (with errors 0.01), within 0.1 lambda 0.00, max miss 1.306 lambda, closed loops on target 0/1; geometry no, topology no  => FAIL   [19 s]
+  16 whips 2.3 GHz                             line     scores {'direct (eigenvector)': 0.1511, 'direct + climb': 0.2114, 'evolve': 0.1753, 'evolve + climb': 0.2126, 'random search': 0.4411}
+      winner: direct (eigenvector); check: charge correct 1.00 (with errors 0.98), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.022/0.037/0.047 lambda, field near the line -20.5 dB re focus, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [8 s]
+      after the worst-point climb (kept): charge correct 1.00 (with errors 0.98), within 0.1 lambda 1.00, max miss 0.081 lambda, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [8 s]
+  16 whips 2.3 GHz                             ring     scores {'direct (eigenvector)': 0.4596, 'direct + climb': 0.3765, 'evolve': 0.3989, 'evolve + climb': 0.4112, 'random search': 0.6568}
+      winner: direct + climb; check: charge correct 0.71 (with errors 0.55), target within 0.1 lambda of a vortex line 0.43, distance median/p90/max 0.108/0.21/0.277 lambda, field near the line -21.6 dB re focus, closed loops on target 0/1; geometry no, topology no  => FAIL   [14 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 0.71 (with errors 0.55), within 0.1 lambda 0.43, max miss 0.277 lambda, closed loops on target 0/1; geometry no, topology no  => FAIL   [14 s]
+  16 whips 2.3 GHz                             link     scores {'direct (eigenvector)': 0.4762, 'direct + climb': 0.4783, 'evolve': 0.5325, 'evolve + climb': 0.5422, 'random search': 0.6601}
+      winner: direct (eigenvector); check: charge correct 0.45 (with errors 0.38), target within 0.1 lambda of a vortex line 0.36, distance median/p90/max 0.126/0.326/0.647 lambda, field near the line -21.7 dB re focus, closed loops on target 0/2, linking number None; geometry no, topology no  => FAIL   [22 s]
+      after the worst-point climb (kept): charge correct 0.30 (with errors 0.28), within 0.1 lambda 0.23, max miss 0.914 lambda, closed loops on target 0/2, linking number None; geometry no, topology no  => FAIL   [22 s]
+  16 whips 2.3 GHz                             trefoil  scores {'direct (eigenvector)': 0.5466, 'direct + climb': 0.528, 'evolve': 0.5413, 'evolve + climb': 0.5272, 'random search': 0.7212}
+      winner: evolve + climb; check: charge correct 0.24 (with errors 0.25), target within 0.1 lambda of a vortex line 0.21, distance median/p90/max 0.207/0.445/0.616 lambda, field near the line -17.1 dB re focus, closed loops on target 0/1; geometry no, topology no  => FAIL   [22 s]
+      after the worst-point climb (kept): charge correct 0.16 (with errors 0.14), within 0.1 lambda 0.11, max miss 0.901 lambda, closed loops on target 0/1; geometry no, topology no  => FAIL   [22 s]
+  32 dipoles on a 250 mm sphere 5.8 GHz        line     scores {'direct (eigenvector)': 0.0404, 'direct + climb': 0.0299, 'evolve': 0.021, 'evolve + climb': 0.0277, 'random search': 0.3951}
+      winner: evolve finalist; check: charge correct 1.00 (with errors 1.00), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.02/0.027/0.032 lambda, field near the line -17.1 dB re focus, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [7 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 1.00 (with errors 1.00), within 0.1 lambda 1.00, max miss 0.032 lambda, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [7 s]
+  32 dipoles on a 250 mm sphere 5.8 GHz        ring     scores {'direct (eigenvector)': 0.0808, 'direct + climb': 0.0933, 'evolve': 0.0946, 'evolve + climb': 0.0984, 'random search': 0.6108}
+      winner: direct (eigenvector); check: charge correct 1.00 (with errors 0.99), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.022/0.037/0.051 lambda, field near the line -21.8 dB re focus, closed loops on target 1/1; geometry ok, topology ok  => SUCCESS   [11 s]
+      after the worst-point climb (kept): charge correct 1.00 (with errors 1.00), within 0.1 lambda 1.00, max miss 0.067 lambda, closed loops on target 1/1; geometry ok, topology ok  => SUCCESS   [11 s]
+  32 dipoles on a 250 mm sphere 5.8 GHz        link     scores {'direct (eigenvector)': 0.2447, 'direct + climb': 0.2256, 'evolve': 0.343, 'evolve + climb': 0.3278, 'random search': 0.6763}
+      winner: direct + climb; check: charge correct 0.92 (with errors 0.92), target within 0.1 lambda of a vortex line 0.96, distance median/p90/max 0.035/0.075/0.148 lambda, field near the line -25.7 dB re focus, closed loops on target 1/2, linking number None; geometry no, topology no  => FAIL   [18 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 0.92 (with errors 0.92), within 0.1 lambda 0.96, max miss 0.148 lambda, closed loops on target 1/2, linking number None; geometry no, topology no  => FAIL   [18 s]
+  32 dipoles on a 250 mm sphere 5.8 GHz        trefoil  scores {'direct (eigenvector)': 0.3304, 'direct + climb': 0.289, 'evolve': 0.3138, 'evolve + climb': 0.3154, 'random search': 0.6889}
+      winner: direct + climb; check: charge correct 0.80 (with errors 0.80), target within 0.1 lambda of a vortex line 0.78, distance median/p90/max 0.051/0.164/0.412 lambda, field near the line -22.4 dB re focus, closed loops on target 0/1; geometry no, topology no  => FAIL   [20 s]
+      after the worst-point climb (kept): charge correct 0.72 (with errors 0.72), within 0.1 lambda 0.69, max miss 0.275 lambda, closed loops on target 0/1; geometry no, topology no  => FAIL   [20 s]
+  64 dipoles on a 250 mm sphere 5.8 GHz        line     scores {'direct (eigenvector)': 0.0095, 'direct + climb': 0.0152, 'evolve': 0.0053, 'evolve + climb': 0.011, 'random search': 0.4164}
+      winner: evolve finalist; check: charge correct 1.00 (with errors 1.00), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.02/0.026/0.029 lambda, field near the line -17.5 dB re focus, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [9 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 1.00 (with errors 1.00), within 0.1 lambda 1.00, max miss 0.029 lambda, closed loops on target 0/1; geometry ok, topology ok  => SUCCESS   [9 s]
+  64 dipoles on a 250 mm sphere 5.8 GHz        ring     scores {'direct (eigenvector)': 0.0234, 'direct + climb': 0.0393, 'evolve': 0.0344, 'evolve + climb': 0.0477, 'random search': 0.6194}
+      winner: direct (eigenvector); check: charge correct 1.00 (with errors 1.00), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.019/0.028/0.038 lambda, field near the line -22.7 dB re focus, closed loops on target 1/1; geometry ok, topology ok  => SUCCESS   [16 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 1.00 (with errors 1.00), within 0.1 lambda 1.00, max miss 0.038 lambda, closed loops on target 1/1; geometry ok, topology ok  => SUCCESS   [16 s]
+  64 dipoles on a 250 mm sphere 5.8 GHz        link     scores {'direct (eigenvector)': 0.0805, 'direct + climb': 0.0737, 'evolve': 0.1502, 'evolve + climb': 0.1521, 'random search': 0.6686}
+      winner: direct + climb; check: charge correct 1.00 (with errors 1.00), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.023/0.041/0.069 lambda, field near the line -25.9 dB re focus, closed loops on target 2/2, linking number 1.0; geometry ok, topology ok  => SUCCESS   [23 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 1.00 (with errors 1.00), within 0.1 lambda 1.00, max miss 0.069 lambda, closed loops on target 2/2, linking number 1.0; geometry ok, topology ok  => SUCCESS   [23 s]
+  64 dipoles on a 250 mm sphere 5.8 GHz        trefoil  scores {'direct (eigenvector)': 0.1158, 'direct + climb': 0.0976, 'evolve': 0.1615, 'evolve + climb': 0.1508, 'random search': 0.7093}
+      winner: direct + climb; check: charge correct 1.00 (with errors 0.99), target within 0.1 lambda of a vortex line 1.00, distance median/p90/max 0.025/0.044/0.094 lambda, field near the line -26.8 dB re focus, closed loops on target 1/1; geometry ok, topology ok  => SUCCESS   [21 s]
+      after the worst-point climb (not better on fresh draws, first stage kept): charge correct 1.00 (with errors 0.99), within 0.1 lambda 1.00, max miss 0.094 lambda, closed loops on target 1/1; geometry ok, topology ok  => SUCCESS   [21 s]
+  [curves: 311 s]
+
+== 9. toy multipath room (image sources, scalar field): time reversal against free-space focusing
+  16 whips                   single frequency   fs_in_fs   : at target +0.0 dB re free space, spot None x None mm, target/background mean 5.9 dB (p99 -3.6 dB), brightest point of the 0.6 m patch is 317 mm from the target at +1.0 dB
+  16 whips                   single frequency   fs_in_room : at target -0.2 dB re free space, spot None x 84 mm, target/background mean 2.8 dB (p99 -5.6 dB), brightest point of the 0.6 m patch is 201 mm from the target at +3.9 dB
+  16 whips                   single frequency   tr_in_room : at target +6.2 dB re free space, spot 68 x 57 mm, target/background mean 9.0 dB (p99 1.5 dB), brightest point of the 0.6 m patch is 8 mm from the target at +0.1 dB
+  16 whips                   20 MHz (11 tones)  fs_in_fs   : at target +0.0 dB re free space, spot None x None mm, target/background mean 6.0 dB (p99 -3.5 dB), brightest point of the 0.6 m patch is 317 mm from the target at +1.0 dB
+  16 whips                   20 MHz (11 tones)  fs_in_room : at target -0.3 dB re free space, spot None x 95 mm, target/background mean 3.3 dB (p99 -5.0 dB), brightest point of the 0.6 m patch is 361 mm from the target at +3.5 dB
+  16 whips                   20 MHz (11 tones)  tr_in_room : at target +6.5 dB re free space, spot 67 x 58 mm, target/background mean 10.6 dB (p99 3.2 dB), brightest point of the 0.6 m patch is 0 mm from the target at +0.0 dB
+  4 whips (X0-X3 transmit)   single frequency   fs_in_fs   : at target +0.0 dB re free space, spot None x None mm, target/background mean 1.2 dB (p99 -6.8 dB), brightest point of the 0.6 m patch is 315 mm from the target at +1.0 dB
+  4 whips (X0-X3 transmit)   single frequency   fs_in_room : at target +0.3 dB re free space, spot None x None mm, target/background mean -1.6 dB (p99 -8.9 dB), brightest point of the 0.6 m patch is 115 mm from the target at +6.1 dB
+  4 whips (X0-X3 transmit)   single frequency   tr_in_room : at target +3.9 dB re free space, spot None x 67 mm, target/background mean 2.1 dB (p99 -4.8 dB), brightest point of the 0.6 m patch is 31 mm from the target at +3.0 dB
+  4 whips (X0-X3 transmit)   20 MHz (11 tones)  fs_in_fs   : at target +0.0 dB re free space, spot None x None mm, target/background mean 1.3 dB (p99 -6.6 dB), brightest point of the 0.6 m patch is 315 mm from the target at +1.0 dB
+  4 whips (X0-X3 transmit)   20 MHz (11 tones)  fs_in_room : at target -1.2 dB re free space, spot None x None mm, target/background mean -2.5 dB (p99 -9.9 dB), brightest point of the 0.6 m patch is 105 mm from the target at +7.0 dB
+  4 whips (X0-X3 transmit)   20 MHz (11 tones)  tr_in_room : at target +3.9 dB re free space, spot None x 74 mm, target/background mean 3.0 dB (p99 -4.1 dB), brightest point of the 0.6 m patch is 54 mm from the target at +3.0 dB
+  [room: 238 s]
+
+total 572 s

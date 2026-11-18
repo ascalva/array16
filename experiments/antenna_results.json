@@ -1,0 +1,893 @@
+{
+ "model": "array16/antenna.py: transmission-line patches coupled through space; see its docstring for accuracy",
+ "options": {
+  "fr4_l2": {
+   "cavity_model_efficiency": 0.146,
+   "cavity_model_bw_vswr2_MHz": 132.633,
+   "W_mm": 15.728,
+   "L_mm": 12.322,
+   "feed_mm": 5.91,
+   "f_res_GHz": 5.8,
+   "s11_f0_dB": -25.511,
+   "bw_10dB_MHz": 114.0,
+   "covers_ism": false,
+   "efficiency": 0.142,
+   "surface_wave_share": 0.034,
+   "gain_dbi": -2.492,
+   "directivity_dbi": 6.01,
+   "probe_x_ohm": 5.173,
+   "f_shift_MHz_per_0p1_eps": -66.0,
+   "f_shift_MHz_per_10pct_h": 1.0,
+   "substrate": "FR-4 main board, ground on L2 (0.21 mm)",
+   "eps_r": 4.4,
+   "tan_d": 0.02,
+   "h_mm": 0.21,
+   "feed_from_edge_mm": 0.25,
+   "coupling_reliable": true,
+   "coupling_db": {
+    "e_plane": -31.755164824420156,
+    "h_plane": -32.765985116850366,
+    "diagonal": -41.78795978076959
+   },
+   "receive_coupling_C": {
+    "e_plane_db": -31.30277977754362,
+    "e_plane_deg": 84.0616556307234,
+    "h_plane_db": -32.27871940819123,
+    "h_plane_deg": 163.386756032096,
+    "fit_residual": 6.449601763783015e-05
+   },
+   "embedded_gain_dbi": {
+    "centre (5)": -2.6718637874536073,
+    "edge, E-plane side (4)": -2.712590114789565,
+    "edge, H-plane side (1)": -2.560633543668348,
+    "corner (0)": -2.5853293704461304
+   },
+   "array_gain_broadside_dbi": 9.408,
+   "scan_loss_db_worse_side": {
+    "E_30": 0.65,
+    "E_45": 1.46,
+    "E_60": 2.35,
+    "H_30": 1.45,
+    "H_45": 3.4,
+    "H_60": 6.64,
+    "D_30": 1.03,
+    "D_45": 2.27,
+    "D_60": 3.82
+   },
+   "2bit_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.42,
+     "worst": 0.73
+    },
+    "H": {
+     "mean": 0.41,
+     "worst": 0.68
+    },
+    "D": {
+     "mean": 0.54,
+     "worst": 0.86
+    }
+   },
+   "2bit_quad_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.21,
+     "worst": 0.66
+    },
+    "H": {
+     "mean": 0.22,
+     "worst": 0.61
+    },
+    "D": {
+     "mean": 0.46,
+     "worst": 0.81
+    }
+   },
+   "max_active_gamma_to_45deg": 0.141,
+   "peak_sidelobe_db_worse_side": {
+    "E_0_manifold": -12.7,
+    "E_0_2bit": -12.7,
+    "E_0_2bit_quad": -12.7,
+    "E_20_manifold": -11.2,
+    "E_20_2bit": -7.3,
+    "E_20_2bit_quad": -8.9,
+    "E_40_manifold": -10.2,
+    "E_40_2bit": -3.7,
+    "E_40_2bit_quad": -6.4,
+    "H_0_manifold": -14.8,
+    "H_0_2bit": -14.8,
+    "H_0_2bit_quad": -14.8,
+    "H_20_manifold": -11.6,
+    "H_20_2bit": -10.8,
+    "H_20_2bit_quad": -11.7,
+    "H_40_manifold": -9.0,
+    "H_40_2bit": -2.3,
+    "H_40_2bit_quad": -5.4
+   }
+  },
+  "fr4_l3": {
+   "cavity_model_efficiency": 0.535,
+   "cavity_model_bw_vswr2_MHz": 224.155,
+   "W_mm": 15.728,
+   "L_mm": 12.133,
+   "feed_mm": 2.902,
+   "f_res_GHz": 5.8,
+   "s11_f0_dB": -50.768,
+   "bw_10dB_MHz": 182.0,
+   "covers_ism": true,
+   "efficiency": 0.519,
+   "surface_wave_share": 0.175,
+   "gain_dbi": 3.13,
+   "directivity_dbi": 5.978,
+   "probe_x_ohm": 31.406,
+   "f_shift_MHz_per_0p1_eps": -64.0,
+   "f_shift_MHz_per_10pct_h": -16.0,
+   "substrate": "FR-4 main board, ground on L3 (1.28 mm)",
+   "eps_r": 4.4,
+   "tan_d": 0.018,
+   "h_mm": 1.275,
+   "feed_from_edge_mm": 3.164,
+   "coupling_reliable": true,
+   "coupling_db": {
+    "e_plane": -20.724835209795266,
+    "h_plane": -20.744125350467762,
+    "diagonal": -31.49585993506562
+   },
+   "receive_coupling_C": {
+    "e_plane_db": -21.217119369445847,
+    "e_plane_deg": 87.03625564170929,
+    "h_plane_db": -20.65439890902519,
+    "h_plane_deg": 159.5761425119038,
+    "fit_residual": 0.004091099262937393
+   },
+   "embedded_gain_dbi": {
+    "centre (5)": 2.4857048531340844,
+    "edge, E-plane side (4)": 2.2646260719250786,
+    "edge, H-plane side (1)": 2.884427577492685,
+    "corner (0)": 2.7314600053252756
+   },
+   "array_gain_broadside_dbi": 14.636,
+   "scan_loss_db_worse_side": {
+    "E_30": 0.72,
+    "E_45": 1.9,
+    "E_60": 3.41,
+    "H_30": 1.11,
+    "H_45": 2.64,
+    "H_60": 5.55,
+    "D_30": 0.92,
+    "D_45": 2.13,
+    "D_60": 3.51
+   },
+   "2bit_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.44,
+     "worst": 0.82
+    },
+    "H": {
+     "mean": 0.42,
+     "worst": 0.66
+    },
+    "D": {
+     "mean": 0.55,
+     "worst": 0.86
+    }
+   },
+   "2bit_quad_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.22,
+     "worst": 0.74
+    },
+    "H": {
+     "mean": 0.23,
+     "worst": 0.58
+    },
+    "D": {
+     "mean": 0.43,
+     "worst": 0.78
+    }
+   },
+   "max_active_gamma_to_45deg": 0.269,
+   "peak_sidelobe_db_worse_side": {
+    "E_0_manifold": -12.5,
+    "E_0_2bit": -12.5,
+    "E_0_2bit_quad": -12.5,
+    "E_20_manifold": -10.7,
+    "E_20_2bit": -7.6,
+    "E_20_2bit_quad": -9.1,
+    "E_40_manifold": -9.9,
+    "E_40_2bit": -3.1,
+    "E_40_2bit_quad": -6.0,
+    "H_0_manifold": -14.4,
+    "H_0_2bit": -14.4,
+    "H_0_2bit_quad": -14.4,
+    "H_20_manifold": -11.9,
+    "H_20_2bit": -9.9,
+    "H_20_2bit_quad": -10.9,
+    "H_40_manifold": -9.2,
+    "H_40_2bit": -2.8,
+    "H_40_2bit_quad": -5.8
+   }
+  },
+  "fr4_sep": {
+   "cavity_model_efficiency": 0.559,
+   "cavity_model_bw_vswr2_MHz": 262.934,
+   "W_mm": 15.728,
+   "L_mm": 12.028,
+   "feed_mm": 2.87,
+   "f_res_GHz": 5.8,
+   "s11_f0_dB": -58.092,
+   "bw_10dB_MHz": 204.0,
+   "covers_ism": true,
+   "efficiency": 0.543,
+   "surface_wave_share": 0.205,
+   "gain_dbi": 3.309,
+   "directivity_dbi": 5.961,
+   "probe_x_ohm": 32.409,
+   "f_shift_MHz_per_0p1_eps": -63.0,
+   "f_shift_MHz_per_10pct_h": -23.0,
+   "substrate": "FR-4 antenna board, 1.55 mm",
+   "eps_r": 4.4,
+   "tan_d": 0.018,
+   "h_mm": 1.55,
+   "feed_from_edge_mm": 3.145,
+   "coupling_reliable": true,
+   "coupling_db": {
+    "e_plane": -20.338528029736,
+    "h_plane": -20.30277609765885,
+    "diagonal": -31.042406127966448
+   },
+   "receive_coupling_C": {
+    "e_plane_db": -20.898370703632043,
+    "e_plane_deg": 87.2771269318624,
+    "h_plane_db": -20.199878696138363,
+    "h_plane_deg": 159.59606789134006,
+    "fit_residual": 0.004896886439355991
+   },
+   "embedded_gain_dbi": {
+    "centre (5)": 2.6451361593566594,
+    "edge, E-plane side (4)": 2.3921593754477635,
+    "edge, H-plane side (1)": 3.059933567022563,
+    "corner (0)": 2.884852640410627
+   },
+   "array_gain_broadside_dbi": 14.791,
+   "scan_loss_db_worse_side": {
+    "E_30": 0.73,
+    "E_45": 1.93,
+    "E_60": 3.48,
+    "H_30": 1.09,
+    "H_45": 2.59,
+    "H_60": 5.48,
+    "D_30": 0.92,
+    "D_45": 2.12,
+    "D_60": 3.48
+   },
+   "2bit_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.45,
+     "worst": 0.95
+    },
+    "H": {
+     "mean": 0.42,
+     "worst": 0.66
+    },
+    "D": {
+     "mean": 0.55,
+     "worst": 0.86
+    }
+   },
+   "2bit_quad_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.3,
+     "worst": 0.95
+    },
+    "H": {
+     "mean": 0.23,
+     "worst": 0.59
+    },
+    "D": {
+     "mean": 0.43,
+     "worst": 0.78
+    }
+   },
+   "max_active_gamma_to_45deg": 0.281,
+   "peak_sidelobe_db_worse_side": {
+    "E_0_manifold": -12.5,
+    "E_0_2bit": -12.5,
+    "E_0_2bit_quad": -12.4,
+    "E_20_manifold": -10.6,
+    "E_20_2bit": -7.6,
+    "E_20_2bit_quad": -9.1,
+    "E_40_manifold": -9.9,
+    "E_40_2bit": -3.5,
+    "E_40_2bit_quad": -5.6,
+    "H_0_manifold": -14.4,
+    "H_0_2bit": -14.4,
+    "H_0_2bit_quad": -14.4,
+    "H_20_manifold": -11.9,
+    "H_20_2bit": -9.8,
+    "H_20_2bit_quad": -10.8,
+    "H_40_manifold": -9.2,
+    "H_40_2bit": -2.9,
+    "H_40_2bit_quad": -5.8
+   }
+  },
+  "ro4003_081": {
+   "cavity_model_efficiency": 0.764,
+   "cavity_model_bw_vswr2_MHz": 112.966,
+   "W_mm": 17.135,
+   "L_mm": 13.568,
+   "feed_mm": 2.422,
+   "f_res_GHz": 5.8,
+   "s11_f0_dB": -46.454,
+   "bw_10dB_MHz": 96.0,
+   "covers_ism": false,
+   "efficiency": 0.751,
+   "surface_wave_share": 0.103,
+   "gain_dbi": 5.021,
+   "directivity_dbi": 6.263,
+   "probe_x_ohm": 17.635,
+   "f_shift_MHz_per_0p1_eps": -79.0,
+   "f_shift_MHz_per_10pct_h": -9.0,
+   "substrate": "RO4003C antenna board, 0.813 mm",
+   "eps_r": 3.55,
+   "tan_d": 0.003,
+   "h_mm": 0.813,
+   "feed_from_edge_mm": 4.362,
+   "coupling_reliable": true,
+   "coupling_db": {
+    "e_plane": -17.746582137594594,
+    "h_plane": -17.30009594294836,
+    "diagonal": -28.528252362428862
+   },
+   "receive_coupling_C": {
+    "e_plane_db": -18.162243964256877,
+    "e_plane_deg": 91.91248216928952,
+    "h_plane_db": -17.22816843769553,
+    "h_plane_deg": 159.01008743148984,
+    "fit_residual": 0.004537923167079777
+   },
+   "embedded_gain_dbi": {
+    "centre (5)": 3.801347795662442,
+    "edge, E-plane side (4)": 3.6418568167075804,
+    "edge, H-plane side (1)": 4.449129924248728,
+    "corner (0)": 4.339004008786546
+   },
+   "array_gain_broadside_dbi": 16.101,
+   "scan_loss_db_worse_side": {
+    "E_30": 0.74,
+    "E_45": 2.12,
+    "E_60": 3.94,
+    "H_30": 0.92,
+    "H_45": 2.17,
+    "H_60": 4.92,
+    "D_30": 0.83,
+    "D_45": 2.03,
+    "D_60": 3.35
+   },
+   "2bit_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.46,
+     "worst": 0.96
+    },
+    "H": {
+     "mean": 0.43,
+     "worst": 0.65
+    },
+    "D": {
+     "mean": 0.55,
+     "worst": 0.87
+    }
+   },
+   "2bit_quad_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.3,
+     "worst": 0.97
+    },
+    "H": {
+     "mean": 0.25,
+     "worst": 0.65
+    },
+    "D": {
+     "mean": 0.43,
+     "worst": 0.8
+    }
+   },
+   "max_active_gamma_to_45deg": 0.341,
+   "peak_sidelobe_db_worse_side": {
+    "E_0_manifold": -12.8,
+    "E_0_2bit": -12.8,
+    "E_0_2bit_quad": -12.7,
+    "E_20_manifold": -10.6,
+    "E_20_2bit": -8.2,
+    "E_20_2bit_quad": -9.6,
+    "E_40_manifold": -9.8,
+    "E_40_2bit": -5.5,
+    "E_40_2bit_quad": -5.6,
+    "H_0_manifold": -14.2,
+    "H_0_2bit": -14.2,
+    "H_0_2bit_quad": -14.2,
+    "H_20_manifold": -12.1,
+    "H_20_2bit": -9.3,
+    "H_20_2bit_quad": -10.5,
+    "H_40_manifold": -9.3,
+    "H_40_2bit": -3.2,
+    "H_40_2bit_quad": -6.0
+   }
+  },
+  "ro4003_152": {
+   "cavity_model_efficiency": 0.768,
+   "cavity_model_bw_vswr2_MHz": 213.775,
+   "W_mm": 17.135,
+   "L_mm": 13.371,
+   "feed_mm": 2.798,
+   "f_res_GHz": 5.8,
+   "s11_f0_dB": -54.412,
+   "bw_10dB_MHz": 166.0,
+   "covers_ism": true,
+   "efficiency": 0.761,
+   "surface_wave_share": 0.177,
+   "gain_dbi": 5.041,
+   "directivity_dbi": 6.227,
+   "probe_x_ohm": 33.058,
+   "f_shift_MHz_per_0p1_eps": -77.0,
+   "f_shift_MHz_per_10pct_h": -23.0,
+   "substrate": "RO4003C antenna board, 1.524 mm",
+   "eps_r": 3.55,
+   "tan_d": 0.003,
+   "h_mm": 1.524,
+   "feed_from_edge_mm": 3.888,
+   "coupling_reliable": true,
+   "coupling_db": {
+    "e_plane": -17.636381952984443,
+    "h_plane": -17.136691589233575,
+    "diagonal": -28.217402495600602
+   },
+   "receive_coupling_C": {
+    "e_plane_db": -18.216605835116905,
+    "e_plane_deg": 92.16299454921705,
+    "h_plane_db": -17.03042161770538,
+    "h_plane_deg": 159.2210071394715,
+    "fit_residual": 0.006646571114710083
+   },
+   "embedded_gain_dbi": {
+    "centre (5)": 3.8618309709479663,
+    "edge, E-plane side (4)": 3.6181395354347927,
+    "edge, H-plane side (1)": 4.505576327900277,
+    "corner (0)": 4.338801091319109
+   },
+   "array_gain_broadside_dbi": 16.126,
+   "scan_loss_db_worse_side": {
+    "E_30": 0.75,
+    "E_45": 2.16,
+    "E_60": 4.06,
+    "H_30": 0.91,
+    "H_45": 2.14,
+    "H_60": 4.88,
+    "D_30": 0.83,
+    "D_45": 2.04,
+    "D_60": 3.34
+   },
+   "2bit_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.46,
+     "worst": 0.97
+    },
+    "H": {
+     "mean": 0.43,
+     "worst": 0.65
+    },
+    "D": {
+     "mean": 0.55,
+     "worst": 0.87
+    }
+   },
+   "2bit_quad_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.3,
+     "worst": 0.98
+    },
+    "H": {
+     "mean": 0.25,
+     "worst": 0.65
+    },
+    "D": {
+     "mean": 0.43,
+     "worst": 0.81
+    }
+   },
+   "max_active_gamma_to_45deg": 0.348,
+   "peak_sidelobe_db_worse_side": {
+    "E_0_manifold": -12.7,
+    "E_0_2bit": -12.6,
+    "E_0_2bit_quad": -12.6,
+    "E_20_manifold": -10.5,
+    "E_20_2bit": -8.1,
+    "E_20_2bit_quad": -9.5,
+    "E_40_manifold": -9.7,
+    "E_40_2bit": -3.2,
+    "E_40_2bit_quad": -5.5,
+    "H_0_manifold": -14.2,
+    "H_0_2bit": -14.2,
+    "H_0_2bit_quad": -14.2,
+    "H_20_manifold": -12.1,
+    "H_20_2bit": -9.3,
+    "H_20_2bit_quad": -10.4,
+    "H_40_manifold": -9.3,
+    "H_40_2bit": -3.2,
+    "H_40_2bit_quad": -6.0
+   }
+  },
+  "ptfe_15": {
+   "cavity_model_efficiency": 0.84,
+   "cavity_model_bw_vswr2_MHz": 221.071,
+   "W_mm": 19.131,
+   "L_mm": 15.488,
+   "feed_mm": 3.291,
+   "f_res_GHz": 5.8,
+   "s11_f0_dB": -55.034,
+   "bw_10dB_MHz": 176.0,
+   "covers_ism": true,
+   "efficiency": 0.836,
+   "surface_wave_share": 0.132,
+   "gain_dbi": 5.908,
+   "directivity_dbi": 6.688,
+   "probe_x_ohm": 34.135,
+   "f_shift_MHz_per_0p1_eps": -103.0,
+   "f_shift_MHz_per_10pct_h": -21.0,
+   "substrate": "PTFE (F4B) antenna board, 1.5 mm",
+   "eps_r": 2.65,
+   "tan_d": 0.001,
+   "h_mm": 1.5,
+   "feed_from_edge_mm": 4.453,
+   "coupling_reliable": true,
+   "coupling_db": {
+    "e_plane": -17.29248589931361,
+    "h_plane": -16.477856737160764,
+    "diagonal": -27.245693520360295
+   },
+   "receive_coupling_C": {
+    "e_plane_db": -18.043271865651356,
+    "e_plane_deg": 102.25071640965517,
+    "h_plane_db": -16.43424699490215,
+    "h_plane_deg": 166.0759882472926,
+    "fit_residual": 0.007908329718988348
+   },
+   "embedded_gain_dbi": {
+    "centre (5)": 4.213249573756283,
+    "edge, E-plane side (4)": 4.128776571654831,
+    "edge, H-plane side (1)": 4.981752189026282,
+    "corner (0)": 4.96596486319014
+   },
+   "array_gain_broadside_dbi": 16.616,
+   "scan_loss_db_worse_side": {
+    "E_30": 0.81,
+    "E_45": 2.32,
+    "E_60": 4.43,
+    "H_30": 0.86,
+    "H_45": 2.04,
+    "H_60": 4.78,
+    "D_30": 0.84,
+    "D_45": 2.08,
+    "D_60": 3.41
+   },
+   "2bit_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.46,
+     "worst": 0.97
+    },
+    "H": {
+     "mean": 0.43,
+     "worst": 0.67
+    },
+    "D": {
+     "mean": 0.55,
+     "worst": 0.89
+    }
+   },
+   "2bit_quad_extra_loss_db_0_to_45deg": {
+    "E": {
+     "mean": 0.32,
+     "worst": 0.96
+    },
+    "H": {
+     "mean": 0.25,
+     "worst": 0.68
+    },
+    "D": {
+     "mean": 0.44,
+     "worst": 0.82
+    }
+   },
+   "max_active_gamma_to_45deg": 0.347,
+   "peak_sidelobe_db_worse_side": {
+    "E_0_manifold": -13.0,
+    "E_0_2bit": -12.9,
+    "E_0_2bit_quad": -12.9,
+    "E_20_manifold": -10.6,
+    "E_20_2bit": -6.9,
+    "E_20_2bit_quad": -7.5,
+    "E_40_manifold": -9.4,
+    "E_40_2bit": -3.1,
+    "E_40_2bit_quad": -5.5,
+    "H_0_manifold": -14.2,
+    "H_0_2bit": -14.2,
+    "H_0_2bit_quad": -14.2,
+    "H_20_manifold": -12.2,
+    "H_20_2bit": -9.2,
+    "H_20_2bit_quad": -10.4,
+    "H_40_manifold": -9.2,
+    "H_40_2bit": -3.3,
+    "H_40_2bit_quad": -6.1
+   }
+  },
+  "air_3": {
+   "cavity_model_efficiency": 0.997,
+   "cavity_model_bw_vswr2_MHz": 439.461,
+   "W_mm": 22.0,
+   "L_mm": 22.315,
+   "feed_mm": 3.47,
+   "f_res_GHz": 5.8,
+   "s11_f0_dB": -52.898,
+   "bw_10dB_MHz": 356.0,
+   "covers_ism": true,
+   "efficiency": 0.996,
+   "surface_wave_share": 0.0,
+   "gain_dbi": 8.221,
+   "directivity_dbi": 8.24,
+   "probe_x_ohm": -0.0,
+   "f_shift_MHz_per_0p1_eps": -216.0,
+   "f_shift_MHz_per_10pct_h": -51.0,
+   "substrate": "Sheet-metal patches 3 mm above the ground",
+   "eps_r": 1.0,
+   "tan_d": 0.0,
+   "h_mm": 3.0,
+   "feed_from_edge_mm": 7.687,
+   "coupling_reliable": false,
+   "moment_method_reference": {
+    "e_plane_db": -9.5,
+    "e_plane_edge_db": -8.7,
+    "max_active_gamma_to_45deg": 0.72
+   }
+  },
+  "air_5": {
+   "cavity_model_efficiency": 0.999,
+   "cavity_model_bw_vswr2_MHz": 824.019,
+   "W_mm": 22.0,
+   "L_mm": 20.087,
+   "feed_mm": 3.515,
+   "f_res_GHz": 5.8,
+   "s11_f0_dB": -58.843,
+   "bw_10dB_MHz": 652.0,
+   "covers_ism": true,
+   "efficiency": 0.998,
+   "surface_wave_share": 0.0,
+   "gain_dbi": 7.659,
+   "directivity_dbi": 7.667,
+   "probe_x_ohm": 0.0,
+   "f_shift_MHz_per_0p1_eps": -226.0,
+   "f_shift_MHz_per_10pct_h": -61.0,
+   "substrate": "Sheet-metal patches 5 mm above the ground",
+   "eps_r": 1.0,
+   "tan_d": 0.0,
+   "h_mm": 5.0,
+   "feed_from_edge_mm": 6.528,
+   "coupling_reliable": false,
+   "moment_method_reference": {
+    "e_plane_db": -9.9,
+    "e_plane_edge_db": -9.5,
+    "h_plane_db": -18.2,
+    "diagonal_db": -21.7,
+    "max_active_gamma_to_45deg": 0.67,
+    "df_boresight_cal_deg": {
+     "median": 2.47,
+     "p95": 5.71,
+     "worst": 6.8
+    },
+    "e_scan_loss_db_30_45_60": [
+     0.06,
+     1.58,
+     6.56
+    ]
+   }
+  }
+ },
+ "direction_finding_deg": {
+  "ideal elements (simulator default)": {
+   "boresight_cal": {
+    "median": 0.12,
+    "p95": 0.45,
+    "worst": 0.6
+   }
+  },
+  "fr4_l3": {
+   "as_designed": {
+    "boresight_cal": {
+     "median": 0.37,
+     "p95": 1.66,
+     "worst": 2.25
+    },
+    "exact_manifold": {
+     "median": 0.12,
+     "p95": 0.47,
+     "worst": 0.75
+    }
+   },
+   "eps_r_off": {
+    "delta_eps_r": 0.2,
+    "boresight_cal": {
+     "median": 0.35,
+     "p95": 1.98,
+     "worst": 2.82
+    },
+    "exact_manifold": {
+     "median": 0.12,
+     "p95": 0.53,
+     "worst": 0.75
+    },
+    "design_manifold": {
+     "median": 0.31,
+     "p95": 1.15,
+     "worst": 1.68
+    }
+   }
+  },
+  "ro4003_152": {
+   "as_designed": {
+    "boresight_cal": {
+     "median": 0.51,
+     "p95": 2.34,
+     "worst": 2.63
+    },
+    "exact_manifold": {
+     "median": 0.1,
+     "p95": 0.47,
+     "worst": 0.75
+    }
+   },
+   "eps_r_off": {
+    "delta_eps_r": 0.05,
+    "boresight_cal": {
+     "median": 0.51,
+     "p95": 2.19,
+     "worst": 3.19
+    },
+    "exact_manifold": {
+     "median": 0.1,
+     "p95": 0.52,
+     "worst": 0.75
+    },
+    "design_manifold": {
+     "median": 0.17,
+     "p95": 0.74,
+     "worst": 1.25
+    }
+   }
+  },
+  "ptfe_15": {
+   "as_designed": {
+    "boresight_cal": {
+     "median": 0.52,
+     "p95": 2.56,
+     "worst": 2.98
+    },
+    "exact_manifold": {
+     "median": 0.1,
+     "p95": 0.47,
+     "worst": 0.67
+    }
+   },
+   "eps_r_off": {
+    "delta_eps_r": 0.05,
+    "boresight_cal": {
+     "median": 0.55,
+     "p95": 2.23,
+     "worst": 2.82
+    },
+    "exact_manifold": {
+     "median": 0.09,
+     "p95": 0.52,
+     "worst": 0.75
+    },
+    "design_manifold": {
+     "median": 0.19,
+     "p95": 0.83,
+     "worst": 1.25
+    }
+   }
+  }
+ },
+ "df_vs_coupling_level": {
+  "note": "FR-4 receive-coupling matrix (all neighbours) scaled to the level and its phase turned 0/90/180/270 deg; [min, max] over phase",
+  "rows": [
+   {
+    "e_plane_coupling_db": -30,
+    "boresight_cal_median": [
+     0.16,
+     0.24
+    ],
+    "boresight_cal_p95": [
+     0.73,
+     1.2
+    ],
+    "exact_manifold_p95": [
+     0.46,
+     0.5
+    ]
+   },
+   {
+    "e_plane_coupling_db": -25,
+    "boresight_cal_median": [
+     0.23,
+     0.34
+    ],
+    "boresight_cal_p95": [
+     1.11,
+     1.77
+    ],
+    "exact_manifold_p95": [
+     0.46,
+     0.54
+    ]
+   },
+   {
+    "e_plane_coupling_db": -20,
+    "boresight_cal_median": [
+     0.4,
+     0.5
+    ],
+    "boresight_cal_p95": [
+     1.87,
+     3.15
+    ],
+    "exact_manifold_p95": [
+     0.42,
+     0.62
+    ]
+   },
+   {
+    "e_plane_coupling_db": -17,
+    "boresight_cal_median": [
+     0.57,
+     0.71
+    ],
+    "boresight_cal_p95": [
+     2.55,
+     4.55
+    ],
+    "exact_manifold_p95": [
+     0.35,
+     0.62
+    ]
+   },
+   {
+    "e_plane_coupling_db": -15,
+    "boresight_cal_median": [
+     0.69,
+     0.86
+    ],
+    "boresight_cal_p95": [
+     3.29,
+     5.83
+    ],
+    "exact_manifold_p95": [
+     0.34,
+     0.62
+    ]
+   },
+   {
+    "e_plane_coupling_db": -12,
+    "boresight_cal_median": [
+     0.87,
+     1.19
+    ],
+    "boresight_cal_p95": [
+     4.3,
+     8.34
+    ],
+    "exact_manifold_p95": [
+     0.29,
+     0.67
+    ]
+   }
+  ]
+ }
+}

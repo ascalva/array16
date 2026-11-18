@@ -1,0 +1,28 @@
+T 2-D square: shortest G x spacing 1.0000 (spacing +0.0 %), elements for the same shortest G 1.000
+T 2-D staggered cards (pitch = card spacing): shortest G x spacing 1.0000 (spacing +0.0 %), elements for the same shortest G 1.000
+T 2-D equilateral triangular: shortest G x spacing 1.1547 (spacing +15.5 %), elements for the same shortest G 0.866
+T 3-D simple cubic: shortest G x spacing 1.0000 (spacing +0.0 %), elements for the same shortest G 1.000
+T 3-D body-centred cubic: shortest G x spacing 1.2247 (spacing +22.5 %), elements for the same shortest G 0.707
+T 3-D face-centred cubic: shortest G x spacing 1.2247 (spacing +22.5 %), elements for the same shortest G 0.770
+T 3-D hexagonal close-packed: shortest G x spacing 1.2247 (spacing +22.5 %), elements for the same shortest G 0.770, partial lobe -6.0 dB at 1.1547
+A square 25 mm (rev B): grating-free to 6.43 GHz at 60 deg, 6.00 at 90; aperture -0.00 dB
+A staggered cards 25 x 25 mm: grating-free to 6.43 GHz at 60 deg, 6.00 at 90; aperture -0.00 dB
+A triangular 28.9 mm (cards 25 mm apart): grating-free to 6.43 GHz at 60 deg, 6.00 at 90; aperture +0.62 dB
+A triangular 25 mm (cards 21.7 mm apart): grating-free to 7.42 GHz at 60 deg, 6.92 at 90; aperture -0.62 dB
+A square 26.9 mm (same area as triangular 28.9): grating-free to 5.98 GHz at 60 deg, 5.58 at 90; aperture +0.62 dB
+B square lattice 4x4, 113 mm: nominal p95 0.36-169.39 deg, gross max 13.6 / 30.3 / 29.8 %, ambiguity max 1.00 (first > 0.9 at 1.25 GHz)
+B square lattice 4x4, 85 mm: nominal p95 0.39-163.39 deg, gross max 10.9 / 22.3 / 24.0 %, ambiguity max 1.00 (first > 0.9 at 1.65 GHz)
+B triangular lattice, 120 mm: nominal p95 0.45-175.31 deg, gross max 12.9 / 34.9 / 34.3 %, ambiguity max 1.00 (first > 0.9 at 1.4 GHz)
+B triangular lattice, 75 mm: nominal p95 0.45-2.19 deg, gross max 0.2 / 0.2 / 1.5 %, ambiguity max 1.00 (first > 0.9 at 2.2 GHz)
+B ring of 16, r 225 mm: nominal p95 0.19-1.11 deg, gross max 0.0 / 3.6 / 4.5 %, ambiguity max 0.64 (first > 0.9 at None GHz)
+B two rings of 8, r 225 / 112 mm (rev B): nominal p95 0.24-1.42 deg, gross max 0.0 / 0.0 / 0.0 %, ambiguity max 0.66 (first > 0.9 at None GHz)
+B searched, genetic (evolved16): nominal p95 0.19-1.07 deg, gross max 0.0 / 0.6 / 1.4 %, ambiguity max 0.77 (first > 0.9 at None GHz)
+B searched, random (random16): nominal p95 0.22-1.26 deg, gross max 0.0 / 0.0 / 0.3 %, ambiguity max 0.64 (first > 0.9 at None GHz)
+C planar square 4x4: extent [3.0, 3.0, 0.0], level 0.27 0.27 1.00 1.00 1.00 1.00 1.00 1.00 1.00 | >0.9 from s/lambda = 0.47000000000000014
+C planar triangular 4x4: extent [2.6, 3.5, 0.0], level 0.30 0.30 0.61 0.95 1.00 1.00 1.00 1.00 1.00 | >0.9 from s/lambda = 0.5400000000000003
+C simple cubic 2x2x4: extent [1.0, 1.0, 3.0], level 0.31 0.81 1.00 1.00 1.00 1.00 1.00 1.00 1.00 | >0.9 from s/lambda = 0.4300000000000001
+C simple cubic, 16 nearest: extent [2.0, 2.0, 2.0], level 0.24 0.68 1.00 1.00 1.00 1.00 1.00 1.00 1.00 | >0.9 from s/lambda = 0.4500000000000001
+C body-centred cubic, 16 nearest: extent [2.31, 2.31, 2.31], level 0.23 0.25 0.70 0.90 1.00 1.00 1.00 1.00 1.00 | >0.9 from s/lambda = 0.5500000000000003
+C face-centred cubic, 16 nearest: extent [2.12, 2.12, 2.12], level 0.20 0.21 0.69 0.89 0.99 1.00 1.00 1.00 1.00 | >0.9 from s/lambda = 0.5600000000000003
+C hexagonal close-packed, 16 nearest: extent [2.0, 2.02, 1.63], level 0.23 0.27 0.67 0.89 0.99 1.00 1.00 1.00 1.00 | >0.9 from s/lambda = 0.5600000000000003
+done in 363 s

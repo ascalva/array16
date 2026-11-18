@@ -1,0 +1,1328 @@
+{
+ "research:discrete": {
+  "summary": "Yes, coherent channels can be built from smaller parts, and the parts are cheap (about $50 per channel against $270 per bladeRF channel). Power, host bandwidth, engineering effort and the loss of transmit decide it, not price.\n\n(a) Shared LO. One synthesizer (LMX2572, 12.5 MHz-6.4 GHz, 0.25 W, $7-16) drives every demodulator through resistive splits and GVA-84+ amplifiers (DC-7 GHz, 0.53 W, $2.2, one per four channels). The LO's random phase after a retune, and its phase noise, are common to all channels and cancel. Channel-to-channel phase then becomes a fixed function of frequency that a stored table covers. Two AD9361s re-randomise on every tune (even with an external LO they land at 0 or 180 deg, set by the LO input divider), and each R820T2 has its own PLL. Use polyphase-quadrature demodulators (ADL5380); divide-by-2 parts (ADL5387) bring the 0/180 ambiguity back. What still drifts:\n- LO line length (0.7 deg per 10 C at 6 GHz for 100 mm)\n- LNA, filter and amplifier phase with temperature and gain state\n- I/Q imbalance and DC offset\n- baseband-filter delay mismatch (2.5 ns gives 4.5 deg at 5 MHz)\n- ADC skew (the AFE5832LP samples paired inputs 12.5 ns apart)\nThe rev B injection network stays, but for drift tracking rather than after every retune.\n\nPower is the blocker. Wideband demodulators are base-station parts drawing 1.2-2.4 W each at 5 V (ADL5380 245 mA, TRF371125 360 mA, LTC5586 ~440 mA, LTC5594 470 mA). Add an AFE5832LP digitising 32 inputs (24.4 mW each, ~$214) plus an FPGA and USB 3:\n- 8 channels: 13.5 W at the rails, 15.9 W from USB-C, ~$420 in parts\n- 16 channels: 25 W at the rails, 29 W from USB-C, ~$770 in parts\nBoth figures come before the rev B front end (6-7.3 W). Sixteen channels of 10 MSPS 16-bit I/Q is 640 MB/s, more than one USB 3 link carries.\n\nLow IF moves the signal off DC, so DC offset, LO leakage and 1/f noise are removed digitally. I/Q imbalance turns into image leakage instead: 25 dB at 1 dB or 6.5 deg, 40 dB at 0.1 dB and 1 deg, and 60 dB only at 0.01 dB and 0.1 deg. Calibration therefore has to measure and correct it. In an array the image carries the conjugate steering vector, which shows up as a ghost at the mirror bearing.\n\n(b) Tuner bank. KrakenSDR ($749; five R820T2+RTL2832U; 24-1766 MHz; 8-bit; 2.56 MHz; 11 W) gets coherence from three things:\n- one 1-ppm clock\n- a noise source behind high-isolation switches\n- heimdall (GPL-3.0, 64-bit Linux): FFT cross-correlation, per-RTL sample-rate trims, eigenvector phase calibration to 3 deg, recalibration on every retune\nIts hardware is unpublished. The R828D is gone (Blog V4 end-of-line); the R860, a renamed R820T2, continues (Blog V3 $34.95). Sixteen tuners need 77-82 MB/s against USB 2.0's practical 40 MB/s. That means three or four separate buses, or tuners feeding a multichannel ADC and FPGA, as the 8-channel CR-8 does (R860s, Microchip 8-input ADC, 12-bit, 8 MHz, USB 3, <1 deg, target $500-600). Sixteen tuners draw ~9.4 W, ~14 W in all. A shared-LO block downconverter in front reaches 6 GHz and keeps the tuners at a fixed frequency, for ~0.3-0.6 W more per channel. Bandwidth stays at 2.5-8 MHz, which hurts radar.\n\n(c) Verified examples: KrakenSDR (5 channels), CR-8 (8), QuadRF (4, 4.9-6 GHz, MAX2850/MAX2851), FMCOMMS5 (2x AD9361). The shared web-search budget ran out before university 8-16-channel builds were found.",
+  "findings": [
+   {
+    "topic": "Coherence: AD9361 baseline",
+    "claim": "The AD9361 has no mechanism to phase-align multiple chips. With internal LOs the phase is random per LO change, sample-rate change, some gain changes and quadrature tracking. With a shared external LO (ADF5355) it is still random but limited to 0 or 180 deg, because the external-LO input divider cannot be bypassed. It re-randomises after power cycles, LO dropouts and large frequency steps.",
+    "source": "https://analogdevicesinc.github.io/system-level/solutions/reference-designs/fmcomms5/phase-sync/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Coherence: demodulator quadrature method",
+    "claim": "ADL5380 (400 MHz-6 GHz) generates LO quadrature with a polyphase filter, so it takes LO = RF and needs LO harmonic filtering. ADL5387 uses a divide-by-2 phase splitter fed with 2x LO (100 MHz-4 GHz). By analogy with the AD9361 input divider, a divider's start state can give a 0/180 deg offset between chips; this is an inference, not a datasheet statement.",
+    "source": "https://www.analog.com/en/resources/reference-designs/circuits-from-the-lab/cn0245.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Coherence: synchronised synthesizers",
+    "claim": "LMX2572 (also LMX2594/LMX2595) has a SYNC input that makes the OSCin-to-RFout phase deterministic, so several synthesizers on one reference can be phase-aligned as an alternative to splitting one LO 16 ways.",
+    "source": "https://www.ti.com/product/LMX2572",
+    "confidence": "high"
+   },
+   {
+    "topic": "Coherence: synchronised synthesizers",
+    "claim": "TI E2E threads report multi-device SYNC pitfalls: timing-critical 'category 3' sync when Fout is not an integer multiple of Fosc, and devices coming up 180 deg apart.",
+    "source": "https://e2e.ti.com/support/clock-timing-group/clock-and-timing/f/clock-timing-forum/1008334/lmx2572-phase-synchronization-can-not-be-achieved",
+    "confidence": "low"
+   },
+   {
+    "topic": "Synthesizers",
+    "claim": "TI LMX2594: 10 MHz-15 GHz, 340 mA at 3.3 V (~1.12 W), up to +7 dBm at 15 GHz, 6x6 mm VQFN-40.",
+    "source": "https://www.ti.com/product/LMX2594",
+    "confidence": "high"
+   },
+   {
+    "topic": "Synthesizers",
+    "claim": "LMX2594RHAT price: about $74 (Octopart) to $138.86 (DigiKey Singapore, qty 1). The TI store showed it out of stock in Nov 2026.",
+    "source": "https://octopart.com/part/texas-instruments/LMX2594RHAT ; https://www.ti.com/product/LMX2594/part-details/LMX2594RHAT",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Synthesizers",
+    "claim": "TI LMX2595: 10 MHz-20 GHz headline (product table 100 MHz-19 GHz), 340 mA at 3.3 V, phase synchronisation across devices. No price found.",
+    "source": "https://www.ti.com/product/LMX2595",
+    "confidence": "high"
+   },
+   {
+    "topic": "Synthesizers",
+    "claim": "TI LMX2572: 12.5 MHz-6.4 GHz, two differential outputs, 75 mA at 3.3 V (~0.25 W). LCSC lists ~$9.90 at qty 1 and ~$7.20 at 100+; a 1ku reference price is ~$16.",
+    "source": "https://www.ti.com/product/LMX2572 ; https://electronicspecifier.com/product-centre/manufacturers/texas-instruments/part/59fffc4a5a8ec920138b4620",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Synthesizers",
+    "claim": "ADI ADF4371: 62.5 MHz-32 GHz, ~$322 at qty 1 (Richardson). ADF4372: 62.5 MHz-16 GHz, 190 mA at 3.3 V, ~$119 at qty 1 and ~$122 at 500. ADI shows no list price.",
+    "source": "https://shop.richardsonrfpd.com/Products/Product/ADF4372BCCZ ; https://shop.richardsonrfpd.com/Products/Product/ADF4371BCCZ",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LO distribution",
+    "claim": "TI LMX1204 RF buffer: 300 MHz-12.8 GHz, 4 outputs each with SYSREF, divide by 1-8 or multiply by 1-4, 405 mA at 2.5 V (~1.0 W). Price ~EUR 152-191 per unit on DigiKey reels and $282-316 at LCSC (out of stock), so about $70 per output.",
+    "source": "https://www.ti.com/product/LMX1204 ; https://www.digikey.at/en/products/detail/texas-instruments/LMX1204RHAR/17885019",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LO distribution",
+    "claim": "Two clock fanouts usable as LO buffers are end-of-life: HMC987 (DC-8 GHz, 1:9) and LTC6955 (7.5 GHz, 11 outputs, 350 mA output supply plus 85 mA core, $16-21) are both Last Time Buy.",
+    "source": "https://www.analog.com/en/products/hmc987.html ; https://www.findchips.com/detail/ltc6955iukg%23pbf/Analog-Devices-Inc",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LO distribution",
+    "claim": "Mini-Circuits GVA-84+: DC-7 GHz, 24 dB gain and P1dB +20.5 dBm at 100 MHz, ~106 mA at 5 V (~0.53 W), ~$2.23. A cheap LO-tree amplifier.",
+    "source": "https://www.minicircuits.com/pdfs/GVA-84+.pdf ; https://octopart.com/part/mini-circuits/GVA-84+",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LO distribution",
+    "claim": "No surface-mount 4-way splitter spanning 0.4-6 GHz was found; Mini-Circuits WP4 parts cover narrow bands (e.g. WP4F1+ 4.75-6.2 GHz, ~$2). Broadband LO trees therefore use resistive splitters at 6 dB per 2-way, or 12 dB per 4-way.",
+    "source": "https://www.mouser.com/new/mini-circuits/mini-circuits-wp4/ ; https://www.microwaves101.com/encyclopedias/resistive-power-splitters",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LO distribution",
+    "claim": "Estimated 16-way LO tree: LMX2572 into a resistive 4-way split, then 4 GVA-84+ amplifiers, then four more 4-way splits. About 5 amplifiers (~2.7 W) for 16 demodulators, or 3 (~1.6 W) for 8. Drive per demodulator is about -7 to -3 dBm, which depends on the unverified GVA-84+ gain at 6 GHz.",
+    "source": "estimate: GVA-84+ 0.53 W each, 12 dB per resistive 4-way, synthesizer +3 to +5 dBm assumed",
+    "confidence": "low"
+   },
+   {
+    "topic": "IQ demodulators",
+    "claim": "ADL5380 (0.4-6 GHz): 245 mA at 5 V (~1.23 W). An ADJ resistor trades supply current for IIP3. Price $18.61 at 100+ and $17.51 at 250+ (element14), $19.85 at qty 1 (Newark).",
+    "source": "https://www.analog.com/en/products/adl5380.html ; https://no.farnell.com/en-NO/analog-devices/adl5380acpz-r7/i-q-demodulator-400mhz-6ghz-lfcsp/dp/4030629",
+    "confidence": "medium"
+   },
+   {
+    "topic": "IQ demodulators",
+    "claim": "ADL5387 (30 MHz-2 GHz): 180 mA at 5 V (~0.9 W), ADI 1ku list from $6.49, LCSC ~$12.21 at qty 1 and $10.61 at 64+.",
+    "source": "https://analog.com/en/products/adl5387.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "IQ demodulators",
+    "claim": "LTC5594 (0.3-9 GHz, 1 GHz demodulation bandwidth, up to 60 dB image rejection): 470 mA at 5 V (~2.35 W), ~250 mA with the baseband amplifiers off. $15.70 per 1k at its 2018 launch; ~$24-26 at small quantity now.",
+    "source": "https://microwavejournal.com/articles/29846-adi-announces-high-linearity-iq-demodulator-supporting-1ghz-bandwidth ; https://zenode.ai/parts/twdcrbkjb0",
+    "confidence": "medium"
+   },
+   {
+    "topic": "IQ demodulators",
+    "claim": "LTC5586 (0.3-6 GHz): ~430-440 mA at 5 V (~2.2 W), ADI 1ku list $9.66, LCSC $34.36 at qty 1.",
+    "source": "https://analog.com/en/products/ltc5586.html ; https://www.lcsc.com/product-detail/C688696.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "IQ demodulators",
+    "claim": "LTC5585 (0.7-3 GHz) has on-chip IIP2 adjustment (to ~80 dBm, 60 dBm unadjusted at 1.95 GHz) and DC-offset cancellation; its supply current was not found.",
+    "source": "https://www.electronicspecifier.com/industries/wireless/ltc5585-i-q-demodulator-with-iip2-optimization-linear",
+    "confidence": "medium"
+   },
+   {
+    "topic": "IQ demodulators",
+    "claim": "ADRF6820 (695-2700 MHz, integrated PLL/VCO, ~1.1 W with external LO and ~1.4 W with internal) is marked Obsolete by ADI.",
+    "source": "https://www.analog.com/en/products/adrf6820.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "IQ demodulators",
+    "claim": "TI TRF371125 (0.7-4 GHz) integrates a baseband PGA and a 0.7-15 MHz low-pass filter, draws 360 mA at 5 V (~1.8 W) and is listed Active.",
+    "source": "https://ti.com/product/TRF371125 ; https://www.digikey.co.uk/en/products/detail/texas-instruments/TRF371125IRGZT/2206016",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multichannel ADCs",
+    "claim": "AD9249: 16 channels, 14-bit, 65 MSPS, serial LVDS, 58 mW/ch at 65 MSPS (35 mW/ch at 20 MSPS). ADI 1ku $184.94; DigiKey $256.76 at qty 1. That is 8 complex (I+Q) channels per chip, ~$23-32 per complex channel.",
+    "source": "https://www.analog.com/en/products/ad9249.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multichannel ADCs",
+    "claim": "AD9257: 8 channels, 14-bit, 65 MSPS, serial LVDS, 55 mW/ch, ~$131-151 at 1k (Octopart).",
+    "source": "https://octopart.com/part/analog-devices/AD9257BCPZ-65",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multichannel ADCs",
+    "claim": "TI ADS5296A: 4 channels at 10-bit 200 MSPS or 8 channels at 12-bit 80 MSPS, 65 mW/ch at 80 MSPS (560 mW typical total), serial LVDS up to ~1 Gb/s per wire, Active. No price shown.",
+    "source": "https://www.ti.com/product/ADS5296A",
+    "confidence": "high"
+   },
+   {
+    "topic": "Multichannel ADCs",
+    "claim": "TI ADS52J90: 16 ADCs that convert 8, 16 or 32 inputs at 10/12/14 bits, up to 100 MSPS (10-bit). 41 mW/ch in 16-input mode, 20.5 mW/ch in 32-input mode at 100 MSPS. LVDS or JESD204B. ~$150-277 at qty 1.",
+    "source": "https://www.ti.com/product/ADS52J90 ; https://www.digikey.com.br/en/products/detail/texas-instruments/ADS52J90ZZE/5994307",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multichannel ADCs",
+    "claim": "TI AFE5832LP: 32 inputs on 16 ADCs, each ADC alternating two inputs. 12-bit at 40 MSPS per input; 24.4 mW/ch (12-bit, 40 MSPS, low-power mode). Integrated LNA/PGA and a 10-25 MHz low-pass, 3-4 nV/rtHz, LVDS up to 1 Gb/s, Active. ~$191-261 at qty 1 (TI listing $214.19), about $6.7 per real input.",
+    "source": "https://www.ti.com/product/AFE5832LP ; https://www.electronicsdatasheets.com/manufacturers/texas-instruments/parts/afe5832lpzav",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multichannel ADCs",
+    "claim": "TI AFE5808A: 8 channels each with LNA, attenuator, PGA, 10/15/20/30 MHz low-pass and a 14-bit 65 MSPS ADC, plus CW mixers; 158 mW/ch. TI.com availability was unclear.",
+    "source": "https://ti.com/product/AFE5808A",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multichannel ADCs",
+    "claim": "ADI AD9083: 16-channel, 125 MHz-bandwidth continuous-time sigma-delta ADC with on-chip DSP and JESD204B, aimed at phased arrays. About 90 mW/ch at default settings (35 mW/ch minimum), 1ku list $375.28. It needs an FPGA with SERDES.",
+    "source": "https://www.analog.com/en/products/ad9083.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multichannel ADCs",
+    "claim": "Microchip MCP37211-200: 12-bit 200 MSPS ADC with an 8-input mux (25 MSPS per input when all eight are used) and fractional-delay recovery that corrects the sampling-instant difference between muxed channels. One distributor lists the TFBGA package as discontinued.",
+    "source": "https://www.mouser.com/datasheet/2/268/20005355B-965124.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Coherence: ADC timing",
+    "claim": "Because the AFE5832LP's ADC alternates two inputs at 80 MSPS, paired inputs are sampled 12.5 ns apart: 4.5 deg at 1 MHz and 22.5 deg at 5 MHz if I and Q share an ADC. The fix is a digital fractional delay, or mapping I and Q to same-phase slots.",
+    "source": "estimate: TI AFE5832LP page (each ADC alternately converts two channels, 40 MSPS per channel), 360*f*12.5 ns",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Budget: shared-LO receiver",
+    "claim": "8-channel shared-LO I/Q receiver (ADL5380 + AFE5832LP + LMX2572 + GVA-84+ tree + ECP5-class FPGA with USB 3): ~$420 in parts (~$52/ch), 13.5 W at the rails, 15.9 W from USB-C at 85 % conversion. That is over the 15 W budget before any front end.",
+    "source": "estimate: computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/budget.py from the cited part figures; FPGA+USB3 $60 / 1.5 W and $12/ch PCB+passives assumed",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Budget: shared-LO receiver",
+    "claim": "16-channel version: ~$767 in parts (~$48/ch), 24.8 W at the rails, 29.2 W from USB-C. ADL5380s are 79 % of it (16 x 1.23 W = 19.6 W).",
+    "source": "estimate: same budget.py",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Budget: system power",
+    "claim": "The rev B front end alone draws 6.0 W (16 external ports) or 7.3 W (panel, QAMP), 13.3 W with everything on. Adding a shared-LO bank gives ~22 W (8 channels, external ports) to ~36.5 W (16 channels, panel), so USB-PD at 9 V/3 A (27 W) or higher would be needed instead of 5 V/3 A.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md (section 10) plus estimate from budget.py",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Budget: bladeRF reference",
+    "claim": "bladeRF 2.0 micro xA4 is $540 for 2 RX + 2 TX, $270 per channel; xA9 is $860. It is bus-powered over USB 3.0, so at most ~4.5 W per board, about 2.25 W per channel (bound from the 900 mA USB 3 port limit).",
+    "source": "https://www.nuand.com/bladerf-2-0-micro/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Host link",
+    "claim": "16 channels x 10 MSPS x 4 bytes (16-bit I+Q) = 640 MB/s; 16 x 5 MSPS x 4 B = 320 MB/s, which is what the two bladeRFs move today (4 x 20 MSPS). So 16 parts-built channels need 5 MSPS at 16-bit, 8-bit samples, or FPGA decimation or beamforming.",
+    "source": "estimate: arithmetic; 320 MB/s figure from REDESIGN.md section 5",
+    "confidence": "high"
+   },
+   {
+    "topic": "Drift after shared LO",
+    "claim": "100 mm of LO microstrip (~615 ps) with an assumed 50 ppm/C delay coefficient drifts 0.66 deg per 10 C at 6 GHz (0.27 deg at 2.4 GHz, 0.04 deg at 0.4 GHz). Small, but it must be tracked.",
+    "source": "estimate: budget.py, eps_eff 3.4 and 50 ppm/C assumed",
+    "confidence": "low"
+   },
+   {
+    "topic": "Drift after shared LO",
+    "claim": "Analog baseband filters on 5 % parts (50 ns group delay, so ~2.5 ns channel-to-channel mismatch) give a frequency-dependent phase error of 0.9 deg at 1 MHz and 4.5 deg at 5 MHz offset. That needs per-channel FIR equalisation from the PN calibration, not a single phase number.",
+    "source": "estimate: budget.py",
+    "confidence": "low"
+   },
+   {
+    "topic": "Low IF / zero IF",
+    "claim": "Direct conversion suffers DC offset, I/Q mismatch, even-order distortion, flicker noise and LO leakage (Razavi 1997, IEEE TCAS-II 44(6):428-435).",
+    "source": "https://doi.org/10.1109/82.592569",
+    "confidence": "high"
+   },
+   {
+    "topic": "Low IF / zero IF",
+    "claim": "Low-IF topologies (Crols and Steyaert 1998, IEEE TCAS-II 45(3):269-282) keep the wanted signal off DC so DC offset and 1/f noise are filtered out, relying on complex I/Q processing for image rejection.",
+    "source": "https://doi.org/10.1109/82.664233",
+    "confidence": "high"
+   },
+   {
+    "topic": "Low IF / zero IF",
+    "claim": "ADI AN-2557: 1 dB gain imbalance or 6.5 deg phase imbalance limits image rejection to about 25 dB, and analog adjustment typically reaches 25-30 dB.",
+    "source": "https://www.analog.com/en/resources/app-notes/an-2557.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "Low IF / zero IF",
+    "claim": "Exact image-rejection formula: 0.1 dB / 1 deg gives 39.6 dB, 0.3 dB / 2 deg gives 32.2 dB, 0.01 dB / 0.1 deg gives 59.6 dB. Low IF therefore needs digital I/Q correction, which the PN calibration source can measure per channel and per baseband frequency.",
+    "source": "estimate: IRR = 10log10((1+2g cos p+g^2)/(1-2g cos p+g^2)) in budget.py",
+    "confidence": "high"
+   },
+   {
+    "topic": "Low IF / zero IF",
+    "claim": "Frequency-dependent I/Q imbalance in wideband direct-conversion receivers can be corrected blindly with a circularity-based digital compensator (Anttila, Valkama, Renfors, IEEE TVT 57(4):2099-2113, 2008).",
+    "source": "https://doi.org/10.1109/TVT.2007.909269",
+    "confidence": "high"
+   },
+   {
+    "topic": "Low IF in arrays",
+    "claim": "In an array, low-IF image leakage is the conjugate of the mirror-frequency signal, so it carries a conjugated steering vector. For a linear array that is a ghost at the mirrored bearing (-theta), at the image-rejection level below the real emitter.",
+    "source": "estimate: analysis of y = a(theta)s + K a*(theta) s*",
+    "confidence": "medium"
+   },
+   {
+    "topic": "KrakenSDR coherence",
+    "claim": "KrakenSDR has five R820T2 tuners and five RTL2832U ADCs (8-bit, 24-1766 MHz, 2.56 MHz maximum bandwidth) on one 1-ppm clock. A built-in noise source is routed to each channel through switches, with a high-isolation silicon switch keeping it off the antennas, inside a Faraday cage. Calibration is automatic; large temperature swings can lose it. Typical draw is 5 V at 2.2 A (11 W).",
+    "source": "https://github.com/krakenrf/krakensdr_docs/wiki/01.-Overview",
+    "confidence": "high"
+   },
+   {
+    "topic": "KrakenSDR coherence",
+    "claim": "heimdall's delay_sync.py works in four steps. Integer delays come from FFT cross-correlation (needs at least 20 dB peak dynamic range) and are corrected by trimming each RTL2832U's sample rate in ppm steps, not by shifting buffers. Fractional delays come from a phase-slope fit, with 0.03-sample tolerance. Phase and amplitude come from the dominant eigenvector of the channel covariance, with 3 deg tolerance. Recalibration runs when the RF frequency changes or after 3 failed sync checks.",
+    "source": "https://github.com/krakenrf/heimdall_daq_fw/blob/main/Firmware/_daq_core/delay_sync.py",
+    "confidence": "high"
+   },
+   {
+    "topic": "KrakenSDR openness",
+    "claim": "heimdall DAQ firmware is GPL-3.0 and documented for 64-bit Linux (aarch64/x86_64; at least 4 cores on x86; Raspberry Pi 4/5 images). macOS is not mentioned, so the Mac host would reuse its algorithms rather than run it.",
+    "source": "https://github.com/krakenrf/heimdall_daq_fw",
+    "confidence": "high"
+   },
+   {
+    "topic": "KrakenSDR openness",
+    "claim": "KrakenSDR's core DAQ and DSP software is open, but no published schematics or PCB files were found; vendor comparisons list only the core software as open source.",
+    "source": "https://crowdsupply.com/krakenrf/krakensdr",
+    "confidence": "medium"
+   },
+   {
+    "topic": "KrakenSDR price",
+    "claim": "KrakenSDR is $749 at krakenrf.com (Nov 2026). The USB-C power supply, data cable and antennas are not included.",
+    "source": "https://www.krakenrf.com/product-page/krakensdr",
+    "confidence": "high"
+   },
+   {
+    "topic": "Tuner supply 2026",
+    "claim": "RTL-SDR Blog V4 is end-of-line: Rafael no longer makes the R828D and the last available chips were faulty. Blog V3 (R860/R820T2) stays in production. V4L uses the R828S, also out of production, as a limited edition.",
+    "source": "https://www.rtl-sdr.com/rtl-sdr-blog-v4-end-of-line/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Tuner supply 2026",
+    "claim": "The Rafael R860 is the R820T2 under a new name (pin-compatible), and is the tuner still available for new builds.",
+    "source": "https://www.rtl-sdr.com/the-r860-will-replace-the-r820t2-same-chip-different-name/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Tuner supply 2026",
+    "claim": "RTL-SDR Blog V3 (R860) dongle is $34.95-39.95; V4L dongle is $37.95 with limited stock.",
+    "source": "https://www.rtl-sdr.com/buy-rtl-sdr-dvb-t-dongles/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Tuner specs",
+    "claim": "R820T: under 178 mA at 3.3 V (~0.59 W), NF 3.5 dB, 65 dBc image rejection, on-chip fractional PLL, so every tuner synthesises its own LO. librtlsdr runs the R82xx at a 3.57 MHz low IF.",
+    "source": "https://www.radiolocman.com/datasheet/data.html?di=684209 ; https://raw.githubusercontent.com/osmocom/rtl-sdr/master/include/tuner_r82xx.h",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Scaling a tuner bank",
+    "claim": "16 RTL channels at 2.4-2.56 MSPS of 8-bit I/Q need 76.8-81.9 MB/s. USB 2.0 high-speed bulk tops out at 13 x 512 B per microframe (~53 MB/s) and ~320 Mb/s (~40 MB/s) in practice, so 3-4 separate USB 2.0 buses are needed. KrakenSDR's 5 channels use ~24 MB/s through one hub.",
+    "source": "https://developerhelp.microchip.com/xwiki/bin/view/applications/usb/speeds-specs/high-speed/ ; https://renesas-wiki.atlassian.net/wiki/spaces/REN/pages/98304002",
+    "confidence": "high"
+   },
+   {
+    "topic": "Scaling a tuner bank",
+    "claim": "16 tuners sampled by one AD9249 plus an FPGA doing the DDCs: ~9.4 W of tuners + 0.92 W ADC + ~1.5 W FPGA/USB 3 = ~11.8 W at the rails, ~13.9 W from USB-C. It fits 15 W only without the front end, and is still limited to 1.77 GHz.",
+    "source": "estimate: budget.py from the R820T and AD9249 figures",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Examples",
+    "claim": "Dragon Labs CR-8 specs: 8 coherent channels, 25-1750 MHz, 8 MHz bandwidth and 12-bit samples per channel, USB 3.0. Claimed under 1 deg phase error at 1.75 GHz and under 100 ps timing error. TCXO, 10 MHz input and 1PPS input.",
+    "source": "https://www.hackster.io/news/dragon-labs-launches-the-cr-8-eight-channel-coherent-sdr-be937864c886",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Examples",
+    "claim": "CR-8 hardware and terms: reportedly one R860 tuner per channel plus a Microchip ADC the article calls 'MCP3721-200', which matches the 8-input, fractional-delay-recovery MCP37211-200. It has an on-board phase-calibration source. Firmware and PCB are closed; the host API is open. Target price $500-600 for the bare board, launching on Crowd Supply.",
+    "source": "https://www.rtl-sdr.com/dragon-labs-cr-8-an-8-channel-coherent-sdr-crowdfunding-soon/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Examples",
+    "claim": "QuadRF (open-space-sdr): 4x4 coherent MIMO at 4.9-6.0 GHz with 40 MHz per antenna, built from MAX2850/MAX2851 4-channel mixers, a Lattice ECP5 LFE5U-45F and a Raspberry Pi 5. Software is GPL; the RF core and bitstreams are proprietary.",
+    "source": "https://github.com/open-space-sdr/main",
+    "confidence": "high"
+   },
+   {
+    "topic": "Examples",
+    "claim": "ADI FMCOMMS5 (two AD9361, 4 RX/4 TX) shows multi-chip coherence in practice: an optional shared ADF5355 external LO, plus calibration with DDS tones routed through on-board RF switches, then quadrature tracking disabled to limit drift.",
+    "source": "https://analogdevicesinc.github.io/system-level/solutions/reference-designs/fmcomms5/phase-sync/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Shared-LO block downconverter",
+    "claim": "A shared-LO block downconverter in front of a tuner bank adds a passive mixer, IF filter and IF amplifier per channel plus a GVA-84+ per 4 channels: about +0.3-0.6 W and +$11 per channel. Totals: 16 channels ~$1,300, 18.8 W at the rails, 22 W from USB-C; 8 channels ~$655, 10.5 W, 12.4 W.",
+    "source": "estimate: budget.py (mixer ~$8, IF parts ~$3, IF amp 0.25 W per channel, CR-8-class back end)",
+    "confidence": "low"
+   },
+   {
+    "topic": "Shared-LO block downconverter",
+    "claim": "With the tuners parked at a fixed IF and only the shared LO retuning, the LO's random phase cancels between channels. Tuner PLL phases then change only at power-up and with drift, so per-retune calibration becomes per-frequency tables plus drift tracking. The image at RF +/- 2*IF must land in the rev B band-filter stopbands, and bandwidth stays 2.5-8 MHz per channel.",
+    "source": "estimate: analysis using the R820T fractional-PLL architecture and the FMCOMMS5 LO behaviour",
+    "confidence": "medium"
+   }
+  ],
+  "open_questions": [
+   "The ADL5380 datasheet could not be reached (analog.com timed out). Still unknown: its LO drive range, raw quadrature phase and gain error, and whether the ADJ pin can cut current below 245 mA, which decides the power budget.",
+   "Does the LTC5594 or LTC5586 generate quadrature with a polyphase network or a divider? A divider would bring back a 0/180 deg ambiguity between chips after each power-up.",
+   "GVA-84+ gain and P1dB at 5-6 GHz were not verified, so the LO tree drive level at the top of the band is uncertain.",
+   "TI's store hides prices and DigiKey/Mouser blocked fetches, so the qty 16-32 prices for LMX2572, LMX2594, ADS5296A, ADS52J90 and AFE5832LP are distributor or aggregator snapshots, not quotes.",
+   "R860 chip-level price and distributor availability, and whether Rafael still sells it outside dongle makers, are unknown.",
+   "MCP37211-200 power, price and current availability (one TFBGA listing said discontinued) are unverified, as is the CR-8's exact ADC part.",
+   "AD9671 and the AFE58JD-series (JESD204B ultrasound AFEs) were not checked.",
+   "The shared web-search budget ran out before documented university or hobby 8-16-channel shared-LO (IQ demodulator plus multichannel ADC) builds and their costs could be found; a follow-up search is needed for part (c).",
+   "Can heimdall run more than 5 channels, or chain two KrakenSDRs? It is not documented.",
+   "ECP5-class FPGA and USB 3 bridge (FT601/FX3) prices, sustained throughput and macOS driver path were not verified (ftdichip.com returned 403).",
+   "Measured bladeRF 2.0 micro power draw was not found; only the USB 3 bus-power bound (~4.5 W) is given.",
+   "Owner decisions: is USB-PD at 9-20 V acceptable, given the 15 W limit blocks a 0.4-6 GHz shared-LO bank above about 4-6 channels? And could transmit come from a synthesizer plus the tile's true-time delays, since a parts-built receiver bank has no transmit?"
+  ]
+ },
+ "research:buy": {
+  "summary": "Short answer for this lens: yes, there are other tools, but nearly every radio that reaches 6 GHz for under about $2,000 uses the same Analog Devices AD936x transceiver as the bladeRF. Switching changes the price, the host link and the timing hooks, but not the core problem. Each chip's LO phase comes back random after a retune (UHD's sync guide says each LO \"may have a random phase offset\" and must be re-aligned \"after each tune\"). So rev B's shared 10 MHz plus a PN calibration after every retune is needed with any of them, and that design carries over unchanged.\n\nFour coherent channels at 0.4-6 GHz, November 2026 (two radios unless noted):\n- **2x bladeRF 2.0 micro xA4: $1,080.** $540 each, in stock at Nuand (it launched at $480 in 2018; the $670 xA5 is out of stock and Nuand points buyers to the xA4 or xA9). In-spec AD9361, 56 MHz, 61.44 MSPS, USB 3. REFIN locks to nearly any reference up to 300 MHz; it also has CLKOUT to CLKIN and the J51-1 trigger. libbladeRF 2025.10 has Homebrew builds for current Apple-silicon macOS. It is still the cheapest option that is documented, in stock and runs natively on a Mac.\n- **2x LibreSDR B220 mini (a Chinese B210 clone): about $620-840.** XC7A200T FPGA plus a claimed AD9361, USB 3, 10 MHz + PPS, runs UHD with a third-party FPGA image. It saves $240-460 and gets UHD's PPS-timed start. But listings disagree on AD9361 versus AD9363, the image is \"as-is\", and vendors claim only Windows/Linux. Credible only after testing one unit.\n- **2x Pluto+ or Zynq LibreSDR (about $360-640), or 2x ADALM-PLUTO Rev D in 2r2t mode (about $450-480): not credible for rev B as specified.** The AD9363 is guaranteed only to 3.8 GHz / 20 MHz; ADI says that beyond that \"performance is not guaranteed\". The Pluto's second channel is not production-tested, and USB 2 sustains about 4 MSPS. Two channels at rev B's 20 MSPS need 1.28 Gbit/s, which is more than Gigabit Ethernet (reports show 6-20 MSPS total per board). There is no documented trigger or PPS input, so the 1023-chip PN code (+/-256 us) would have to grow (2^15-1 chips gives +/-8 ms).\n- **More expensive with no gain for rev B:** ANTSDR E200 AD9361 ($687-727 each), ANTSDR U220 (about EUR 854), LiteX-M2SDR (EUR 699 and sold out; best timing with 10 MHz/PPS/PTP/White Rabbit, but Linux-first), USRP B210 ($2,387 each), B206mini-i ($1,820, 1x1), four HackRF Pros ($1,600, half-duplex, 8-bit).\n- **Ruled out by frequency range:** LimeSDR Mini 2.0 (to 3.5 GHz, 1x1), LimeSDR XTRX and LimeSDR Micro (to 3.8 GHz), KrakenSDR (5 RX, 24-1766 MHz, $749, receive-only).\n- **HackRF successor:** the HackRF Pro is $400 at SparkFun. It is still one half-duplex channel (20 MSPS, USB 2.0) and now has clock and trigger SMAs. Rev B's \"$340 HackRF One\" line should read about $400.\n\n8-16 coherent channels under about $1,500:\n- **Nothing turnkey reaches 6 GHz.**\n- **Below 1.766 GHz, yes:** KrakenSDR (5 channels), or a DIY RTL-SDR array (Aalto ran 21 coherent channels; dongles are $37.95).\n- **4.9-6.0 GHz only:** QuadRF tiles, 4 coherent TX/RX per tile on MAX2850/MAX2851 mixers. The $499 kit includes a Pi 5; six bare tiles cost $594 and ship January 2027.\n- **To 6 GHz:** 8 RX means four AD936x boards. That is $720-1,280 as Pluto-class clones (with the caveats above), $1,240-1,680 as B210 clones, or $2,160 as bladeRFs. 16 RX means eight boards, at least $1,440 for the radios alone.\n- **Cheapest turnkey 8-channel phase-coherent radio to 6 GHz found:** the RFSoC-based PZSDR P047 at $8,749.\n\nBottom line: keep 2x bladeRF xA4 ($1,080) as the baseline. The only real saving is a pair of B210 clones, and only after one unit has been tested. Don't plan on 8-16 channels at 6 GHz for under $1,500.",
+  "findings": [
+   {
+    "topic": "bladeRF xA4 price/stock",
+    "claim": "bladeRF 2.0 micro xA4 is $540.00, 'In stock - Usually ships out in 1 to 2 business days' (two units = $1,080)",
+    "source": "https://www.nuand.com/product/bladerf-xa4/",
+    "confidence": "high"
+   },
+   {
+    "topic": "bladeRF price history",
+    "claim": "bladeRF 2.0 micro xA4 launched at $480 in 2018; it is $540 in Nov 2026",
+    "source": "https://www.rtl-sdr.com/bladerf-2-0-micro-new-47-mhz-6-ghz-56-mhz-bandwidth-2x2-mimo-sdr-for-480/",
+    "confidence": "high"
+   },
+   {
+    "topic": "bladeRF variants",
+    "claim": "xA9 is $860 in stock; xA5 ($670) is out of stock and Nuand points buyers to xA4/xA9; xA4 THERMAL is $1,325",
+    "source": "https://www.nuand.com/product-category/bladerf-2-0-micro/",
+    "confidence": "high"
+   },
+   {
+    "topic": "bladeRF specs",
+    "claim": "bladeRF 2.0 micro: RX 70-6000 MHz (TX from 47 MHz), 0.521-61.44 MSPS, 12-bit, 56 MHz filtered bandwidth, 2x2, USB 3.0",
+    "source": "https://www.nuand.com/bladerf-2-0-micro/",
+    "confidence": "high"
+   },
+   {
+    "topic": "bladeRF reference input",
+    "claim": "bladeRF 2.0 micro REFIN (J95) locks the 38.4 MHz VCTCXO via an ADF4002 to 'nearly any frequency up to 300 MHz' (default 10 MHz), max 3.3 Vpp",
+    "source": "https://github.com/Nuand/bladeRF/wiki/Taming-Your-VCTCXO",
+    "confidence": "high"
+   },
+   {
+    "topic": "bladeRF trigger",
+    "claim": "libbladeRF trigger BLADERF_TRIGGER_J51_1 (mini_exp[1] on xA4/xA5/xA9) gates RX/TX start on master and slave boards",
+    "source": "https://www.nuand.com/libbladeRF-doc/v2.5.0/group___f_n___t_r_i_g.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "macOS: bladeRF",
+    "claim": "Homebrew libbladerf 2025.10 has Apple Silicon bottles for golden gate, tahoe, sequoia and sonoma",
+    "source": "https://formulae.brew.sh/formula/libbladerf",
+    "confidence": "high"
+   },
+   {
+    "topic": "macOS: UHD",
+    "claim": "Homebrew UHD 4.11.0.0 has Apple Silicon bottles (golden gate, tahoe, sequoia); no Intel bottles listed",
+    "source": "https://formulae.brew.sh/formula/uhd",
+    "confidence": "high"
+   },
+   {
+    "topic": "macOS: GNU Radio stack",
+    "claim": "radioconda ships macOS arm64 and x86_64 installers bundling UHD, bladeRF, HackRF, LimeSuite, libiio (Pluto) and rtl-sdr",
+    "source": "https://github.com/ryanvolz/radioconda",
+    "confidence": "high"
+   },
+   {
+    "topic": "macOS: SDR++",
+    "claim": "SDR++ macOS is a nightly app bundle; its macOS build example enables bladeRF, HackRF, RTL-SDR and Airspy; the USRP source is beta and Pluto/USRP are not in the macOS example",
+    "source": "https://github.com/AlexandreRouma/SDRPlusPlus",
+    "confidence": "medium"
+   },
+   {
+    "topic": "AD936x phase after retune",
+    "claim": "UHD sync guide: each LO 'may have a random phase offset due to the dividers' and LOs must be re-aligned after each tune; with 10 MHz + PPS, streams on two devices start at exactly the same time",
+    "source": "https://uhd.readthedocs.io/en/latest/page_sync.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "USRP B210",
+    "claim": "USRP B210 board-only is $2,387 (AD9361, 70 MHz-6 GHz, 56 MHz, USB 3.0); two units = $4,774",
+    "source": "https://www.ettus.com/all-products/ub210-kit/",
+    "confidence": "high"
+   },
+   {
+    "topic": "USRP B210 timing",
+    "claim": "B200/B210 have an external 10 MHz input (J100, max +15 dBm) and a PPS input (J104, 1.8-5 V); in dual-channel mode the master clock rate is limited to 30.72 MHz",
+    "source": "https://uhd.readthedocs.io/en/latest/page_usrp_b200.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "USRP B205mini/B206mini",
+    "claim": "B205mini-i is $1,875 and superseded by B206mini-i at $1,820 (1x1 AD9364, 70 MHz-6 GHz, 10 MHz/PPS input, UHD 4.9+)",
+    "source": "https://www.ettus.com/all-products/usrp-b206mini-i/",
+    "confidence": "high"
+   },
+   {
+    "topic": "ADALM-PLUTO range",
+    "claim": "Pluto is guaranteed for 325-3800 MHz and 20 MHz; AD9364 mode extends it to 70 MHz-6 GHz / 56 MHz but 'performance is not guaranteed'; 2r2t (Rev C+, firmware 0.39+) halves the max rate to 30.72 MSPS",
+    "source": "https://analogdevicesinc.github.io/system-level/solutions/platforms/pluto/setup/hacking/",
+    "confidence": "high"
+   },
+   {
+    "topic": "ADALM-PLUTO Rev D hardware",
+    "claim": "Rev D's internal 2nd RX/TX U.FL channel 'is not test during production test'; it has an internal clock-input U.FL; no trigger input is described",
+    "source": "https://wiki.analog.com/university/tools/pluto/hacking/hardware",
+    "confidence": "high"
+   },
+   {
+    "topic": "ADALM-PLUTO price",
+    "claim": "ADALM-PLUTO is about $224-241 per unit at Mouser (aggregator snapshots); two in 2r2t = about $450-480 for 4 RX",
+    "source": "https://www.findchips.com/search/pluto",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Pluto USB 2.0 throughput",
+    "claim": "Pluto over USB 2.0 sustains only about 4-5 MSPS continuous; above about 4 MSPS single-channel samples are lost",
+    "source": "https://wiki.gnuradio.org/index.php/PlutoSDR_Source",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Pluto+",
+    "claim": "Pluto+ (AD9363, 2T2R, Zynq 7010, Gigabit Ethernet, 40 MHz VCTCXO with IPEX external-clock input and EXCLK jumper) sells for about $180-235 on eBay",
+    "source": "https://www.ebay.de/itm/176564011282",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Pluto+ throughput",
+    "claim": "Users report the Pluto+ Ethernet tops out around 6-7.5 MSPS usable, blamed on its single-core Zynq",
+    "source": "https://red.chatoyer.de/r/RTLSDR/comments/1aq2ken/pluto_what_is_the_maximum_bandwidth_over_ethernet",
+    "confidence": "low"
+   },
+   {
+    "topic": "LibreSDR (Zynq 7020)",
+    "claim": "LibreSDR firmware streams about 11-12 MSPS with stock firmware, about 20 MSPS optimized, 27.5 MSPS overclocked, at 4 bytes per IQ sample over Gigabit Ethernet (aggregate, so about 10 MSPS per channel with 2 RX)",
+    "source": "https://github.com/mrengineer/libresdr",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LibreSDR price/chip",
+    "claim": "LibreSDR/ZynqSDR (XC7Z020 + AD9363) is listed at US$319.99 ($259.99 with coupon) at Banggood; some sellers' units are AD9363 'configured as AD9361'",
+    "source": "https://rtl-sdr.com/?p=62198",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LibreSDR B220 mini (B210 clone)",
+    "claim": "B210/B220 mini: 70 MHz-6 GHz, 2R2T, 61.44 MSPS, USB 3.0 Type-C, PPS and 10 MHz reference; EUR 388.79 at sdrstore.eu, about US$310-330 on eBay; listings conflict on AD9361 vs AD9363",
+    "source": "https://www.sdrstore.eu/software-defined-radio/instruments/usrp/libresdr-b210-mini-b220-mini-2r2t-xc7a200tad9361-or-xc7a100tad9363-sdr-uhd-pluto-oai-compatible/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "B210 clone software",
+    "claim": "A third-party usrp_b210_fpga.bin for 'XC7A100T+AD9361 ONLY' clones is provided as-is, tested with UHD 4.0-4.7; its example probe output is from a Mac (MacPorts path /opt/local)",
+    "source": "https://github.com/lmesserStep/LibreSDRB210",
+    "confidence": "medium"
+   },
+   {
+    "topic": "ANTSDR E200",
+    "claim": "ANTSDR E200: AD9361 (70 MHz-6 GHz, 56 MHz) or AD9363, 2T2R, Gigabit Ethernet, external PPS/10M input, IIO or UHD 4.1 firmware; setup documented for Ubuntu only",
+    "source": "https://antsdr-doc-en.readthedocs.io/en/latest/device_and_usage_manual/E200_Getting_Started_Guide.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "ANTSDR E200 price",
+    "claim": "ANTSDR E200 launched at $299 (AD9363) and $499 (AD9361) on Crowd Supply; Mouser now lists the AD9361 version at $687 (no case) and $727 (enclosure)",
+    "source": "https://www.mouser.com/c/?m=MicroPhase",
+    "confidence": "medium"
+   },
+   {
+    "topic": "ANTSDR U220",
+    "claim": "ANTSDR U220 (XC7A200T, AD9361 or AD9363, USB 3.0, external PPS and 10 MHz, UHD workflow) is EUR 854.07 at sdrstore.eu",
+    "source": "https://www.sdrstore.eu/software-defined-radio/instruments/plutosdr/microphase-antsdr-u220-sdr-demo-board-70mhz-6ghz-sdr-usb3-0-adi-ad9361-ad9363-mimo-srsran",
+    "confidence": "medium"
+   },
+   {
+    "topic": "ANTSDR E310",
+    "claim": "ANTSDR E310V2 added an external 10M/PPS input, a GPS module and a VCXO; no official price found (marketplace listings $387-1,026)",
+    "source": "https://raw.githubusercontent.com/open-sdr/openwifi/master/kernel_boot/boards/e310v2/README.md",
+    "confidence": "low"
+   },
+   {
+    "topic": "LiteX-M2SDR price",
+    "claim": "LiteX M2 SDR (SI5351C) is EUR 699 and sold out; the Acorn Baseboard Mini needed for Ethernet is EUR 119",
+    "source": "https://enjoy-digital-shop.myshopify.com/",
+    "confidence": "high"
+   },
+   {
+    "topic": "LiteX-M2SDR capability",
+    "claim": "LiteX-M2SDR: AD9361 2T2R, 70 MHz-6 GHz, 61.44 MSPS (122.88 oversampled), PCIe Gen2 x4 (about 14 Gbps) or 1G/2.5G Ethernet on the baseboard, 10 MHz u.FL, PPS, PTP, White Rabbit; 4 boards = 8T8R on an M.2 carrier",
+    "source": "https://github.com/enjoy-digital/litex_m2sdr",
+    "confidence": "high"
+   },
+   {
+    "topic": "LiteX-M2SDR macOS",
+    "claim": "Enjoy-Digital's 3 June 2026 post says the host tools are 'Linux-first' and macOS/Windows support is still in progress",
+    "source": "https://enjoy-digital.github.io/posts/litex-m2sdr/",
+    "confidence": "high"
+   },
+   {
+    "topic": "HackRF Pro specs",
+    "claim": "HackRF Pro: 100 kHz-6 GHz, half-duplex, 20 MSPS 8-bit (40 MSPS 4-bit), USB 2.0 Type-C, TCXO, P1/P2 SMA ports for clock and trigger; trigger sync error under one sample",
+    "source": "https://hackrf.readthedocs.io/en/latest/hackrf_pro.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "HackRF Pro price",
+    "claim": "HackRF Pro (WRL-29523) is $400.00 and in stock at SparkFun; four for 4 channels = $1,600",
+    "source": "https://www.sparkfun.com/hackrf-pro.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "HackRF clock input",
+    "claim": "HackRF CLKIN expects a 3.3 V square wave at 10 MHz only (other frequencies need firmware changes); on the Pro, P1 defaults to CLKIN",
+    "source": "https://hackrf.readthedocs.io/en/latest/external_clock_interface.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "LimeSDR Mini 2.0",
+    "claim": "LimeSDR Mini 2.0: 10 MHz-3.5 GHz, 1T1R, 40 MHz, 30.72 MSPS, U.FL reference in/out, USB 3.0; misses 6 GHz (Mouser Austria EUR 516.06)",
+    "source": "https://limemicro.com/products/boards/limesdr-mini/",
+    "confidence": "high"
+   },
+   {
+    "topic": "LimeSDR XTRX",
+    "claim": "LimeSDR XTRX: 2x2 LMS7002M, 30 MHz-3.8 GHz, mini-PCIe card; $699 at 2023 launch; misses 6 GHz and needs a PCIe host",
+    "source": "https://limemicro.com/news/lime-micro-opens-orders-for-the-limesdr-xtrx-an-open-hardware-mpcie-software-defined-radio",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LimeSDR Micro (2026)",
+    "claim": "LimeSDR Micro (2026): 30 MHz-3.8 GHz, 1T2R expandable to 1T4R, $199-299, shipping from end of September 2026",
+    "source": "https://www.hackster.io/news/lime-microsystems-unveils-the-limesdr-micro-an-m-2-expandable-sdr-with-vector-accelerator-9c1ef3823d9f",
+    "confidence": "high"
+   },
+   {
+    "topic": "KrakenSDR",
+    "claim": "KrakenSDR is $749 at krakenrf.com: 5 RX (R820T2/RTL2832U, 8-bit), 24-1766 MHz, 2.56 MHz per channel, one shared clock",
+    "source": "https://www.krakenrf.com/product-page/krakensdr",
+    "confidence": "high"
+   },
+   {
+    "topic": "KrakenSDR coherence and host",
+    "claim": "KrakenSDR calibrates coherence with a built-in noise source correlated against CH0 (the same idea as rev B's PN injection); the software is designed to run on a Raspberry Pi 4",
+    "source": "https://github.com/krakenrf/krakensdr_docs/wiki/01.-Overview",
+    "confidence": "high"
+   },
+   {
+    "topic": "QuadRF (2026)",
+    "claim": "QuadRF: 4 full-duplex coherent RX/TX at 4.9-6.0 GHz, MAX2850/MAX2851 4-channel mixers, 40 MHz per antenna, Lattice ECP5, Raspberry Pi 5 host over MIPI; tiles link into larger arrays",
+    "source": "https://github.com/open-space-sdr/main",
+    "confidence": "high"
+   },
+   {
+    "topic": "QuadRF price",
+    "claim": "QuadRF kit is $499 including a Raspberry Pi 5; the research six-pack (six PCBAs, no Pi or antennas) is $594 and ships January 2027",
+    "source": "https://www.rtl-sdr.com/quadrf-now-crowdfunding-on-crowd-supply-for-499",
+    "confidence": "medium"
+   },
+   {
+    "topic": "8-ch turnkey to 6 GHz",
+    "claim": "PZSDR P047 (RFSoC XCZU47DR): 8RX/8TX 14-bit, 1 MHz-6 GHz, US$8,749 on Crowd Supply; 7-board sync measured within +/-3 deg",
+    "source": "https://www.rtl-sdr.com/pzsdr-new-amd-zync-ultrascale-based-sdr-crowd-funding-on-crowd-supply/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "FMCOMMS5",
+    "claim": "AD-FMCOMMS5-EBZ (2x AD9361, 4x4, optional shared external LO) is about $1,673 before the required ZC706-class carrier",
+    "source": "https://octopart.com/part/analog-devices/AD-FMCOMMS5-EBZ",
+    "confidence": "medium"
+   },
+   {
+    "topic": "DIY coherent RTL arrays",
+    "claim": "Aalto University ran a 21-channel phase-coherent RTL-SDR array (common clock, switchable noise source; EUSIPCO 2020)",
+    "source": "https://acris.aalto.fi/ws/portalfiles/portal/55502879/Phase_coherent_multichannel_SDR.pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "RTL-SDR dongle price",
+    "claim": "RTL-SDR Blog V4L dongle only is $37.95 (16 dongles for about $607 before clock and noise-source hardware)",
+    "source": "https://www.rtl-sdr.com/buy-rtl-sdr-dvb-t-dongle/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Ethernet vs rev B data rate",
+    "claim": "Rev B's 2 channels x 20 MSPS x 4 bytes per radio = 1.28 Gbit/s, above Gigabit Ethernet; GbE at about 900 Mbit/s gives about 28 MSPS total, so about 14 MSPS per channel at most",
+    "source": "estimate: arithmetic in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/offshelf/costs.py",
+    "confidence": "high"
+   },
+   {
+    "topic": "Alignment without trigger",
+    "claim": "Rev B's 1023-chip PN at 2 Mchip/s resolves only +/-256 us; radios with no trigger or PPS (the Pluto family) would need a longer code, e.g. 2^15-1 chips for +/-8.2 ms",
+    "source": "estimate: arithmetic in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/offshelf/costs.py",
+    "confidence": "high"
+   },
+   {
+    "topic": "Channel-count cost",
+    "claim": "Radios only, to 6 GHz: 8 RX costs $720-1,280 (4x Pluto-class clones), $1,240-1,680 (4x B220 mini) or $2,160 (4x bladeRF); 16 RX costs $1,440-2,560 (8x clones) or $4,320 (8x bladeRF)",
+    "source": "estimate: unit prices above times units, /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/offshelf/costs.py",
+    "confidence": "medium"
+   }
+  ],
+  "open_questions": [
+   "Does a LibreSDR B220 mini really carry an AD9361 (listings conflict with AD9363), and does it run under Homebrew UHD 4.11 on Apple-silicon macOS with the third-party FPGA image, 10 MHz and PPS included? Test one unit before buying two.",
+   "US import duties, tariffs and shipping on China-made clones (Pluto+, LibreSDR, B220 mini, ANTSDR) in Nov 2026 were not checked and could erase the $240-460 saving.",
+   "Which reference frequency does the Pluto+ / LibreSDR external clock input expect (a 40 MHz replacement for the VCTCXO or 10 MHz), and is any PPS input timestamped in their firmware?",
+   "QuadRF: do all four channels share one LO (no per-retune calibration within a tile), what is its sample rate, and how is coherence kept across chained tiles?",
+   "LiteX-M2SDR pre-order price ('slightly higher' than EUR 699) and when macOS host support will land.",
+   "Can two bladeRF xA4 on separate Mac USB 3 ports sustain 4 x 20 MSPS without overruns? Nuand gives no sustained 2x2 figure; this is rev B step 0.",
+   "Status and price of the '2+ GHz' KrakenSDR version mentioned on KrakenRF's forum.",
+   "The shared web-search quota ran out before I could check the AD9361/AD9363 chip prices (which bear on whether $200-330 'AD9361' clones are plausible) and an official ANTSDR E310 price; a follow-up can continue the search."
+  ]
+ },
+ "research:effort": {
+  "summary": "The radio can be re-implemented, and people have done it, but at quantity two it is the most expensive, slowest and riskiest part of array16 to rebuild. The software analogy breaks on three numbers: a hardware iteration takes 1.5-3 weeks, costs hundreds of dollars, and a bad one can destroy a $300+ chip.\n\nHistories. Funded professionals needed about two years and several boards: HackRF went from separate prototype boards (June 2012) through the DARPA-funded Jawbreaker beta (slipped to February 2013 over clock-chip sourcing) to HackRF One in 2014, then revisions r6-r10 (2020-2024) mostly for parts availability. LimeSDR slipped two to three months when end-of-life parts forced a redesign; shipped rev 1.4 boards ran hot enough to burn fingers and lost HF to a matching inductor. LimeSDR Mini 2.0 was respun onto another FPGA during the shortage. XTRX and KrakenSDR shipped months late and KerberosSDR missed its date, like about 75% of Kickstarter tech projects. The one well-documented solo AD936x board, FreeSRP, took a teenager two years and three revisions (regulator errors, a wrong feedback resistor that killed the RFIC, a reflow-oven failure costing $400 of parts, clocks on the wrong FPGA pins, weak transmit). Henrik Forsten's 2024 discrete 6 GHz radar (Zynq, DDR3, six layers) cost $330 for two assembled boards plus EUR 225 of parts; one of the two worked, and its design worked around DDR overshoot, FPGA clock jitter, fractional-N spurs and LO leakage (-21 dBc before digital cancellation).\n\nMoney. The AD9361 alone lists at $300-415 from authorised distributors, 55-77% of a $540 bladeRF xA4. My estimate for two self-built AD9361+FPGA+FX3 boards is $1,800-2,450 for the first spin (with US import duty) against $1,080 for two bladeRFs, plus $900-1,300 per respin. Chinese clones at $100-280 sell for less than their chips cost at distributors, which points to grey-market silicon (Forsten's $17 Zynq against $173 at Digi-Key; a 2026 LibreSDR owner could not verify the board's AD9361). Fabrication is not the obstacle: JLCPCB builds 6-20 layer boards with free filled via-in-pad, +/-10% TDR-checked impedance and BGA assembly with automatic X-ray ($1.64 a board) in 4+ days. Import duty is the new cost: JLCPCB prepays 35% of order value on US PCB and assembly orders (since March 2026), which could also add up to about $410 to rev B's own core and tile (not in REDESIGN section 10).\n\nEffort (estimate): a bladeRF-class clone is 400-1,300 hours solo, against 520 hours for all of rev B. At 17-35 spins a year at most, \"mutate and keep what works\" loops belong in simulation and calibration, not PCB spins; budget two or three spins (professionals average 2.9).\n\nTest gear: about $600-1,000 minimum (tinySA Ultra+ to 7.3 GHz, about EUR 159; LiteVNA-64, EUR 145-192, above REDESIGN's $120; scope, current-limited supply, hot air, microscope). A calibrated look at the 11.6 GHz harmonic needs a used 8563E ($1,900-5,000) or a borrowed one. Home BGA works for practised builders but cannot be inspected without X-ray; with a $350 chip, pay for assembly.\n\nRegulation: a home-built device (five or fewer, not marketed, not a kit) needs no FCC authorisation (15.23) but should meet Part 15 \"to the greatest extent practicable\". Tuning 400-960 MHz puts it in the regulated receiver class (15.101): at most 2 nW (-57 dBm) at the antenna port (15.111), Class B limits of 200/500 uV/m at 3 m (about -49/-41 dBm EIRP, 15.109), and no harmful interference (15.5). Selling kits would end the exemption.\n\nRebuilding pays where no product exists: front ends, switching, calibration and clock distribution, which rev B already builds. Search budget ran out before PCBWay quotes and door-to-door lead times were checked.",
+  "findings": [
+   {
+    "topic": "HackRF history",
+    "claim": "HackRF began in mid-2012 as separate prototype boards (Jellybean, Lemondrop, Lollipop/Licorice), merged into the Jawbreaker beta by Oct 2012; beta manufacturing slipped from about Dec 2012 to Feb 2013 because 500 Si5351C clock chips were hard to source, forcing a one-resistor design change.",
+    "source": "https://ossmann.blogspot.com/2012",
+    "confidence": "high"
+   },
+   {
+    "topic": "HackRF history",
+    "claim": "DARPA Cyber Fast Track put about $200,000 into the HackRF beta phase (Feb 2012), with a target retail price near $300.",
+    "source": "https://tech.slashdot.org/story/12/10/22/0518231/darpa-funds-a-300-software-defined-radio-for-hackers (reporting Forbes)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "HackRF history",
+    "claim": "HackRF One r1-r4 (2014-2020) were one design; r5 was never built; r6 (2020) to r10 (2024) changed RF switches, swapped MAX2837 for MAX2839 and Si5351C for Si5351A in r9 (2023) and reverted most of that in r10, all to address component availability.",
+    "source": "https://hackrf.readthedocs.io/en/latest/list_of_hardware_revisions.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "HackRF history",
+    "claim": "HackRF Pro (announced June 2025) sells for $400 at SparkFun in Nov 2026: 100 kHz-6 GHz, USB 2.0 over USB-C, TCXO, SMA clock in/out.",
+    "source": "https://www.sparkfun.com/hackrf-pro.html ; https://www.cnx-software.com/2025/06/27/hackrf-pro-open-source-sdr-platform-supports-100-khz-to-6-ghz-operating-frequency/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Open designs to copy",
+    "claim": "HackRF One's full KiCad design including the PCB layout (hardware/hackrf-one/hackrf-one.kicad_pcb) is public; Nuand publishes bladeRF 2.0 micro schematics (not layout) plus open HDL, FX3 firmware and libraries.",
+    "source": "https://github.com/greatscottgadgets/hackrf/tree/master/hardware/hackrf-one ; https://www.nuand.com/bladerf-2-0-micro/",
+    "confidence": "high"
+   },
+   {
+    "topic": "bladeRF history",
+    "claim": "Nuand's bladeRF Kickstarter (early 2013) nearly doubled a $100,000 goal with more than 500 backers; the bladeRF 2.0 micro launched Aug 2018 at $480 (xA4) and $720 (xA9).",
+    "source": "https://www.eenewseurope.com/en/kickstarter-funded-open-source-software-defined-radio-platform/ ; https://hackaday.com/2018/08/30/bladerf-2-0-micro-is-smaller-more-powerful",
+    "confidence": "medium"
+   },
+   {
+    "topic": "bladeRF price 2026",
+    "claim": "Nuand lists the bladeRF 2.0 micro xA4 at $540 and xA9 at $860 (xA4 THERMAL $1,325; xA5 $670, out of stock, 're-entering production' Feb 2026).",
+    "source": "https://www.nuand.com/shop/ ; https://www.nuand.com/product/bladeRF-xA5/",
+    "confidence": "high"
+   },
+   {
+    "topic": "LimeSDR history",
+    "claim": "LimeSDR (Crowd Supply goal reached June 2016, over $800k raised) promised Nov/Dec 2016 delivery; an Oct 2016 update blamed end-of-life parts that forced a redesign and extra prototype runs, and backers' rev 1.4 boards arrived around Feb 2017.",
+    "source": "https://www.rtl-sdr.com/limesdr-production-progress/ ; https://www.rtl-sdr.com/limesdr-unboxing-initial-review/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LimeSDR first-production defects",
+    "claim": "Shipped LimeSDR rev 1.4 boards got hot enough to burn fingers within minutes, an 8.2 nH matching inductor wrecked HF reception (factory fix offered until Feb 21, 2017), long USB 3 cables failed, and spurs appeared with no antenna.",
+    "source": "https://www.rtl-sdr.com/limesdr-unboxing-initial-review/",
+    "confidence": "high"
+   },
+   {
+    "topic": "LimeSDR Mini 2.0",
+    "claim": "LimeSDR Mini 2.0 (2022) was respun from Intel MAX10 to Lattice ECP5 because the MAX10 was hit by the shortage, at $399; an Oct 19, 2023 update still moved a production run's assembly to November and shipping to December.",
+    "source": "https://www.cnx-software.com/2022/06/09/limesdr-mini-2-usb-sdr-lattice-semi-ecp5-fpga/ ; https://crowdsupply.com/lime-micro/limesdr-mini-2/updates/assembly-timeline-for-next-production-run",
+    "confidence": "medium"
+   },
+   {
+    "topic": "XTRX history",
+    "claim": "Fairwaves XTRX moved delivery to August 2018 in an April 2018 update (beta-tester bug fixes); first units shipped Sept 2018 and the USB 3 adapter boards needed rework, about a month more.",
+    "source": "https://www.crowdsupply.com/fairwaves/xtrx/updates/shipping-testing-and-reworking ; https://www.crowdsupply.com/fairwaves/xtrx/updates/first-100-units",
+    "confidence": "medium"
+   },
+   {
+    "topic": "KerberosSDR / KrakenSDR history",
+    "claim": "KerberosSDR's Indiegogo closed Nov 13, 2018 at $80,079 from 651 backers and missed its mid-January ship target; KrakenSDR planned to ship end of March 2022, had 300 units at Mouser by June 24, 2022 and all backer units delivered by Aug 30, 2022, citing pandemic and supply-chain delays including the Raspberry Pi 4 shortage.",
+    "source": "https://indiegogo.com/projects/kerberossdr-4x-coherent-rtl-sdr ; https://www.rtl-sdr.com/kerberossdr-updates-demo-software-speed-improvements-android-app-manufacturing-updates/ ; https://crowdsupply.com/krakenrf/krakensdr/updates/june-shipping-update-and-pricing-change ; https://www.rtl-sdr.com/krakensdr-now-shipped-to-the-majority-of-crowd-supply-backers/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Crowdfunded hardware delays",
+    "claim": "About 75% of Kickstarter technology and design projects in Mollick's 2014 study delivered late (summaries cite 24.9% on time and a mean delay of about 2.4 months).",
+    "source": "https://brainstation.io/magazine/75-of-tech-projects-funded-on-kickstarter-dont-finish-on-time ; https://leeds-faculty.colorado.edu/bhagat/Dynamics-of-Crowdfunding.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "FreeSRP (solo AD9364 board)",
+    "claim": "FreeSRP (AD9364 + Artix-7 + FX3), begun at age 16 in summer 2014 with no FPGA experience, needed three revisions to 2016: rev 0 had 1.8 V and 1.3 V regulator errors and a USB 3 footprint exposing only USB 2 lanes; rev 2 went to 6 layers for BGA fan-out and moved the transceiver clocks to clock-capable FPGA pins; transmit stayed very weak.",
+    "source": "http://electronics.kitchen/misc/freesrp (origin refused connection; read through https://hn.jakechampion.name/reader/http://electronics.kitchen/misc/freesrp)",
+    "confidence": "high"
+   },
+   {
+    "topic": "FreeSRP (solo AD9364 board)",
+    "claim": "On FreeSRP rev 1 a stuck reflow-oven controller destroyed about $400 of parts, and a wrong regulator feedback resistor (698 + 536 ohm instead of 14.3 kohm) left the next board's transceiver hot, silent on SPI and dead; the Crowd Supply campaign raised $20,050 of $75,000 (ended May 19, 2017).",
+    "source": "http://electronics.kitchen/misc/freesrp ; https://crowdsupply.com/lukas-lao-beyer/freesrp",
+    "confidence": "high"
+   },
+   {
+    "topic": "Expert hobby build (discrete 6 GHz)",
+    "claim": "Henrik Forsten's 2024 6 GHz pulse radar (discrete zero-IF, Zynq 7020, DDR3L, ADS4229 ADC, DAC3174 DAC, 6-layer FR-4, top-side parts only) cost $330 for fabrication and assembly of two boards plus EUR 225 of hand-soldered parts (24% VAT and shipping included); only one of the two assembled boards worked out of the box.",
+    "source": "https://hforsten.com/homemade-6-ghz-pulse-compression-radar.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "Expert hobby build (discrete 6 GHz)",
+    "claim": "The same radar's design had to handle DDR3 overshoot of about 0.7 V against a 0.4 V limit (termination added), FPGA PLL jitter of about 130 ps p-p (external CDCM6208 at about 4 ps), fractional-N spurs near -100 dBFS (LO moved to integer multiples) and LO leakage giving -21 dBc range sidelobes (-36 dB after digital cancellation).",
+    "source": "https://hforsten.com/homemade-6-ghz-pulse-compression-radar.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "Expert hobby build (noise, laminate)",
+    "claim": "Forsten's third FMCW radar needed linear regulators after its buck converters to remove switching spurs and one shared ADC/PLL clock to remove sampling jitter; FR-4 at er 4.58 instead of the simulated 4.20 shifted his patch antennas about 150 MHz low.",
+    "source": "https://hforsten.com/third-version-of-homemade-6-ghz-fmcw-radar.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "Grey-market parts",
+    "claim": "Forsten bought his Zynq 7020 from China for about $17 (date and lot codes covered) against $173 at Digi-Key; HamGeek's XC7A200T + AD9361 M.2 SDR lists at $209-279 (out of stock), below the distributor price of its two main chips.",
+    "source": "https://hforsten.com/homemade-6-ghz-pulse-compression-radar.html ; https://www.hgeek.com/products/hamgeek-m2sdr-software-defined-radio-m-2-xc7a200-rf-transceiver-module-gpsdo-40m-clock-output",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Pluto clones",
+    "claim": "Pluto+ style clones (AD9363 + Zynq 7010/7020) sell for about $100-250; a 2026 owner of an OpenSourceSDRLab 7020 (LibreSDR) board could not confirm whether its chip labelled AD9361 was genuine, bricked it several times with firmware updates and found it usable mainly above about 1.5 GHz.",
+    "source": "https://www.rtl-sdr.com/testing-a-100-fishball-pluto-plutosdr-clone/ ; https://community.libre.space/t/opensourcesdrlab-7020-sdr-and-my-mistakes-failures/14410",
+    "confidence": "medium"
+   },
+   {
+    "topic": "LiteX-M2SDR",
+    "claim": "Enjoy-Digital had built AD9361 systems for clients since 2014 before its LiteX M2SDR (XC7A200T + AD9361, M.2/PCIe, hardware by Lambdaconcept) was described as fully commercialised in a June 3, 2026 post; gateware and software are open, hardware files are not stated as open.",
+    "source": "https://enjoy-digital.github.io/posts/litex-m2sdr/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Respin baselines",
+    "claim": "Professional PCB projects average 2.9 respins (Lifecycle Insights, Sept 2018, as cited); an experienced home BGA builder reported about four fab round trips for non-trivial boards and treated one dead board in four as normal.",
+    "source": "https://semiwiki.com/eda/7841-eliminate-pcb-re-spins-using-an-integrated-multi-dimensional-verification-platform/ ; https://www.fpgarelated.com/showarticle/499.php",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Re-implementation BOM",
+    "claim": "AD9361BBCZ lists at $354.31 (qty 1) and $314.47 (qty 10) at Digi-Key, $290.68 at Mouser reel quantity and up to $414.95 elsewhere: 55-77% of a $540 bladeRF xA4 for the RFIC alone; one Digi-Key region noted constrained supply with no backorders.",
+    "source": "https://www.findchips.com/search/AD9361BBCZ ; https://www.digikey.com/en/products/detail/analog-devices-inc/AD9361BBCZ/4439647 (undated snapshots via search; distributor pages refused automated fetch)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Re-implementation BOM",
+    "claim": "Other bladeRF-class silicon: AD9363ABCZ (325 MHz-3.8 GHz) $172.95; FX3 CYUSB3014-BZXI $39.43 with 13-25 week lead time; Cyclone V 5CEBA5F23C8N $136.76 (4 in stock, 52-week lead time); Zynq XC7Z020-1CLG400C about $103-138.",
+    "source": "https://www.digikey.com/en/products/detail/analog-devices-inc/AD9363ABCZ/AD9363ABCZ-ND/6566180 ; https://www.digikey.com/en/products/detail/infineon-technologies/CYUSB3014-BZXI/2827561 ; https://www.digikey.com/en/products/detail/altera/5CEBA5F23C8N/3879686 ; https://www.findchips.com/search/XC7Z020-1CLG400C (search snapshots)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Board complexity",
+    "claim": "ADI's own AD9361 evaluation board (AD-FMCOMMS3-EBZ) is 10 layers; the AD9361 is a 144-ball 10 x 10 mm CSP_BGA (0.8 mm pitch per secondary listings) whose VDD_INTERFACE must stay at 1.71-2.625 V (3.3 V damages it).",
+    "source": "https://analogdevicesinc.github.io/system-level/solutions/reference-designs/ad-fmcomms3-ebz/hardware-guide/ ; https://www.analog.com/en/ad9361s/datasheet",
+    "confidence": "high"
+   },
+   {
+    "topic": "PCB fab 2026 (JLCPCB)",
+    "claim": "JLCPCB charges nothing extra for via-in-pad on 6-20 layer boards (since Nov 2022), offers +/-10% impedance control verified by TDR (campaign valid to Dec 31, 2026), and builds 6-layer boards in as little as 48 h with 0.09 mm trace/space and a 0.25 mm minimum BGA pad.",
+    "source": "https://jlcpcb.com/6-layer-pcb ; https://jlcpcb.com/news/special-offer-6-8-layer-high-precision-pcbs ; https://jlcpcb.com/pcb-campaign",
+    "confidence": "high"
+   },
+   {
+    "topic": "PCB assembly 2026 (JLCPCB)",
+    "claim": "JLCPCB Standard assembly takes 1-32 layers, double-sided, BGA to 0.3 mm pitch, in 4 days or more; Economic is limited to 2/4/6-layer single-sided boards and 0.5 mm BGA in 1-3 days; X-ray is applied automatically to BGA, QFN and LGA.",
+    "source": "https://jlcpcb.com/capabilities/pcb-assembly-capabilities",
+    "confidence": "high"
+   },
+   {
+    "topic": "PCB assembly 2026 (JLCPCB)",
+    "claim": "JLCPCB assembly fees: Standard setup $25.56 single-sided or $51.12 double-sided, stencil $8.21 or $16.42, feeder loading $1.53 per part type, SMT $0.0016 per joint, X-ray $1.64 per board for 1-10 boards.",
+    "source": "https://jlcpcb.com/help/article/pcb-assembly-price",
+    "confidence": "high"
+   },
+   {
+    "topic": "Import duty (US)",
+    "claim": "JLCPCB prepays US DDP tariffs of 35% of order value on PCB and SMT orders from Mar 17, 2026, after 175% (Apr 22, 2025) and 55-60% (May 2025), and says the policy can change at any time.",
+    "source": "https://jlcpcb.com/news/logistics-update-us-china-tariff ; https://jlcpcb.com/help/article/us-tariff-policy-faq",
+    "confidence": "high"
+   },
+   {
+    "topic": "PCB price estimates",
+    "claim": "A third-party 2026 estimate for 100 x 100 mm boards at qty 5 gives $30-42 per 6-layer and $45-65 per 8-layer board, with impedance control adding 10-25%; PCBWay prices BGA assembly (X-ray and rework offered) only by RFQ.",
+    "source": "https://dev.to/abc_8b09c7009ee0029b85665/multilayer-pcb-cost-breakdown-4-layer-vs-6-layer-vs-8-layer-2026-pricing-e75 ; https://www.pcbway.com/pcb-assembly.html",
+    "confidence": "low"
+   },
+   {
+    "topic": "Build vs buy (estimate)",
+    "claim": "Two self-built 2x2 AD9361+FPGA+FX3 boards would cost about $1,790-2,445 for a first spin (parts $1,070-1,360, fab and assembly $250-450, plus 35% US DDP) against $1,080 for two bladeRF xA4 (1.7-2.3x), with a likely respin adding about $900-1,270.",
+    "source": "estimate: RFIC, FPGA and FX3 prices above, $80-150 of other parts per board, JLCPCB fee table, Forsten's $330 for two assembled 6-layer boards, 35% DDP on PCBA value; script /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/receiver_study/calc/build_vs_buy.py",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Effort (estimate)",
+    "claim": "A solo bladeRF-class clone would take about 400-1,300 hours (schematic 60-120, layout 120-300, bring-up 100-250, gateware and host 50-400, second spin 60-150), against 520 hours for all of rev B.",
+    "source": "estimate: FreeSRP (3 revisions over about 2 years part-time), HackRF (about 2 years by a funded team, 2012-2014), Forsten (one 6-layer spin with workarounds); reuse of bladeRF HDL, FX3 firmware and libbladeRF sets the low end",
+    "confidence": "low"
+   },
+   {
+    "topic": "Iteration cost (estimate)",
+    "claim": "One board spin takes about 1.5-3 weeks (6-layer fab from 48 h, Standard assembly 4+ days, shipping, bring-up), so at most 17-35 spins a year at roughly $250-1,300 each: evolutionary keep-what-works loops fit simulation, firmware and calibration tables, not PCB respins.",
+    "source": "estimate: JLCPCB fab and assembly times above plus shipping and bring-up; build_vs_buy.py",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Rev B cost risk (estimate)",
+    "claim": "If rev B's core and tile (about $1,180 of parts and assembly in REDESIGN section 10, frame excluded) are assembled by JLCPCB and shipped to the US, 35% DDP adds about $410 that the plan does not show.",
+    "source": "estimate: REDESIGN.md section 10 (core 685 + tile 523 - frame 25) x 35% JLCPCB DDP rate",
+    "confidence": "medium"
+   },
+   {
+    "topic": "BGA at home",
+    "claim": "Experienced hobbyists report reliable oven or hot-air BGA soldering at 0.65 mm pitch and above, but without X-ray the hidden joints cannot be checked and rework needs expensive equipment; with a $300-415 RFIC, vendor assembly with $1.64-per-board X-ray is the cheaper insurance.",
+    "source": "https://eevblog.com/forum/manufacture/home-fab-with-bgas ; https://forum.allaboutcircuits.com/threads/best-bga-soldering-method.193430/ ; https://jlcpcb.com/help/article/pcb-assembly-price",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Test equipment",
+    "claim": "tinySA Ultra+ ZS407 covers 0.1-900 MHz normally and up to 7.3 GHz in Ultra mode (level-calibrated to 7.3 GHz, observes to 12 GHz) with a signal generator to 7.3 GHz, for about EUR 159 ex VAT; the ZS406 reaches 5.3 GHz for about EUR 125.",
+    "source": "https://tinysa.org/wiki/ ; https://eleshop.eu/tinysa-ultra-zs-407-spectrum-analyser.html ; https://eleshop.eu/tinysa-ultra-spectrum-analyser-7918.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Test equipment",
+    "claim": "LiteVNA-64 (50 kHz-6.3 GHz) sells for EUR 144.59 ex VAT up to EUR 192 for the official Zeenko unit, above REDESIGN's $120 line; LibreVNA (2-port, 100 kHz-6 GHz) is EUR 359-546; NanoVNA-H4 stops at 1.5 GHz.",
+    "source": "https://eleshop.eu/litevna.html ; https://lab401.com/products/litevna ; https://www.sdrstore.eu/librevna-vs-librevna-2-0/ ; https://www.sdrstore.eu/test-and-measurement/spectrum-analyzer/nanovna-h4-10khz-1-5ghz-portable-vector-network-analyzer-vna-for-mf-hf-vhf-uhf-shf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Test equipment",
+    "claim": "A used HP/Agilent 8563E (to 26.5 GHz, enough for the 11.6 GHz harmonic) costs $1,890-4,997; the 6.5 GHz 8561E is $3,795 from a dealer.",
+    "source": "https://www.ebay.com/itm/286148201519 ; https://valuetronics.com/products/8563e-agilent-spectrum-analyzer-used",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Test equipment",
+    "claim": "TI's LMX2572EVM (13 MHz-6.4 GHz) can serve as a clean bench source; TI shows no public price and listed it out of stock.",
+    "source": "https://www.ti.com/tool/LMX2572EVM",
+    "confidence": "high"
+   },
+   {
+    "topic": "Test equipment (estimate)",
+    "claim": "A minimum adequate bench for a 0.4-6 GHz build is about $600-1,000: tinySA Ultra+, LiteVNA-64, a 100 MHz+ scope, a current-limited supply, hot-air station, microscope, attenuators and SMA parts.",
+    "source": "estimate: instrument prices above plus typical prices for a scope ($300-450), supply ($60-150), hot air ($80-150), microscope ($100-300) and RF accessories ($100-200), not verified (search budget exhausted)",
+    "confidence": "low"
+   },
+   {
+    "topic": "First-spin failure modes: power",
+    "claim": "AD9361 guidance ranks the 1.3 V analog supply as the noise-critical rail (low-frequency ripple worst) and requires VDD_GPO to rise at least as fast as 1.3 V; an AD9364 user cured excess VDD_INTERFACE current by bringing 1.3 V up first.",
+    "source": "https://www.analog.com/media/en/technical-documentation/user-guides/ad9361.pdf ; https://ez.analog.com/rf/wide-band-rf-transceivers/design-support/f/q-a/603717/vdd_interface-drawing-power-exponentially",
+    "confidence": "medium"
+   },
+   {
+    "topic": "First-spin failure modes: power",
+    "claim": "Cyclone V needs its Group 1 rails at 80% or more before Group 2 starts, and a plateau in a rail's ramp can hold the device in power-on reset.",
+    "source": "https://www.intel.com/content/www/us/en/docs/programmable/683375/current/power-up-sequence-recommendation-for-devices.html ; https://community.intel.com/t5/FPGA-SoC-And-CPLD-Boards-And/CYCLONE-V-FPGA-POWER-UP-SEQUENCE/td-p/1658956",
+    "confidence": "medium"
+   },
+   {
+    "topic": "First-spin failure modes: USB/EMI",
+    "claim": "USB 3.0 ports, cables and devices radiate broadband noise inside 2.4-2.5 GHz; Intel measured a noise-floor rise of nearly 20 dB from a USB 3.0 drive and recommended shielding and distance.",
+    "source": "https://www.intel.com/content/www/us/en/content-details/841692/usb-3-0-radio-frequency-interference-impact-on-2-4-ghz-wireless-devices-white-paper.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "FCC Part 15: home-built",
+    "claim": "47 CFR 15.23: no equipment authorisation is needed for devices not marketed, not built from a kit and built in quantities of five or fewer for personal use; the builder must use good engineering practice to meet the technical standards to the greatest extent practicable, and 15.5 applies.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.23",
+    "confidence": "high"
+   },
+   {
+    "topic": "FCC Part 15: receivers",
+    "claim": "47 CFR 15.101(b): only receivers that tune 30-960 MHz (plus CB receivers and radar detectors) are subject to authorisation; receivers above 960 MHz are exempt from Part 15 technical provisions but subject to 15.5, so array16's 0.4-0.96 GHz coverage puts it in the regulated class.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.101",
+    "confidence": "high"
+   },
+   {
+    "topic": "FCC Part 15: receiver antenna port",
+    "claim": "47 CFR 15.111(a): a receiver tuning 30-960 MHz with external antenna terminals may put at most 2.0 nW (-57 dBm) into a matched load on the antenna terminal; rev B's calibration code reaching an antenna (at most -92 dBm) is 35 dB under it.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.111",
+    "confidence": "high"
+   },
+   {
+    "topic": "FCC Part 15B: digital emissions",
+    "claim": "47 CFR 15.109(a) Class B radiated limits at 3 m are 100/150/200 uV/m at 30-88/88-216/216-960 MHz and 500 uV/m above 960 MHz, about -55/-52/-49/-41 dBm EIRP.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.109 (EIRP conversion is an estimate: EIRP = (E*d)^2/30)",
+    "confidence": "high"
+   },
+   {
+    "topic": "FCC Part 15: interference",
+    "claim": "47 CFR 15.5(b)-(c): Part 15 operation is conditional on causing no harmful interference and accepting interference, and the operator must stop on FCC notice until the problem is fixed.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.5",
+    "confidence": "high"
+   },
+   {
+    "topic": "Amateur transmit",
+    "claim": "47 CFR 97.307(c) requires amateur spurious emissions to be reduced to the greatest extent practicable; paragraph (e) gives numbers for 30-225 MHz (for 25 W or less: at most 25 uW and at least 40 dB down), so home-built transmitters still need a way to measure harmonics.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/97.307",
+    "confidence": "medium"
+   }
+  ],
+  "open_questions": [
+   "Where does the owner live? The 35% US import duty and the FCC rules drive several numbers; EU duty and CE/RED rules would differ.",
+   "A live JLCPCB and PCBWay quote for the actual core and tile (size, stackup, BOM, consigned Mini-Circuits parts) is still needed: the shared web-search budget ran out before PCBWay prices, US door-to-door lead times and hot-plate/rework tool prices could be verified.",
+   "Has the owner designed and brought up a multilayer board before, and what test gear does he already own? The 400-1,300 h estimate assumes a capable but first-time RF/FPGA builder.",
+   "Do Nuand's published bladeRF 2.0 micro schematics carry a licence that permits a derivative board, and is any layout available? (HackRF One's KiCad layout is public.)",
+   "Did the US Section 301 exclusions that one vendor said ran to Nov 10, 2026 lapse, and has JLCPCB's 35% DDP rate changed since March 2026?",
+   "Is a shared-LO discrete receiver (one synthesizer feeding four downconverters, removing per-retune phase calibration) worth its extra risk? That needs the architecture lens; this lens only shows it is the costliest path.",
+   "Can 2-4 genuine AD9361s be bought at authorised distributors now (one Digi-Key region showed constrained supply with no backorders), and would grey-market chips be acceptable?",
+   "What is the LiteVNA-64's real dynamic range at 5-6 GHz? No published figure was found, and REDESIGN budgets it at $120 against EUR 145-192 listings.",
+   "The 2.9-respin (Lifecycle Insights) and 75%-late (Mollick) figures were read only through secondary summaries."
+  ]
+ },
+ "research:datapath": {
+  "summary": "Short answer for the digital side: yes. Every digital layer of a bladeRF can be rewritten or replaced, and most of it already exists as open code. Doing it yourself does not save money for a single unit, though, and each hardware round takes weeks instead of seconds.\n\nA bladeRF 2.0 micro xA4 ($540, in stock at Nuand) is three chips. An AD9361 handles the RF and the 12-bit converters and has its own decimating filters. A Cyclone V FPGA does the LVDS capture and framing; about 32 of its 49 kLE are free. An FX3 chip bridges to USB3. Its HDL and FX3 firmware are MIT-licensed and libbladeRF is LGPL-2.1. The AD9361 driver inside it is ADI's BSD-3 no-OS code; ad9361.c alone is 7,813 lines. LiteX (BSD-2) works like a package ecosystem for FPGAs. LiteEth generates a UDP streaming core from a YAML file. LiteX-M2SDR is a complete open AD9361 + Artix-7 design: a PRBS-calibrated LVDS interface, 8/12-bit packing, VRT packets, and PCIe, Ethernet and USB3 transports.\n\n**Bandwidth comes first.** I/Q rate = channels x MS/s x 2 x bits/8.\n- Rev B's 4 channels x 20 MS/s x 16-bit = 320 MB/s.\n- 4 channels at 61.44 MS/s = 492 to 983 MB/s.\n- 16 channels x 20 MS/s x 12-bit = 960 MB/s.\n\nWhat each link carries in practice:\n- USB 2.0: about 40 MB/s.\n- FX3 USB3: 391 MB/s measured, against a 403 MB/s bus limit. One bladeRF therefore cannot move 2 x 61.44 MS/s at 16-bit (492 MB/s), which is why libbladeRF offers 12-bit packed and 8-bit formats.\n- FT601: about 350-360 MB/s.\n- USB3 built into the FPGA itself (usb3_pipe, 2026): 446 MB/s on Artix-7, tested on Linux only.\n- 1 GbE: 120-124 MB/s. 10 GbE: about 1.2 GB/s. PCIe Gen2 x4: about 1.75 GB/s. Thunderbolt 4: 32 Gb/s of PCIe.\n\n**Mac specifics.** USB (libusb) and Ethernet need no driver. PCIe over Thunderbolt needs a DriverKit extension with entitlements Apple must grant, or System Integrity Protection (SIP) turned off. ThunderScope's permissively licensed LitePCIe DriverKit driver shows it can be done. Vivado (Xilinx's tool) and Quartus (Intel/Altera's tool, needed for the bladeRF HDL) run only on x86 Windows or Linux. Yosys, nextpnr, Trellis and Apicula run natively on Apple silicon, and openXC7 builds on macOS.\n\n**Measured on this M2 Pro.** Python UDP receive tops out at about 100-150k datagrams/s. That is enough for 1 GbE (81k frames/s) but not for 10 GbE. A numpy digital downconverter (NCO + 64-tap FIR, decimate by 8) uses 0.59 of one core for 4 x 20 MS/s, 1.8 cores for 4 x 61.44 and 2.4 cores for 16 x 20. So decimate on the host unless the link is the bottleneck. Doing it in the FPGA for 16 channels needs about 40-100 multipliers; the largest ECP5 has 156.\n\n**FPGA choices.**\n- ECP5: fully open toolchain on the Mac; LVDS only on the left and right I/O banks, at 624-800 Mb/s.\n- Artix-7: 950-1,250 Mb/s LVDS and the most ready-made IP, but needs Vivado on x86 Linux.\n- Zynq-7000: ADI HDL plus Linux IIO; the 7020 chip costs about $105-145.\n- Gowin GW5A: 1.6 Gb/s LVDS and a $200 board with 10 GbE SFP+; open-toolchain support is still in progress.\n\n**Effort (estimates).**\n- Capture -> packets -> 1 GbE -> Python on a LiteX dev board: 180-470 h.\n- The same over FX3 USB3: 250-650 h.\n- Over PCIe/Thunderbolt to macOS: 300-860 h.\n- Decimation in the FPGA adds 60-150 h, against 10-20 h on the host.\n- A custom board with two AD9361s (your own bladeRF pair): about 600-1,400 h and $1,000-1,400. Rev B step 0 needs $1,080 and 40 h, and one AD9361 chip alone costs about $354.\n\n**Hardest parts for a software engineer:**\n- Passing data between clock domains.\n- LVDS timing: AD9361 pair skew is up to 0.9 ns on a 4.07 ns clock.\n- Meeting timing, and debugging without printf.\n- BGA and high-speed PCB layout.\n- Toolchain and driver friction on the Mac.\n\n**Where re-implementing pays off:**\n- Gateware on the bladeRFs you buy (MIT-licensed).\n- DSP on the host.\n- A custom capture board, but only if you want more simultaneous channels than the bladeRFs give. The digital side of 16 channels is modest; the RF side is the expensive part.",
+  "findings": [
+   {
+    "topic": "Data rates",
+    "claim": "Rev B's own load is 4 ch x 20 MS/s x 16-bit I/Q = 320 MB/s (160 MB/s per bladeRF). At 61.44 MS/s the same 4 channels need 491.5 MB/s (8-bit), 737.3 (12-bit packed) or 983.0 MB/s (16-bit).",
+    "source": "estimate: channels x fs x 2 x bits/8, computed in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/scripts/rates.py",
+    "confidence": "high"
+   },
+   {
+    "topic": "Data rates",
+    "claim": "16 channels x 20 MS/s need 640 / 960 / 1,280 MB/s at 8/12/16-bit. 16 x 10 MS/s at 12-bit and 8 x 20 MS/s at 12-bit are both 480 MB/s. 16 x 61.44 MS/s needs 1,966-3,932 MB/s.",
+    "source": "estimate: channels x fs x 2 x bits/8 (rates.py, same path)",
+    "confidence": "high"
+   },
+   {
+    "topic": "Data rates",
+    "claim": "Decimating to 2.5 MS/s shrinks the load to 40 MB/s for 4 ch and 160 MB/s for 16 ch at 16-bit (120 MB/s at 12-bit). 4 channels then fit USB 2.0, and 16 channels fit one USB3 link or 2.5 GbE.",
+    "source": "estimate: channels x fs x 2 x bits/8 (rates.py)",
+    "confidence": "high"
+   },
+   {
+    "topic": "Transport: USB 2.0",
+    "claim": "USB 2.0 high-speed bulk is 53.2 MB/s theoretical (13 x 512 B per 125 us microframe; the Renesas wiki gives about 425 Mb/s). About 320 Mb/s (40 MB/s) is the optimistic practical figure when the device is alone on the bus.",
+    "source": "https://renesas-wiki.atlassian.net/wiki/spaces/REN/pages/98304002",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Transport: USB 2.0",
+    "claim": "HackRF One streams 2-20 Msps quadrature at 8 bits over High Speed USB, i.e. up to 40 MB/s.",
+    "source": "https://hackrf.readthedocs.io/en/latest/hackrf_one.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "Transport: USB 2.0",
+    "claim": "Nuand's wiki says the bladeRF's maximum achievable rate over USB 2.0 has been reported at 5-8 Msps (20-32 MB/s at 4 bytes per sample).",
+    "source": "https://github.com/Nuand/bladeRF/wiki/Debugging-dropped-samples-and-identifying-achievable-sample-rates",
+    "confidence": "high"
+   },
+   {
+    "topic": "Transport: USB3 FX3",
+    "claim": "The FX3 GPIF II bus at 100.8 MHz x 32 bits caps FPGA-to-FX3 at 403.2 MB/s. Infineon measured GPIF-to-USB bulk at up to 391 MB/s (16 KB bursts, Windows 7, Intel C216 xHCI) and internal-source bulk IN at 454 MB/s.",
+    "source": "https://www.infineon.com/dgdl/Infineon-AN86947_Optimizing_USB_3.0_Throughput_with_EZ-USB_FX3-ApplicationNotes-v05_00-EN.pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "Transport: bladeRF limit",
+    "claim": "One bladeRF at 2 x 61.44 MS/s needs 491.5 MB/s in SC16, which is above the FX3's 403 MB/s bus. libbladeRF's SC16_Q11_PACKED (12-bit) format 'allows for a 33.3% higher sample rate when bandwidth limited by the host interface' (368.6 MB/s), and SC8_Q7 needs 245.8 MB/s.",
+    "source": "https://raw.githubusercontent.com/Nuand/bladeRF/master/host/libraries/libbladeRF/include/libbladeRF.h",
+    "confidence": "high"
+   },
+   {
+    "topic": "Transport: USB3 FT601",
+    "claim": "The FT601's 32-bit FIFO at 100 MHz is a 400 MB/s ceiling. An open libusb driver (ft60x-rs) read about 360 MB/s continuously in 245 FIFO mode, and FTDI support quotes 350 MB/s to a PC.",
+    "source": "https://github.com/apertus-open-source-cinema/ft60x-rs ; https://www.ftdichip.com/old2020/support/Documents/AppNotes/AN_386%20FTDI%20FT600%20Maximize%20Performance.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Transport: FPGA-native USB3",
+    "claim": "usb3_pipe (Enjoy-Digital, BSD-2-Clause, 2019-2026) runs a USB 3.2 Gen1 device on the FPGA's own transceivers with no external chip. It measured 446/449 MB/s bulk IN/OUT on an Artix-7 GTP and 372/433 MB/s on a Gowin GW5AST, and lists ECP5-5G as supported. It was tested only against a Linux xHCI host.",
+    "source": "https://github.com/enjoy-digital/usb3_pipe",
+    "confidence": "high"
+   },
+   {
+    "topic": "Transport: Ethernet",
+    "claim": "UDP payload capacity is 119.6 MB/s (1 GbE, MTU 1500) or 124.1 MB/s (MTU 9000), 299/310 MB/s for 2.5 GbE, and 1,196/1,241 MB/s for 10 GbE. At line rate, 10 GbE means 813k frames/s at MTU 1500 or 138k at MTU 9000.",
+    "source": "estimate: 38 B per-frame overhead (8 preamble/SFD, 14 header, 4 FCS, 12 gap; https://en.wikipedia.org/wiki/Ethernet_frame) plus 28 B IP/UDP headers",
+    "confidence": "high"
+   },
+   {
+    "topic": "Host driver on Mac",
+    "claim": "Measured on this Mac (Apple M2 Pro, loopback): a plain Python recv_into receiver saturates at about 100-150k datagrams/s, i.e. 146-223 MB/s with 1472 B datagrams and 0.85-0.89 GB/s with 8972 B. 1 GbE (81k frames/s) is fine in Python; 10 GbE needs a C receiver and jumbo frames.",
+    "source": "estimate: measured with /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/scripts/udp_bench2.py (loopback, no NIC cost)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "DDC on host",
+    "claim": "Measured on one M2 Pro core (numpy with Accelerate), a downconverter of NCO + 64-tap FIR, decimate by 8, costs 59% of a core for 4 ch x 20 MS/s, 176% for 4 x 61.44, 118% for 16 x 10 and 238% for 16 x 20. The int16-to-complex64 conversion alone is 5-20%.",
+    "source": "estimate: measured with /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/scripts/ddc_bench.py",
+    "confidence": "medium"
+   },
+   {
+    "topic": "DDC in FPGA",
+    "claim": "For 16 ch x 20 MS/s decimated by 8 with a 64-tap FIR, the FPGA needs about 96 multipliers with one mixer per channel, or about 40 with time-shared mixers at 160 MHz. ECP5 offers 28 (25F), 72 (45F) and 156 (85F) 18x18 multipliers.",
+    "source": "estimate: mixer 4 mults per channel + FIR MACs/f_clk; multiplier counts from https://www.latticesemi.com/ECP5",
+    "confidence": "medium"
+   },
+   {
+    "topic": "DDC: AD9361",
+    "claim": "The AD9361 receive path has digital decimating filters plus a programmable 128-tap FIR, so AD9361 radios can output a chosen low rate (e.g. 2.5-20 MS/s) directly. An FPGA downconverter is optional there.",
+    "source": "https://analogdevicesinc.github.io/documentation/solutions/reference-designs/fmcomms2/common/ad9361_ad9363_ad9364_general_description.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Transport: PCIe",
+    "claim": "LiteX-M2SDR (AD9361 + XC7A200T, M.2 2280) moves samples over PCIe Gen2 x4 at about 14 Gb/s. It is validated at 2T2R 61.44 MS/s, and its 122.88 MS/s oversampling mode uses 7.9 Gb/s on the bus.",
+    "source": "https://github.com/enjoy-digital/litex_m2sdr",
+    "confidence": "high"
+   },
+   {
+    "topic": "Transport: Thunderbolt",
+    "claim": "Thunderbolt 4 carries 32 Gb/s of PCIe (Gen3 x4) and Thunderbolt 5 carries 64 Gb/s (Gen4 x4).",
+    "source": "https://intel.com/performance-wired",
+    "confidence": "medium"
+   },
+   {
+    "topic": "macOS drivers",
+    "claim": "A custom PCIe/Thunderbolt device on macOS needs a DriverKit extension with the com.apple.developer.driverkit and driverkit.transport.pci entitlements, requested from Apple with a hardware vendor ID. Apple's built-in drivers already cover Intel, Broadcom and Aquantia Ethernet, xHCI, AHCI and NVMe.",
+    "source": "https://developer.apple.com/documentation/pcidriverkit/creating-custom-pcie-drivers-for-thunderbolt-devices.md ; https://developer.apple.com/documentation/driverkit/requesting-entitlements-for-driverkit-development.md",
+    "confidence": "high"
+   },
+   {
+    "topic": "macOS drivers",
+    "claim": "ThunderScope (an open 4-channel 1 GS/s oscilloscope) has a macOS DriverKit LitePCIe driver under a permissive 0BSD-style licence, merged January 2026. Its development workflow requires SIP disabled and 'systemextensionsctl developer on'.",
+    "source": "https://github.com/EEVengers/ts_litex_driver_macos",
+    "confidence": "high"
+   },
+   {
+    "topic": "Mac 10 GbE",
+    "claim": "The Mac mini (M4 / M4 Pro) offers its Gigabit Ethernet port as a 10Gb configure-to-order option, and the M4 Pro model has three Thunderbolt 5 ports. Laptops need a Thunderbolt 10 GbE adapter.",
+    "source": "https://www.apple.com/ca/mac-mini/specs/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "bladeRF",
+    "claim": "Nuand lists the bladeRF 2.0 micro xA4 at $540, 'In stock'. Its 49 kLE Cyclone V leaves about 32 kLE user-programmable, and Nuand states support on Windows, Linux and macOS.",
+    "source": "https://www.nuand.com/product/bladeRF-xA4/",
+    "confidence": "high"
+   },
+   {
+    "topic": "bladeRF",
+    "claim": "The xA5 (77 kLE) is listed at $670, but Nuand says there are no plans to manufacture more now that the xA4 is back in stock.",
+    "source": "https://www.nuand.com/product-category/bladerf-2-0-micro/ ; https://www.nuand.com/product/bladeRF-xA5/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Licences: bladeRF",
+    "claim": "bladeRF licences: FPGA HDL MIT, FX3 firmware MIT, libbladeRF LGPLv2.1, bladeRF-cli GPLv2. FPGA IP under hdl/fpga/ip may vary.",
+    "source": "https://raw.githubusercontent.com/Nuand/bladeRF/master/COPYING",
+    "confidence": "high"
+   },
+   {
+    "topic": "Toolchain: bladeRF",
+    "claim": "The bladeRF HDL must be built with Quartus Prime Lite 23.1.1 (free but not open source; Windows or Linux) and includes a Nios II soft CPU. The FX3 firmware needs the Cypress FX3 SDK (Linux x86 or Windows, ThreadX RTOS).",
+    "source": "https://raw.githubusercontent.com/Nuand/bladeRF/master/hdl/README.md ; https://raw.githubusercontent.com/Nuand/bladeRF/master/fx3_firmware/README.md",
+    "confidence": "high"
+   },
+   {
+    "topic": "Toolchain: Vivado",
+    "claim": "Vivado (2026.1 docs) supports only x86-64 processors running Windows 11 or listed Linux distributions. There is no macOS or ARM64 support, so an Apple-silicon owner needs an x86 Linux machine.",
+    "source": "https://docs.amd.com/r/en-US/ug973-vivado-release-notes-install-license/Supported-Operating-Systems",
+    "confidence": "high"
+   },
+   {
+    "topic": "Toolchain: Vivado",
+    "claim": "The free Vivado edition covers Artix-7 XC7A12T to XC7A200T and all Zynq-7000. AMD places 7 series in a $0 Basic tier that needs a free annual licence renewal from 2026.1.",
+    "source": "https://docs.amd.com/r/en-US/ug973-vivado-release-notes-install-license/Supported-Devices ; https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vivado/vivado-licensing-options.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Toolchain: open",
+    "claim": "OSS CAD Suite publishes darwin-arm64 (Apple silicon, macOS 13+) builds with Yosys, nextpnr (ecp5, gowin), Project Trellis, Apicula, openFPGALoader, Verilator, cocotb, Amaranth and Migen.",
+    "source": "https://github.com/YosysHQ/oss-cad-suite-build",
+    "confidence": "high"
+   },
+   {
+    "topic": "Toolchain: open",
+    "claim": "openXC7 targets Xilinx 7 series (Spartan-7, Artix-7, Zynq-7, plus Kintex-7 70T-480T) and builds on macOS with Homebrew or Nix (installer BSD-3-Clause). Its limitations versus Vivado are not documented on the page.",
+    "source": "https://github.com/openXC7/toolchain-installer",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Toolchain: LiteX",
+    "claim": "LiteX (BSD-2-Clause) has build backends for trellis (open ECP5), diamond, radiant, vivado, yosys_nextpnr (openXC7), f4pga, apicula (open Gowin) and the Gowin vendor tool.",
+    "source": "https://github.com/enjoy-digital/litex/tree/master/litex/build",
+    "confidence": "high"
+   },
+   {
+    "topic": "FPGA: ECP5",
+    "claim": "On ECP5, all differential inputs and LVDS outputs are on the left and right banks only. Generic DDRX2 input runs at 800/700/624 Mb/s by speed grade (left/right only), and DDRX1 at 500 Mb/s.",
+    "source": "https://www.farnell.com/datasheets/3215493.pdf (ECP5 data sheet FPGA-DS-02012 v1.9)",
+    "confidence": "high"
+   },
+   {
+    "topic": "FPGA: ECP5",
+    "claim": "The ECP5 family has 24/44/84 kLUT for the 25/45/85 parts and SERDES up to 5 Gb/s on ECP5-5G (3.2 Gb/s on plain ECP5). I/O counts: 197 on LFE5U-25F CABGA256, 203 on LFE5UM-45 CABGA381, 259 on LFE5UM-85 CABGA554 and 365 on CABGA756.",
+    "source": "https://www.latticesemi.com/ECP5 ; https://lcsc.com/product-detail/Programmable-Logic-Device-CPLDs-FPGAs_Lattice-LFE5U-25F-6BG256C_C1521614.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "FPGA: ECP5 price",
+    "claim": "Price snapshots are undated and could not be checked at Digi-Key or Mouser. LFE5U-25F-6BG256C shows $5.52 at qty 1 at LCSC and about $16-22 at Western distributors. LFE5U-85F-6BG381C shows about $32 (Mouser) to $68 (Digi-Key).",
+    "source": "https://lcsc.com/product-detail/Programmable-Logic-Device-CPLDs-FPGAs_Lattice-LFE5U-25F-6BG256C_C1521614.html ; https://www.edinventory.com/parts/lfe5u-85f-6bg381c_lattice-semiconductor-corporation",
+    "confidence": "low"
+   },
+   {
+    "topic": "FPGA: Artix-7",
+    "claim": "The Artix-7 DDR LVDS receiver runs at 1,250 Mb/s (-3/-2) or 950 Mb/s (-1). LVDS_25 inputs may sit in banks with a different VCCO.",
+    "source": "https://cdn.sparkfun.com/assets/0/f/b/6/2/Artix_7_Data_Sheet.pdf (DS181 v1.27, Table 15)",
+    "confidence": "high"
+   },
+   {
+    "topic": "FPGA: Artix-7 price",
+    "claim": "XC7A35T-1FTG256C has 170 I/O and 33,280 logic cells; it costs $31.31 at LCSC, $46.74 on Octopart and $55 at SparkFun. XC7A100T-1FGG484C has 285 I/O and costs $37.76 at LCSC versus about $170-182 at US distributors.",
+    "source": "https://www.lcsc.com/product-detail/C1521698.html ; https://www.sparkfun.com/artix-7-field-programmable-gate-array-fpga-ic-170-xc7a35t-1ftg256c.html ; https://lcsc.com/product-detail/Programmable-Logic-Device-CPLDs-FPGAs_AMD-XILINX-XC7A100T-1FGG484C_C1521767.html",
+    "confidence": "low"
+   },
+   {
+    "topic": "FPGA: Zynq-7000",
+    "claim": "XC7Z020-1CLG400C costs about $105-145 at qty 1 (aggregator snapshots). ADI's HDL repo has an FMCOMMS5 project (two AD9361s = 4 coherent channels) for ZC702, ZC706 and ZCU102 carriers.",
+    "source": "https://www.findchips.com/search/XC7Z020-1CLG400C ; https://github.com/analogdevicesinc/hdl/tree/main/projects/fmcomms5",
+    "confidence": "medium"
+   },
+   {
+    "topic": "FPGA: Gowin",
+    "claim": "Gowin rates GW5A-25/60 LVDS receive at about 1.6 Gb/s and GW5A-138 at 1.5 Gb/s. The Sipeed Tang Mega 138K Pro Dock (GW5AST-138, two SFP+ up to 10 Gb/s) costs about $195-200.",
+    "source": "https://www.gowinsemi.com/en/product/arora-v-fpga/ ; https://en.wiki.sipeed.com/hardware/en/tang/tang-mega-138k/mega-138k-pro.html ; https://www.cnx-software.com/2023/10/01/sipeed-tang-mega-138k-pro-dock-features-gowin-gw5ast-fpga-risc-v-soc/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "FPGA: Gowin",
+    "claim": "Open-toolchain (Apicula/nextpnr) support for GW5A is funded work in progress (NLnet GW-5 grant April 2024 to April 2026; a new GW5A 60k/138k grant from June 2026), so GW5A designs still need Gowin's tool today.",
+    "source": "https://nlnet.nl/project/nextpnr-GW-5/ ; https://nlnet.nl/project/Apicula-GW5A/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Gateware reuse: LiteEth",
+    "claim": "LiteEth (BSD-2) generates standalone UDP streaming cores from YAML (e.g. udp_raw_ecp5rgmii.yml, udp_s7phyrgmii.yml). It supports RGMII on ECP5, 7-series and GW5, and 10GBASE-R on 7-series, UltraScale+ and the GW5AST-138.",
+    "source": "https://github.com/enjoy-digital/liteeth",
+    "confidence": "high"
+   },
+   {
+    "topic": "Gateware reuse: LitePCIe",
+    "claim": "LitePCIe (BSD-2) supports Xilinx 7-series up to Gen2 x8, UltraScale(+) up to Gen3 x16 and Cyclone V up to Gen2 x4, but not ECP5 or Gowin. It ships a Linux driver only.",
+    "source": "https://github.com/enjoy-digital/litepcie",
+    "confidence": "high"
+   },
+   {
+    "topic": "Gateware reuse: LiteX-M2SDR",
+    "claim": "LiteX-M2SDR gateware (BSD-2) contains an AD9361 PHY with PRBS LVDS calibration and 8/12-bit modes (phy.py 389, core.py 490, prbs.py 181, bitmode.py 427 lines), VRT packets, and PCIe, Ethernet, USB3 and SATA transports. The host side is Linux-only, and the board is sold out with pre-orders open.",
+    "source": "https://github.com/enjoy-digital/litex_m2sdr ; https://enjoy-digital.github.io/posts/litex-m2sdr/",
+    "confidence": "high"
+   },
+   {
+    "topic": "AD9361 interface",
+    "claim": "In 2R2T LVDS mode the AD9361 uses 16 differential pairs per chip (6 RX data + RX_FRAME + DATA_CLK, 6 TX data + TX_FRAME + FB_CLK), at 245.76 MHz DDR = 491.52 Mb/s per pair at 61.44 MS/s. Pair skew up to about 0.9 ns needs PRBS calibration, which brings it to 0.3-0.4 ns.",
+    "source": "https://www.analog.com/en/resources/app-notes/an-1441.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "AD9361 driver",
+    "claim": "ADI's no-OS AD9361 driver is BSD-3-Clause, and ad9361.c alone is 7,813 lines. libbladeRF bundles it under thirdparty/analogdevicesinc/no-OS, so a custom board would reuse it rather than rewrite it.",
+    "source": "https://github.com/analogdevicesinc/no-OS/blob/main/drivers/rf-transceiver/ad9361/ad9361.c",
+    "confidence": "high"
+   },
+   {
+    "topic": "Parts price",
+    "claim": "AD9361BBCZ (144-ball CSPBGA) costs about $354 at qty 1 at Digi-Key per aggregator snapshots, so two chips alone cost $708 against $1,080 for two complete bladeRFs.",
+    "source": "https://www.findchips.com/search/AD9361BBCZ",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Parts price",
+    "claim": "USB3 bridge chips: FT601Q-B-T is $8.75 at qty 1 (Digi-Key, out of stock, 21-week lead time). CYUSB3014-BZXI (FX3) is about $39 (Mouser, per aggregator).",
+    "source": "https://www.digikey.com/en/products/detail/ftdi-future-technology-devices-international-ltd/FT601Q-B-T/6558601 ; https://www.oemstrade.com/search/CYUSB3014-BZXI",
+    "confidence": "low"
+   },
+   {
+    "topic": "Licences: others",
+    "claim": "Each ADI HDL module carries its own licence; axi_ad9361 is GPL-2 or ADI-BSD, and ADI-BSD allows closed bitstreams 'as long as it attaches to an ADI device'. libiio is LGPL-2.1, SoapySDR BSL-1.0, GNU Radio GPL-3.0, and heimdall_daq_fw and krakensdr_doa GPL-3.0.",
+    "source": "https://github.com/analogdevicesinc/hdl/blob/main/library/axi_ad9361/axi_ad9361.v ; https://github.com/pothosware/SoapySDR ; https://github.com/krakenrf/heimdall_daq_fw",
+    "confidence": "high"
+   },
+   {
+    "topic": "Licences: others",
+    "claim": "More licences: LimeSDR-Mini v2 gateware is Apache-2.0 but needs Lattice Diamond 3.12; LimeSuite and LimeSuiteNG are Apache-2.0. LiteX, LiteEth, LitePCIe and LiteDRAM are BSD-2, LUNA BSD-3, Yosys and nextpnr ISC, Apicula MIT, HackRF GPL-2.0.",
+    "source": "https://github.com/myriadrf/LimeSDR-Mini-v2_GW ; https://github.com/enjoy-digital/litedram ; https://github.com/YosysHQ/nextpnr",
+    "confidence": "high"
+   },
+   {
+    "topic": "Reference designs",
+    "claim": "KrakenSDR's heimdall_daq_fw is a C + Python coherent DAQ chain that runs on Linux (Raspberry Pi 4/5, Orange Pi 5B, x86_64 with 4 or more cores). macOS is not documented.",
+    "source": "https://github.com/krakenrf/heimdall_daq_fw",
+    "confidence": "high"
+   },
+   {
+    "topic": "Reference designs",
+    "claim": "Hermes-Lite 2, a hobby open SDR, runs 4 FPGA receivers (9 in skimmer builds) at 48-384 kHz in a Cyclone IV EP4CE22 and streams them to a PC over UDP. This shows FPGA downconversion plus Ethernet is within hobby reach.",
+    "source": "https://github.com/softerhardware/Hermes-Lite/wiki/Hermes-Lite-2.0",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Effort (estimate)",
+    "claim": "Capture -> packets -> host on a LiteX dev board (4-16 ch): 180-470 h over 1 GbE with a Python receiver, 210-560 h over FT601, 250-650 h over FX3, 230-630 h over 10 GbE and 300-860 h over PCIe/Thunderbolt with DriverKit. FPGA downconversion adds 60-150 h, versus 10-20 h on the host.",
+    "source": "estimate: bottom-up sum. Ramp-up 40-80 h, LVDS capture/calibration 40-120 h (20-40 h porting LiteX-M2SDR's PHY), framing/CDC/timestamps 20-40 h. Transport: LiteEth UDP 20-40 h, FT601 50-100 h, FX3 80-160 h, 10 GbE 60-150 h, PCIe + DriverKit 120-300 h. Host receiver 15-30 h. Then x1.3-1.5 for bring-up.",
+    "confidence": "low"
+   },
+   {
+    "topic": "Effort (estimate)",
+    "claim": "A custom board with two AD9361s, an FPGA and USB3 (an 'own bladeRF pair') is about 600-1,400 h and $1,000-1,400 per prototype round. Rev B step 0 is $1,080 and 40 h, so re-implementing saves no money at qty 1.",
+    "source": "estimate: pipeline with FX3 250-650 h + 6-8-layer BGA design and bring-up 200-400 h + AD9361 driver integration 60-150 h + multi-chip sync and TX 80-160 h. Parts: 2 x $354 AD9361 + $30-70 FPGA + $39 FX3 + clocking/power + PCB/assembly. Rev B step 0 from REDESIGN.md section 12.",
+    "confidence": "low"
+   },
+   {
+    "topic": "Effort anchors",
+    "claim": "Comparable open projects took years. The HackRF repo dates from March 2012. ThunderScope's repo (June 2019) got its macOS driver merged in January 2026. LiteX-M2SDR (repo May 2024) was built by a professional FPGA team reusing earlier XTRX work.",
+    "source": "https://api.github.com/repos/greatscottgadgets/hackrf ; https://github.com/EEVengers/ThunderScope ; https://enjoy-digital.github.io/posts/litex-m2sdr/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Hardest parts for a software engineer",
+    "claim": "Clock-domain crossings are the classic trap: they need synchronizers or async FIFOs, can pass simulation and fail on hardware, and are often found only by desk-checking. Source-synchronous LVDS adds sub-ns skew calibration (0.9 ns on a 4.07 ns AD9361 clock).",
+    "source": "https://zipcpu.com/blog/2017/10/20/cdc.html ; https://zipcpu.com/blog/2018/08/04/sim-mismatch.html ; https://www.analog.com/en/resources/app-notes/an-1441.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Market context",
+    "claim": "Complete AD9361 + XC7A200T USB3 boards (LibreSDR B220 mini, B210/UHD-compatible) appear at about EUR 282, less than one AD9361 at Digi-Key. Listings were not opened directly; this is a radio choice for another lens.",
+    "source": "https://www.ebay.de/itm/176489014212 ; https://www.sdrstore.eu/software-defined-radio/instruments/usrp/libresdr-b210-mini-b220-mini-2r2t-xc7a200tad9361-or-xc7a100tad9363-sdr-uhd-pluto-oai-compatible/",
+    "confidence": "low"
+   }
+  ],
+  "open_questions": [
+   "Does usb3_pipe's FPGA-native USB3 device (446 MB/s on Artix-7) work with a macOS xHCI host and libusb? It is documented only against Linux.",
+   "Can two bladeRFs sustain 4 x 20 MS/s SC16 (320 MB/s total, two ports) on this M2 Pro without drops? No macOS benchmark was found; measure it in rev B build step 0, along with whether SC16_Q11_PACKED or SC8 is needed above about 40 MS/s per board.",
+   "Python UDP receive was measured only on loopback. A real Thunderbolt or USB Ethernet adapter on macOS (no recvmmsg or kernel bypass) may be slower; test before relying on 1 GbE in pure Python.",
+   "Would Apple grant the DriverKit PCI entitlement to a hobbyist without a PCI-SIG vendor ID? If not, a PCIe/Thunderbolt capture board means running with SIP disabled.",
+   "FPGA and bridge-chip prices for November 2026 could not be confirmed first-hand: Digi-Key, Mouser and Octopart blocked fetching and the aggregator snapshots are undated. Dev-board prices (ECP5/Artix-7 boards with GbE) were not checked because the shared web-search budget ran out. A follow-up can continue the search.",
+   "Does the owner want more than 4 simultaneous channels? 16 simultaneous channels would remove Hadamard switching, and the digital side handles it (up to about 1 GB/s, or decimate in the FPGA to fit 1-2.5 GbE), but the 16 RF downconverters are outside this lens.",
+   "Is the bladeRF xA4's ~32 kLE of free logic enough for in-FPGA decimation or PN correlation on both channels at 61.44 MS/s? This needs a Quartus fit test on an x86 Linux machine.",
+   "Can an M.2 SDR such as LiteX-M2SDR run on a Mac in a Thunderbolt M.2 enclosure? Many enclosures expect NVMe, and the M2SDR host software is Linux-only today.",
+   "How usable is the GW5A open toolchain (Apicula), and does Gowin's vendor tool run on macOS?"
+  ]
+ }
+}

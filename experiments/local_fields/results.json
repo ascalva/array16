@@ -1,0 +1,3385 @@
+{
+ "dof": [
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "N": 16,
+   "centre": [
+    0.0,
+    0.0,
+    0.15
+   ],
+   "sv_db": [
+    0.0,
+    -2.9,
+    -6.5,
+    -8.8,
+    -10.0,
+    -13.0,
+    -13.1,
+    -15.9,
+    -17.0,
+    -18.6,
+    -19.0,
+    -20.9,
+    -23.9,
+    -27.6,
+    -28.9,
+    -48.6
+   ],
+   "within_10dB": 4,
+   "within_20dB": 11,
+   "within_40dB": 15,
+   "participation": 3.44
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "N": 16,
+   "centre": [
+    0.0,
+    0.0,
+    0.15
+   ],
+   "sv_db": [
+    0.0,
+    -0.4,
+    -1.5,
+    -2.0,
+    -2.6,
+    -4.4,
+    -5.5,
+    -6.2,
+    -7.3,
+    -8.8,
+    -9.9,
+    -13.3,
+    -14.4,
+    -15.2,
+    -17.6,
+    -25.0
+   ],
+   "within_10dB": 11,
+   "within_20dB": 15,
+   "within_40dB": 16,
+   "participation": 8.15
+  },
+  {
+   "array": "two tiles side by side (8x4) 5.8 GHz",
+   "N": 32,
+   "centre": [
+    0.0,
+    0.0,
+    0.15
+   ],
+   "sv_db": [
+    0.0,
+    -0.0,
+    -0.4,
+    -1.2,
+    -1.6,
+    -1.7,
+    -1.9,
+    -2.8,
+    -2.9,
+    -4.6,
+    -5.1,
+    -5.7,
+    -5.8,
+    -6.1,
+    -7.1,
+    -7.3,
+    -8.9,
+    -9.1,
+    -11.7,
+    -12.4,
+    -13.4,
+    -13.7,
+    -14.3,
+    -14.5,
+    -15.6,
+    -17.6,
+    -18.1,
+    -18.1,
+    -22.1,
+    -24.9,
+    -27.9,
+    -35.8
+   ],
+   "within_10dB": 18,
+   "within_20dB": 28,
+   "within_40dB": 32,
+   "participation": 14.37
+  },
+  {
+   "array": "16 whips 0.9 GHz",
+   "N": 16,
+   "centre": [
+    0.0,
+    0.0,
+    0.35
+   ],
+   "sv_db": [
+    0.0,
+    -0.0,
+    -0.0,
+    -0.4,
+    -1.9,
+    -1.9,
+    -3.2,
+    -3.8,
+    -6.8,
+    -6.9,
+    -6.9,
+    -9.5,
+    -14.0,
+    -18.2,
+    -18.2,
+    -22.1
+   ],
+   "within_10dB": 12,
+   "within_20dB": 15,
+   "within_40dB": 16,
+   "participation": 9.16
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "N": 16,
+   "centre": [
+    0.0,
+    0.0,
+    0.35
+   ],
+   "sv_db": [
+    0.0,
+    -0.0,
+    -0.2,
+    -0.7,
+    -1.4,
+    -1.4,
+    -1.9,
+    -2.0,
+    -3.3,
+    -4.4,
+    -4.4,
+    -5.7,
+    -6.1,
+    -6.9,
+    -6.9,
+    -7.2
+   ],
+   "within_10dB": 16,
+   "within_20dB": 16,
+   "within_40dB": 16,
+   "participation": 12.56
+  },
+  {
+   "array": "32 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 32,
+   "centre": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "sv_db": [
+    0.0,
+    -0.1,
+    -0.2,
+    -0.2,
+    -0.2,
+    -0.3,
+    -0.4,
+    -0.4,
+    -0.5,
+    -0.5,
+    -0.8,
+    -0.8,
+    -0.9,
+    -1.0,
+    -1.4,
+    -1.5,
+    -1.9,
+    -1.9,
+    -2.6,
+    -2.6,
+    -3.4,
+    -3.4,
+    -4.4,
+    -4.4,
+    -5.7,
+    -5.7,
+    -7.1,
+    -7.2,
+    -9.1,
+    -9.1,
+    -11.9,
+    -11.9
+   ],
+   "within_10dB": 30,
+   "within_20dB": 32,
+   "within_40dB": 32,
+   "participation": 25.34
+  },
+  {
+   "array": "64 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 64,
+   "centre": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "sv_db": [
+    0.0,
+    -0.1,
+    -0.1,
+    -0.1,
+    -0.2,
+    -0.3,
+    -0.3,
+    -0.4,
+    -0.4,
+    -0.4,
+    -0.5,
+    -0.5,
+    -0.5,
+    -0.6,
+    -0.7,
+    -0.7,
+    -0.7,
+    -0.7,
+    -0.8,
+    -0.9,
+    -0.9,
+    -1.0,
+    -1.0,
+    -1.1,
+    -1.2,
+    -1.3,
+    -1.3,
+    -1.3,
+    -1.6,
+    -1.7,
+    -1.7,
+    -1.7,
+    -2.0,
+    -2.1,
+    -2.3,
+    -2.3,
+    -2.6,
+    -2.7,
+    -3.0,
+    -3.0,
+    -3.4,
+    -3.5,
+    -3.9,
+    -3.9,
+    -4.4,
+    -4.4,
+    -4.9,
+    -5.0,
+    -5.6,
+    -5.6,
+    -6.2,
+    -6.3,
+    -7.0,
+    -7.0,
+    -7.8,
+    -7.9,
+    -8.7,
+    -8.8,
+    -9.9,
+    -10.0,
+    -11.3,
+    -11.4,
+    -13.3,
+    -13.5
+   ],
+   "within_10dB": 59,
+   "within_20dB": 64,
+   "within_40dB": 64,
+   "participation": 50.31
+  }
+ ],
+ "focus": [
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "focus_m": 0.2,
+   "aperture_mm": 75,
+   "fraunhofer_m": 0.09,
+   "fwhm_x_mm": 189.6,
+   "fwhm_y_mm": 175.1,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 0.05,
+   "peak_on_axis_db_above_focus": 7.9,
+   "e_v_per_m_at_1mW": 4.274,
+   "s_uW_per_cm2_at_1mW": 2.424,
+   "lambda_mm": 124.9,
+   "ez_share_of_power_at_focus": 0.0
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "focus_m": 0.3,
+   "aperture_mm": 75,
+   "fraunhofer_m": 0.09,
+   "fwhm_x_mm": 276.8,
+   "fwhm_y_mm": 248.5,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 0.02,
+   "peak_on_axis_db_above_focus": 11.1,
+   "e_v_per_m_at_1mW": 2.941,
+   "s_uW_per_cm2_at_1mW": 1.1478,
+   "lambda_mm": 124.9,
+   "ez_share_of_power_at_focus": 0.0
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "focus_m": 0.5,
+   "aperture_mm": 75,
+   "fraunhofer_m": 0.09,
+   "fwhm_x_mm": 454.8,
+   "fwhm_y_mm": 402.4,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 0.01,
+   "peak_on_axis_db_above_focus": 15.4,
+   "e_v_per_m_at_1mW": 1.794,
+   "s_uW_per_cm2_at_1mW": 0.4274,
+   "lambda_mm": 124.9,
+   "ez_share_of_power_at_focus": 0.0
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "focus_m": 0.2,
+   "aperture_mm": 75,
+   "fraunhofer_m": 0.218,
+   "fwhm_x_mm": 95.4,
+   "fwhm_y_mm": 94.8,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 0.31,
+   "peak_on_axis_db_above_focus": 6.9,
+   "e_v_per_m_at_1mW": 8.317,
+   "s_uW_per_cm2_at_1mW": 9.1796,
+   "lambda_mm": 51.7,
+   "ez_share_of_power_at_focus": 0.0
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "focus_m": 0.3,
+   "aperture_mm": 75,
+   "fraunhofer_m": 0.218,
+   "fwhm_x_mm": 141.2,
+   "fwhm_y_mm": 138.0,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 0.14,
+   "peak_on_axis_db_above_focus": 9.8,
+   "e_v_per_m_at_1mW": 5.645,
+   "s_uW_per_cm2_at_1mW": 4.2293,
+   "lambda_mm": 51.7,
+   "ez_share_of_power_at_focus": 0.0
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "focus_m": 0.5,
+   "aperture_mm": 75,
+   "fraunhofer_m": 0.218,
+   "fwhm_x_mm": 233.8,
+   "fwhm_y_mm": 226.6,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 0.05,
+   "peak_on_axis_db_above_focus": 13.7,
+   "e_v_per_m_at_1mW": 3.419,
+   "s_uW_per_cm2_at_1mW": 1.5511,
+   "lambda_mm": 51.7,
+   "ez_share_of_power_at_focus": 0.0
+  },
+  {
+   "array": "16 whips 0.9 GHz",
+   "focus_m": 0.2,
+   "aperture_mm": 450,
+   "fraunhofer_m": 1.216,
+   "fwhm_x_mm": 172.3,
+   "fwhm_y_mm": 172.3,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 5.92,
+   "peak_on_axis_db_above_focus": 9.3,
+   "e_v_per_m_at_1mW": 2.821,
+   "s_uW_per_cm2_at_1mW": 1.0563,
+   "lambda_mm": 333.1,
+   "ez_share_of_power_at_focus": 1.0
+  },
+  {
+   "array": "16 whips 0.9 GHz",
+   "focus_m": 0.3,
+   "aperture_mm": 450,
+   "fraunhofer_m": 1.216,
+   "fwhm_x_mm": 362.8,
+   "fwhm_y_mm": 362.8,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 3.07,
+   "peak_on_axis_db_above_focus": 14.9,
+   "e_v_per_m_at_1mW": 1.568,
+   "s_uW_per_cm2_at_1mW": 0.3264,
+   "lambda_mm": 333.1,
+   "ez_share_of_power_at_focus": 1.0
+  },
+  {
+   "array": "16 whips 0.9 GHz",
+   "focus_m": 0.5,
+   "aperture_mm": 450,
+   "fraunhofer_m": 1.216,
+   "fwhm_x_mm": null,
+   "fwhm_y_mm": null,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 0.59,
+   "peak_on_axis_db_above_focus": 23.0,
+   "e_v_per_m_at_1mW": 0.698,
+   "s_uW_per_cm2_at_1mW": 0.0647,
+   "lambda_mm": 333.1,
+   "ez_share_of_power_at_focus": 1.0
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "focus_m": 0.2,
+   "aperture_mm": 450,
+   "fraunhofer_m": 3.107,
+   "fwhm_x_mm": 93.3,
+   "fwhm_y_mm": 93.3,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 12.15,
+   "peak_on_axis_db_above_focus": 9.2,
+   "e_v_per_m_at_1mW": 2.258,
+   "s_uW_per_cm2_at_1mW": 0.6769,
+   "lambda_mm": 130.3,
+   "ez_share_of_power_at_focus": 1.0
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "focus_m": 0.3,
+   "aperture_mm": 450,
+   "fraunhofer_m": 3.107,
+   "fwhm_x_mm": 124.9,
+   "fwhm_y_mm": 295.1,
+   "depth_mm": 229.8,
+   "axial_peak_m": 0.157,
+   "gain_over_beam_db": 6.1,
+   "peak_on_axis_db_above_focus": 3.6,
+   "e_v_per_m_at_1mW": 1.217,
+   "s_uW_per_cm2_at_1mW": 0.1965,
+   "lambda_mm": 130.3,
+   "ez_share_of_power_at_focus": 0.0
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "focus_m": 0.5,
+   "aperture_mm": 450,
+   "fraunhofer_m": 3.107,
+   "fwhm_x_mm": 441.3,
+   "fwhm_y_mm": 176.6,
+   "depth_mm": null,
+   "axial_peak_m": null,
+   "gain_over_beam_db": 2.28,
+   "peak_on_axis_db_above_focus": 6.9,
+   "e_v_per_m_at_1mW": 0.57,
+   "s_uW_per_cm2_at_1mW": 0.0431,
+   "lambda_mm": 130.3,
+   "ez_share_of_power_at_focus": 0.0
+  }
+ ],
+ "spots": [
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "spots": [
+    [
+     -0.12,
+     0.0,
+     0.3
+    ],
+    [
+     0.12,
+     0.0,
+     0.3
+    ]
+   ],
+   "rel_single_focus_db": [
+    -3.46,
+    -3.46
+   ],
+   "ideal_split_db": -3.01,
+   "worst_elsewhere_db_re_spots": -6.6
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "spots": [
+    [
+     -0.12,
+     0.0,
+     0.3
+    ],
+    [
+     0.12,
+     0.0,
+     0.3
+    ],
+    [
+     0.0,
+     0.2,
+     0.3
+    ]
+   ],
+   "rel_single_focus_db": [
+    -5.96,
+    -5.96,
+    -3.28
+   ],
+   "ideal_split_db": -4.77,
+   "worst_elsewhere_db_re_spots": -5.0
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "spots": [
+    [
+     -0.1,
+     0.0,
+     0.3
+    ],
+    [
+     0.1,
+     0.0,
+     0.3
+    ]
+   ],
+   "rel_single_focus_db": [
+    -3.13,
+    -3.13
+   ],
+   "ideal_split_db": -3.01,
+   "worst_elsewhere_db_re_spots": -0.5
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "spots": [
+    [
+     -0.1,
+     0.0,
+     0.3
+    ],
+    [
+     0.1,
+     0.0,
+     0.3
+    ],
+    [
+     0.0,
+     0.15,
+     0.3
+    ]
+   ],
+   "rel_single_focus_db": [
+    -4.25,
+    -4.6,
+    -5.56
+   ],
+   "ideal_split_db": -4.77,
+   "worst_elsewhere_db_re_spots": 1.4
+  }
+ ],
+ "quiet": [
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "A": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "B": [
+    0.08,
+    0.0,
+    0.3
+   ],
+   "B_before_db_re_A": -3.9,
+   "point_null": {
+    "cost_at_A_db": -2.5,
+    "exact_db_re_A": -301.0,
+    "with_errors_db_re_A": -34.5,
+    "worst_on_shell_db_re_A": {
+     "0.02 lambda": -38.0,
+     "0.05 lambda": -30.0,
+     "0.10 lambda": -23.9,
+     "0.20 lambda": -17.7,
+     "0.35 lambda": -12.7
+    }
+   },
+   "zone": {
+    "a=0.125 lambda, loading 0.0001": {
+     "cost_at_A_db": -10.99,
+     "mean_db_re_A": -47.6,
+     "worst_db_re_A": -40.6,
+     "mean_with_errors_db_re_A": -25.1
+    },
+    "a=0.125 lambda, loading 0.01": {
+     "cost_at_A_db": -3.23,
+     "mean_db_re_A": -30.1,
+     "worst_db_re_A": -23.2,
+     "mean_with_errors_db_re_A": -28.4
+    },
+    "a=0.25 lambda, loading 0.0001": {
+     "cost_at_A_db": -11.42,
+     "mean_db_re_A": -41.2,
+     "worst_db_re_A": -32.6,
+     "mean_with_errors_db_re_A": -24.7
+    },
+    "a=0.25 lambda, loading 0.01": {
+     "cost_at_A_db": -6.11,
+     "mean_db_re_A": -27.5,
+     "worst_db_re_A": -19.8,
+     "mean_with_errors_db_re_A": -25.6
+    },
+    "a=0.5 lambda, loading 0.0001": {
+     "cost_at_A_db": -15.27,
+     "mean_db_re_A": -33.5,
+     "worst_db_re_A": -22.1,
+     "mean_with_errors_db_re_A": -21.7
+    },
+    "a=0.5 lambda, loading 0.01": {
+     "cost_at_A_db": -9.27,
+     "mean_db_re_A": -27.0,
+     "worst_db_re_A": -16.2,
+     "mean_with_errors_db_re_A": -23.9
+    }
+   },
+   "revB_zone_quarter_lambda": {
+    "evolve_then_climb_db": -23.5,
+    "cost_at_A_db": -5.36,
+    "random_search_db": -17.8,
+    "unconstrained_db": -25.5,
+    "projected_unconstrained_db": -25.2,
+    "evaluations": 32464
+   }
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "A": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "B": [
+    0.08,
+    0.0,
+    0.3
+   ],
+   "B_before_db_re_A": -1.1,
+   "point_null": {
+    "cost_at_A_db": -9.14,
+    "exact_db_re_A": -283.0,
+    "with_errors_db_re_A": -27.4,
+    "worst_on_shell_db_re_A": {
+     "0.02 lambda": -31.0,
+     "0.05 lambda": -23.0,
+     "0.10 lambda": -16.8,
+     "0.20 lambda": -10.5,
+     "0.35 lambda": -5.4
+    }
+   },
+   "zone": {
+    "a=0.125 lambda, loading 0.0001": {
+     "cost_at_A_db": -23.35,
+     "mean_db_re_A": -31.2,
+     "worst_db_re_A": -23.1,
+     "mean_with_errors_db_re_A": -12.7
+    },
+    "a=0.125 lambda, loading 0.01": {
+     "cost_at_A_db": -9.25,
+     "mean_db_re_A": -21.9,
+     "worst_db_re_A": -14.6,
+     "mean_with_errors_db_re_A": -20.8
+    },
+    "a=0.25 lambda, loading 0.0001": {
+     "cost_at_A_db": -24.96,
+     "mean_db_re_A": -26.2,
+     "worst_db_re_A": -16.1,
+     "mean_with_errors_db_re_A": -11.0
+    },
+    "a=0.25 lambda, loading 0.01": {
+     "cost_at_A_db": -10.89,
+     "mean_db_re_A": -16.6,
+     "worst_db_re_A": -8.8,
+     "mean_with_errors_db_re_A": -16.2
+    },
+    "a=0.5 lambda, loading 0.0001": {
+     "cost_at_A_db": -26.41,
+     "mean_db_re_A": -17.0,
+     "worst_db_re_A": -4.5,
+     "mean_with_errors_db_re_A": -9.4
+    },
+    "a=0.5 lambda, loading 0.01": {
+     "cost_at_A_db": -15.76,
+     "mean_db_re_A": -12.3,
+     "worst_db_re_A": -2.6,
+     "mean_with_errors_db_re_A": -11.8
+    }
+   },
+   "revB_zone_quarter_lambda": {
+    "evolve_then_climb_db": -7.6,
+    "cost_at_A_db": -6.08,
+    "random_search_db": -4.9,
+    "unconstrained_db": -6.5,
+    "projected_unconstrained_db": -4.6,
+    "evaluations": 32464
+   }
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "A": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "B": [
+    0.08,
+    0.0,
+    0.3
+   ],
+   "B_before_db_re_A": -5.0,
+   "point_null": {
+    "cost_at_A_db": -1.79,
+    "exact_db_re_A": -308.0,
+    "with_errors_db_re_A": -29.3,
+    "worst_on_shell_db_re_A": {
+     "0.02 lambda": -29.4,
+     "0.05 lambda": -21.5,
+     "0.10 lambda": -15.5,
+     "0.20 lambda": -9.1,
+     "0.35 lambda": -4.1
+    }
+   },
+   "zone": {
+    "a=0.125 lambda, loading 0.0001": {
+     "cost_at_A_db": -8.45,
+     "mean_db_re_A": -33.7,
+     "worst_db_re_A": -26.9,
+     "mean_with_errors_db_re_A": -22.1
+    },
+    "a=0.125 lambda, loading 0.01": {
+     "cost_at_A_db": -5.09,
+     "mean_db_re_A": -27.1,
+     "worst_db_re_A": -20.1,
+     "mean_with_errors_db_re_A": -23.0
+    },
+    "a=0.25 lambda, loading 0.0001": {
+     "cost_at_A_db": -18.79,
+     "mean_db_re_A": -25.3,
+     "worst_db_re_A": -16.7,
+     "mean_with_errors_db_re_A": -13.4
+    },
+    "a=0.25 lambda, loading 0.01": {
+     "cost_at_A_db": -6.03,
+     "mean_db_re_A": -21.1,
+     "worst_db_re_A": -12.7,
+     "mean_with_errors_db_re_A": -19.4
+    },
+    "a=0.5 lambda, loading 0.0001": {
+     "cost_at_A_db": -23.52,
+     "mean_db_re_A": -15.4,
+     "worst_db_re_A": -3.9,
+     "mean_with_errors_db_re_A": -7.2
+    },
+    "a=0.5 lambda, loading 0.01": {
+     "cost_at_A_db": -7.41,
+     "mean_db_re_A": -11.7,
+     "worst_db_re_A": -2.6,
+     "mean_with_errors_db_re_A": -11.4
+    }
+   }
+  }
+ ],
+ "superosc": [
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "focus": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "zeros_at_fraction_of_fwhm": 1.0,
+   "fwhm_mm": 141.2,
+   "fwhm_lambda": 2.732,
+   "spot_db_re_plain_focus": 0.0,
+   "brightest_sidelobe_db_re_spot": 0.0,
+   "fwhm_with_errors_mm": 141.3
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "focus": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "zeros_at_fraction_of_fwhm": 0.6,
+   "fwhm_mm": 83.9,
+   "fwhm_lambda": 1.623,
+   "spot_db_re_plain_focus": -7.5,
+   "brightest_sidelobe_db_re_spot": 2.8,
+   "fwhm_with_errors_mm": 83.9
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "focus": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "zeros_at_fraction_of_fwhm": 0.4,
+   "fwhm_mm": 58.7,
+   "fwhm_lambda": 1.135,
+   "spot_db_re_plain_focus": -15.1,
+   "brightest_sidelobe_db_re_spot": 10.7,
+   "fwhm_with_errors_mm": 58.9
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "focus": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "zeros_at_fraction_of_fwhm": 0.25,
+   "fwhm_mm": 37.6,
+   "fwhm_lambda": 0.727,
+   "spot_db_re_plain_focus": -23.7,
+   "brightest_sidelobe_db_re_spot": 19.3,
+   "fwhm_with_errors_mm": 38.8
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "focus": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "zeros_at_fraction_of_fwhm": 1.0,
+   "fwhm_mm": 77.6,
+   "fwhm_lambda": 0.596,
+   "spot_db_re_plain_focus": 0.0,
+   "brightest_sidelobe_db_re_spot": 0.0,
+   "fwhm_with_errors_mm": 77.6
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "focus": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "zeros_at_fraction_of_fwhm": 0.6,
+   "fwhm_mm": 47.2,
+   "fwhm_lambda": 0.362,
+   "spot_db_re_plain_focus": -6.7,
+   "brightest_sidelobe_db_re_spot": 4.0,
+   "fwhm_with_errors_mm": 47.3
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "focus": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "zeros_at_fraction_of_fwhm": 0.4,
+   "fwhm_mm": 32.6,
+   "fwhm_lambda": 0.25,
+   "spot_db_re_plain_focus": -14.5,
+   "brightest_sidelobe_db_re_spot": 11.8,
+   "fwhm_with_errors_mm": 32.8
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "focus": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "zeros_at_fraction_of_fwhm": 0.25,
+   "fwhm_mm": 20.8,
+   "fwhm_lambda": 0.159,
+   "spot_db_re_plain_focus": -23.2,
+   "brightest_sidelobe_db_re_spot": 20.3,
+   "fwhm_with_errors_mm": 21.7
+  }
+ ],
+ "vortex": [
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "excitation": "ideal",
+   "l": 1,
+   "steer_deg": 0,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       -1.3,
+       1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.4
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       -1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.0
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.0
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       -1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.9
+    }
+   ],
+   "line_tilt_deg": [
+    -0.7,
+    -0.4,
+    0.2,
+    -0.2
+   ]
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "excitation": "ideal",
+   "l": 1,
+   "steer_deg": 15,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.9
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       53.7,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.2
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       81.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.1
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       106.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.0
+    }
+   ],
+   "line_tilt_deg": [
+    16.1,
+    15.0,
+    15.2,
+    14.9
+   ]
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "excitation": "ideal",
+   "l": 1,
+   "steer_deg": 30,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       58.8,
+       -3.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.3
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       116.3,
+       -6.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -4.2
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       173.8,
+       -6.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -4.0
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       231.2,
+       -6.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -3.9
+    }
+   ],
+   "line_tilt_deg": [
+    30.5,
+    30.2,
+    30.1,
+    30.0
+   ]
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "excitation": "ideal",
+   "l": 2,
+   "steer_deg": 0,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       -11.2,
+       1.3
+      ],
+      [
+       11.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -8.3
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       -11.2,
+       1.3
+      ],
+      [
+       11.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -8.6
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       -11.2,
+       1.3
+      ],
+      [
+       11.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -8.7
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       -11.2,
+       1.3
+      ],
+      [
+       11.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -8.8
+    }
+   ],
+   "line_tilt_deg": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "excitation": "rev B delays",
+   "l": 1,
+   "steer_deg": 0,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.5
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.1
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.0
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.0
+    }
+   ],
+   "line_tilt_deg": [
+    0.7,
+    0.4,
+    0.2,
+    0.2
+   ]
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "excitation": "rev B delays",
+   "l": 1,
+   "steer_deg": 15,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.0
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       53.7,
+       -3.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.3
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       81.3,
+       -3.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.1
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       108.8,
+       -3.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.1
+    }
+   ],
+   "line_tilt_deg": [
+    16.1,
+    15.0,
+    15.2,
+    15.2
+   ]
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "excitation": "rev B delays",
+   "l": 1,
+   "steer_deg": 30,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       58.8,
+       -3.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -5.5
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       116.3,
+       -3.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -4.5
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       173.8,
+       -3.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -4.3
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       231.2,
+       -3.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -4.2
+    }
+   ],
+   "line_tilt_deg": [
+    30.5,
+    30.2,
+    30.1,
+    30.0
+   ]
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "excitation": "rev B delays",
+   "l": 2,
+   "steer_deg": 0,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       -11.2,
+       1.3
+      ],
+      [
+       11.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -8.2
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       -11.2,
+       1.3
+      ],
+      [
+       11.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -8.4
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       -11.2,
+       1.3
+      ],
+      [
+       11.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -8.5
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       -11.2,
+       1.3
+      ],
+      [
+       11.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -8.6
+    }
+   ],
+   "line_tilt_deg": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "excitation": "ideal",
+   "l": 1,
+   "steer_deg": 0,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       -1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -8.8
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       -1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -9.7
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       -1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -9.9
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       -1.3,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -9.9
+    }
+   ],
+   "line_tilt_deg": [
+    -0.7,
+    -0.4,
+    -0.2,
+    -0.2
+   ]
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "excitation": "ideal",
+   "l": 1,
+   "steer_deg": 15,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       23.8,
+       -11.2
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.5
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       51.3,
+       -8.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.9
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       78.8,
+       -8.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.9
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       106.3,
+       -8.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.9
+    }
+   ],
+   "line_tilt_deg": [
+    13.4,
+    14.4,
+    14.7,
+    14.9
+   ]
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "excitation": "ideal",
+   "l": 1,
+   "steer_deg": 30,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       48.8,
+       -21.2
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -4.2
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       111.3,
+       -18.7
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -4.0
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       171.3,
+       -18.7
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -3.9
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       228.8,
+       -18.7
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -3.8
+    }
+   ],
+   "line_tilt_deg": [
+    26.0,
+    29.1,
+    29.7,
+    29.8
+   ]
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "excitation": "ideal",
+   "l": 2,
+   "steer_deg": 0,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       -28.7,
+       1.3
+      ],
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -16.7
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       -28.7,
+       1.3
+      ],
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -17.9
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       -28.7,
+       1.3
+      ],
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -18.3
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       -28.7,
+       1.3
+      ],
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -18.5
+    }
+   ],
+   "line_tilt_deg": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "excitation": "rev B delays",
+   "l": 1,
+   "steer_deg": 0,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       -1.3,
+       1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -8.8
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       1.3,
+       1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -9.7
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       -1.3,
+       1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -9.9
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       -1.3,
+       1.3
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -9.9
+    }
+   ],
+   "line_tilt_deg": [
+    -0.7,
+    0.4,
+    -0.2,
+    -0.2
+   ]
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "excitation": "rev B delays",
+   "l": 1,
+   "steer_deg": 15,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       21.3,
+       -11.2
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.4
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       51.3,
+       -11.2
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.8
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       76.3,
+       -8.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.9
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       103.8,
+       -8.8
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -6.9
+    }
+   ],
+   "line_tilt_deg": [
+    12.0,
+    14.4,
+    14.3,
+    14.5
+   ]
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "excitation": "rev B delays",
+   "l": 1,
+   "steer_deg": 30,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       46.3,
+       -21.2
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -4.1
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       111.3,
+       -18.7
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -3.9
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       171.3,
+       -21.2
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -3.8
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       228.8,
+       -21.2
+      ]
+     ],
+     "charge": [
+      1
+     ],
+     "peak_db_re_focus": -3.8
+    }
+   ],
+   "line_tilt_deg": [
+    24.8,
+    29.1,
+    29.7,
+    29.8
+   ]
+  },
+  {
+   "array": "panel 4x4 2.4 GHz",
+   "excitation": "rev B delays",
+   "l": 2,
+   "steer_deg": 0,
+   "slices": [
+    {
+     "z": 0.1,
+     "xy_mm": [
+      [
+       -28.7,
+       1.3
+      ],
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -16.7
+    },
+    {
+     "z": 0.2,
+     "xy_mm": [
+      [
+       -28.7,
+       1.3
+      ],
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -18.0
+    },
+    {
+     "z": 0.3,
+     "xy_mm": [
+      [
+       -28.7,
+       1.3
+      ],
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -18.4
+    },
+    {
+     "z": 0.4,
+     "xy_mm": [
+      [
+       -28.7,
+       1.3
+      ],
+      [
+       28.8,
+       -1.3
+      ]
+     ],
+     "charge": [
+      1,
+      1
+     ],
+     "peak_db_re_focus": -18.5
+    }
+   ],
+   "line_tilt_deg": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  }
+ ],
+ "pol": [
+  {
+   "z": 0.1,
+   "c_points": [
+    {
+     "xy_mm": [
+      -1.3,
+      -1.3
+     ],
+     "index": 0.5,
+     "s3_over_s0": 0.97
+    },
+    {
+     "xy_mm": [
+      53.7,
+      71.3
+     ],
+     "index": -0.5,
+     "s3_over_s0": -1.0
+    },
+    {
+     "xy_mm": [
+      71.3,
+      46.2
+     ],
+     "index": 0.5,
+     "s3_over_s0": -1.0
+    }
+   ],
+   "ez_over_et_rms_within_50mm": 0.259
+  },
+  {
+   "z": 0.2,
+   "c_points": [
+    {
+     "xy_mm": [
+      -1.3,
+      1.3
+     ],
+     "index": 0.5,
+     "s3_over_s0": 1.0
+    }
+   ],
+   "ez_over_et_rms_within_50mm": 0.192
+  },
+  {
+   "z": 0.3,
+   "c_points": [
+    {
+     "xy_mm": [
+      1.3,
+      -1.3
+     ],
+     "index": 0.5,
+     "s3_over_s0": 1.0
+    }
+   ],
+   "ez_over_et_rms_within_50mm": 0.142
+  }
+ ],
+ "curves": [
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "N": 16,
+   "target": "line",
+   "scores": {
+    "direct (eigenvector)": 0.2587,
+    "direct + climb": 0.3325,
+    "evolve": 0.2932,
+    "evolve + climb": 0.3563,
+    "random search": 0.4741
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.2587,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 232,
+   "lines": 46,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.02,
+   "dist_p90_lambda": 0.027,
+   "dist_max_lambda": 0.034,
+   "dist_max_mm": 1.8,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.608,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 0.859,
+   "all_correct_with_errors_share_of_draws": 0.62,
+   "field_on_circles_db_re_focus": -29.1,
+   "tube_radius_lambda": 0.1,
+   "components_realised": 0,
+   "geometry_ok": true,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 0.859,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.02,
+    "dist_max_lambda": 0.034,
+    "field_on_circles_db_re_focus": -29.1,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "N": 16,
+   "target": "ring",
+   "scores": {
+    "direct (eigenvector)": 0.4257,
+    "direct + climb": 0.4505,
+    "evolve": 0.4965,
+    "evolve + climb": 0.5138,
+    "random search": 0.6509
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.4257,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 196,
+   "lines": 1,
+   "closed_loops": 1,
+   "dist_median_lambda": 0.076,
+   "dist_p90_lambda": 0.151,
+   "dist_max_lambda": 0.176,
+   "dist_max_mm": 9.1,
+   "target_within_0p1_lambda": 0.618,
+   "vortex_length_off_target": 0.24,
+   "charge_correct": 0.771,
+   "charge_correct_with_errors": 0.273,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -27.1,
+   "tube_radius_lambda": 0.3,
+   "components_realised": 1,
+   "geometry_ok": false,
+   "topology_ok": true,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 0.771,
+    "charge_correct_with_errors": 0.273,
+    "target_within_0p1_lambda": 0.618,
+    "dist_median_lambda": 0.076,
+    "dist_max_lambda": 0.176,
+    "field_on_circles_db_re_focus": -27.1,
+    "components_realised": 1,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": true,
+    "success": false
+   }
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "N": 16,
+   "target": "link",
+   "scores": {
+    "direct (eigenvector)": 0.6304,
+    "direct + climb": 0.6155,
+    "evolve": 0.6143,
+    "evolve + climb": 0.6103,
+    "random search": 0.6912
+   },
+   "winner": "evolve + climb",
+   "score": 0.6103,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 338,
+   "lines": 35,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.384,
+   "dist_p90_lambda": 0.814,
+   "dist_max_lambda": 0.907,
+   "dist_max_mm": 46.9,
+   "target_within_0p1_lambda": 0.115,
+   "vortex_length_off_target": 0.811,
+   "charge_correct": 0.208,
+   "charge_correct_with_errors": 0.148,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -17.3,
+   "tube_radius_lambda": 0.298,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "linking_number": null,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": [
+     0.7188,
+     0.7111
+    ],
+    "kept": true,
+    "evaluations": 68000,
+    "charge_correct": 0.156,
+    "charge_correct_with_errors": 0.145,
+    "target_within_0p1_lambda": 0.098,
+    "dist_median_lambda": 0.392,
+    "dist_max_lambda": 0.944,
+    "field_on_circles_db_re_focus": -16.9,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "panel 4x4 5.8 GHz",
+   "N": 16,
+   "target": "trefoil",
+   "scores": {
+    "direct (eigenvector)": 0.5615,
+    "direct + climb": 0.6072,
+    "evolve": 0.6407,
+    "evolve + climb": 0.643,
+    "random search": 0.7297
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.5615,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 434,
+   "lines": 52,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.155,
+   "dist_p90_lambda": 0.352,
+   "dist_max_lambda": 0.488,
+   "dist_max_mm": 25.2,
+   "target_within_0p1_lambda": 0.168,
+   "vortex_length_off_target": 0.624,
+   "charge_correct": 0.448,
+   "charge_correct_with_errors": 0.172,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -33.2,
+   "tube_radius_lambda": 0.246,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 0.448,
+    "charge_correct_with_errors": 0.172,
+    "target_within_0p1_lambda": 0.168,
+    "dist_median_lambda": 0.155,
+    "dist_max_lambda": 0.488,
+    "field_on_circles_db_re_focus": -33.2,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "two tiles side by side (8x4) 5.8 GHz",
+   "N": 32,
+   "target": "line",
+   "scores": {
+    "direct (eigenvector)": 0.0923,
+    "direct + climb": 0.301,
+    "evolve": 0.1682,
+    "evolve + climb": 0.1853,
+    "random search": 0.5177
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.0923,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 135,
+   "lines": 2,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.02,
+   "dist_p90_lambda": 0.026,
+   "dist_max_lambda": 0.031,
+   "dist_max_mm": 1.6,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.326,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 1.0,
+   "all_correct_with_errors_share_of_draws": 1.0,
+   "field_on_circles_db_re_focus": -26.9,
+   "tube_radius_lambda": 0.1,
+   "components_realised": 0,
+   "geometry_ok": true,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 1.0,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.02,
+    "dist_max_lambda": 0.031,
+    "field_on_circles_db_re_focus": -26.9,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  },
+  {
+   "array": "two tiles side by side (8x4) 5.8 GHz",
+   "N": 32,
+   "target": "ring",
+   "scores": {
+    "direct (eigenvector)": 0.4143,
+    "direct + climb": 0.4582,
+    "evolve": 0.4214,
+    "evolve + climb": 0.4495,
+    "random search": 0.6328
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.4143,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 711,
+   "lines": 65,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.067,
+   "dist_p90_lambda": 0.222,
+   "dist_max_lambda": 0.329,
+   "dist_max_mm": 17.0,
+   "target_within_0p1_lambda": 0.705,
+   "vortex_length_off_target": 0.788,
+   "charge_correct": 0.604,
+   "charge_correct_with_errors": 0.481,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -26.6,
+   "tube_radius_lambda": 0.3,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 0.604,
+    "charge_correct_with_errors": 0.481,
+    "target_within_0p1_lambda": 0.705,
+    "dist_median_lambda": 0.067,
+    "dist_max_lambda": 0.329,
+    "field_on_circles_db_re_focus": -26.6,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "two tiles side by side (8x4) 5.8 GHz",
+   "N": 32,
+   "target": "link",
+   "scores": {
+    "direct (eigenvector)": 0.6692,
+    "direct + climb": 0.5726,
+    "evolve": 0.5703,
+    "evolve + climb": 0.5764,
+    "random search": 0.7216
+   },
+   "winner": "evolve finalist",
+   "score": 0.5697,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 543,
+   "lines": 65,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.289,
+   "dist_p90_lambda": 0.835,
+   "dist_max_lambda": 0.892,
+   "dist_max_mm": 46.1,
+   "target_within_0p1_lambda": 0.237,
+   "vortex_length_off_target": 0.829,
+   "charge_correct": 0.271,
+   "charge_correct_with_errors": 0.229,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -19.9,
+   "tube_radius_lambda": 0.298,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "linking_number": null,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": [
+     0.7383,
+     0.7191
+    ],
+    "kept": true,
+    "evaluations": 68000,
+    "charge_correct": 0.146,
+    "charge_correct_with_errors": 0.139,
+    "target_within_0p1_lambda": 0.133,
+    "dist_median_lambda": 0.404,
+    "dist_max_lambda": 0.969,
+    "field_on_circles_db_re_focus": -21.9,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "two tiles side by side (8x4) 5.8 GHz",
+   "N": 32,
+   "target": "trefoil",
+   "scores": {
+    "direct (eigenvector)": 0.6301,
+    "direct + climb": 0.5617,
+    "evolve": 0.594,
+    "evolve + climb": 0.6101,
+    "random search": 0.7166
+   },
+   "winner": "direct + climb",
+   "score": 0.5617,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 415,
+   "lines": 52,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.213,
+   "dist_p90_lambda": 0.608,
+   "dist_max_lambda": 0.762,
+   "dist_max_mm": 39.4,
+   "target_within_0p1_lambda": 0.13,
+   "vortex_length_off_target": 0.81,
+   "charge_correct": 0.167,
+   "charge_correct_with_errors": 0.182,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -25.1,
+   "tube_radius_lambda": 0.246,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": [
+     0.7605,
+     0.7514
+    ],
+    "kept": true,
+    "evaluations": 68000,
+    "charge_correct": 0.01,
+    "charge_correct_with_errors": 0.009,
+    "target_within_0p1_lambda": 0.0,
+    "dist_median_lambda": 0.591,
+    "dist_max_lambda": 1.306,
+    "field_on_circles_db_re_focus": -19.5,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "N": 16,
+   "target": "line",
+   "scores": {
+    "direct (eigenvector)": 0.1511,
+    "direct + climb": 0.2114,
+    "evolve": 0.1753,
+    "evolve + climb": 0.2126,
+    "random search": 0.4411
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.1511,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 334,
+   "lines": 63,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.022,
+   "dist_p90_lambda": 0.037,
+   "dist_max_lambda": 0.047,
+   "dist_max_mm": 6.1,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.725,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 0.978,
+   "all_correct_with_errors_share_of_draws": 0.85,
+   "field_on_circles_db_re_focus": -20.5,
+   "tube_radius_lambda": 0.1,
+   "components_realised": 0,
+   "geometry_ok": true,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": [
+     0.2667,
+     0.2481
+    ],
+    "kept": true,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 0.985,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.037,
+    "dist_max_lambda": 0.081,
+    "field_on_circles_db_re_focus": -16.4,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "N": 16,
+   "target": "ring",
+   "scores": {
+    "direct (eigenvector)": 0.4596,
+    "direct + climb": 0.3765,
+    "evolve": 0.3989,
+    "evolve + climb": 0.4112,
+    "random search": 0.6568
+   },
+   "winner": "direct + climb",
+   "score": 0.3765,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 382,
+   "lines": 33,
+   "closed_loops": 1,
+   "dist_median_lambda": 0.108,
+   "dist_p90_lambda": 0.21,
+   "dist_max_lambda": 0.277,
+   "dist_max_mm": 36.1,
+   "target_within_0p1_lambda": 0.432,
+   "vortex_length_off_target": 0.688,
+   "charge_correct": 0.708,
+   "charge_correct_with_errors": 0.552,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -21.6,
+   "tube_radius_lambda": 0.3,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 0.708,
+    "charge_correct_with_errors": 0.552,
+    "target_within_0p1_lambda": 0.432,
+    "dist_median_lambda": 0.108,
+    "dist_max_lambda": 0.277,
+    "field_on_circles_db_re_focus": -21.6,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "N": 16,
+   "target": "link",
+   "scores": {
+    "direct (eigenvector)": 0.4762,
+    "direct + climb": 0.4783,
+    "evolve": 0.5325,
+    "evolve + climb": 0.5422,
+    "random search": 0.6601
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.4762,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 717,
+   "lines": 95,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.126,
+   "dist_p90_lambda": 0.326,
+   "dist_max_lambda": 0.647,
+   "dist_max_mm": 84.3,
+   "target_within_0p1_lambda": 0.362,
+   "vortex_length_off_target": 0.745,
+   "charge_correct": 0.448,
+   "charge_correct_with_errors": 0.376,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -21.7,
+   "tube_radius_lambda": 0.298,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "linking_number": null,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": [
+     0.6638,
+     0.6395
+    ],
+    "kept": true,
+    "evaluations": 68000,
+    "charge_correct": 0.302,
+    "charge_correct_with_errors": 0.276,
+    "target_within_0p1_lambda": 0.229,
+    "dist_median_lambda": 0.235,
+    "dist_max_lambda": 0.914,
+    "field_on_circles_db_re_focus": -15.9,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "16 whips 2.3 GHz",
+   "N": 16,
+   "target": "trefoil",
+   "scores": {
+    "direct (eigenvector)": 0.5466,
+    "direct + climb": 0.528,
+    "evolve": 0.5413,
+    "evolve + climb": 0.5272,
+    "random search": 0.7212
+   },
+   "winner": "evolve + climb",
+   "score": 0.5272,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 630,
+   "lines": 83,
+   "closed_loops": 0,
+   "dist_median_lambda": 0.207,
+   "dist_p90_lambda": 0.445,
+   "dist_max_lambda": 0.616,
+   "dist_max_mm": 80.3,
+   "target_within_0p1_lambda": 0.207,
+   "vortex_length_off_target": 0.8,
+   "charge_correct": 0.24,
+   "charge_correct_with_errors": 0.251,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -17.1,
+   "tube_radius_lambda": 0.246,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": [
+     0.7441,
+     0.6839
+    ],
+    "kept": true,
+    "evaluations": 68000,
+    "charge_correct": 0.156,
+    "charge_correct_with_errors": 0.135,
+    "target_within_0p1_lambda": 0.11,
+    "dist_median_lambda": 0.316,
+    "dist_max_lambda": 0.901,
+    "field_on_circles_db_re_focus": -18.3,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "32 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 32,
+   "target": "line",
+   "scores": {
+    "direct (eigenvector)": 0.0404,
+    "direct + climb": 0.0299,
+    "evolve": 0.021,
+    "evolve + climb": 0.0277,
+    "random search": 0.3951
+   },
+   "winner": "evolve finalist",
+   "score": 0.0209,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 2047,
+   "lines": 295,
+   "closed_loops": 1,
+   "dist_median_lambda": 0.02,
+   "dist_p90_lambda": 0.027,
+   "dist_max_lambda": 0.032,
+   "dist_max_mm": 1.7,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.957,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 1.0,
+   "all_correct_with_errors_share_of_draws": 1.0,
+   "field_on_circles_db_re_focus": -17.1,
+   "tube_radius_lambda": 0.1,
+   "components_realised": 0,
+   "geometry_ok": true,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 1.0,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.02,
+    "dist_max_lambda": 0.032,
+    "field_on_circles_db_re_focus": -17.1,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  },
+  {
+   "array": "32 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 32,
+   "target": "ring",
+   "scores": {
+    "direct (eigenvector)": 0.0808,
+    "direct + climb": 0.0933,
+    "evolve": 0.0946,
+    "evolve + climb": 0.0984,
+    "random search": 0.6108
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.0808,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 3138,
+   "lines": 461,
+   "closed_loops": 7,
+   "dist_median_lambda": 0.022,
+   "dist_p90_lambda": 0.037,
+   "dist_max_lambda": 0.051,
+   "dist_max_mm": 2.6,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.939,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 0.993,
+   "all_correct_with_errors_share_of_draws": 0.7,
+   "field_on_circles_db_re_focus": -21.8,
+   "tube_radius_lambda": 0.3,
+   "components_realised": 1,
+   "geometry_ok": true,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": [
+     0.1979,
+     0.1721
+    ],
+    "kept": true,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 1.0,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.03,
+    "dist_max_lambda": 0.067,
+    "field_on_circles_db_re_focus": -21.0,
+    "components_realised": 1,
+    "linking_number": null,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  },
+  {
+   "array": "32 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 32,
+   "target": "link",
+   "scores": {
+    "direct (eigenvector)": 0.2447,
+    "direct + climb": 0.2256,
+    "evolve": 0.343,
+    "evolve + climb": 0.3278,
+    "random search": 0.6763
+   },
+   "winner": "direct + climb",
+   "score": 0.2256,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 5070,
+   "lines": 802,
+   "closed_loops": 5,
+   "dist_median_lambda": 0.035,
+   "dist_p90_lambda": 0.075,
+   "dist_max_lambda": 0.148,
+   "dist_max_mm": 7.7,
+   "target_within_0p1_lambda": 0.964,
+   "vortex_length_off_target": 0.931,
+   "charge_correct": 0.917,
+   "charge_correct_with_errors": 0.921,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -25.7,
+   "tube_radius_lambda": 0.298,
+   "components_realised": 1,
+   "geometry_ok": false,
+   "linking_number": null,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 0.917,
+    "charge_correct_with_errors": 0.921,
+    "target_within_0p1_lambda": 0.964,
+    "dist_median_lambda": 0.035,
+    "dist_max_lambda": 0.148,
+    "field_on_circles_db_re_focus": -25.7,
+    "components_realised": 1,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "32 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 32,
+   "target": "trefoil",
+   "scores": {
+    "direct (eigenvector)": 0.3304,
+    "direct + climb": 0.289,
+    "evolve": 0.3138,
+    "evolve + climb": 0.3154,
+    "random search": 0.6889
+   },
+   "winner": "direct + climb",
+   "score": 0.289,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 3768,
+   "lines": 499,
+   "closed_loops": 3,
+   "dist_median_lambda": 0.051,
+   "dist_p90_lambda": 0.164,
+   "dist_max_lambda": 0.412,
+   "dist_max_mm": 21.3,
+   "target_within_0p1_lambda": 0.78,
+   "vortex_length_off_target": 0.908,
+   "charge_correct": 0.802,
+   "charge_correct_with_errors": 0.799,
+   "all_correct_with_errors_share_of_draws": 0.0,
+   "field_on_circles_db_re_focus": -22.4,
+   "tube_radius_lambda": 0.246,
+   "components_realised": 0,
+   "geometry_ok": false,
+   "topology_ok": false,
+   "success": false,
+   "polish": {
+    "worst_point_score_before_after": [
+     0.6235,
+     0.5065
+    ],
+    "kept": true,
+    "evaluations": 68000,
+    "charge_correct": 0.719,
+    "charge_correct_with_errors": 0.724,
+    "target_within_0p1_lambda": 0.695,
+    "dist_median_lambda": 0.08,
+    "dist_max_lambda": 0.275,
+    "field_on_circles_db_re_focus": -20.5,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": false,
+    "topology_ok": false,
+    "success": false
+   }
+  },
+  {
+   "array": "64 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 64,
+   "target": "line",
+   "scores": {
+    "direct (eigenvector)": 0.0095,
+    "direct + climb": 0.0152,
+    "evolve": 0.0053,
+    "evolve + climb": 0.011,
+    "random search": 0.4164
+   },
+   "winner": "evolve finalist",
+   "score": 0.0053,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 2128,
+   "lines": 259,
+   "closed_loops": 2,
+   "dist_median_lambda": 0.02,
+   "dist_p90_lambda": 0.026,
+   "dist_max_lambda": 0.029,
+   "dist_max_mm": 1.5,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.957,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 1.0,
+   "all_correct_with_errors_share_of_draws": 1.0,
+   "field_on_circles_db_re_focus": -17.5,
+   "tube_radius_lambda": 0.1,
+   "components_realised": 0,
+   "geometry_ok": true,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 1.0,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.02,
+    "dist_max_lambda": 0.029,
+    "field_on_circles_db_re_focus": -17.5,
+    "components_realised": 0,
+    "linking_number": null,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  },
+  {
+   "array": "64 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 64,
+   "target": "ring",
+   "scores": {
+    "direct (eigenvector)": 0.0234,
+    "direct + climb": 0.0393,
+    "evolve": 0.0344,
+    "evolve + climb": 0.0477,
+    "random search": 0.6194
+   },
+   "winner": "direct (eigenvector)",
+   "score": 0.0234,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 3443,
+   "lines": 504,
+   "closed_loops": 7,
+   "dist_median_lambda": 0.019,
+   "dist_p90_lambda": 0.028,
+   "dist_max_lambda": 0.038,
+   "dist_max_mm": 2.0,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.945,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 1.0,
+   "all_correct_with_errors_share_of_draws": 1.0,
+   "field_on_circles_db_re_focus": -22.7,
+   "tube_radius_lambda": 0.3,
+   "components_realised": 1,
+   "geometry_ok": true,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 1.0,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.019,
+    "dist_max_lambda": 0.038,
+    "field_on_circles_db_re_focus": -22.7,
+    "components_realised": 1,
+    "linking_number": null,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  },
+  {
+   "array": "64 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 64,
+   "target": "link",
+   "scores": {
+    "direct (eigenvector)": 0.0805,
+    "direct + climb": 0.0737,
+    "evolve": 0.1502,
+    "evolve + climb": 0.1521,
+    "random search": 0.6686
+   },
+   "winner": "direct + climb",
+   "score": 0.0737,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 4889,
+   "lines": 584,
+   "closed_loops": 8,
+   "dist_median_lambda": 0.023,
+   "dist_p90_lambda": 0.041,
+   "dist_max_lambda": 0.069,
+   "dist_max_mm": 3.6,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.937,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 0.999,
+   "all_correct_with_errors_share_of_draws": 0.9,
+   "field_on_circles_db_re_focus": -25.9,
+   "tube_radius_lambda": 0.298,
+   "components_realised": 2,
+   "geometry_ok": true,
+   "linking_number": 1.0,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 0.999,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.023,
+    "dist_max_lambda": 0.069,
+    "field_on_circles_db_re_focus": -25.9,
+    "components_realised": 2,
+    "linking_number": 1.0,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  },
+  {
+   "array": "64 dipoles on a 250 mm sphere 5.8 GHz",
+   "N": 64,
+   "target": "trefoil",
+   "scores": {
+    "direct (eigenvector)": 0.1158,
+    "direct + climb": 0.0976,
+    "evolve": 0.1615,
+    "evolve + climb": 0.1508,
+    "random search": 0.7093
+   },
+   "winner": "direct + climb",
+   "score": 0.0976,
+   "evaluations": {
+    "evolve": 51264,
+    "climb": 13600,
+    "random": 51200
+   },
+   "vortex_faces_in_box": 4158,
+   "lines": 540,
+   "closed_loops": 4,
+   "dist_median_lambda": 0.025,
+   "dist_p90_lambda": 0.044,
+   "dist_max_lambda": 0.094,
+   "dist_max_mm": 4.9,
+   "target_within_0p1_lambda": 1.0,
+   "vortex_length_off_target": 0.903,
+   "charge_correct": 1.0,
+   "charge_correct_with_errors": 0.995,
+   "all_correct_with_errors_share_of_draws": 0.5,
+   "field_on_circles_db_re_focus": -26.8,
+   "tube_radius_lambda": 0.246,
+   "components_realised": 1,
+   "geometry_ok": true,
+   "topology_ok": true,
+   "success": true,
+   "polish": {
+    "worst_point_score_before_after": null,
+    "kept": false,
+    "evaluations": 68000,
+    "charge_correct": 1.0,
+    "charge_correct_with_errors": 0.995,
+    "target_within_0p1_lambda": 1.0,
+    "dist_median_lambda": 0.025,
+    "dist_max_lambda": 0.094,
+    "field_on_circles_db_re_focus": -26.8,
+    "components_realised": 1,
+    "linking_number": null,
+    "geometry_ok": true,
+    "topology_ok": true,
+    "success": true
+   }
+  }
+ ],
+ "room": {
+  "room_m": [
+   5.0,
+   4.0,
+   2.6
+  ],
+  "wall_reflection": 0.7,
+  "image_order": 3,
+  "f0": 2300000000.0,
+  "array_centre": [
+   1.0,
+   2.1,
+   1.0
+  ],
+  "target": [
+   3.7,
+   1.35,
+   1.25
+  ],
+  "distance_m": 2.81,
+  "rows": [
+   {
+    "array": "16 whips",
+    "band": "single frequency",
+    "method": "fs_in_fs",
+    "at_target_db_re_free_space": 0.0,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": null,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": 5.9,
+    "target_over_p99_background_db": -3.6,
+    "brightest_in_patch_offset_mm": 317,
+    "brightest_in_patch_db_re_target": 1.0
+   },
+   {
+    "array": "16 whips",
+    "band": "single frequency",
+    "method": "fs_in_room",
+    "at_target_db_re_free_space": -0.2,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": 84,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": 2.8,
+    "target_over_p99_background_db": -5.6,
+    "brightest_in_patch_offset_mm": 201,
+    "brightest_in_patch_db_re_target": 3.9
+   },
+   {
+    "array": "16 whips",
+    "band": "single frequency",
+    "method": "tr_in_room",
+    "at_target_db_re_free_space": 6.2,
+    "fwhm_x_mm": 68,
+    "fwhm_y_mm": 57,
+    "fwhm_x_lambda": 0.52,
+    "target_over_mean_background_db": 9.0,
+    "target_over_p99_background_db": 1.5,
+    "brightest_in_patch_offset_mm": 8,
+    "brightest_in_patch_db_re_target": 0.1
+   },
+   {
+    "array": "16 whips",
+    "band": "20 MHz (11 tones)",
+    "method": "fs_in_fs",
+    "at_target_db_re_free_space": 0.0,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": null,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": 6.0,
+    "target_over_p99_background_db": -3.5,
+    "brightest_in_patch_offset_mm": 317,
+    "brightest_in_patch_db_re_target": 1.0
+   },
+   {
+    "array": "16 whips",
+    "band": "20 MHz (11 tones)",
+    "method": "fs_in_room",
+    "at_target_db_re_free_space": -0.3,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": 95,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": 3.3,
+    "target_over_p99_background_db": -5.0,
+    "brightest_in_patch_offset_mm": 361,
+    "brightest_in_patch_db_re_target": 3.5
+   },
+   {
+    "array": "16 whips",
+    "band": "20 MHz (11 tones)",
+    "method": "tr_in_room",
+    "at_target_db_re_free_space": 6.5,
+    "fwhm_x_mm": 67,
+    "fwhm_y_mm": 58,
+    "fwhm_x_lambda": 0.51,
+    "target_over_mean_background_db": 10.6,
+    "target_over_p99_background_db": 3.2,
+    "brightest_in_patch_offset_mm": 0,
+    "brightest_in_patch_db_re_target": 0.0
+   },
+   {
+    "array": "4 whips (X0-X3 transmit)",
+    "band": "single frequency",
+    "method": "fs_in_fs",
+    "at_target_db_re_free_space": 0.0,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": null,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": 1.2,
+    "target_over_p99_background_db": -6.8,
+    "brightest_in_patch_offset_mm": 315,
+    "brightest_in_patch_db_re_target": 1.0
+   },
+   {
+    "array": "4 whips (X0-X3 transmit)",
+    "band": "single frequency",
+    "method": "fs_in_room",
+    "at_target_db_re_free_space": 0.3,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": null,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": -1.6,
+    "target_over_p99_background_db": -8.9,
+    "brightest_in_patch_offset_mm": 115,
+    "brightest_in_patch_db_re_target": 6.1
+   },
+   {
+    "array": "4 whips (X0-X3 transmit)",
+    "band": "single frequency",
+    "method": "tr_in_room",
+    "at_target_db_re_free_space": 3.9,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": 67,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": 2.1,
+    "target_over_p99_background_db": -4.8,
+    "brightest_in_patch_offset_mm": 31,
+    "brightest_in_patch_db_re_target": 3.0
+   },
+   {
+    "array": "4 whips (X0-X3 transmit)",
+    "band": "20 MHz (11 tones)",
+    "method": "fs_in_fs",
+    "at_target_db_re_free_space": 0.0,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": null,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": 1.3,
+    "target_over_p99_background_db": -6.6,
+    "brightest_in_patch_offset_mm": 315,
+    "brightest_in_patch_db_re_target": 1.0
+   },
+   {
+    "array": "4 whips (X0-X3 transmit)",
+    "band": "20 MHz (11 tones)",
+    "method": "fs_in_room",
+    "at_target_db_re_free_space": -1.2,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": null,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": -2.5,
+    "target_over_p99_background_db": -9.9,
+    "brightest_in_patch_offset_mm": 105,
+    "brightest_in_patch_db_re_target": 7.0
+   },
+   {
+    "array": "4 whips (X0-X3 transmit)",
+    "band": "20 MHz (11 tones)",
+    "method": "tr_in_room",
+    "at_target_db_re_free_space": 3.9,
+    "fwhm_x_mm": null,
+    "fwhm_y_mm": 74,
+    "fwhm_x_lambda": null,
+    "target_over_mean_background_db": 3.0,
+    "target_over_p99_background_db": -4.1,
+    "brightest_in_patch_offset_mm": 54,
+    "brightest_in_patch_db_re_target": 3.0
+   }
+  ]
+ }
+}

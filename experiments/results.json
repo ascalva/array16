@@ -1,0 +1,68 @@
+{
+ "direction_error_deg_hackrf_tone": {
+  "median": 0.15,
+  "p95": 0.49,
+  "worst": 0.55
+ },
+ "direction_error_deg_four_radio_tone": {
+  "median": 0.16,
+  "p95": 0.31,
+  "worst": 0.34
+ },
+ "direction_error_deg_four_radio_modulated_blind": {
+  "median": 0.18,
+  "p95": 0.31,
+  "worst": 0.34
+ },
+ "direction_error_deg_four_radio_modulated_naive": {
+  "median": 3.65,
+  "p95": 61.68,
+  "worst": 66.02
+ },
+ "direction_error_deg_single_burst": {
+  "median": 0.28,
+  "p95": 0.51,
+  "worst": 0.55
+ },
+ "phase_error_after_retune_deg_rms": {
+  "median": 0.38,
+  "p95": 0.88,
+  "worst": 0.96
+ },
+ "tx_pointing_error_deg_hackrf": {
+  "median": 2.04,
+  "p95": 5.18,
+  "worst": 5.31
+ },
+ "tx_eirp_dbm_steered_hackrf": {
+  "median": 2.8,
+  "lowest": 1.5
+ },
+ "tx_pointing_error_deg_four_radio_unaligned": {
+  "median": 8.13,
+  "p95": 19.99,
+  "worst": 43.68
+ },
+ "tx_eirp_dbm_steered_four_radio_unaligned": {
+  "median": 8.5,
+  "lowest": -24.1
+ },
+ "tx_pointing_error_deg_four_radio_aligned": {
+  "median": 2.01,
+  "p95": 3.68,
+  "worst": 3.71
+ },
+ "tx_eirp_dbm_steered_four_radio_aligned": {
+  "median": 13.3,
+  "lowest": 12.1
+ },
+ "eirp_dbm_broadside_four_radio": 14.69,
+ "eirp_dbm_broadside_hackrf": 4.41,
+ "noise_figure_db_quad": 2.49,
+ "noise_figure_db_hackrf": 3.48,
+ "snapshot_ms": {
+  "hackrf": 0.85,
+  "four_radio_steady": 0.25,
+  "four_radio_any": 0.3
+ }
+}

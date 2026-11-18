@@ -1,0 +1,737 @@
+{
+ "investigate:feasibility": {
+  "summary": "Lens: quantified feasibility. I derived numbers for 13 capabilities from rev B's own figures (REDESIGN.md gains, noise figures, EIRP; whip Tsys 242 K and SEFD 1.19e8 Jy per element at 1420 MHz from experiments/topology/results.json). Scripts and outputs are in the scratch folder; nothing in the repository was changed. All ranges are free-space link budgets, so treat them as upper bounds.\n\n**What the hardware would achieve**\n\n- **Radio camera:** beamwidth is 25\u00b0 at 915 MHz (16 whips on a 655 mm \u03bb/2 grid), 62\u00b0 at 2.44 GHz and 26\u00b0 at 5.8 GHz, so at most 16 independent pixels. Four channels can measure all 120 element pairs in exactly 20 slots (I verified the schedule), giving 50 frames/s at 1 ms per slot. The cost is 6.5 dB of sensitivity against 16 ADCs. A 20 ms frame sees an emitter of -40 dBm EIRP at 100 m at 5.8 GHz (-46 dBm with 16 ADCs).\n- **GNSS interference nulling (receive-side protection only):** a null steered from the calibration tables is 10\u00b7log10(2\u03c3\u00b2) deep: -22.6 dB at 3\u00b0, -32 dB at 1\u00b0, -48.6 dB at 0.15\u00b0, independent of element count. Adaptive nulls ignore calibration but are capped by channel delay mismatch (-49 dB over 2 MHz at 1 ns, -29 dB over 20 MHz) and by the ADC.\n- **Passive radar:** on a 50 kW DVB-T transmitter 30 km away, thermal noise alone allows a 10 m\u00b2 aircraft at an equivalent range \u221a(Rt\u00b7Rr) of 118 km. With an assumed 60 dB ADC range this falls to 77 km, and with 50 dB direct-path cancellation to 44 km. REDESIGN's 5-10 km is conservative.\n- **Interferometric SAR on a rail or turntable (5.8 GHz):** 0.072 mm of displacement per degree of phase. A 0.3 m corner reflector at 100 m gives 57 \u00b5m at 15.249 power in 10 ms; a 1 m\u00b2 cell gives 0.2 mm. Atmosphere adds about 0.1 mm per ppm of refractivity per 100 m. A 1 m aperture resolves 1.5\u00b0 (2.6 m at 100 m) in 11 stops.\n- **Vital signs (consenting subject):** thermal SNR on the heartbeat sideband is 70-98 dB at 1-5 m, so noise is not the limit; oscillator phase noise on static clutter is.\n- **Two-site 1420 MHz interferometry:** Cas A fringe SNR is 1.4\u00b7\u221a\u03c4 with 16 coherent whips per site (4.4 in 10 s) and 0.35\u00b7\u221a\u03c4 with rev B's four. The quiet Sun gives 37\u00b7\u221a\u03c4 with one whip per site, and resolves out at a 28 m baseline, so its diameter is measurable.\n- **Time-difference geolocation:** signal bandwidth is not the limit above about 200 kHz (2 cm bound at 20 MHz); a 5 ns GNSS clock gives 2-4.5 m.\n- **L-band satellites:** four patches reach -10.8 dB/K (a 30 cm dish equivalent); sixteen reach -4.8 dB/K (60 cm).\n- **Also computed:** channel sounding (50 ns at 20 MHz, 0.27 ns stitched across 2.3-6 GHz), RFID (1.6-3.2 m tag wake-up at rev B power), stepped-frequency imaging (4 cm range cells) and ADS-B angle cross-checks.\n\n**Bottlenecks, in order of how often they bind**\n\n1. **Four channels instead of 16 ADCs.** This costs 6 dB on satellites and interferometry, 6.5 dB on the camera, and limits GNSS nulling to three nulls. It also rules out a 408 MHz pulsar detection (7.6\u03c3 in 6 h needs all 16 simultaneously).\n2. **Reference stability.** The 10 MHz TCXO gives well under 1 s of coherence at 1420 MHz; a GNSS-disciplined OCXO at about 1e-11 gives 11 s.\n3. **ADC dynamic range against the direct path** in passive radar.\n4. **Uncorrelated transmit and receive synthesizers** for vital signs and SAR.\n5. **20-56 MHz instantaneous bandwidth** for range resolution.\n6. **Transmit power** only for RFID.\n\n**Smallest fixes**\n\n- A GNSS-disciplined OCXO with PPS time-stamping, about $150-250 per site (my estimate).\n- A software reference channel: loop the transmitter through the calibration tree into one receiver. This cancels both oscillators' phase noise at no hardware cost.\n- A directional surveillance antenna with 20 dB rejection of the illuminator, which restores about 170 km equivalent range for the 10 m\u00b2 case.\n- An external 902-928 MHz amplifier for RFID (16-33 m).\n- Sixteen ADCs only if satellites, interferometry or the camera become primary goals.\n\nThe 60 dB ADC range, the radar cross-sections, the 60 K sky temperature and the 408 MHz pulsar flux are my estimates, not sourced figures.",
+  "findings": [
+   {
+    "topic": "Radio camera: resolution and pixel count",
+    "claim": "HPBW = 0.886*lambda/D gives 25.4 deg at 915 MHz (16 whips on a 655 mm lambda/2 grid), 62.4 deg at 2.44 GHz and 26.2 deg at 5.8 GHz (100 mm panel). A +-60 deg field holds about 4 beams at 2.44 GHz and about 21 at 5.8 GHz, capped at 16 degrees of freedom. A moving element against a fixed reference over a 1 m baseline sharpens this to 18.8 / 7.0 / 3.0 deg (2 m: 9.4 / 3.5 / 1.5 deg). Bottleneck: aperture. Smallest fix: baseline synthesis on the planned turntable or a rail. Comparable hobby projects exist: QuadRF (4 coherent antennas, 4.9-6 GHz) and ESPARGOS (8 ESP32 patches, 2.4 GHz).",
+    "source": "Derivation in /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/feasibility.py section A; examples https://www.crowdsupply.com/scale-rf/quadrf and https://hackaday.com/2025/02/15/octet-of-esp32s-lets-you-see-wifi-like-never-before",
+    "confidence": "high"
+   },
+   {
+    "topic": "Radio camera: frame rate and sensitivity",
+    "claim": "Four channels measure all 120 pairs of 16 elements in exactly 20 slots of 4 (the lines of the affine plane AG(2,4); verified: 120 of 120 pairs, each once). At 1 ms per slot that is 50 frames/s; the firmware minimum of 15 us per slot would allow about 3,300 frames/s with no sensitivity. Each pair gets 1/20 of the time, a 6.5 dB loss against 16 ADCs. 5-sigma pixel sensitivity, S_min = 5*k*Tsys*B/(Ae*sqrt(B*tau)) with B = 20 MHz: minimum EIRP visible at 100 m in a 20 ms frame is -56.5 dBm at 915 MHz, -39.7 dBm at 2.44 GHz and -39.9 dBm at 5.8 GHz with four channels (-63.0 / -46.2 / -46.4 dBm with 16 ADCs); a 1 s frame is 8.5 dB better. Image dynamic range from calibration is about N/sigma^2: 37.7 dB at 3 deg residual, 47 dB at 1 deg. Bursty sources break the switched covariance. Bottleneck: four channels. Smallest fix: accept the 20-slot schedule for steady emitters; 16 ADCs for bursty ones.",
+    "source": "Derivation, feasibility.py section A; hardware gains and noise figures from /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 4-5",
+    "confidence": "medium"
+   },
+   {
+    "topic": "GNSS interference nulling (receive-side protection only)",
+    "claim": "A null steered from the calibration tables leaves a residual of 10*log10(sigma_phase^2 + sigma_amp^2) relative to one element, independent of element count (Monte Carlo for N = 4 and 16 matches the formula): -12.2 dB at 10 deg, -22.6 dB at 3 deg, -32.2 dB at 1 deg, -48.6 dB at 0.15 deg, each with an amplitude error equal in radians. Adaptive power-minimisation nulls do not depend on calibration. Their limits are: N-1 nulls (3 with four channels, 15 with 16 ADCs); sample support (loss (K-N+2)/(K+1): 0.33 dB at K = 40 for N = 4); inter-channel delay mismatch, (pi*B*dt)^2/3 = -48.6 dB over 2 MHz at 1 ns but -28.6 dB over 20 MHz; and ADC range. An unprotected C/A receiver tolerates J/S of about 35 dB (C/N0 45 to 28 dB-Hz, Q = 2), about -93.5 dBm at the element; a 35 dB null raises that to -58.5 dBm, needing 54 dB of ADC headroom over noise. Published arrays quote 25-35 dB per null. Bottleneck: four channels, then ADC range and wideband mismatch. Smallest fix: a few-tap space-time filter in software for bands wider than C/A. Transmitting interference or spoofing is illegal and excluded; this is receive-side protection only.",
+    "source": "Derivation and Monte Carlo, feasibility.py section B; GPS minimum received power -158.5 dBW: https://febo.com/pipermail/time-nuts_lists.febo.com/2019-June/096688.html (spec is IS-GPS-200 Table 3-Va, https://www.gps.gov/technical/icwg/IS-GPS-200L.pdf); 25-35 dB nulls: https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5955987",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Passive radar: DVB-T aircraft",
+    "claim": "Bistatic equation with coherent gain B*T (65.8 dB for 7.61 MHz and 0.5 s), 50 kW ERP at 666 MHz, one 2 dBi whip, 13 dB threshold, 5 dB loss. Thermal noise alone gives an equivalent range sqrt(Rt*Rr) of 210 km (100 m^2), 118 km (10 m^2), 66 km (1 m^2). The direct path at a 30 km baseline is -37.4 dBm, 67 dB above noise. With an assumed 60 dB ADC range the 10 m^2 figure falls to 77 km, and with a 50 dB cancellation residual to 44 km; at a 10 km baseline it is 26 km. The range cell is c/B = 39 m. REDESIGN's 5-10 km for 10 m^2 is conservative. Real limits also include the radio horizon and the transmitter's downward-tilted vertical pattern. Bottleneck: ADC dynamic range against the direct path; digital nulling after the ADC does not help. Smallest fix: a Yagi with 20 dB rejection of the transmitter on the surveillance port, which restores about 170-185 km equivalent range for 10 m^2. Trials used 50-63 kW transmitters 32-61 km away.",
+    "source": "Derivation, /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/passive_radar.py; trial parameters: https://www.sto.nato.int/publications/STO%20Meeting%20Proceedings/STO-MP-SET-311/MP-SET-311-MSS-048.pdf and https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9003249/; ADC range and cross-sections are estimates",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Passive radar: LTE and vehicles",
+    "claim": "With LTE at 64 dBm EIRP (carriers above 10 MHz), 1.9 GHz, 18 MHz (17 m range cell), a 3-whip beam and 0.1 s integration, a 3 m^2 car has a free-space equivalent range of 13.5 km on thermal noise, 5-9 km with the ADC floor and 2.7-5 km with a 50 dB cancellation residual, for a cell 0.3-1 km away. These are upper bounds: ground targets see two-ray propagation and clutter, so hundreds of metres to 1-2 km is my realistic estimate. Bottleneck: direct-path and clutter cancellation, and the cell's variable loading. Smallest fix: a directional surveillance antenna. Tracking people without consent is off limits.",
+    "source": "Derivation, passive_radar.py; LTE EIRP 61/64 dBm and 18 dBi: https://www.ntia.doc.gov/sites/default/files/meetings/lte_technical_characteristics_0.pdf; car cross-section is an estimate",
+    "confidence": "low"
+   },
+   {
+    "topic": "Interferometric SAR on a rail or turntable",
+    "claim": "sigma_d = lambda/(4*pi) * sigma_phi with sigma_phi = 1/sqrt(2*SNR): 0.072 mm per degree at 5.8 GHz, 0.171 mm per degree at 2.44 GHz. With the 15.5 dBi panel and 10 ms per position at 15.249 power (-1.25 dBm EIRP): a 0.3 m trihedral (12.7 m^2) gives 34 dB SNR and 57 um at 100 m, 513 um at 300 m; a 1 m^2 cell gives 203 um at 100 m. At 15.245 power (18.75 dBm, 5785-5815 MHz) the 1 m^2 cell gives 20 um at 100 m. Atmosphere adds about 0.1 mm per ppm of refractivity per 100 m, and the hardware must hold phase to about 1 deg, so 0.1-0.2 mm is the realistic precision. Cross-range is lambda/(2L): 1.48 deg (2.6 m at 100 m) for 1 m, taken in 11 stops of one panel width, about 10-20 s. Range resolution c/2B is 7.5 m at 20 MHz, 2.7 m at 56 MHz, 1.0 m stitched over 150 MHz. Bottleneck: bandwidth, then phase stability between passes. Smallest fix: frequency stitching with the PN calibration at each retune and a fixed reference reflector in the scene. The literature reports sub-millimetre accuracy with atmosphere as the dominant error.",
+    "source": "Derivation, feasibility.py section D; https://zenodo.org/record/1157917/files/Ground-based%20synthetic%20aperture.pdf and https://pmc.ncbi.nlm.nih.gov/articles/PMC5026987",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Vital-sign radar (consenting subject)",
+    "claim": "Chest motion of 0.2-0.5 mm (heart) and 4-12 mm (breathing) gives a phase swing beta = 4*pi*x/lambda. At 5.8 GHz a 0.3 mm peak-to-peak heartbeat gives beta = 0.036 rad and a sideband at -34.8 dBc (-42.3 dBc at 2.44 GHz). At -1.25 dBm EIRP with the 15.5 dBi panel and a 0.5 m^2 torso (estimate), the echo is -47.5 dBm at 1 m and -75.4 dBm at 5 m; thermal SNR of the heart sideband in 0.1 Hz is 98 dB at 1 m and 70 dB at 5 m. Thermal noise is therefore irrelevant. With static clutter 40 dB above the chest echo, the transmit-receive phase noise at 1 Hz offset must be below -75 dBc/Hz, which the AD9361's separate synthesizers will not give. Bottleneck: phase stability, then body motion. Smallest fix: route the transmitter through the calibration tree into one receive channel and divide by it, which cancels both oscillators; no new hardware.",
+    "source": "Derivation, feasibility.py section E; displacements: https://pmc.ncbi.nlm.nih.gov/articles/PMC7570872 and https://www.mdpi.com/1424-8220/20/18/5209; torso cross-section and clutter ratio are estimates",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Channel sounding",
+    "claim": "Delay resolution 1/B: 500 ns (150 m) with the LMX2572 code at 2 Mchip/s, 50 ns (15 m) at 20 MSPS, 17.9 ns (5.4 m) at the AD9361's 56 MHz, 6.7 ns (2 m) stitched over 5.725-5.875 GHz, and 0.27 ns (8 cm) stitched over 2.3-6 GHz for a static channel. A 1023-chip code at 20 Mchip/s lasts 51.2 us (30 dB gain, 15.3 km unambiguous). A 4x4 snapshot takes 0.2 ms (Doppler to +-2.4 kHz), 4x16 takes 0.82 ms (+-611 Hz), and a time-multiplexed 16x16 takes 3.3 ms (+-153 Hz, 7.9 m/s at 5.8 GHz). Bottleneck: instantaneous bandwidth and four channels. Smallest fix: stitching for static scenes; orthogonal codes on the four transmitters to remove the transmit multiplexing.",
+    "source": "Derivation, feasibility.py section F",
+    "confidence": "high"
+   },
+   {
+    "topic": "RFID localisation (own tags)",
+    "claim": "Tag wake-up range from rev B's +15.9 dBm four-whip EIRP at 915 MHz is 1.6 m for a -18 dBm tag and 3.2 m for a -24 dBm tag (Impinj M700 class); a 4 W EIRP reader reaches 16.5-32.8 m in free space. Backscatter at those ranges is -56 to -88 dBm, far above the noise floor. Range from the phase slope over 26 MHz and 50 channels is 0.8 cm at 1 deg of phase error, 3.9 cm at 5 deg and 15.7 cm at 20 deg (multipath). Angle of arrival of 0.5-1 deg gives 4-9 cm cross-range at 5 m. Bottleneck: transmit power, then carrier leakage and multipath. Smallest fix: an external 902-928 MHz amplifier within Part 15.247 limits (1 W, 6 dBi), or listen passively beside an existing reader.",
+    "source": "Derivation, feasibility.py section G; tag sensitivity: https://www.impinj.com/getmedia/e10f6c89-5e70-40b5-bae1-7c6bc4026036/Impinj-ProductBrief-M700-combined-SpecTable-010325.pdf; power limit: https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFR2f2e5828339709e/section-15.247",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Electronic satellite tracking at L-band",
+    "claim": "With 5 dBi patches on the external ports and Tsys of 152 K (1.2 dB noise figure plus an assumed 60 K sky and spillover), G/T is -16.8 dB/K for 1 patch, -10.8 dB/K for 4 (rev B's simultaneous limit; a 28-31 cm dish equivalent) and -4.8 dB/K for 16 (a 57-62 cm dish equivalent). Whips are the wrong element: they have a zenith null and linear polarisation. The quiet Sun at 70 sfu gives a Y-factor of 0.27 dB with 4 patches and 0.98 dB with 16, a usable G/T check. GOES HRIT at 1694.1 MHz is normally taken with a dish of about 1 m, so 16 patches would be marginal by my estimate. Bottleneck: four channels, because the external ports have no analog combining. Smallest fix: 16 ADCs, or a 4:1 phase-shifted combiner per group.",
+    "source": "Derivation, feasibility.py section H; Sun flux 71-137 sfu at 1415 MHz: https://listserver.ips.gov.au/pipermail/ips-iflux-dailyvalues/2015-September/004833.html; HRIT parameters and dish sizes: https://noaasis.noaa.gov/GOES/HRIT/broadcast.html and https://usradioguy.com/hrit-emwin-grb/; sky temperature is an estimate",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Two-site interferometry at 1420 MHz: fringe SNR",
+    "claim": "SNR = S*sqrt(2*B*tau)/sqrt(SEFD1*SEFD2) with B = 20 MHz and per-whip SEFD of 1.19e8 Jy. Cas A (about 1650 Jy in 2026, my extrapolation from 1768 Jy at 0.6 %/yr): 1.40*sqrt(tau) with 16 coherent whips per site (4.4 in 10 s, 14 in 100 s); 0.35*sqrt(tau) with rev B's four (1.1 in 10 s, 21 in one coherent hour); 0.088*sqrt(tau) with one whip. Cyg A is 6 % lower. The quiet Sun (70 sfu) gives 37*sqrt(tau) with one whip per site. The Sun resolves out at a 28 m baseline (visibility 0.78 at 10 m, 0.30 at 20 m), Cas A at about 177 m and Cyg A at about 440 m, so the Sun's diameter is measurable on a garden-scale baseline. Fringe spacing is 73 arcmin at 10 m and 7.3 arcmin at 100 m. Bottleneck: four channels for Cas A; nothing for the Sun.",
+    "source": "Derivation, feasibility.py section I; whip Tsys and SEFD from /Users/ascalva/Documents/code/sdr_array/array16/experiments/topology/results.json; Cas A 1768 Jy at 1.4 GHz: https://arxiv.org/pdf/2002.10431; decline 0.6 %/yr: https://arxiv.org/pdf/1801.04887",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Two-site interferometry: timing and phase stability",
+    "claim": "Delay must be known to well under 1/B = 50 ns: a 5 ns error costs 1.6 % of amplitude, 20 ns costs 24 %, 50 ns loses the fringe. A ZED-F9T-class timing receiver gives 5 ns absolute (2.5 ns differential), which is enough. Coherence time for 1 rad is 1/(2*pi*f*sigma_y): 0.11 s at 1e-9, 1.1 s at 1e-10, 11 s at 1e-11, 112 s at 1e-12. Hobby GPS-disciplined OCXOs reach about 1e-11 at 100 s, so integrate coherently for about 10 s and then average incoherently or track the fringe phase. The fringe rate is at most 0.035 Hz at 100 m and 3.5 Hz at 10 km. Bottleneck: reference stability; rev B's TCXO is inadequate. Smallest fix: a GNSS-disciplined OCXO per site feeding the existing 10 MHz tree, with PPS-stamped captures (about $150-250 per site, my estimate), or a shared cable for baselines under 100 m.",
+    "source": "Derivation, feasibility.py section I; timing spec: https://cdn.sparkfun.com/assets/2/6/5/f/e/ZED-F9T-00B_DataSheet.pdf; oscillator stability: https://febo.com/pages/gpsdo_comparison/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Time-difference geolocation of public beacons",
+    "claim": "Cramer-Rao bound sigma = 1/(beta*sqrt(B*T*gamma)) with beta = 2*pi*B/sqrt(12). At 10 dB SNR: 179 ns (54 m) for 10 kHz over 1 s; 6.3 ns (1.9 m) for 200 kHz over 0.1 s; 5.8 ns (1.7 m) for a 2 MHz, 120 us burst; 0.06 ns (2 cm) for 20 MHz over 1 ms. Above about 200 kHz the limit is clock synchronisation and multipath: 5 ns gives 1.5 m per pair, or 2.2-4.5 m with a geometry factor of 1.5-3; 100 ns gives 45-90 m. Lawful test targets that broadcast their own position: an RS41 radiosonde (60 mW at 403 MHz) arrives at -104.8 dBm at 100 km, 28 dB SNR in 10 kHz; ADS-B at 250 W gives 26 dB SNR at 200 km. A single-site angle of 0.5 deg is 873 m at 100 km, so two timed sites beat one array by 10-100 times. Angle against reported position is also a defensive consistency check on ADS-B. Bottleneck: clock synchronisation. Smallest fix: the same GNSS discipline as for interferometry. Locating private transmitters or people is off limits.",
+    "source": "Derivation, feasibility.py section J; RS41 power: https://www.vaisala.com/sites/default/files/documents/WEA-MET-White%20Paper%20RS41%20Ground%20check%20procedures_B211539EN-C.pdf (60 mW minimum per Vaisala documents); ADS-B 250 W nominal: https://uavionix.com/products/ping200X; timing: https://cdn.sparkfun.com/assets/2/6/5/f/e/ZED-F9T-00B_DataSheet.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Pulsar B0329+54 (limit check)",
+    "claim": "Folded SNR = S*sqrt(B*t)*sqrt((P-W)/W)/SEFD with P = 0.7145 s and W = 6.6 ms. At 1420 MHz (203 mJy, 16 whips, 20 MHz) it is 0.08 in 1 h: infeasible. At 408 MHz (about 1.5 Jy, a catalogue value recalled from memory and not verified; 3.9 MHz) 16 simultaneous whips give 3.1 in 1 h and 7.6 in 6 h; sixteen 10 dBi Yagis give 19.6 in 1 h; rev B's four channels with Yagis give 4.9 in 1 h and 12 in 6 h. Whips also have a null near zenith, where this pulsar transits at mid-northern latitudes. Amateurs have detected it with a 1.9 m dish and with Yagis near 436 MHz. Bottleneck: collecting area and four channels. Smallest fix: four 10 dBi Yagis on X0-X3 at 408 MHz and a multi-hour fold.",
+    "source": "Derivation, feasibility.py section K; flux, period and width: https://lso.fe.uni-lj.si/literatura/Razno/IKT%20dan%202017/Predavanje%20Matjaz/priprava/PSR_Meas_2017_revA3_Eng.pdf; amateur detections: https://www.rtl-sdr.com/pulsar-b032954-detected-with-a-1-9m-dish-and-rtl-sdr/ and https://www.rtl-sdr.com/detecting-pulsars-with-a-circularly-polarized-yagi-and-an-rtl-sdr/; 408 MHz flux is an unverified estimate",
+    "confidence": "low"
+   },
+   {
+    "topic": "Stepped-frequency near-field imaging, 2.3-6 GHz",
+    "claim": "Stitching 3.7 GHz gives c/2B = 4.1 cm range cells; 370 steps of 10 MHz give 15 m unambiguous range and take about 3.7 s at 5 ms calibration plus 5 ms dwell per step. At a Part 15.209-level EIRP of -41.2 dBm, a 0.01 m^2 target at 1 m returns -104.4 dBm against -140.6 dBm of noise in 1 kHz: 36 dB per step. Cross-range lambda*R/(2L) at the 4.15 GHz centre is 18 cm at 0.5 m with the 100 mm panel, 1.8 cm with a 1 m rail, 7.2 cm at 2 m. Bottleneck: the AD9361's phase is random after each retune, and REDESIGN notes 51 % of 2.3-6 GHz is restricted for intentional radiation, so over the air the spectrum is gapped and sidelobes rise. Smallest fix: the existing PN calibration at every step (already planned), and an absorber-lined or shielded enclosure when the full band is wanted.",
+    "source": "Derivation, feasibility.py section L; restricted-band share from /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md section 6",
+    "confidence": "medium"
+   }
+  ],
+  "files": [
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/feasibility.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/feasibility_out.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/passive_radar.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/passive_radar_out.txt"
+  ],
+  "open_questions": [
+   "What is the AD9361's usable instantaneous dynamic range in the bladeRF at 20 MSPS with manual gain? I assumed 60 dB; it sets the passive-radar range and the GNSS nulling headroom, and step 0 of the build order (two bladeRFs and a splitter) can measure it.",
+   "What is the residual phase noise between the AD9361's transmit and receive synthesizers at 0.1-10 Hz offsets, and how far does the loopback reference channel cancel it? This decides vital-sign and repeat-pass SAR performance and is a bench measurement.",
+   "Will the owner fit a GNSS-disciplined OCXO (about 1e-11) in place of the TCXO? Two-site interferometry and time-difference location both depend on it; the TCXO gives well under 1 s of coherence at 1420 MHz.",
+   "Is a second site available, and at what baseline? Under about 28 m the Sun works with single whips; Cas A needs under about 150 m and either 16 coherent elements per site or about an hour with four.",
+   "Is one ADC per element worth it? It buys 6 dB for satellites and interferometry, 6.5 dB for the camera, 15 nulls instead of 3, and makes the 408 MHz pulsar reachable; for direction finding the count study already showed little gain when calibration-limited.",
+   "Are transmit and receive calibration tables stable enough (about 1 deg over hours) for repeat-pass interferometry outdoors, or is a fixed reference reflector always required?",
+   "The LTE vehicle ranges and the 408 MHz pulsar flux (about 1.5 Jy) are low-confidence; both need a sourced value or a field test before being promised.",
+   "Regulatory status of stepped-frequency sweeps across 2.3-6 GHz and of chirped operation under 15.245 remains open, as REDESIGN section 7 already notes; the imaging and SAR figures assume the conservative 15.249 or 15.209 levels."
+  ]
+ },
+ "investigate:catalogue": {
+  "summary": "CATALOGUE lens: what coherent arrays like rev B have actually delivered, with a fit check against rev B. Estimates were computed in scratch. The web-search budget ran out near the end, so a few entries rest on search snippets; those are marked medium.\n\nClosest relatives. None of these tunes 0.4-6 GHz with calibrated transmit:\n- KrakenSDR: 5 coherent receive-only channels, 24-1766 MHz, 2.56 MHz bandwidth.\n- ESPARGOS: 8 ESP32-S2 per board at 2.4 GHz, with a shared 40 MHz clock and phase reference; 4 boards were combined (32 antennas). Its camera demo overlays a Wi-Fi heat map on video.\n- QuadRF ($499, 2026): 4x4 full duplex, 4.9-6.0 GHz, 40 MHz, up to 1 W per antenna, a 30 fps \"RF camera\", and a planned 240-antenna EME array.\n\nRev B would be unusual in combining 0.4-6 GHz tuning, 4 transmit channels, a measured manifold and true-time-delay beams.\n\nBest fits, each delivered elsewhere:\n1. **RF camera.** ESPARGOS and QuadRF already do this at 2.4 and 5 GHz. Rev B's panel covers both Wi-Fi bands.\n2. **Interference and jammer hunting.**\n   - DTU used a KrakenSDR at Jammertest 2023. Best chamber precision was 0.48\u00b0, typically above 1\u00b0, with residuals up to 10\u00b0 without coupling calibration.\n   - They placed a spoofer within 18 m by driving past it, and detected a 10 dBm car jammer.\n3. **Checking broadcast position claims.**\n   - ADS-B: TU Delft checked direction of arrival with a KerberosSDR.\n   - Remote ID: the GhostBuster network uses signal strength and needs 12 receivers to catch spoofing beyond 364 m. A 1\u00b0 bearing at 1 km is about 17 m (estimate).\n   - GNSS: spoofing can be detected by direction.\n4. **Passive radar.** Examples are blah2 (RSPduo or B210, checked against ADS-B), KrakenSDR on DVB-T, UCL's passive Wi-Fi radar through 25 cm of brick, and LTE drone detection.\n5. **Ground-based interferometric SAR.** Examples are UPC's SDR system on a 2 m rail (to 6 GHz, 160 MHz), a USRP system stepped over 0.5-2 GHz, and Forst\u00e9n's 6 GHz drone SAR for under $900.\n   - Rev B at 5.8 GHz (estimates): 0.09 mm precision at 30 dB SNR; the phase wraps every 12.9 mm.\n   - Licence-free bandwidth of 150 MHz gives about 1 m range cells.\n   - The loopback path gives a transmit-receive phase reference every scan. The atmosphere adds about 2 mm per 10 N-units over 100 m, so reference reflectors are needed.\n6. **Radio astronomy.** Hydrogen-line rotation curves are routine with a horn or dish plus an SDR. Others have shown two-element fringes on the Sun (Harvard 20 m baseline; SARA RSPduo 10 m at 1.255 GHz), and Dwingeloo got VLBI fringes with an X310 and a GPS-locked rubidium clock.\n   - Two whips: Sun fringes at about 18 sigma in 1 s.\n   - One whip: the hydrogen line at about 16 sigma per 10 kHz channel in a minute.\n   - Cas A: about 3 sigma per hour, so not practical with whips.\n   - Two separate sites: the phase stays coherent for about 11 s at 1.42 GHz with OCXO GPS-disciplined clocks, but only about 0.1 s with TCXOs.\n7. **Networks of arrays timed by GNSS.**\n   - ATLAS uses USRPs with GPS-disciplined oscillators and fixed beacons.\n   - mlat-server uses ADS-B position reports as clock references.\n   - BRAMS has 42 GPS-synced stations plus an interferometer good to about 1\u00b0.\n   - NetRAD found GPS timing limits radar bandwidth to under 37.5 MHz.\n   - PPS jitter of 5-20 ns means 1.5-6 m error per time difference, far worse than the centimetre bound set by bandwidth (estimate). So clocks must be calibrated against known transmitters.\n8. **MIMO, channel sounding, full duplex.** Argos/SoftNull (72 elements), LuMaMi (100 chains), MegaMIMO (10 access points phase-synced over the air, 8.1-9.4x throughput) and DICHASUS (1.272 GHz, over-the-air sync, open data) all work this way. Rev B's 4 calibrated transmit channels allow small-scale versions.\n\nWeak fits (estimates):\n- **UHF RFID:** the power-up link reaches about 2 m at +15.9 dBm EIRP and 0.3 m at 15.249 levels. Frequency hopping under 15.247 would allow 36 dBm (about 20 m). Better: listen for tag directions beside a commercial reader.\n- **L-band weather satellites:** at most 7.8 dBi from whips at once, against about 20 dBi typical.\n- **Meteor scatter:** echoes about 28 dB weaker at 433 MHz than at 50 MHz.\n- **Moon-bounce (EME):** out of reach.\n- **WiTrack-class tracking:** needs 1.69 GHz sweeps, and is off limits on other people anyway.\n\nStructural findings specific to rev B (scratch scripts):\n- **Snapshot switching** gives a 16-element aperture at the sensitivity of a fixed 4-element array: 6.5 dB below 16 separate ADCs. That is fine for steady sources (sky, steady carriers) but useless for nulling and short bursts.\n- **Fixed port groups** mean 24 of the 120 external pairs are never sampled at the same time.\n  - The \u03bb/2 grid loses 2 of 24 baseline directions; the two-ring layout (assumed port order) loses 12 of 64.\n  - Re-labelling which SMA feeds which whip cuts the ring loss to 2. It costs nothing.\n- **Two radios, two LOs:** the two bladeRFs tune independently, so two bands can run at once (GNSS L1+L5 for ionosphere TEC, or 2.4+5.8 GHz drone links).\n\nOff limits: jamming (test nulling only cabled or at sanctioned events like Jammertest); spoofing (detection is fine); decoding private payloads; through-wall or covert tracking of people; counter-drone mitigation (2020 DOJ/FAA/FCC/DHS advisory). KrakenRF pulled its passive radar code in 2022 for regulatory reasons.",
+  "findings": [
+   {
+    "topic": "Comparators: closest delivered arrays",
+    "claim": "KrakenSDR is a 5-channel phase-coherent, receive-only RTL-SDR array (24-1766 MHz, 2.56 MHz bandwidth) with a shared clock and internal calibration hardware; it is the de-facto hobby baseline for DF, passive radar and interferometry experiments.",
+    "source": "https://www.elektor.com/products/krakensdr-five-channel-software-defined-radio-based-on-rtl-sdr ; https://www.krakenrf.com/about-krakensdr",
+    "confidence": "high"
+   },
+   {
+    "topic": "Comparators: closest delivered arrays",
+    "claim": "QuadRF (ScaleRF/MoonRF, 2026): 4x4 full-duplex coherent SDR, 4.9-6.0 GHz, up to 40 MHz per antenna, up to 1 W transmit per antenna, Lattice ECP5 FPGA plus Raspberry Pi 5, switchable RHCP/LHCP patches, GPL software, $499 kit; tiles combine into larger arrays.",
+    "source": "https://www.hackster.io/news/quadrf-the-open-source-rf-camera-that-lets-you-see-wi-fi-signals-141ad91f2a2d ; https://hackaday.com/2026/06/20/seeing-the-world-in-radio-waves-with-the-quadrf/ ; https://www.rtl-sdr.com/?p=66277",
+    "confidence": "high"
+   },
+   {
+    "topic": "Comparators: closest delivered arrays",
+    "claim": "No delivered hobby/open array found that combines 0.4-6 GHz tuning, calibrated multi-channel transmit and true-time-delay beams: KrakenSDR/KerberosSDR/ESPARGOS are receive-only, QuadRF is 4.9-6.0 GHz only, and ESPARGOS is 2.4 GHz Wi-Fi CSI only. Rev B would occupy an empty niche.",
+    "source": "estimate: comparison of the sources in this catalogue with REDESIGN.md sections 1-9",
+    "confidence": "medium"
+   },
+   {
+    "topic": "RF camera",
+    "claim": "ESPARGOS (Univ. Stuttgart): 8 ESP32-S2 receivers per board in a 2x4 layout of 2.4 GHz patches, phase-coherent via one crystal (40 MHz clock) plus a phase-reference signal frequency-multiplexed on a single coax; 4 boards were combined (32 antennas) for datasets; channel charting reached 0.44 m MAE. The pyespargos demos/camera overlays a live Wi-Fi heat map on webcam video.",
+    "source": "https://arxiv.org/html/2408.16377 ; https://www.rtl-sdr.com/espargos-an-esp32-phased-array-for-seeing-wifi/ ; https://hackaday.com/2025/02/15/octet-of-esp32s-lets-you-see-wifi-like-never-before",
+    "confidence": "high"
+   },
+   {
+    "topic": "RF camera",
+    "claim": "QuadRF's 'RF camera' scans its whole 4.9-6.0 GHz range at 30 fps, tracks signal directions and overlays them on a camera feed; in the demo it tracked a drone and separated its two transmitters.",
+    "source": "https://hackaday.com/2026/06/20/seeing-the-world-in-radio-waves-with-the-quadrf/",
+    "confidence": "high"
+   },
+   {
+    "topic": "RF camera",
+    "claim": "ArrayTrack (UCL, NSDI 2013) built multi-antenna Wi-Fi APs on Rice WARP and fused AoA spectra to locate 41 clients to 23 cm median with 100 ms latency; Wision (UW, SenSys 2014) imaged static humans and metal objects from ambient Wi-Fi on a multi-antenna AP (26 cm and 15 cm median).",
+    "source": "https://www.usenix.org/conference/nsdi13/technical-sessions/presentation/xiong ; https://homes.cs.washington.edu/~gshyam/Papers/wision.pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "RF camera: rev B fit",
+    "claim": "Rev B's panel (2.3-6 GHz) spans both Wi-Fi bands and QuadRF's band; per-element panel data come from TTD/Hadamard toggling with a 15 us minimum slot, so a 4-8 state code cycle takes about 60-120 us: enough for most Wi-Fi/BLE packets and continuous drone video, too slow for the shortest OFDM frames. For steady emitters the snapshot covariance gives the full 16-element image.",
+    "source": "estimate: REDESIGN.md section 8 (minimum slot 15 us) and sections 2-3 (TTD state pairs, Hadamard decoding)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Interference hunting",
+    "claim": "DTU Space characterised a KrakenSDR (5-element UCA, r = 8 cm, GPS L1 C/A only) against real jammers and spoofers at Jammertest 2023: best chamber bearing precision 0.48 deg, typical above 1 deg, residuals up to 10 deg without coupling calibration; a 10 dBm car jammer was detected and its speed estimated; wardriving triangulation put a spoofer 18.1 m from truth.",
+    "source": "https://navi.ion.org/content/73/1/navi.735",
+    "confidence": "high"
+   },
+   {
+    "topic": "Interference hunting",
+    "claim": "Fraunhofer (ICL-GNSS 2024) compared TDOA and AoA with low-cost COTS sensors and found AoA results potentially sufficient to pinpoint a single moving vehicle (jammer) on a highway; a Sensors 2023 paper used KrakenSDR for GNSS RFI localisation.",
+    "source": "https://publica.fraunhofer.de/handle/publica/476979 ; https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10781236/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Spectrum mapping",
+    "claim": "ElectroSense crowdsources spectrum data from RTL-SDR + Raspberry Pi sensors (optional GPS time sync, an open up/down-converter to 6 GHz) behind an open API; Electrosense+ added remote decoding.",
+    "source": "https://arxiv.org/pdf/1703.09989 ; https://www.rtl-sdr.com/electrosense-rtl-sdr-based-crowd-sourced-spectrum-monitoring-with-a-dc-to-6-ghz-rtl-sdr-up-downconverter/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Interference hunting",
+    "claim": "UHF partial-discharge (arcing) sources in substations are located with antenna arrays, either by TDOA (Cardiff, Energies 2023; XJTU 4 x 1 m movable diamond array at 110 kV sites) or by RSSI arrays (under 6 deg DOA error in the lab). This is a power-line-noise hunting application for the 0.4-2.3 GHz ports.",
+    "source": "https://mdpi.com/1996-1073/16/10/4221 ; https://arxiv.org/pdf/2010.08309",
+    "confidence": "medium"
+   },
+   {
+    "topic": "GNSS adaptive nulling",
+    "claim": "An SDR GNSS anti-jam testbed used an 8-element dual-band (L1/B3) patch array, 8 x 14-bit ADCs at 60 MSPS and a GPU running STAP/SFAP (SMI with diagonal loading) in real time against ISR above 90 dB; beamforming improved positioning (east 1.05 to 0.32 m).",
+    "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4813931/",
+    "confidence": "high"
+   },
+   {
+    "topic": "GNSS adaptive nulling",
+    "claim": "A European Navigation Conference 2024 paper evaluated spatial-diversity processing on a KrakenSDR for mass-market GNSS and reported under 10 m positioning error under interference.",
+    "source": "https://sciforum.net/paper/19335",
+    "confidence": "medium"
+   },
+   {
+    "topic": "GNSS resilience: spoofing detection (defensive)",
+    "claim": "Spoofing is detectable by direction: Montgomery/Humphreys used two L1 antennas 1.46 m apart (each extra antenna needs another spoofer transmitter to fool); DLR field-tested a 2x2 array; Fraunhofer IIS used a multi-antenna snapshot receiver and notes DOA methods need a time- and frequency-synchronised, calibrated array.",
+    "source": "https://insidegnss.com/?p=225 ; https://link.springer.com/article/10.1007/s12567-018-0232-6 ; https://www.iis.fraunhofer.de/content/dam/iis/en/doc/lv/los/lokalisierung/2019Sensors_19-05439.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "GNSS nulling: rev B fit",
+    "claim": "Nulling needs every element on the same samples, so rev B can null only with its 4 simultaneous channels (3 nulls); snapshot switching cannot form nulls. Whips are linear (about 3 dB loss on RHCP and no LHCP multipath rejection). Testing needs a cabled injection or a sanctioned event such as Jammertest: radiating a jammer is off limits.",
+    "source": "estimate: REDESIGN.md section 9 (4 whips: 3 nulls of 20-30 dB) and the Jammertest context in https://navi.ion.org/content/73/1/navi.735",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Drone detection and localisation",
+    "claim": "Codau et al. (Sensors 2024) built 5 coherent channels from three NI USRP-2954R plus an OctoClock, with a 5-element UCA at half a wavelength at 2.46 GHz and MUSIC on a DJI Mavic 3T 20 MHz OFDM downlink: mean error 18.65 deg against GPS logs (125 m-2.5 km), 4.27 deg against a Narda ADFA reference, and 3.27 deg at 3 m.",
+    "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11086345",
+    "confidence": "high"
+   },
+   {
+    "topic": "Drone detection: Remote ID verification",
+    "claim": "GhostBuster (TU Eindhoven, CCNC 2024) checks claimed Remote ID positions with a network of COTS receivers using RSS: 95% detection of location spoofing only beyond 364 m with 12 receivers (1,199 m with 4).",
+    "source": "https://ssciancalepore.win.tue.nl/publications_pdf/2024_Keizer_CCNC.pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "Drone detection: rev B fit",
+    "claim": "A single calibrated rev B array checking Remote ID bearings (2.4 GHz Wi-Fi/BLE, panel DF 0.5-2 deg with manifold) would flag spoofing at roughly 20-50 m tangential error at 1 km, an order of magnitude finer than the 12-receiver RSS network. This is receive-only, legal, and uses a broadcast designed for public reception.",
+    "source": "estimate: REDESIGN.md section 9 DF figures; 1 deg at 1 km = 17.5 m; GhostBuster threshold 364 m",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Drone detection: legal",
+    "claim": "The 2020 DOJ/FAA/DHS/FCC advisory warns that drone detection tools can violate federal surveillance laws (Wiretap Act, Pen/Trap Statute) and that mitigation can violate aircraft and computer-damage laws. Bearing-only measurement and Remote ID reception are the defensible path; decoding control or video links, and any mitigation, are off limits.",
+    "source": "https://www.justice.gov/media/1084061/dl ; https://www.justice.gov/opa/pr/interagency-issues-advisory-use-technology-detect-and-mitigate-unmanned-aircraft-systems",
+    "confidence": "high"
+   },
+   {
+    "topic": "Passive bistatic radar",
+    "claim": "blah2 (30hours) is an open-source (MIT) real-time passive radar for SDRplay RSPduo and USRP B210 that produces delay-Doppler maps; its companion adsb2dd converts tar1090 ADS-B positions into delay-Doppler truth for aircraft.",
+    "source": "https://www.github.com/30hours/blah2 ; https://awesome.ecosyste.ms/projects/github.com%2F30hours%2Fadsb2dd",
+    "confidence": "high"
+   },
+   {
+    "topic": "Passive bistatic radar",
+    "claim": "KrakenSDR passive radar uses 1 reference and 1 surveillance channel on DVB-T/ATSC; 2.56 MHz gives about 58 m bistatic range cells. IEEE Spectrum built one that saw multiple aircraft. KrakenRF pulled its passive-radar code in 2022 after 'regulatory concerns', pending legal review.",
+    "source": "https://github.com/krakenrf/krakensdr_docs/wiki/08.-Passive-Radar/191d28c9f2a665558d40f99d526fbfe0e13d2361 ; https://spectrum.ieee.org/passive-radar-with-sdr ; https://hackaday.com/2022/11/19/open-source-passive-radar-taken-down-for-regulatory-reasons",
+    "confidence": "high"
+   },
+   {
+    "topic": "Passive bistatic radar",
+    "claim": "In 2013 Juha Vierinen used two DVB-T dongles on a common clock with an FM illuminator and detected aircraft and meteors.",
+    "source": "https://www.rtl-sdr.com/?p=8313",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Passive bistatic radar: people",
+    "claim": "UCL built a high-Doppler-resolution passive Wi-Fi radar on two NI software-defined transceivers using an ordinary access point: it detected a walking person through a 25 cm brick wall and Doppler shifts under 1 Hz. Chetty/Smith/Woodbridge (IEEE TGRS 2012) showed 2.4 GHz passive multistatic Wi-Fi detection of personnel inside a building from outside.",
+    "source": "https://www.ni.com/en/solutions/academic-research/case-studies/university-college-london-tracks-wifi-signals-to-passively-see-through-walls-using-ni-wireless-design-tools.html ; https://doi.org/10.1109/TGRS.2011.2164411",
+    "confidence": "high"
+   },
+   {
+    "topic": "Passive bistatic radar: LTE",
+    "claim": "Wuhan University built an SDR LTE-based passive radar whose drone detections agreed with ground truth; an LTE450 single- and multichannel passive radar was demonstrated for drone early warning.",
+    "source": "https://doaj.org/article/37b95353aed44ee3a722423e0bf12040 ; https://core.ac.uk/works/320478154",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Passive radar: rev B fit and ethics",
+    "claim": "Passive radar needs simultaneous reference and surveillance channels at the illuminator bandwidth (DVB-T 7.6 MHz, LTE up to 20 MHz, Wi-Fi 20 MHz) and 0.1-1 s integration, with no transmit; rev B's 4 x 20 MSPS gives 1 reference plus 3 surveillance channels, so it fits. Sensing people through walls should stay on one's own premises with consent.",
+    "source": "estimate: REDESIGN.md sections 5 and 7; illuminator bandwidths from https://www.sto.nato.int/publications/STO%20Educational%20Notes/STO-EN-SET-243/EN-SET-243-08.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Ground-based InSAR",
+    "claim": "UPC built an SDR-based multi-frequency FMCW GBSAR: a coherent radar unit moving on a 2 m rail, with an SDR to 6 GHz and 160 MHz instantaneous bandwidth.",
+    "source": "https://core.ac.uk/download/512034301.pdf ; https://www.tdx.cat/bitstream/10803/670326/1/TAAS1de1.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Ground-based InSAR",
+    "claim": "A USRP-based ground-based interferometric SAR (2023) used stepped-frequency operation over 500-2000 MHz (1500 MHz synthetic bandwidth) and notes that displacement between acquisitions must stay under a quarter wavelength. An IEEE TIM 2021 SDR ground-based interferometric radar reported high-accuracy displacement measurement.",
+    "source": "https://aminer.cn/pub/648cd7c2d68f896efa829d7b/software-defined-ground-based-synthetic-aperture-radar-interferometry ; https://i-cirena.ubfc.fr/node/36067",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Ground-based InSAR / hobby SAR",
+    "claim": "Henrik Forsten built 6 GHz FMCW radars, a bike-mounted SAR and a polarimetric drone SAR (under $900, imaging at 1.5 km or more, MIT-licensed code); in 2026 he added interferometric imaging.",
+    "source": "https://www.hackster.io/news/henrik-forsten-s-radar-drone-captures-detailed-imagery-on-autonomous-flights-for-under-900-7d9c8e65ca56 ; https://hackaday.com/2026/09/28/synthetic-aperture-radar-drone-gets-interferometric-imaging/ ; https://hforsten.com/synthetic-aperture-radar-autofocus-and-calibration.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "Ground-based InSAR: rev B fit",
+    "claim": "At 5.8 GHz the displacement precision is 0.29/0.09/0.03 mm at 20/30/40 dB SNR, and phase wraps every 12.9 mm (lambda/4). Range cells are 7.5 m at 20 MHz and 1.0 m at the licence-free 150 MHz (5725-5875 MHz, stepped with recalibration). A 1 m rail gives 1.5 deg cross-range resolution against the panel's 26 deg beam. The conducted loopback gives a per-scan TX-RX phase reference; the atmosphere (about 2 mm per 10 N-units over 100 m two-way) needs corner reflectors.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section E)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Vital signs, gesture, through-wall",
+    "claim": "WiTrack (MIT, NSDI 2014) used a custom FMCW front end as a USRP2 daughterboard (LFRX, 1 MHz sampling), sweeping 5.56-7.25 GHz (1.69 GHz) at 0.75 mW with 1 transmit and 3 receive antennas in a T. It located a person to 10-13 cm (x,y) and 21 cm (z) median, through walls, with a 2.5 ms sweep.",
+    "source": "https://courses.grainger.illinois.edu/CS598WSI/fa2024/Papers%5CWiTrack_NSDI14.pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "Vital signs, gesture, through-wall",
+    "claim": "WiSee (UW, MobiCom 2013) made a MIMO receiver of up to 5 antennas from externally clocked USRP-N210s (5 GHz, 10 MHz OFDM, 10 mW transmitters) and classified whole-body gestures from Doppler. Wi-Vi (MIT, SIGCOMM 2013) used USRP N210s with 2 transmit and 1 receive antennas and MIMO nulling to cancel static reflections through walls. RF-Capture (MIT, TOG 2015) reconstructed a coarse human figure behind a wall with a 2-D array.",
+    "source": "https://ubicomplab.cs.washington.edu/publications/whole-home-gesture/ ; https://www.mit.edu/~fadel/papers/wivi-paper.pdf ; https://people.csail.mit.edu/hongzi/content/publications/RFcapture-TOG.pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "Vital signs",
+    "claim": "Software-defined Doppler radars measured breathing on an NI USRP-2920 (Costanzo, Sensors 2019) and a USRP B205-mini (Adla 2020, open code); an X310 GNU Radio CW bistatic radar extracted respiratory and heart rates.",
+    "source": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6679243/ ; https://pubs.gnuradio.org/index.php/grcon/article/download/125/105",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Vital signs: rev B fit",
+    "claim": "At 5.8 GHz a 4 mm chest motion swings the phase 56 deg and a 0.3 mm heartbeat 4.2 deg (23 and 1.8 deg at 2.44 GHz). Even at FCC 15.249 EIRP with the 15.5 dBi panel, a 0.5 m2 torso gives about 65-93 dB SNR in 1 kHz at 1-5 m, so TX leakage and clutter, not noise, set the limit. Rev B's 20-56 MHz cannot reach WiTrack-class range resolution, which needs 1.69 GHz sweeps.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section G)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "MIMO research: full duplex with spatial nulls",
+    "claim": "SoftNull (Rice, IEEE TWC 2016) achieved many-antenna full duplex using only digital transmit beamforming (no analog canceller), measured on the 72-element Argos array, and beat half duplex for small cells with many more antennas than users.",
+    "source": "https://arxiv.org/abs/1508.03765v2 ; https://yecl.org/argos",
+    "confidence": "high"
+   },
+   {
+    "topic": "MIMO research: testbeds",
+    "claim": "LuMaMi (Lund) ran 100 coherent transceiver chains on about 50 NI USRP-RIO units with up to 20 MHz LTE-TDD. RENEW/POWDER (Rice/Utah) offers open 64-antenna Iris SDR base stations, the RENEWLab code and public channel datasets.",
+    "source": "https://lup.lub.lu.se/search/files/6253008/4857740.pdf ; https://arxiv.org/pdf/2005.10027",
+    "confidence": "high"
+   },
+   {
+    "topic": "MIMO research: distributed coherence",
+    "claim": "MegaMIMO (MIT, SIGCOMM 2012) phase-synchronised 10 independent software-radio APs over the air: slaves track the lead AP's preamble, and periodic resync symbols cancel drift. It reached 8.1-9.4x median throughput over 802.11 unicast. This is the over-the-air sync recipe two GNSS-timed rev B boards would need for coherent joint transmission.",
+    "source": "https://people.csail.mit.edu/rahul/papers/megamimo-sigcomm2012.pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "Channel sounding / datasets",
+    "claim": "DICHASUS (Stuttgart) is a distributed massive-MIMO channel sounder of autonomous single-antenna SDR receivers made phase-coherent by a reference transmitter over the air. Datasets are at a 1.272 GHz carrier (23 cm band), up to 50 MHz, with arrays such as four 8-antenna arrays and tachymeter or GNSS ground truth, freely licensed.",
+    "source": "https://dichasus.inue.uni-stuttgart.de/datasets/data/dichasus-cf0x ; https://arxiv.org/pdf/2206.05984 ; https://arxiv.org/pdf/2206.15302",
+    "confidence": "high"
+   },
+   {
+    "topic": "Channel sounding",
+    "claim": "Low-cost GNU Radio/USRP channel sounders exist: Min/Saito/Takada formed a MIMO matrix with a virtual (moved) antenna array below 4.4 GHz, validated against a VNA; Maas et al. 2010 built an 802.11b CIR sounder for about US$975.",
+    "source": "https://journals.utm.my/aej/article/view/15488 ; https://typeset.io/pdf/channel-sounding-for-the-masses-low-complexity-gnu-802-11b-3hp8fjkai2.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "MIMO research: rev B fit",
+    "claim": "Rev B's 4 calibrated transmit plus 4 receive chains on one reference (FDD) can reproduce small-scale beam training (TTD states as a codebook), 2-4 stream spatial multiplexing, SoftNull-style transmit nulls toward its own receive ports, and DICHASUS-like sounding. 23 cm (1240-1300 MHz) transmit needs an amateur licence; licence-free transmit is limited to 433/915/2.4/5.8 GHz.",
+    "source": "estimate: REDESIGN.md sections 6-7 (transmit calibration via cal tree, band table)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "UHF RFID localisation",
+    "claim": "PinIt (MIT, SIGCOMM 2013) moved a USRP reader antenna to synthesise an aperture, matched multipath profiles with dynamic time warping, and located 200 tags in a library to 11 cm median. RF-IDraw (SIGCOMM 2014) used COTS readers with antenna arrays to trace gestures. Kargas/Mavromatis/Bletsas (IEEE WCL 2015) published a fully coherent full-duplex Gen2 reader on one USRP N200, with open forks.",
+    "source": "https://www.cis.upenn.edu/~mingminz/courses/cis7000-23s/papers/pinit.pdf ; https://people.csail.mit.edu/deepak/assets/papers/RF-IDraw_SIGCOMM_2014.pdf ; https://www.telecom.tuc.gr/~aggelos/files/wcl15.pdf ; https://github.com/L2zz/Gen2-UHF-RFID-Reader",
+    "confidence": "high"
+   },
+   {
+    "topic": "UHF RFID: rev B fit",
+    "claim": "The tag power-up link limits range: about 0.28 m at the 15.249 average limit (-1.25 dBm EIRP), about 2.0 m with 4 whips at +15.9 dBm, and about 21 m only at the 15.247 frequency-hopping limit (1 W conducted, gain above 6 dBi deducted). Readers need a PA and hopping, so rev B is better used as a receive-only tag-direction listener beside a COTS reader (RF-IDraw style).",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section F); rule text https://www.law.cornell.edu/cfr/text/47/15.247",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Satellite tracking with electronic beams",
+    "claim": "Johns Hopkins (SmallSat 2016) demonstrated a COTS UHF phased-array ground station with a low-cost SDR at each element and digital beamforming: multiple simultaneous beams to talk to and localise several CubeSats. SatNOGS authors point to MIMO/array stations as a low-cost alternative to rotators.",
+    "source": "https://digitalcommons.usu.edu/smallsat/2016/TS9GroundSystems/1 ; https://community.libre.space/uploads/default/original/1X/afee8f6d865f925931e2863522720cffdb6f40cc.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Satellite tracking",
+    "claim": "STRF (Cees Bassa, GPL) identifies satellites and refines TLEs from Doppler curves recorded with RTL-SDR/GNU Radio. Adding rev B bearings to the Doppler would give joint angle-plus-Doppler orbit fits (estimate).",
+    "source": "https://github.com/cbassa/strf",
+    "confidence": "high"
+   },
+   {
+    "topic": "Satellite tracking: rev B fit",
+    "claim": "L-band weather satellites need about 20 dBi (GOES HRIT is fixed but needs a dish or grid; HRPT also needs tracking). Rev B gives at most about 7.8 dBi at once from 4 whips (16 ports cannot be summed at once, and the panel starts at 2.3 GHz), or about 16 dBi with 4 helices on X0-X3: not feasible as built. 435 MHz amateur LEO satellites and GNSS (+6 dB beam, nulls on terrestrial interference) do fit.",
+    "source": "estimate: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section H); HRPT/GOES practice https://www.rtl-sdr.com/building-a-tracking-mount-for-hrpt-weather-satellite-reception/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multistatic GNSS-timed networks",
+    "claim": "ATLAS (Tel Aviv Univ.) is a reverse-GPS time-of-arrival system: 433-434 MHz SRD tags, USRP N200 base stations with GPS-disciplined oscillators, and base-station clocks held in a common frame by fixed beacon tags. It tracked 172 wild bats (Science 2020).",
+    "source": "https://www.tau.ac.il/~stoledo/tags/ ; https://www.rtl-sdr.com/tracking-wild-bats-with-sdrs-featured-in-science-magazine/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Multistatic GNSS-timed networks",
+    "claim": "mlat-server multilaterates Mode S aircraft using receivers whose clocks are not synchronised, by modelling each receiver clock from ADS-B DF17 position messages used as reference beacons. KiwiSDR's TDoA extension uses GPS-timestamped I/Q from public receivers to geolocate HF emitters as a server-side heat map.",
+    "source": "https://github.com/mutability/mlat-server ; https://www.rtl-sdr.com/kiwisdr-tdoa-direction-finding-now-freely-available-for-public-use/",
+    "confidence": "high"
+   },
+   {
+    "topic": "Multistatic GNSS-timed networks",
+    "claim": "NetRAD, a 2.4 GHz coherent pulsed-Doppler netted radar (UCT/UCL), was synchronised with UCT-built GPSDOs; GPS timing limited radar bandwidth to under 37.5 MHz when synchronising within a range cell. LoRaWAN TDOA uses SX1303 fine timestamps on GPS-PPS gateways, with about 200 m median single-shot error for moving nodes.",
+    "source": "https://open.uct.ac.za/items/0fdd8b4f-ec5d-4ab8-8120-443b30894c8c ; https://learn.rakwireless.com/hc/en-us/articles/35956454537111-how-to-enable-fine-timestamp-for-precise-lorawan-geolocation-on-rak-gateways ; https://core.ac.uk/download/55900712.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multistatic: rev B fit",
+    "claim": "GNSS PPS jitter of 20/5/1 ns gives 6.0/1.5/0.3 m per range difference, while the bandwidth bound for a 20 MHz signal at 0 dB SNR over 1 ms is about 4 cm: timing dominates. Two rev B arrays need GNSS-disciplined 10 MHz plus PPS-tagged triggers and over-the-air calibration against known transmitters (the ATLAS / mlat-server / DICHASUS practice) to approach metre or sub-metre TDOA; AoA cross-fixes come free.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section D)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "VLBI-style interferometry",
+    "claim": "Dwingeloo (CAMRAS/JIVE) got VLBI fringes on 4C39.25 with Jodrell Bank Mk2 and WSRT on 25 Aug 2018. It used an Ettus X310 with TwinRX at 1300.49-1364.49 MHz, a GNU Radio VDIF formatter (4 x 16 MHz, 2-bit), a GPS-locked FS725 rubidium reference and correlation at JIVE.",
+    "source": "https://pos.sissa.it/344/156",
+    "confidence": "high"
+   },
+   {
+    "topic": "VLBI-style interferometry: rev B fit",
+    "claim": "With independent references at separate sites, phase stays within 1 rad for about 0.1 s at 1.42 GHz with a TCXO (sigma_y 1e-9), about 11 s with an OCXO GPSDO (1e-11) and about 56 s with rubidium (2e-12), and roughly 4x shorter at 5.8 GHz. Separate-site rev B pairs can fringe on the Sun but not integrate on faint sources unless an OCXO or rubidium is added; cabled boards (A CLKOUT to B CLKIN) avoid the problem.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section C)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Hydrogen line and Milky Way rotation curve",
+    "claim": "Measuring the Milky Way rotation curve from 21 cm Doppler shifts is routine with SDR telescopes: pyramidal horn plus SDR drift scans giving HI maps and a rotation curve (arXiv 2512.19262); a DIY telescope deriving the inner-disk curve (arXiv 2404.17893); a horn plus Airspy hobby build measuring tangent points; a 1 m dish with Raspberry Pi; and a Wurzburg thesis sampling every 5 deg of longitude with 2-min integrations.",
+    "source": "https://arxiv.org/pdf/2512.19262 ; https://pdf.arxiv.org/pdf/2404.17893 ; https://www.rtl-sdr.com/detecting-dark-matters-mark-with-an-rtl-sdr-based-diy-radio-telescope/ ; https://www.arxiv.org/abs/2411.00057 ; https://www.physik.uni-wuerzburg.de/fileadmin/11030400/2026/writeup.pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "Hydrogen line: rev B fit",
+    "claim": "One whip (beam-diluted T_A about 5 K, assumed) gives about 16 sigma per 10 kHz channel in 60 s. A 16-whip beam synthesised from the snapshot covariance has about 27 deg resolution on the 0.45 m plate (6 deg with a 2 m layout) and is limited by bandpass ripple, not noise. Because the sky is stationary, a switched array can image HI without 16 ADCs, which would be uncommon among hobby arrays; the PN calibration source must be muted during observations.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section B)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Solar imaging / interferometry",
+    "claim": "Two-element solar fringes are a standard amateur result: a Harvard course used two 21 cm horns on a 20 m E-W baseline (fringe period about 2.4 min); a SARA member (June 2026) got Sun fringes at 1.255 GHz on about 10 m with an SDRplay RSPduo correlator; MIT Haystack's VSRT used 0.45 m dishes with 12 GHz LNBs to measure the solar diameter. A KrakenSDR user ran one baseline at 1419 MHz for a year and saw faint continuum fringes.",
+    "source": "https://ui.adsabs.harvard.edu/abs/2020AAS...23511704P/abstract ; https://groups.google.com/g/sara-list/c/hhwTlmKLeM0/m/Gj2PztdhCgAJ ; https://www.haystack.mit.edu/haystack-memo-series/vsrt-and-mosaic-memos ; https://groups.google.com/g/sara-list/c/hg0Od3aJ29A",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Solar/continuum: rev B fit",
+    "claim": "Whip-whip Sun fringes come out at about 5.7 sigma in 0.1 s and 18 sigma in 1 s at 20 MHz (quiet Sun 50 sfu assumed); panel-panel at 2.44 and 5.8 GHz gives 26 and 36 sigma in 1 s. Cas A gives about 3 sigma per hour on whips and about 2 sigma per hour on panels, so not practical. The Sun, plus e-CALLISTO-band (45-870 MHz) solar bursts on the external ports, are the realistic radio-astronomy targets besides HI.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section A); https://www.dlr.de/en/so/research-transfer/research-infrastructure/instruments/callisto-solar-spectrometers",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Meteor scatter",
+    "claim": "BRAMS runs a 49.97 MHz, 130 W CW transmitter at Dourbes and 42 receiving stations (newer ones: SDRplay RSP2 plus Raspberry Pi with a GPSDO 24 MHz reference). Its Humain 5-antenna Jones interferometer gives echo DOA to about 1 deg, which makes forward-scatter trajectory reconstruction tractable (checked against CAMS optical).",
+    "source": "https://brams.aeronomie.be/ ; https://meetingorganizer.copernicus.org/EPSC2022/EPSC2022-227.html ; https://orbi.uliege.be/handle/2268/306194",
+    "confidence": "high"
+   },
+   {
+    "topic": "Meteor scatter: rev B fit",
+    "claim": "Poor fit: meteor work lives at 30-150 MHz, below rev B's 0.4 GHz floor, and underdense-trail echoes scale roughly as lambda^3, so they are about 28 dB weaker at 433 MHz than at 50 MHz. Only large meteors or head echoes would show.",
+    "source": "estimate: lambda^3 forward-scatter scaling, /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section I)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Ionospheric measurements",
+    "claim": "Spaced GNSS receivers measure ionospheric drift: ScintPi 3.0 (low-cost receiver plus Pi; AMT 2025); Wang and Morton used an array of software-defined multi-GNSS front ends at Poker Flat; Cristodaro et al. (GRSL 2018) built a scintillation monitor from a USRP data grabber and a software GNSS receiver.",
+    "source": "https://amt.copernicus.org/articles/18/909/2025/ ; https://sites.bc.edu/ies2017/wp-content/uploads/sites/200/2017/05/10B6-Wang-paper_v3.pdf ; https://iris.polito.it/bitstream/11583/2701809/2/08275502.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Ionosphere: rev B fit",
+    "claim": "The two bladeRFs have independent LOs, so one can sit on L1 and the other on L5 or L2 at the same time, giving dual-frequency TEC with array beams per satellite. Phase scintillation needs OCXO-class stability, and drift velocity needs spaced sites (100 m-1 km), so ionospheric work is really a multistatic-network application.",
+    "source": "estimate: REDESIGN.md section 5 (bladeRF A and B on separate radios); the AD9361 shared-RX-LO detail was not re-checked",
+    "confidence": "medium"
+   },
+   {
+    "topic": "ML RF datasets",
+    "claim": "RadioML 2018.01A (DeepSig): 24 modulations, about 2 million examples of 1024 samples, synthetic channel effects plus over-the-air captures, CC BY-NC-SA. ORACLE: 16 bit-similar USRP X310 transmitters received by a B210 (802.11a, 2.45 GHz, 5 MS/s, SigMF), with 99% fingerprinting accuracy. DroneRF: 2 x NI USRP-2943, 3 drones, 227 segments, over 40 GB.",
+    "source": "https://deepsig.squarespace.com/datasets-old ; https://genesys-lab.org/oracle ; https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6727013/",
+    "confidence": "high"
+   },
+   {
+    "topic": "ML RF datasets: rev B fit",
+    "claim": "Public multi-antenna datasets are mostly single-band CSI (ESPARGOS 2.4 GHz, DICHASUS 1.272/3.4 GHz). A calibrated 16-port, 0.4-6 GHz, transmit-capable array that logs manifold, IMU, GNSS and camera labels in SigMF would offer a rare multi-band, AoA-labelled IQ set. Recordings should be limited to own or consenting transmitters and public broadcasts.",
+    "source": "estimate: comparison of https://arxiv.org/html/2408.16377 and https://dichasus.inue.uni-stuttgart.de/datasets/data/dichasus-cf0x with REDESIGN.md",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Integrity verification: ADS-B",
+    "claim": "TU Delft (Huygens, Sun, Hoekstra 2021) verified ADS-B by comparing the DOA measured with a 4-channel KerberosSDR (linear and circular 4-element arrays) against the bearing computed from the broadcast position, and validated it with injected signals from another SDR.",
+    "source": "https://doi.org/10.3390/engproc2021013004 ; https://repository.tudelft.nl/file/File_9e17f7ea-d889-444f-8835-f4c7d150e457?preview=1",
+    "confidence": "high"
+   },
+   {
+    "topic": "GNSS reflectometry (extra)",
+    "claim": "Low-cost GNSS interferometric reflectometry measures water level and snow depth: the Raspberry Pi Reflector tracks river levels to centimetres, and a GPS Solutions 2021 open SNR sensor published full hardware. An array could add separate sky and ground beams (estimate).",
+    "source": "https://github.com/MakanAKaregar/RPR ; https://link.springer.com/doi/10.1007/s10291-021-01087-1",
+    "confidence": "medium"
+   },
+   {
+    "topic": "EME with electronic arrays (extra)",
+    "claim": "ScaleRF's planned 'Moon' array (60 QuadRF tiles, 240 antennas) targets about 33.8 dBi, about 60.6 dBW EIRP and about 60 deg steering for amateur EME and radio astronomy, requiring a Technician-or-higher licence. Rev B (panel EIRP at most +9.4 dBm) is roughly 80 dB short.",
+    "source": "https://scalerf.com/ ; REDESIGN.md section 9",
+    "confidence": "high"
+   },
+   {
+    "topic": "Rev B structure: snapshot switching",
+    "claim": "With 16 whips on 4 channels, every pair is seen in only 1 of 20 slots, so the 120 baselines carry as much signal as sqrt(6) full-time baselines, the same as a fixed 4-element array and 6.5 dB below 16 ADCs (sqrt(120)). Switching buys aperture (resolution, sidelobes), not sensitivity: good for stationary sky and steady carriers, unusable for nulling, transients or per-pulse radar.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt (section A)",
+    "confidence": "high"
+   },
+   {
+    "topic": "Rev B structure: fixed port groups",
+    "claim": "Rev B's external selector takes one port per fixed group per slot (groups {0,6,11,13} {1,7,10,12} {2,4,9,15} {3,5,8,14}), so only 96 of 120 pairs are ever simultaneous (16 slots cover them). The lambda/2 grid then loses 2 of 24 baseline vectors; the two-ring layout (assuming ports 0-7 outer, 8-15 inner) loses 12 of 64. A swap search found a port-to-whip relabelling that loses only 2, which is a free wiring fix for covariance imaging.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/snapshot_coverage_out.txt ; groups from REDESIGN.md section 4",
+    "confidence": "high"
+   },
+   {
+    "topic": "Off-limits and regulatory boundaries",
+    "claim": "Excluded from the catalogue as off limits: jamming (including live jammers for nulling tests outside sanctioned events), GNSS spoofing (only detection is catalogued), decoding private payloads (drone video/control, cellular, Wi-Fi data), covert or through-wall tracking of people or their phones, and drone mitigation. Export or regulatory sensitivity of passive-radar software is real: KrakenRF withdrew its code in 2022.",
+    "source": "https://www.justice.gov/media/1084061/dl ; https://hackaday.com/2022/11/19/open-source-passive-radar-taken-down-for-regulatory-reasons",
+    "confidence": "high"
+   }
+  ],
+  "files": [
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/fit_estimates_out.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/snapshot_coverage.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/snapshot_coverage_out.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/catalogue/tools/pdf2txt.py"
+  ],
+  "open_questions": [
+   "The parallel feasibility output reports 'AG(2,4): 120 of 120 pairs' for the radio camera. Rev B's fixed external groups allow only 96 of 120 pairs at once. Which assumption do control.py's Latin-square/Paley-20 schedules make?",
+   "The ring baseline loss (12 of 64, cut to 2 by relabelling) assumes ports 0-7 are the outer ring in angle order. The real port-to-whip map must be confirmed (hw/design.py or the plate drawing) before fixing the wiring.",
+   "Which GNSS module and oscillator would discipline the 10 MHz? A TCXO limits separate-site coherence to about 0.1 s at 1.42 GHz; an OCXO GPSDO gives about 11 s. This decides whether two-array interferometry and phase-scintillation work are possible.",
+   "Should rev B get a frequency-hopping RFID mode under 15.247 plus a PA? Without it, UHF RFID is receive-only (tag directions beside a COTS reader).",
+   "Remote ID bearing checks at 2.4 GHz depend on the panel manifold in multipath; rev B's real accuracy outdoors is unmeasured (simulated 0.5-2 deg).",
+   "Web-search budget ran out (shared limit), so several entries rest on search snippets and were not re-checked: CTTC GNSS array testbeds, ArcSAR/turntable SAR primary papers, BLE AoA standards, the AD9361 shared-RX-LO detail, and the GRCon 2026 Remote ID talk (its page returned 404).",
+   "Radio-astronomy use needs firmware/host support for long, stable switching schedules, a muted PN source, and bandpass calibration. Not checked against fwsim/protocol."
+  ]
+ },
+ "investigate:bounds": {
+  "summary": "Bottom line: nearly every exotic capability of this array is legal if it only listens. Transmitting fits inside Part 15 or a $35 Technician licence, within specific bands and levels. A short list is off limits at every stage. What decides legality is what you decode and whom you sense, not the hardware.\n\nReceive-only, fine: direction finding, beams and a \"radio camera\", passive radar on aircraft and vehicles, radio astronomy, GNSS reception, calibration and nulling, analysis of weather-radar pulses, ADS-B/UAT/Remote ID, amateur and weather satellites, interference hunting, and using cellular, Wi-Fi or TV signals as illuminators without demodulating them. The boundary is interception law:\n- 18 USC 2511 allows aeronautical, marine, amateur, broadcast and unencrypted public-safety traffic.\n- \"Readily accessible\" excludes encrypted traffic, common-carrier traffic (cellular, display pagers) and Part 25 satellite traffic.\n- 47 USC 605 bars divulging most intercepted content.\n- Joffe v. Google puts Wi-Fi payloads off limits.\n- The pen/trap statute covers addressing and signalling data such as MAC addresses and IMSIs. The 2020 DOJ/DHS/FAA/FCC drone advisory applies it to RF detection systems.\n\nTransmitting, under Part 15 or a licence: home-built devices need no FCC authorisation (15.23), but they must meet the limits and stop if they cause interference (15.5). New points for rev B:\n1. 15.209 bars any fundamental in 470-806 MHz and allows only -49.2 dBm EIRP at 216-960 MHz. Both belong in the radiated-calibration interlock.\n2. All five US246 \"no transmission\" radio-astronomy bands in 0.4-6 GHz already lie inside 15.205 bands, so the existing interlock protects them.\n3. REDESIGN's table omits 15.247. Digitally modulated signals at 902-928, 2400-2483.5 and 5725-5850 MHz may use 1 W with 6 dBi (36 dBm EIRP). So data-carrying beam steering and two-array MIMO links need no back-off.\n4. The open radar questions:\n   - The text of 15.245 sets no modulation limit, so FMCW fits a short-range field disturbance sensor. Aircraft-range use stretches the word \"vicinity\".\n   - Radar is not one of the one-way transmissions in 97.111(b). Amateur radar therefore rests on brief \"test\" emissions, with pulse allowed only at 33, 13 and 5 cm, plus a CW ID. Sustained radar belongs under a Part 5 experimental licence.\n   - Swept systems are measured with the sweep stopped (15.31(c)). Stepped-frequency imaging across 2.3-6 GHz must therefore skip the restricted slices and stay at -41 dBm EIRP.\n\nOff limits at every stage:\n- jamming, including Wi-Fi deauthentication (Marriott paid $600k)\n- radiated test jammers for GNSS nulling (inject the interference by cable)\n- GNSS spoofing or re-radiation\n- fake base stations\n- decoding private traffic\n- covert tracking of devices\n- through-wall sensing of other people\n- taking over drones\n\nEU: the Radio Equipment Directive (RED) excludes self-built amateur equipment that is not sold. The ePrivacy Directive (Art. 5) and GDPR cover MAC tracking; the Dutch regulator fined Enschede \u20ac600k for Wi-Fi tracking.\n\nExport: shipping built hardware abroad may need an export classification. Rev B plausibly meets 5A001.e (direction finding with \u226510 MHz bandwidth on signals shorter than 1 ms). Also relevant are 6A008.e/.k (radar with a steered array or pulse compression), 7A005.b (GNSS nulling) and 3A001.a.5.a (fast ADCs). Designs published openly are outside the export rules (EAR). In the National Radio Quiet Zone, fixed transmitters must coordinate with the observatory, and amateur beacons must notify NRAO in writing.\n\nRoadmap (all costs and hours are estimates):\n\n| Stage | Cost | Effort | First cheap, legal demo |\n|---|---|---|---|\n| 1. Rev B as proposed | \u2248$2.6k | 520-630 h (REDESIGN's steps sum to 630, not the 520 it states) | ADS-B \"truth map\": measured bearings against each aircraft's own broadcast position, SNR 25-40 dB at 50-200 km |\n| 2. GNSS-disciplined timing (GPSDO from \u20ac155 net) | \u2248$200-300 | 60-120 h | GPS satellites calibrate the 16 whips and give the array's heading (about 0.4\u00b0 per pair per second from thermal noise) |\n| 3. All 16 elements digitised | \u2248$1.6-4k | 300-600 h | Live 16-beam radio camera at 1090 MHz; streams need 0.64-1.28 GB/s at 20 MSPS |\n| 4. Motion | \u2248$50-600 | 60-150 h | Walk-around direction finding of your own 433.92 MHz sensor with IMU-stabilised bearings; stretch: the Moon at 5 GHz |\n| 5. Dual polarisation | \u2248$0.5-1.6k | 150-250 h | Horizontal/vertical polarimetry of a NEXRAD weather radar's pulses |\n| 6. Second array | \u2248$1.2-2.4k | 150-250 h | Measure the Sun's diameter; the first null falls at a 7-8 m baseline at 5 GHz |\n\n- Pulsars stay out of reach even after stage 3: SNR about 0.6 in one hour.\n- In total: about $6.2-11.5k and 1,250-2,000 h.\n- Best value per dollar: GNSS timing and motion straight after rev B; all-channel digitisation last, once the receiver study is in.\n\nPractical bound: within about 20 km line of sight of an S-band weather radar, main-beam pulses could reach -15 to +11 dBm at each panel LNA. The QAMP compresses at -20 dBm. Do solar work at 4990-5000 MHz rather than 2690-2700 MHz.\n\nNot verified because the shared web-search budget ran out: the current eCFR export-control wording (I used the Wassenaar-based Hong Kong list instead), the GPS L1 power figure, WSR-88D radar parameters, the FAA Remote ID page (blocked, 403) and the Part 5 fee. This is not legal advice.",
+  "findings": [
+   {
+    "topic": "US licence-free transmit: home-built devices",
+    "claim": "47 CFR 15.23 exempts devices that are not marketed, not built from a kit and built in quantities of five or fewer for personal use from FCC equipment authorisation. The builder must still meet the Part 15 technical standards by good engineering practice, and 15.5 applies: cause no harmful interference, accept interference, and stop operating when a Commission representative says it interferes. This is the legal footing for every licence-free transmit mode of rev B.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.23 ; https://www.law.cornell.edu/cfr/text/47/15.5",
+    "confidence": "high"
+   },
+   {
+    "topic": "Gap in REDESIGN's radiated-calibration interlock (TV bands, 216-960 MHz)",
+    "claim": "15.209 bars fundamental emissions of intentional radiators in 54-72, 76-88, 174-216 and 470-806 MHz at any level. Its 216-960 MHz limit is 200 uV/m at 3 m, which is -49.2 dBm EIRP, not the -41.25 dBm that applies above 960 MHz. REDESIGN sections 6 and 8 refuse radiated calibration only in 15.205 bands and cap MANIFOLD mode at -41 dBm EIRP. Fix: add 470-806 MHz to the refusal list and cap CAL-ANT/probe radiation at -49 dBm EIRP below 960 MHz.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.209 ; /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 6 and 8 ; derivation in bounds_estimates.json part15_eirp_dbm",
+    "confidence": "high"
+   },
+   {
+    "topic": "Radio-astronomy no-transmit bands (US246) vs the existing interlock",
+    "claim": "Footnote US246: 'No station shall be authorized to transmit' in 608-614, 1400-1427, 1660.5-1668.4, 2690-2700 and 4990-5000 MHz (the entries inside 0.4-6 GHz). All five sit inside 15.205 restricted bands (608-614, 1300-1427, 1660-1710, 2690-2900 and 4500-5150 MHz), so rev B's 15.205 refusal already protects them, and none overlaps an amateur band. They are the same protected bands the topology study chose for receive-only astronomy.",
+    "source": "https://www.ntia.gov/sites/default/files/2023-11/4_2021_edition_rev_2023.pdf (NTIA Manual ch.4, footnote US246) ; https://www.law.cornell.edu/cfr/text/47/15.205",
+    "confidence": "high"
+   },
+   {
+    "topic": "15.247 missing from REDESIGN's US transmit table",
+    "claim": "15.247 covers digitally modulated systems in 902-928, 2400-2483.5 and 5725-5850 MHz. Conditions: 6 dB bandwidth of at least 500 kHz, PSD no more than 8 dBm per 3 kHz, out-of-band emissions 20 dB down per 100 kHz, and 15.209 limits in restricted bands. Such systems may use 1 W conducted with up to 6 dBi directional gain, about 36 dBm EIRP. Above 6 dBi the power must drop dB for dB, except fixed point-to-point links (1 dB per 3 dB at 2.4 GHz, no reduction at 5.8 GHz); 2.4 GHz multi-beam arrays have their own rules. So data-carrying transmit beam steering and two-array MIMO or OAM links can run at full bladeRF drive (+6 to +8 dBm EIRP), with none of the 9.3/7.5 dB back-off that 15.249 needs. Whether a PN-coded (BPSK) radar may operate as a 15.247 device is an open interpretation.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.247 ; REDESIGN.md section 7",
+    "confidence": "high"
+   },
+   {
+    "topic": "REDESIGN open question: FMCW under 15.245",
+    "claim": "15.245 is limited to field disturbance sensors (excluding perimeter protection). Limits: 500 mV/m at 3 m (+18.75 dBm EIRP) in 902-928, 2435-2465 and 5785-5815 MHz; harmonics 1.6 mV/m and 15.209 in restricted bands; out-of-band emissions 50 dB down or at 15.209; average detector, with the 15.35 peak rule. The text sets no modulation restriction, so a chirp is not excluded. The definition in 15.3(l) is a device that 'establishes a radio frequency field in its vicinity' and detects movement within its range. Garden-scale ranging and motion fit that; an aircraft-range radar stretches 'vicinity' (interpretation). Estimate: keep chirps near 25 MHz in the 30 MHz bands so the 50 dB out-of-band rule has room; REDESIGN's 30 MHz chirp option leaves none.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.245 ; https://www.law.cornell.edu/cfr/text/47/15.3",
+    "confidence": "medium"
+   },
+   {
+    "topic": "REDESIGN open question: one-way radar under Part 97",
+    "claim": "Radar is not among the one-way transmissions listed in 97.111(b). The only hook is 97.305(b): 'test' emissions, defined in 97.3(c)(9) as carrying no information with N as the third symbol, 'for brief periods for experimental purposes'. Pulse emissions are allowed only where the table authorises pulse: 33 cm, 13 cm and 5 cm, not 70 cm or 23 cm. Also, 97.119 forbids unidentified signals (so add a CW ID), and 97.307(a) and 97.313(a) require minimum bandwidth and minimum power. No FCC ruling on amateur FMCW radar was found. Reading: short FMCW experiments under a Technician licence are defensible; sustained radar belongs under a Part 5 experimental licence (FCC Form 442).",
+    "source": "https://www.law.cornell.edu/cfr/text/47/97.111 ; https://www.law.cornell.edu/cfr/text/47/97.305 ; https://www.law.cornell.edu/cfr/text/47/97.3 ; https://www.law.cornell.edu/cfr/text/47/97.119 ; https://www.law.cornell.edu/cfr/text/47/97.307 ; https://www.law.cornell.edu/cfr/text/47/97.313",
+    "confidence": "medium"
+   },
+   {
+    "topic": "What a Technician licence opens",
+    "claim": "Under 97.301(a), Region 2, a Technician may use 420-450, 902-928, 1240-1300, 2300-2310, 2390-2450 and 5650-5925 MHz, at the minimum power necessary and no more than 1.5 kW PEP (97.313). The FCC fee has been $35 since 19 April 2022; upgrades carry no fee. Conditions:\n- station ID at least every 10 minutes and no unidentified signals (97.119);\n- no messages encoded to obscure their meaning, and no pecuniary interest (97.113(a)(4) and (a)(3));\n- RF-exposure compliance (97.13(c));\n- no transmitting in 420-430 MHz north of Line A, and protect other nations' radionavigation-satellite (GNSS) services at 23 cm (97.303).\nThe 9 cm band is effectively gone: 3.45-3.5 GHz ended on 14 April 2022, 3.3-3.45 GHz continues only pending FCC action, and the current 97.301 table no longer lists it.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/97.301 ; https://www.law.cornell.edu/cfr/text/47/97.303 ; https://www.law.cornell.edu/cfr/text/47/97.313 ; https://www.law.cornell.edu/cfr/text/47/97.113 ; https://www.arrl.org/news/new-amateur-radio-license-applications-fee-to-become-effective-april-19-2022 ; https://www.arrl.org/w1aw-bulletins-archive/ARLB005/2022",
+    "confidence": "high"
+   },
+   {
+    "topic": "Stepped-frequency imaging and synthetic wide bandwidth",
+    "claim": "Under 15.31(c), swept-frequency equipment is measured with the sweep stopped. So every step of a stepped-frequency radar or near-field imager must meet the limit for its own frequency: 15.209 (-41.25 dBm EIRP above 960 MHz) outside restricted bands, and only spurious emissions inside them (51% of 2.3-6 GHz per REDESIGN). The UWB imaging rules do not help: 15.509 limits wall imaging to law enforcement, fire, rescue, scientific research, mining or construction users eligible under Part 90, and 15.510 limits through-wall imaging to public-safety agencies. Wideband imaging is therefore a receive-only, conducted or shielded-enclosure experiment (interpretation for the enclosure).",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.31 ; https://www.law.cornell.edu/cfr/text/47/15.205 ; https://www.law.cornell.edu/cfr/text/47/15.509 ; https://www.law.cornell.edu/cfr/text/47/15.510",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Interception boundary (US)",
+    "claim": "18 USC 2511(1)(a) bars intercepting wire, oral or electronic communications. 2511(2)(g) excepts communications readily accessible to the public, stations for the general public or for distress, unencrypted government and public-safety systems, the amateur/CB/GMRS bands, and marine or aeronautical systems. Under 2510(16), radio is not 'readily accessible' if it is encrypted, on a subcarrier, carried by a common carrier (except tone-only paging) or on Part 25 or Part 74 D/E/F frequencies. 47 USC 605 bars divulging intercepted radio content, with exceptions only for general-public, distress and amateur/CB transmissions. Joffe v. Google (9th Cir. 2013) held that unencrypted Wi-Fi payloads are not exempt. Result:\n- Fine to receive: ADS-B, UAT, Mode S, amateur, broadcast, weather satellites.\n- Off limits: cellular, display-pager, Wi-Fi payload and Part 25 satellite user traffic (Inmarsat, Iridium).\n- Unencrypted public safety may be heard but should not be published.",
+    "source": "https://www.law.cornell.edu/uscode/text/18/2511 ; https://www.law.cornell.edu/uscode/text/18/2510 ; https://www.law.cornell.edu/uscode/text/47/605 ; https://caselaw.findlaw.com/us-9th-circuit/1643851.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "Device tracking: pen/trap and the drone advisory",
+    "claim": "18 USC 3121 and 3127 forbid any person to install or use a device or process that records or decodes 'dialing, routing, addressing, or signaling information' without a court order; the exceptions are for providers and with the user's consent. The DOJ/DHS/FAA/FCC advisory (August 2020) says whether a detection system implicates the Pen/Trap Statute and the Wiretap Act depends on whether it captures, records, decodes or intercepts communications between a drone and its controller. It cites identifiers such as IMEI and IMSI, says RF-emitting detection must comply with FCC rules, and says mitigation may violate federal law. By the same logic, logging other people's Wi-Fi or BLE MAC addresses is legally exposed (interpretation). Safe form: aggregate counts in your own space, with salted, rotating hashes and no stored raw identifiers.",
+    "source": "https://www.law.cornell.edu/uscode/text/18/3121 ; https://www.law.cornell.edu/uscode/text/18/3127 ; https://www.justice.gov/media/1084061/dl ; https://www.justice.gov/opa/pr/interagency-issues-advisory-use-technology-detect-and-mitigate-unmanned-aircraft-systems",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Jamming: off limits",
+    "claim": "47 USC 333: 'No person shall willfully or maliciously interfere' with licensed or government radio. The FCC says jammers may not be operated in the US even on private property, and offenders face fines, seizure of the equipment and possible imprisonment. Marriott paid $600,000 in 2014, under section 333, for Wi-Fi deauthentication. Off limits for this array: jamming, deauthentication frames, and pointing transmit beams or nulls at other people's links.",
+    "source": "https://www.law.cornell.edu/uscode/text/47/333 ; https://www.fcc.gov/general/jammer-enforcement ; https://transition.fcc.gov/eb/Public_Notices/DA-14-1785A1.html ; https://transition.fcc.gov/eb/Orders/2014/DA-14-1444A1.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "GNSS: spoofing, re-radiation, and testing a nulling capability",
+    "claim": "GNSS frequencies lie in 15.205 restricted bands (960-1240 and 1435-1626.5 MHz). In 2006 the FCC held that GPS re-radiator kits cannot be authorised because they operate in restricted bands, and operating any transmitter there also needs a section 301 licence. Spoofing, meaconing and re-radiation are off limits. The GNSS adaptive-nulling capability another lens proposes must be tested with interference injected by cable or from natural sources, never radiated (interpretation).",
+    "source": "https://transition.fcc.gov/bureaus/eb/Orders/2006/FCC-06-30A1.html ; https://www.law.cornell.edu/cfr/text/47/15.205",
+    "confidence": "high"
+   },
+   {
+    "topic": "Through-wall and vital-sign sensing: consent only",
+    "claim": "UWB wall and through-wall imaging are restricted by rule to public-safety, research and construction users (15.509, 15.510). Kyllo v. United States (2001) held that the government's use of sense-enhancing technology not in general public use to learn about a home's interior is a search; that is the privacy norm to follow. Radar or Wi-Fi sensing of breathing, motion or occupancy should be used only on yourself or consenting household members, and never aimed at neighbours. State privacy laws were not checked.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.510 ; https://www.law.cornell.edu/cfr/text/47/15.509 ; https://www.govinfo.gov/content/pkg/USREPORTS-533/pdf/USREPORTS-533-27.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Cellular bands",
+    "claim": "15.121 requires scanning receivers (automatic switching between frequencies in 30-960 MHz) to be incapable of tuning the cellular bands. Cellular traffic is common-carrier, so it is not 'readily accessible' (18 USC 2510(16)(D)). Use cell signals only as passive-radar illuminators, or measure base-station power and angle. Never decode user traffic or subscriber identifiers; IMSI catchers are 5A001.f items and need an unlicensed transmitter.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/15.121 ; https://www.law.cornell.edu/uscode/text/18/2510 ; https://www.stc.tid.gov.hk/english/checkprod/cat_5_1.html",
+    "confidence": "high"
+   },
+   {
+    "topic": "RF exposure",
+    "claim": "Limits for the general population (47 CFR 1.1310): 1.0 mW/cm2 at 1.5-100 GHz and f/1500 mW/cm2 at 300-1500 MHz, averaged over 30 minutes. At rev B levels (at most +18.75 dBm EIRP) the limit is reached only within a few centimetres. Hypothetical amateur builds need a keep-out zone of about 1-2 m in the beam: 4 x 1 W into the panel at 5.8 GHz (+50.5 dBm EIRP) gives 0.9-1.5 m; 5 W into a 14 dBi Yagi at 915 MHz gives 1.3-2.0 m (estimate, far-field point source with and without a 2.56 ground-reflection factor). 97.13(c) makes the licensee responsible.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/1.1310 ; https://www.law.cornell.edu/cfr/text/47/97.13 ; estimate: bounds_estimates.json mpe_distance_m_plain_and_with_ground_reflection",
+    "confidence": "medium"
+   },
+   {
+    "topic": "EU in brief",
+    "claim": "RED (2014/53/EU) Annex I(1) excludes equipment used by radio amateurs unless it is made available on the market; kits for assembly and equipment modified by and for amateurs do not count as made available. Article 3(2) requires equipment to use spectrum efficiently 'in order to avoid harmful interference', which a jammer cannot meet. ePrivacy Article 5(1) prohibits 'listening, tapping, storage or other kinds of interception or surveillance' of communications and traffic data without consent. In 2021 the Dutch regulator fined Enschede \u20ac600,000 for Wi-Fi tracking; pseudonymised MAC addresses were still personal data. Licence-free EU transmission stays in the short-range-device (SRD) bands, as in REDESIGN's EU profile.",
+    "source": "https://eur-lex.europa.eu/eli/dir/2014/53/oj ; https://eur-lex.europa.eu/eli/dir/2002/58/oj ; https://edpb.europa.eu/news/national-news/2021/dutch-dpa-fines-municipality-wi-fi-tracking_es",
+    "confidence": "high"
+   },
+   {
+    "topic": "Radio quiet zones",
+    "claim": "The National Radio Quiet Zone covers about 13,000 square miles (Maryland/Virginia/West Virginia box, 37\u00b030'-39\u00b015'N, 78\u00b030'-80\u00b030'W). New or modified fixed licensed transmitters there must coordinate with the observatory, and amateur automatically controlled beacons need written notice to NRAO (97.203(e)). Receive-only astronomy is unaffected; an always-on radar or calibration beacon inside the zone should be coordinated.",
+    "source": "https://greenbankobservatory.org/about/national-radio-quiet-zone/ ; https://www.law.cornell.edu/cfr/text/47/97.3 ; https://www.law.cornell.edu/cfr/text/47/97.203",
+    "confidence": "high"
+   },
+   {
+    "topic": "Export controls on built hardware",
+    "claim": "Wassenaar control text (read from the Hong Kong list, which mirrors it, because eCFR blocked automated reads):\n- 5A001.e: direction-finding equipment above 30 MHz with at least 10 MHz instantaneous bandwidth that can take a bearing on non-cooperating transmitters with signals shorter than 1 ms. Rev B's 4-channel AD9361 mode plausibly meets both (estimate).\n- 5A001.b.5: receivers with more than 1000 channels, switching under 1 ms, automatic scanning and signal identification. Relevant if an automatic scan-and-classify feature ships.\n- 6A008.e: radar with electronically scanned arrays. 6A008.k: pulse compression ratio above 150 or compressed pulse under 200 ns; a 20 MHz chirp gives about 50 ns. 6A008.d: SAR/ISAR.\n- 7A005.b: GNSS receivers with adaptive antenna systems; ordinary commercial GPS is 7A994.\n- 3A001.a.5.a: ADCs above 400 MSPS at 12-bit, 250 MSPS at 14-bit, 65 MSPS at 16-bit. The AD9361 (12-bit, at most 61.44 MSPS) is clear.\nThese matter only if built units, or unpublished design data, go abroad or to foreign persons.",
+    "source": "https://www.stc.tid.gov.hk/english/checkprod/cat_5_1.html ; https://www.stc.tid.gov.hk/english/checkprod/cat_6.html ; https://www.stc.tid.gov.hk/english/checkprod/cat_3.html ; https://www.space.commerce.gov/wp-content/uploads/2022-03-US-export-controls-GPS-GNSS-equipment.pdf ; https://data.consilium.europa.eu/doc/document/ST-13064-2018-ADD-9/en/pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Published designs are outside the EAR",
+    "claim": "Under 15 CFR 734.3(b)(3) and 734.7, technology and software published with no restriction on further dissemination (for example a public repository) are not subject to the EAR; published encryption code has extra conditions. A public repo removes the deemed-export question for the design itself. Physical units still need classification before export.",
+    "source": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.7 ; https://bestpractices.linuxfoundation.org/export/ear-oss.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Power beaming and field focusing",
+    "claim": "Part 18 'ISM equipment' generates and uses RF energy locally, excluding telecommunication. It is not a route to beaming power at a distance (interpretation). The near-field focusing, vortex and time-reversal experiments in experiments/local_fields stay at Part 15 or Part 97 levels.",
+    "source": "https://www.law.cornell.edu/cfr/text/47/18.107",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Roadmap stage 1: rev B as proposed",
+    "claim": "Cost about $2,630 ($1,550 calibrated system + $1,080 for two bladeRFs) and 520-630 h, per REDESIGN.\n\nWhat becomes possible: direction finding over 0.4-6 GHz, receive beams, passive radar (open-source example: blah2), Part 15 radar in the 15.245 bands, transmit steering (15.247 for data, 15.249, or amateur), radio astronomy in the US246 bands, and ADS-B/UAT/Remote ID direction finding.\n\nFirst wow: an ADS-B 'truth map'. Compare each aircraft's measured bearing at 1090 MHz with the bearing computed from its own broadcast position, giving hundreds of free calibration checks an hour. Estimated SNR is 25-40 dB at 50-200 km, assuming 125-250 W transponders, 2 dBi whips and NF 1.3 dB. Legal under 18 USC 2511(2)(g)(ii)(IV); nothing needs publishing.",
+    "source": "REDESIGN.md sections 1, 10, 12 ; https://github.com/30hours/blah2 ; https://www.law.cornell.edu/uscode/text/18/2511 ; estimate: bounds_estimates.json adsb_link",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Practical bound: S-band radar pulses at the panel",
+    "claim": "Within about 20 km line of sight of an S-band weather radar, main-beam passes could put -15 to +11 dBm pulses on each panel LNA. Estimate assumes a WSR-88D-like radar (750 kW, 45.5 dBi) and -1.6 dBi per element at 2.8 GHz. That is far above the QAMP's -20 dBm compression point. Check the LNA and switch absolute-maximum ratings, blank on pulses, and do solar work at 4990-5000 MHz rather than 2690-2700 MHz, which sits next to the 2700-2900 MHz radionavigation and meteorological-aids allocation.",
+    "source": "estimate: bounds_estimates.json weather_radar_pulse_at_element_lna_dbm (radar parameters assumed, not verified) ; REDESIGN.md section 5 ; https://www.ntia.gov/sites/default/files/2023-11/4_2021_edition_rev_2023.pdf",
+    "confidence": "low"
+   },
+   {
+    "topic": "Roadmap stage 2: GNSS-disciplined timing",
+    "claim": "Hardware: a GNSS-disciplined 10 MHz source feeding the LMK1C1106 clock tree, plus PPS into the RP2040 for timestamps. Leo Bodnar LBE-1420 is \u20ac155 net; a GPS antenna is about \u00a316. Total about $200-300 and 60-120 h (estimate).\n\nWhat becomes possible: UTC time tags, absolute frequency for Doppler (orbit fits of 435-438 MHz amateur satellites), GNSS satellites as calibration beacons and an array compass, and multilateration or TDOA with other stations (mlat-server syncs receivers to about 0.5 us using ADS-B position messages).\n\nFirst wow: 'the array finds north'. Despread GPS L1 C/A on the whips. Thermal phase noise is about 0.44\u00b0 per pair per second with 4-of-16 switching (C/N0 about 45 dB-Hz, assuming -128.5 dBm received power, unverified); multipath will dominate. Receive-only.",
+    "source": "https://www.batronix.com/shop/frequency-references/index.html ; https://www.sdr-kits.net/LBE-1420-GPS-Clock ; https://github.com/mutability/mlat-server ; https://discussions.flightaware.com/t/mlat-and-piaware/70609/21 ; estimate: bounds_estimates.json gps_l1_calibration",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Roadmap stage 3: digitise all 16 elements",
+    "claim": "Three routes (estimates except quoted prices):\n- (a) Six more bladeRF 2.0 micro xA4, about $3,240. But 16 streams need 0.64-1.28 GB/s at 20 MSPS, beyond USB unless samples are 8-bit or decimated.\n- (b) Coherent RTL-class tuners for the whip band only (KrakenSDR lists $499 for 5 channels, 24-1766 MHz), about $1.6k.\n- (c) A custom design: AD9083 (16 channels, from $412.81 at 1k units) plus downconverters and a JESD204B FPGA, about $2-4k and 300-600 h.\nCorrelator load is about 2.4 G complex MAC/s at 20 MSPS.\n\nWhat becomes possible: MUSIC on bursts across all 16 elements, many simultaneous beams, full-rank adaptive nulling, interferometry about 20x faster than switched (topology study), and the receive side of MIMO radar.\n\nFirst wow: a live 16-beam 1090 MHz 'radio camera' with ADS-B overlay. If the hardware may ever be exported, keep ADCs below the 3A001.a.5.a thresholds.",
+    "source": "https://www.krakenrf.com/product-page/krakensdr ; https://lab401.com/collections/sdr/products/krakensdr ; https://www.analog.com/en/products/ad9083.html ; REDESIGN.md section 10 ; experiments/topology/results.json astro ; estimate: bounds_estimates.json all16_stream_MB_per_s",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Pulsars stay out of reach",
+    "claim": "PSR B0329+54 at 408 MHz with all 16 whips beamformed gives SNR of about 0.56 in 1 h and 1.1 in 4 h. Assumptions: the 16 whips sit inside 0.6 wavelength, so effective area is limited to the aperture, pi x (0.25 m)^2; Tsys 234 K from the topology study; catalogue values S400 = 1.5 Jy, P = 0.7145 s, W50 = 6.6 ms, not verified here. Not a roadmap goal.",
+    "source": "estimate: bounds_estimates.json pulsar_B0329_408MHz",
+    "confidence": "low"
+   },
+   {
+    "topic": "Roadmap stage 4: motion",
+    "claim": "Hardware: REDESIGN's $50 turntable, then a SatNOGS v3 az-el rotator ($300-400 on the wiki, $300-500 in the FAQ) plus an IMU and encoders at about $30-80. Effort 60-150 h (estimate).\n\nWhat becomes possible: ambiguities resolved by rotation, full-sphere manifolds (rotation study), IMU-stabilised mobile direction finding, Sun/Moon/satellite tracking, and SAR/ISAR experiments at Part 15 levels (6A008.d export flag).\n\nFirst wow: walk-around direction finding of your own certified 433.92 MHz sensor, or a club fox hunt, with IMU-stabilised bearings on a map.\n\nStretch: the Moon at 4.99 GHz with electronic on/off beam switching. Antenna temperature about 0.03 K; ideal SNR 7-17 in 10-60 min at 10 MHz bandwidth (estimate, needs gain stability near 1e-4).",
+    "source": "https://wiki.satnogs.org/SatNOGS_Rotator_v3 ; https://satnogs.org/faq/ ; REDESIGN.md section 10 ; estimate: bounds_estimates.json moon_5GHz",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Roadmap stage 5: dual polarisation",
+    "claim": "Hardware: a second set of 16 H-pol flares, LNAs and true-time delays, roughly the tile's $523 again. Add $1,080 if V and H each get four channels; otherwise they time-share the existing four. Effort 150-250 h (estimate).\n\nWhat becomes possible: Stokes polarimetry, circular-polarisation beams for satellites, polarisation-diverse direction finding and nulling, and polarimetric radar.\n\nFirst wow: receive the nearest NEXRAD's pulses and measure their H/V amplitude and phase as the beam sweeps past. The fleet has been dual-pol since 2013 and transmits H and V simultaneously. Radar pulses carry no communications content, so this is receive-only and legal; mind the strong-pulse levels.",
+    "source": "https://www.weather.gov/meg/dualpol ; https://tvtechnology.com/miscellaneous/dualpolarization-weather-radar ; REDESIGN.md section 10",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Roadmap stage 6: second array",
+    "claim": "Cost about $1.2-2.4k: from a tile plus reduced core plus HackRF ($340) up to a full rev B. Effort 150-250 h (estimate).\n\nWhat becomes possible: cross-bearing fixes, bistatic and multistatic radar (the separation removes the transmit-to-receive isolation limit REDESIGN identifies), two-site interferometry, and 15.247 MIMO or OAM links (the fields study's coaxial rings).\n\nFirst wow: measure the Sun's diameter. The first visibility null falls at a 7.0-7.9 m baseline at 4.995 GHz and 13-14.7 m at 2.695 GHz. Fringes come every 1-5 minutes on 5-15 m east-west baselines (estimate, radio diameter assumed 0.53-0.6\u00b0). Share the 10 MHz reference by coax. Receive-only.",
+    "source": "estimate: bounds_estimates.json solar_diameter_interferometer ; REDESIGN.md section 7 ; experiments/fields/tables.md 1d",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Roadmap totals and order",
+    "claim": "The six stages total about $6.2-11.5k and 1,250-2,000 h (estimate). On value per dollar: GNSS timing (about $250) and motion ($50-600) right after rev B, the second array next, and all-channel digitisation last, once experiments/receiver_study.md lands.",
+    "source": "estimate: sum of the stage findings above",
+    "confidence": "medium"
+   },
+   {
+    "topic": "REDESIGN consistency: build hours",
+    "claim": "The build-order steps in REDESIGN section 12 add up to 630 h (40+30+60+180+180+100+40), but section 1 says 520 hours.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 1 and 12",
+    "confidence": "high"
+   },
+   {
+    "topic": "Example projects and references",
+    "claim": "- blah2: open-source real-time passive radar using a reference and a surveillance channel.\n- KrakenSDR: 5-channel coherent RTL-SDR for direction finding and passive radar.\n- mlat-server: multilateration with clocks synced from ADS-B.\n- SatNOGS: open-source rotator.\n- NOAA SWPC F10.7: the 2800 MHz solar-flux reference (1 sfu = 1e-22 W m^-2 Hz^-1; below 50 to above 300 sfu over a solar cycle).\n- Remote ID: drone broadcasts meant for public reception (the FAA page returned 403; Wikipedia used).",
+    "source": "https://github.com/30hours/blah2 ; https://www.krakenrf.com/product-page/krakensdr ; https://github.com/mutability/mlat-server ; https://wiki.satnogs.org/SatNOGS_Rotator_v3 ; https://www.spaceweather.gov/phenomena/f107-cm-radio-emissions ; https://en.wikipedia.org/wiki/Remote_ID",
+    "confidence": "medium"
+   }
+  ],
+  "files": [
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/bounds_estimates.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/capabilities/bounds_estimates.json",
+   "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/topology/results.json"
+  ],
+  "open_questions": [
+   "Where will the array operate? Line A matters for 420-430 MHz, the National Radio Quiet Zone needs coordination, and line of sight to a NEXRAD or airport radar drives limiter and blanking needs. US or EU profile?",
+   "Will a built unit, or unpublished design data, ever go to someone outside the US? Is the GitLab repo public, which would make the design 'published' under 734.7?",
+   "Will the owner get a Technician licence? For sustained radar, a Part 5 experimental licence? Should someone ask the FCC (a KDB inquiry) whether long-range FMCW ranging qualifies as a 15.245 field disturbance sensor, and whether a PN-coded radar may use 15.247?",
+   "Should REDESIGN add 470-806 MHz and the -49.2 dBm EIRP cap below 960 MHz to the radiated-calibration interlock, add 15.247 to the US transmit table, keep chirps at about 25 MHz in the 30 MHz 15.245 bands, and settle 520 vs 630 build hours?",
+   "Can the PMA3-83LNW+ and BGS12WN6 absolute-maximum ratings survive S-band radar pulses near -15 to +11 dBm per element (estimate)? Is a limiter or pulse blanking needed on the tile?",
+   "The stage 3 receiver route and cost depend on experiments/receiver_study.md, which does not exist yet.",
+   "What privacy policy governs any Wi-Fi, BLE, RFID or vital-sign sensing (household consent, no raw identifier retention)? This is the owner's decision.",
+   "Not verified because the shared web-search budget ran out: current eCFR export-control (CCL) wording (the Wassenaar-based Hong Kong list was used), the GPS L1 minimum received power, WSR-88D power and gain, the FAA Remote ID page (403), IEEE 802.11bf status, and the Part 5 filing fee."
+  ]
+ }
+}

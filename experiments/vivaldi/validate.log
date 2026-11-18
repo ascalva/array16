@@ -1,0 +1,11 @@
+2026-11-15 21:41:48 validate: starting design on the row model
+2026-11-15 21:41:56   [validate] 2d988f5d220002d9 ran 8 s  score -6.18  worst -2.79 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 21:42:07   [validate] e2072b0c74592dc3 ran 10 s  score -6.15  worst -2.77 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 21:42:21   [validate] bfe580ab4dbf32dc ran 14 s  score -6.08  worst -2.70 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 21:43:27   [validate] 49882d34469a36d2 ran 66 s  score -6.17  worst -2.79 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 21:43:50   [validate] 616b3ba2f68b61b1 ran 22 s  score -6.19  worst -2.71 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 21:44:45   [validate] 8de71f121348c6db ran 55 s  score -6.08  worst -2.67 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 21:44:48   [validate] bf3ab7480c21166c ran 3 s  score -6.08  worst -2.66 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 21:44:48 validate: gates {'mesh': True, 'boundary': True, 'passive': True, 'engine': True, 'end': True} -> trustworthy=True
+2026-11-15 21:44:49 report: wrote /Users/ascalva/Documents/code/sdr_array/array16/experiments/vivaldi/summary.md
+EXIT 0

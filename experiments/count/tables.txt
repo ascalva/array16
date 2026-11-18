@@ -1,0 +1,183 @@
+TABLE 1. Direction finding against N (N coherent channels; 3 deg calibration residual, 20 dB, K = 64, sources 0-30 deg up).
+p95 = 95th percentile azimuth error: worst over 0.4-1 GHz / worst over 1-2.3 GHz; gross = worst over the band, % of fixes off by > 10 deg (stress: 5 deg, 0 dB).
+layout               min mm |   az-only p95 gross stress |     az-el p95 gross stress |      el p95 el gross | bound az p95 (0.4 / 2.3 GHz)
+planar_ring_4           318 | 165.10 / 174.40  76.5   76.8 | 171.88 / 173.53  85.5   86.0 | 32.1 / 35.6     54.2 | 2.36 / 0.41
+planar_opt_4             75 |  6.35 /  3.87   4.0   17.0 |  6.18 /  2.26   0.7   18.5 | 19.0 /  9.6     30.5 | 6.01 / 1.05
+vol_stack_4             437 |                            | 139.89 / 172.86  74.8   78.2 | 33.2 / 37.4     60.8 | 2.36 / 0.41
+vol_cone_4              334 |                            | 146.32 / 169.10  50.0   59.5 |  5.1 / 40.1      9.7 | 3.35 / 0.58
+vol_helix_4             334 |                            | 141.19 / 168.91  66.3   72.8 |  3.1 / 38.2     47.8 | 2.48 / 0.43
+vol_opt_4                76 |                            |  6.53 / 47.03   7.7   17.8 | 11.8 /  3.9      7.3 | 6.29 / 1.09
+
+planar_ring_6           225 | 172.10 / 173.15  59.7   63.8 | 173.76 / 174.23  75.3   74.5 | 36.0 / 33.6     46.8 | 1.93 / 0.34
+planar_opt_6             75 |  3.86 /  1.58   0.2    2.3 |  3.86 /  1.27   0.0    2.5 | 13.2 /  7.1     14.0 | 3.58 / 0.62
+vol_stack_6             375 |                            | 117.82 / 168.47  67.3   71.8 | 19.8 / 37.7     43.2 | 1.93 / 0.34
+vol_cone_6              233 |                            | 154.32 / 162.34  28.8   30.2 |  4.2 /  1.8      0.0 | 2.46 / 0.43
+vol_helix_6             233 |                            | 146.70 / 159.95  27.0   27.3 |  3.6 /  1.4      0.0 | 2.26 / 0.39
+vol_opt_6                75 |                            |  2.55 /  0.97   0.0    0.5 |  3.2 /  1.2      0.0 | 2.60 / 0.45
+
+planar_ring_8           172 |  1.67 / 173.09  31.2   28.7 |  1.67 /  0.60   0.0    0.0 |  8.3 /  4.1      2.7 | 1.67 / 0.29
+planar_rings_8          158 |  2.12 / 173.38  29.0   27.2 |  2.11 /  0.74   0.0    0.8 |  9.6 /  5.3      4.7 | 2.12 / 0.37
+planar_opt_8             75 |  2.50 /  0.97   0.2    0.5 |  2.40 /  0.91   0.0    0.0 | 10.5 /  5.7      6.2 | 2.37 / 0.41
+vol_stack_8             318 |                            |  1.68 /  0.58   0.2    0.8 |  1.7 /  0.6      0.2 | 1.67 / 0.29
+vol_cone_8              158 |                            |  2.09 /  0.78   3.2    3.8 |  1.7 /  0.7      3.7 | 2.12 / 0.37
+vol_helix_8             215 |                            |  1.70 /  0.63   0.0    0.2 |  2.5 /  0.9      0.0 | 1.71 / 0.30
+vol_opt_8               215 |                            |  1.70 /  0.63   0.0    0.2 |  2.5 /  0.9      0.0 | 1.71 / 0.30
+
+planar_ring_12          116 |  1.40 / 88.64  13.2   10.8 |  1.38 /  0.49   0.0    0.0 |  7.9 /  3.7      2.2 | 1.36 / 0.24
+planar_rings_12         112 |  1.71 / 144.92   8.7    7.8 |  1.72 /  0.63   0.0    0.0 |  9.1 /  4.4      3.7 | 1.73 / 0.30
+planar_opt_12            75 |  1.75 /  0.99   0.3    0.2 |  1.56 /  0.55   0.0    0.0 |  8.3 /  4.1      2.5 | 1.53 / 0.27
+vol_stack_12            225 |                            |  1.38 /  0.48   0.0    0.0 |  1.3 /  0.5      0.0 | 1.36 / 0.24
+vol_cone_12             112 |                            |  1.75 /  0.66   0.0    0.0 |  1.4 /  0.5      0.8 | 1.73 / 0.30
+vol_helix_12            160 |                            |  1.42 /  0.48   0.0    0.0 |  2.1 /  0.7      0.0 | 1.37 / 0.24
+vol_opt_12              225 |                            |  1.38 /  0.48   0.0    0.0 |  1.3 /  0.5      0.0 | 1.36 / 0.24
+
+planar_ring_16           88 |  1.14 /  0.41   4.3    4.3 |  1.14 /  0.41   0.0    0.0 |  6.3 /  3.5      0.5 | 1.18 / 0.21
+planar_rings_16          86 |  1.46 /  0.53   0.0    0.0 |  1.46 /  0.52   0.0    0.0 |  7.6 /  4.2      1.8 | 1.50 / 0.26
+planar_opt_16            75 |  1.33 /  0.72   0.2    0.0 |  1.25 /  0.43   0.0    0.0 |  6.5 /  3.6      0.7 | 1.26 / 0.22
+vol_stack_16            172 |                            |  1.11 /  0.41   0.0    0.0 |  1.2 /  0.4      0.0 | 1.18 / 0.21
+vol_cone_16              86 |                            |  1.47 /  0.50   0.0    0.0 |  1.3 /  0.4      0.3 | 1.50 / 0.26
+vol_helix_16            133 |                            |  1.16 /  0.43   0.0    0.0 |  2.0 /  0.7      0.0 | 1.20 / 0.21
+vol_opt_16              172 |                            |  1.11 /  0.41   0.0    0.0 |  1.2 /  0.4      0.0 | 1.18 / 0.21
+
+planar_ring_24           52 |  0.89 /  0.32   0.0    0.0 |  0.87 /  0.31   0.0    0.0 |  6.2 /  3.1      0.2 | 0.89 / 0.16
+planar_rings_24          80 |  0.94 /  0.39   2.0    2.7 |  0.95 /  0.38   0.0    0.0 |  6.4 /  3.2      1.0 | 1.03 / 0.18
+planar_opt_24            75 |  1.12 /  0.58   0.0    0.2 |  1.06 /  0.41   0.0    0.0 |  6.8 /  3.3      0.7 | 1.08 / 0.19
+vol_stack_24            116 |                            |  0.93 /  0.34   0.0    0.0 |  1.0 /  0.4      0.0 | 0.97 / 0.17
+vol_cone_24              80 |                            |  0.93 /  0.38   0.0    0.0 |  1.1 /  0.4      0.0 | 1.03 / 0.18
+vol_helix_24             88 |                            |  0.93 /  0.34   0.0    0.0 |  1.5 /  0.5      0.0 | 0.97 / 0.17
+vol_opt_24              116 |                            |  0.93 /  0.34   0.0    0.0 |  1.0 /  0.4      0.0 | 0.97 / 0.17
+
+planar_ring_32           54 |  0.81 /  0.34   0.0    0.0 |  0.76 /  0.30   0.0    0.0 |  5.3 /  2.7      0.0 | 0.81 / 0.14
+planar_rings_32          61 |  0.86 /  0.32   0.0    0.0 |  0.85 /  0.30   0.0    0.0 |  6.1 /  2.9      0.2 | 0.89 / 0.15
+planar_opt_32            61 |  0.86 /  0.32   0.0    0.0 |  0.85 /  0.30   0.0    0.0 |  6.1 /  2.9      0.2 | 0.89 / 0.15
+vol_stack_32             88 |                            |  0.79 /  0.30   0.0    0.0 |  0.8 /  0.3      0.0 | 0.84 / 0.15
+vol_cone_32              90 |                            |  0.96 /  0.34   0.0    0.0 |  1.1 /  0.4      0.0 | 0.96 / 0.17
+vol_helix_32             75 |                            |  0.84 /  0.30   0.0    0.0 |  1.4 /  0.5      0.0 | 0.84 / 0.15
+vol_opt_32               88 |                            |  0.79 /  0.30   0.0    0.0 |  0.8 /  0.3      0.0 | 0.84 / 0.15
+
+planar_ring_48           48 |  0.69 /  0.26   0.0    0.0 |  0.69 /  0.24   0.0    0.0 |  4.3 /  2.4      0.0 | 0.69 / 0.12
+planar_rings_48          61 |  0.77 /  0.28   0.0    0.0 |  0.76 /  0.28   0.0    0.0 |  5.2 /  2.7      0.0 | 0.78 / 0.14
+planar_opt_48            48 |  0.69 /  0.26   0.0    0.0 |  0.69 /  0.24   0.0    0.0 |  4.3 /  2.4      0.0 | 0.69 / 0.12
+vol_stack_48             88 |                            |  0.70 /  0.24   0.0    0.0 |  0.8 /  0.3      0.0 | 0.68 / 0.12
+vol_cone_48              75 |                            |  0.77 /  0.28   0.0    0.0 |  1.1 /  0.4      0.0 | 0.80 / 0.14
+vol_helix_48             75 |                            |  0.69 /  0.24   0.0    0.0 |  1.1 /  0.4      0.0 | 0.68 / 0.12
+vol_opt_48               88 |                            |  0.70 /  0.24   0.0    0.0 |  0.8 /  0.3      0.0 | 0.68 / 0.12
+
+planar_ring_64           40 |  0.60 /  0.23   0.0    0.0 |  0.58 /  0.23   0.0    0.0 |  4.4 /  2.0      0.0 | 0.60 / 0.10
+planar_rings_64          46 |  0.70 /  0.25   0.0    0.0 |  0.69 /  0.26   0.0    0.0 |  4.5 /  2.2      0.2 | 0.68 / 0.12
+planar_opt_64            42 |  0.68 /  0.31   0.0    0.0 |  0.69 /  0.26   0.0    0.0 |  5.3 /  2.2      0.0 | 0.68 / 0.12
+vol_stack_64             88 |                            |  0.56 /  0.23   0.0    0.0 |  0.8 /  0.3      0.0 | 0.59 / 0.10
+vol_cone_64              75 |                            |  0.67 /  0.25   0.0    0.0 |  0.9 /  0.3      0.0 | 0.68 / 0.12
+vol_helix_64             79 |                            |  0.58 /  0.23   0.0    0.0 |  1.0 /  0.4      0.0 | 0.59 / 0.10
+vol_opt_64               88 |                            |  0.56 /  0.23   0.0    0.0 |  0.8 /  0.3      0.0 | 0.59 / 0.10
+
+TABLE 2. Beams against N (uniform weights, isotropic elements, steered to the horizon). Directivity dBi and peak sidelobe dB (whole sphere, mean over steering azimuth) at 0.408 / 1.0 / 1.42 / 2.3 GHz; 10 log N for reference.
+planar_ring_4        10logN  6.0 | D  6.0 /  5.9 /  6.1 /  6.0 | PSL  -1.8 /  -0.0 /  -0.0 /  -0.0 | PSL horizon  -1.8 /  -0.1 /  -0.2 /  -0.1 | worst PSL in band  -0.0 | beamwidth  69 /  28 /  20 /  13
+planar_opt_4         10logN  6.0 | D  2.3 /  5.2 /  5.8 /  5.9 | PSL -60.0 /  -1.9 /  -1.0 /  -0.4 | PSL horizon -60.0 /  -2.0 /  -2.1 /  -1.4 | worst PSL in band  -0.4 | beamwidth 188 /  69 /  49 /  31
+vol_stack_4          10logN  6.0 | D  5.6 /  6.0 /  6.1 /  6.0 | PSL  -1.2 /  -0.1 /  -0.0 /  -0.0 | PSL horizon  -1.8 /  -0.1 /  -0.2 /  -0.1 | worst PSL in band  -0.0 | beamwidth  69 /  28 /  20 /  13
+vol_cone_4           10logN  6.0 | D  5.8 /  5.8 /  6.0 /  6.0 | PSL  -1.3 /  -0.0 /  -0.0 /  -0.0 | PSL horizon  -1.8 /  -0.1 /  -0.2 /  -0.1 | worst PSL in band  -0.0 | beamwidth  69 /  28 /  20 /  13
+vol_helix_4          10logN  6.0 | D  5.7 /  5.8 /  6.0 /  6.0 | PSL  -1.7 /  -0.0 /  -0.0 /  -0.0 | PSL horizon  -1.8 /  -0.1 /  -0.2 /  -0.1 | worst PSL in band  -0.0 | beamwidth  69 /  28 /  20 /  13
+vol_opt_4            10logN  6.0 | D  2.7 /  4.6 /  5.7 /  5.9 | PSL -60.0 /  -0.4 /  -0.0 /  -0.1 | PSL horizon -60.0 /  -1.2 /  -1.8 /  -1.0 | worst PSL in band  -0.0 | beamwidth 172 /  65 /  46 /  29
+
+planar_ring_6        10logN  7.8 | D  6.4 /  7.2 /  7.5 /  7.5 | PSL  -6.5 /  -0.0 /  -0.0 /  -0.0 | PSL horizon  -6.5 /  -0.5 /  -0.3 /  -0.6 | worst PSL in band  -0.0 | beamwidth  72 /  28 /  20 /  12
+planar_opt_6         10logN  7.8 | D  3.4 /  6.7 /  7.5 /  7.5 | PSL -60.0 /  -3.6 /  -2.7 /  -1.9 | PSL horizon -18.9 /  -3.9 /  -4.1 /  -2.6 | worst PSL in band  -1.9 | beamwidth 133 /  52 /  38 /  25
+vol_stack_6          10logN  7.8 | D  7.3 /  7.9 /  7.8 /  7.7 | PSL  -1.9 /  -0.1 /  -0.0 /  -0.0 | PSL horizon  -6.5 /  -0.5 /  -0.3 /  -0.6 | worst PSL in band  -0.0 | beamwidth  72 /  28 /  20 /  12
+vol_cone_6           10logN  7.8 | D  6.4 /  7.4 /  7.7 /  7.4 | PSL  -5.4 /  -0.4 /  -0.2 /  -0.3 | PSL horizon  -6.5 /  -0.5 /  -0.3 /  -0.6 | worst PSL in band  -0.0 | beamwidth  72 /  28 /  20 /  12
+vol_helix_6          10logN  7.8 | D  6.5 /  7.5 /  7.6 /  7.7 | PSL  -4.7 /  -0.4 /  -0.2 /  -0.3 | PSL horizon  -6.5 /  -0.5 /  -0.3 /  -0.6 | worst PSL in band  -0.0 | beamwidth  72 /  28 /  20 /  12
+vol_opt_6            10logN  7.8 | D  6.0 /  7.0 /  7.7 /  7.7 | PSL  -6.8 /  -0.7 /  -0.9 /  -0.4 | PSL horizon  -7.9 /  -3.3 /  -2.8 /  -1.8 | worst PSL in band  -0.4 | beamwidth  89 /  36 /  26 /  17
+
+planar_ring_8        10logN  9.0 | D  6.4 /  8.5 /  8.8 /  8.9 | PSL  -7.8 /  -2.3 /  -1.1 /  -0.7 | PSL horizon  -7.8 /  -2.3 /  -2.8 /  -1.4 | worst PSL in band  -0.7 | beamwidth  72 /  28 /  20 /  12
+planar_rings_8       10logN  9.0 | D  5.5 /  8.4 /  8.5 /  8.6 | PSL -13.0 /  -2.6 /  -2.3 /  -0.5 | PSL horizon -12.9 /  -2.6 /  -5.2 /  -2.6 | worst PSL in band  -0.5 | beamwidth  91 /  37 /  28 /  16
+planar_opt_8         10logN  9.0 | D  3.9 /  7.5 /  8.5 /  8.5 | PSL  -5.2 /  -3.7 /  -3.7 /  -2.4 | PSL horizon  -5.2 /  -5.2 /  -4.8 /  -3.1 | worst PSL in band  -2.4 | beamwidth 106 /  43 /  32 /  21
+vol_stack_8          10logN  9.0 | D  8.0 /  9.3 /  8.9 /  9.1 | PSL  -7.8 /  -1.9 /  -0.6 /  -0.7 | PSL horizon  -7.8 /  -2.3 /  -2.8 /  -1.4 | worst PSL in band  -0.5 | beamwidth  72 /  28 /  20 /  12
+vol_cone_8           10logN  9.0 | D  6.9 /  9.0 /  8.7 /  8.9 | PSL  -7.5 /  -2.2 /  -1.5 /  -1.1 | PSL horizon -12.9 /  -2.6 /  -5.2 /  -2.6 | worst PSL in band  -0.5 | beamwidth  91 /  37 /  28 /  16
+vol_helix_8          10logN  9.0 | D  6.9 /  8.3 /  9.0 /  9.0 | PSL  -5.4 /  -1.8 /  -1.6 /  -0.9 | PSL horizon  -7.8 /  -2.3 /  -2.8 /  -1.4 | worst PSL in band  -0.7 | beamwidth  72 /  28 /  20 /  12
+vol_opt_8            10logN  9.0 | D  6.9 /  8.3 /  9.0 /  9.0 | PSL  -5.4 /  -1.8 /  -1.6 /  -0.9 | PSL horizon  -7.8 /  -2.3 /  -2.8 /  -1.4 | worst PSL in band  -0.7 | beamwidth  72 /  28 /  20 /  12
+
+planar_ring_12       10logN 10.8 | D  6.4 / 10.2 / 10.1 / 10.5 | PSL  -7.9 /  -7.9 /  -2.5 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -2.5 /  -3.1 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+planar_rings_12      10logN 10.8 | D  5.6 /  9.9 /  9.7 / 10.4 | PSL -21.1 /  -8.1 /  -0.9 /  -0.9 | PSL horizon -21.1 /  -9.4 /  -0.9 /  -3.4 | worst PSL in band  -0.9 | beamwidth  92 /  36 /  28 /  16
+planar_opt_12        10logN 10.8 | D  6.1 /  9.8 / 10.1 / 10.4 | PSL  -8.6 /  -6.8 /  -5.1 /  -4.3 | PSL horizon  -8.6 /  -7.3 /  -6.4 /  -5.0 | worst PSL in band  -4.3 | beamwidth  80 /  33 /  24 /  16
+vol_stack_12         10logN 10.8 | D  8.2 / 10.1 / 10.5 / 10.5 | PSL  -7.9 /  -3.7 /  -2.5 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -2.5 /  -3.1 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+vol_cone_12          10logN 10.8 | D  7.1 / 10.3 / 10.7 / 10.6 | PSL  -9.0 /  -3.9 /  -0.9 /  -1.1 | PSL horizon -21.1 /  -9.4 /  -0.9 /  -3.4 | worst PSL in band  -0.9 | beamwidth  92 /  36 /  28 /  16
+vol_helix_12         10logN 10.8 | D  7.1 / 10.2 / 10.2 / 10.5 | PSL  -7.1 /  -3.7 /  -1.9 /  -2.1 | PSL horizon  -7.9 /  -7.9 /  -2.5 /  -3.1 | worst PSL in band  -1.3 | beamwidth  72 /  28 /  20 /  12
+vol_opt_12           10logN 10.8 | D  8.2 / 10.1 / 10.5 / 10.5 | PSL  -7.9 /  -3.7 /  -2.5 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -2.5 /  -3.1 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+
+planar_ring_16       10logN 12.0 | D  6.4 / 10.2 / 11.5 / 11.3 | PSL  -7.9 /  -7.9 /  -7.9 /  -3.9 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -4.4 | worst PSL in band  -3.9 | beamwidth  72 /  28 /  20 /  12
+planar_rings_16      10logN 12.0 | D  5.6 / 10.2 / 11.2 / 11.2 | PSL -23.7 /  -5.7 /  -5.1 /  -3.6 | PSL horizon -23.7 /  -5.7 /  -5.7 /  -4.4 | worst PSL in band  -3.6 | beamwidth  92 /  36 /  28 /  16
+planar_opt_16        10logN 12.0 | D  6.2 /  9.9 / 11.2 / 11.4 | PSL  -7.1 /  -5.1 /  -5.0 /  -4.7 | PSL horizon  -7.1 /  -6.8 /  -7.1 /  -5.9 | worst PSL in band  -4.7 | beamwidth  75 /  32 /  23 /  16
+vol_stack_16         10logN 12.0 | D  8.2 / 11.5 / 12.1 / 12.0 | PSL  -7.9 /  -4.7 /  -4.0 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -4.4 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+vol_cone_16          10logN 12.0 | D  7.1 / 10.9 / 11.9 / 11.3 | PSL  -9.1 /  -5.7 /  -3.5 /  -1.4 | PSL horizon -23.7 /  -5.7 /  -5.7 /  -4.4 | worst PSL in band  -1.4 | beamwidth  92 /  36 /  28 /  16
+vol_helix_16         10logN 12.0 | D  7.1 / 11.2 / 11.3 / 12.1 | PSL  -7.4 /  -6.5 /  -5.0 /  -4.0 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -4.4 | worst PSL in band  -3.7 | beamwidth  72 /  28 /  20 /  12
+vol_opt_16           10logN 12.0 | D  8.2 / 11.5 / 12.1 / 12.0 | PSL  -7.9 /  -4.7 /  -4.0 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -4.4 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+
+planar_ring_24       10logN 13.8 | D  6.6 / 10.4 / 11.8 / 13.6 | PSL  -7.8 /  -7.7 /  -7.7 /  -7.7 | PSL horizon  -7.8 /  -7.8 /  -7.8 /  -7.9 | worst PSL in band  -7.6 | beamwidth  64 /  28 /  20 /  12
+planar_rings_24      10logN 13.8 | D  6.7 / 11.1 / 12.6 / 12.7 | PSL -16.6 / -11.1 / -10.8 /  -3.7 | PSL horizon -16.6 / -11.1 / -10.8 /  -5.2 | worst PSL in band  -3.7 | beamwidth  76 /  32 /  24 /  16
+planar_opt_24        10logN 13.8 | D  6.3 / 10.7 / 12.4 / 12.6 | PSL -10.7 /  -8.7 /  -8.6 /  -4.5 | PSL horizon -10.7 /  -9.8 /  -9.9 /  -5.2 | worst PSL in band  -4.5 | beamwidth  79 /  33 /  24 /  16
+vol_stack_24         10logN 13.8 | D  8.2 / 13.3 / 13.2 / 13.8 | PSL  -7.9 /  -7.9 /  -5.1 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+vol_cone_24          10logN 13.8 | D  7.6 / 12.1 / 13.1 / 12.8 | PSL  -8.5 /  -6.7 /  -4.3 /  -1.9 | PSL horizon -16.6 / -11.1 / -10.8 /  -5.2 | worst PSL in band  -1.9 | beamwidth  76 /  32 /  24 /  16
+vol_helix_24         10logN 13.8 | D  7.1 / 12.6 / 12.9 / 13.6 | PSL  -7.8 /  -7.7 /  -6.7 /  -5.7 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -5.7 | beamwidth  72 /  28 /  20 /  12
+vol_opt_24           10logN 13.8 | D  8.2 / 13.3 / 13.2 / 13.8 | PSL  -7.9 /  -7.9 /  -5.1 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+
+planar_ring_32       10logN 15.1 | D  6.5 / 10.6 / 12.3 / 14.3 | PSL  -7.7 /  -7.0 /  -6.9 /  -6.9 | PSL horizon  -7.7 /  -7.8 /  -7.9 /  -8.1 | worst PSL in band  -6.9 | beamwidth  68 /  28 /  20 /  12
+planar_rings_32      10logN 15.1 | D  6.7 / 11.1 / 12.6 / 14.5 | PSL -16.6 / -11.2 / -11.1 / -11.1 | PSL horizon -16.6 / -11.2 / -11.1 / -11.1 | worst PSL in band -11.1 | beamwidth  76 /  32 /  24 /  16
+planar_opt_32        10logN 15.1 | D  6.7 / 11.1 / 12.6 / 14.5 | PSL -16.6 / -11.2 / -11.1 / -11.1 | PSL horizon -16.6 / -11.2 / -11.1 / -11.1 | worst PSL in band -11.1 | beamwidth  76 /  32 /  24 /  16
+vol_stack_32         10logN 15.1 | D  8.2 / 13.3 / 14.5 / 14.2 | PSL  -7.9 /  -7.9 /  -5.1 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+vol_cone_32          10logN 15.1 | D  7.2 / 12.9 / 14.1 / 14.5 | PSL -12.3 / -10.4 / -10.4 /  -4.9 | PSL horizon -16.1 / -15.4 / -15.4 /  -7.9 | worst PSL in band  -4.9 | beamwidth  80 /  32 /  24 /  16
+vol_helix_32         10logN 15.1 | D  7.1 / 12.8 / 14.4 / 14.5 | PSL  -7.7 /  -7.7 /  -7.7 /  -7.6 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -6.9 | beamwidth  72 /  28 /  20 /  12
+vol_opt_32           10logN 15.1 | D  8.2 / 13.3 / 14.5 / 14.2 | PSL  -7.9 /  -7.9 /  -5.1 /  -2.2 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -2.2 | beamwidth  72 /  28 /  20 /  12
+
+planar_ring_48       10logN 16.8 | D  6.5 / 10.5 / 12.4 / 15.4 | PSL  -8.3 /  -8.1 /  -8.1 /  -8.1 | PSL horizon  -8.3 /  -8.3 /  -8.3 /  -8.4 | worst PSL in band  -8.0 | beamwidth  72 /  29 /  20 /  16
+planar_rings_48      10logN 16.8 | D  6.2 / 11.7 / 13.8 / 15.3 | PSL -16.5 / -15.8 / -15.8 / -10.7 | PSL horizon -16.5 / -15.8 / -15.8 / -10.7 | worst PSL in band -10.7 | beamwidth  80 /  32 /  24 /  16
+planar_opt_48        10logN 16.8 | D  6.5 / 10.5 / 12.4 / 15.4 | PSL  -8.3 /  -8.1 /  -8.1 /  -8.1 | PSL horizon  -8.3 /  -8.3 /  -8.3 /  -8.4 | worst PSL in band  -8.0 | beamwidth  72 /  29 /  20 /  16
+vol_stack_48         10logN 16.8 | D  7.7 / 14.3 / 16.6 / 15.7 | PSL  -7.9 /  -7.9 /  -7.9 /  -5.7 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -5.4 | beamwidth  72 /  28 /  20 /  12
+vol_cone_48          10logN 16.8 | D  6.8 / 12.4 / 14.8 / 15.4 | PSL -60.0 / -10.4 / -10.3 /  -4.9 | PSL horizon -17.0 / -15.5 / -15.5 /  -6.1 | worst PSL in band  -4.9 | beamwidth  84 /  36 /  24 /  16
+vol_helix_48         10logN 16.8 | D  7.1 / 12.9 / 15.2 / 15.6 | PSL  -7.8 /  -7.7 /  -7.7 /  -7.8 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -7.7 | beamwidth  72 /  28 /  20 /  12
+vol_opt_48           10logN 16.8 | D  7.7 / 14.3 / 16.6 / 15.7 | PSL  -7.9 /  -7.9 /  -7.9 /  -5.7 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -5.4 | beamwidth  72 /  28 /  20 /  12
+
+planar_ring_64       10logN 18.1 | D  6.5 / 10.5 / 12.4 / 15.4 | PSL  -8.3 /  -8.1 /  -8.1 /  -8.1 | PSL horizon  -8.3 /  -8.3 /  -8.3 /  -8.4 | worst PSL in band  -8.1 | beamwidth  72 /  28 /  20 /  16
+planar_rings_64      10logN 18.1 | D  6.3 / 11.7 / 13.8 / 15.5 | PSL -16.1 / -15.4 / -15.4 / -13.5 | PSL horizon -16.1 / -15.4 / -15.4 / -13.6 | worst PSL in band -13.5 | beamwidth  80 /  32 /  24 /  16
+planar_opt_64        10logN 18.1 | D  6.2 / 11.1 / 13.0 / 15.5 | PSL -12.8 / -10.6 / -10.5 / -10.5 | PSL horizon -12.8 / -11.6 / -11.6 / -12.1 | worst PSL in band -10.5 | beamwidth  81 /  33 /  24 /  16
+vol_stack_64         10logN 18.1 | D  7.5 / 14.0 / 16.3 / 16.5 | PSL  -7.9 /  -7.9 /  -7.9 /  -5.7 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -5.7 | beamwidth  72 /  28 /  20 /  12
+vol_cone_64          10logN 18.1 | D  6.9 / 12.4 / 14.9 / 16.8 | PSL -14.6 / -10.6 / -10.6 /  -9.7 | PSL horizon -15.0 / -14.0 / -14.1 / -12.6 | worst PSL in band  -9.7 | beamwidth  81 /  34 /  24 /  16
+vol_helix_64         10logN 18.1 | D  7.1 / 13.0 / 15.3 / 17.4 | PSL  -7.9 /  -7.9 /  -7.9 /  -7.9 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -7.9 | beamwidth  72 /  28 /  20 /  12
+vol_opt_64           10logN 18.1 | D  7.5 / 14.0 / 16.3 / 16.5 | PSL  -7.9 /  -7.9 /  -7.9 /  -5.7 | PSL horizon  -7.9 /  -7.9 /  -7.9 /  -7.9 | worst PSL in band  -5.7 | beamwidth  72 /  28 /  20 /  12
+
+TABLE 3. Four shared channels against N coherent channels (best layout by the az-el estimator). Azimuth median (band median) / p95 (band worst) / gross % (band worst), elevated; then gross % under stress.
+planar_opt_4         | N channels: 0.58 /  6.18 /  0.7; stress 18.5
+vol_opt_4            | N channels: 0.60 / 47.03 /  7.7; stress 17.8
+planar_opt_6         | N channels: 0.39 /  3.86 /  0.0; stress  2.5 | reference + 3 roving: 0.38 /  3.73 /  0.0; stress  9.3
+vol_opt_6            | N channels: 0.28 /  2.55 /  0.0; stress  0.5 | reference + 3 roving: 0.27 /  2.70 /  0.0; stress  2.7
+planar_ring_8        | N channels: 0.17 /  1.67 /  0.0; stress  0.0 | reference + 3 roving: 0.17 /  1.63 /  0.0; stress  0.2 | disjoint groups: 0.18 /  1.68 /  0.0; stress  0.7
+vol_helix_8          | N channels: 0.18 /  1.70 /  0.0; stress  0.2 | reference + 3 roving: 0.18 /  1.74 /  0.0; stress  0.5 | disjoint groups: 0.19 /  1.75 /  0.7; stress  1.3
+planar_ring_12       | N channels: 0.14 /  1.38 /  0.0; stress  0.0 | reference + 3 roving: 0.14 /  1.37 /  0.0; stress  0.2 | disjoint groups: 0.15 /  1.41 /  0.0; stress  1.5
+vol_stack_12         | N channels: 0.14 /  1.38 /  0.0; stress  0.0 | reference + 3 roving: 0.14 /  1.42 /  0.0; stress  0.2 | disjoint groups: 0.15 /  1.43 /  0.2; stress  0.8
+planar_ring_16       | N channels: 0.11 /  1.14 /  0.0; stress  0.0 | reference + 3 roving: 0.13 /  1.27 /  0.0; stress  0.0 | disjoint groups: 0.12 /  1.31 /  0.0; stress  0.0
+vol_stack_16         | N channels: 0.12 /  1.11 /  0.0; stress  0.0 | reference + 3 roving: 0.12 /  1.29 /  0.0; stress  0.0 | disjoint groups: 0.12 /  1.31 /  0.0; stress  0.0
+planar_ring_24       | N channels: 0.09 /  0.87 /  0.0; stress  0.0 | reference + 3 roving: 0.09 /  0.98 /  0.0; stress  0.0 | disjoint groups: 0.09 /  0.84 /  0.0; stress  0.0
+vol_stack_24         | N channels: 0.10 /  0.93 /  0.0; stress  0.0 | reference + 3 roving: 0.10 /  1.07 /  0.0; stress  0.0 | disjoint groups: 0.09 /  0.91 /  0.0; stress  0.0
+planar_ring_32       | N channels: 0.08 /  0.76 /  0.0; stress  0.0 | reference + 3 roving: 0.09 /  0.86 /  0.0; stress  0.0 | disjoint groups: 0.08 /  0.80 /  0.0; stress  0.0
+vol_stack_32         | N channels: 0.09 /  0.79 /  0.0; stress  0.0 | reference + 3 roving: 0.09 /  0.84 /  0.0; stress  0.0 | disjoint groups: 0.09 /  0.81 /  0.0; stress  0.0
+planar_ring_48       | N channels: 0.07 /  0.69 /  0.0; stress  0.0 | reference + 3 roving: 0.08 /  0.70 /  0.0; stress  0.0 | disjoint groups: 0.07 /  0.72 /  0.0; stress  0.0
+vol_helix_48         | N channels: 0.07 /  0.69 /  0.0; stress  0.0 | reference + 3 roving: 0.07 /  0.67 /  0.0; stress  0.0 | disjoint groups: 0.07 /  0.70 /  0.0; stress  0.0
+planar_ring_64       | N channels: 0.06 /  0.58 /  0.0; stress  0.0 | reference + 3 roving: 0.07 /  0.62 /  0.0; stress  0.0 | disjoint groups: 0.06 /  0.61 /  0.0; stress  0.0
+vol_stack_64         | N channels: 0.06 /  0.56 /  0.0; stress  0.0 | reference + 3 roving: 0.06 /  0.61 /  0.0; stress  0.0 | disjoint groups: 0.06 /  0.59 /  0.0; stress  0.0
+
+TABLE 4. Slots per fix with 4 shared channels, sources MUSIC separates with N channels (success >= 90 %) and aperture degrees of freedom.
+  N | slots: groups  ref all pairs >=  cross-ch pairs | MUSIC sources at 0.4 / 1.0 / 1.42 / 2.3 GHz (limit N-1) | port cost $ | 2-ch radios for N channels
+  4 |             1    1            1              1 |  1 /  2 /  2 /  2 (limit 3) |     45 | 2 ($1080)
+  6 |             2    2            3              4 |  2 /  4 /  4 /  4 (limit 5) |     68 | 3 ($1620)
+  8 |             2    3            6              4 |  5 /  6 /  5 /  5 (limit 7) |     90 | 4 ($2160)
+ 12 |             3    4           12              9 |  6 /  9 /  9 /  9 (limit 11) |    135 | 6 ($3240)
+ 16 |             4    5           20             16 |  6 / 13 / 13 / 13 (limit 15) |    180 | 8 ($4320)
+ 24 |             6    8           48             36 |  7 / 13 / 19 / 19 (limit 23) |    270 | 12 ($6480)
+ 32 |             8   11           88             64 |  7 / 13 / 19 / 23 (limit 31) |    360 | 16 ($8640)
+ 48 |            12   16          192            144 |  7 / 13 / 15 / 27 (limit 47) |    540 | 24 ($12960)
+ 64 |            16   21          336            256 |  7 / 13 / 19 / 27 (limit 63) |    720 | 32 ($17280)
+
+Aperture degrees of freedom (azimuth modes of the 240 mm disc 2kr+1; sphere modes of the disc (kr+1)^2; of the 500 x 300 mm volume (ka+1)^2):
+  0.408 GHz: azimuth   5.1; planar sphere modes    9.3; volume   11.7
+  0.611 GHz: azimuth   7.1; planar sphere modes   16.6; volume   21.4
+  1.000 GHz: azimuth  11.1; planar sphere modes   36.4; volume   48.0
+  1.420 GHz: azimuth  15.3; planar sphere modes   66.3; volume   88.8
+  1.665 GHz: azimuth  17.8; planar sphere modes   87.9; volume  118.3
+  2.300 GHz: azimuth  24.1; planar sphere modes  158.0; volume  214.4

@@ -1,0 +1,165 @@
+{
+ "array_field_0p3m": {
+  "P_tot_mW": 12.649110640673518,
+  "EIRP_mW": 448.8073817207854,
+  "S_W_m2": 0.39683285164996746,
+  "S_mW_cm2": 0.03968328516499675,
+  "E_peak_V_m": 17.29774465484086,
+  "B_peak_T": 5.769761392541981e-08
+ },
+ "field_1W_PA_0p3m": {
+  "S_W_m2": 31.37239153984012,
+  "S_mW_cm2": 3.1372391539840123,
+  "E_peak_V_m": 153.80111579907165,
+  "B_peak_T": 5.130123942597454e-07
+ },
+ "mpe_distance_m": {
+  "array_12.6mW_15.5dBi": 0.05976199180791841,
+  "1W_15.5dBi": 0.5313675976746804
+ },
+ "qed": {
+  "sigma_532nm_cm2": 1.1654600965408161e-63,
+  "sigma_1eV_cm2": 7.265136316969559e-66,
+  "sigma_6GHz_photon_cm2": 1.697011512359465e-93,
+  "thomson_cm2": 6.652e-25,
+  "dn_vacuum_per_T2": 4e-24,
+  "dn_array_field": 1.331605861074719e-38,
+  "phase_rad_over_1m_532nm": 1.572692928808063e-31,
+  "dn_1W_PA": 1.0527268666564657e-36,
+  "schwinger_E_V_m": 1.32e+18,
+  "ratio_E_array_to_schwinger": 1.3104352011243075e-17
+ },
+ "acousto_optic": {
+  "TeO2 slow-shear AOD 80 MHz": {
+   "lambda_nm": 532.0,
+   "sep_mrad": 65.47692307692309,
+   "scan_mrad": 40.92307692307692,
+   "mrad_per_MHz": 0.8184615384615386,
+   "transit_us": 6.153846153846154,
+   "resolvable_spots": 307.6923076923077,
+   "eff_at_plus5dBm": 0.015524209224334846,
+   "eff_at_0p5W": 1.0,
+   "gain_needed_dB_for_Psat": 21.989700043360187
+  },
+  "PbMoO4 AOM (Isomet 1205C) 80 MHz": {
+   "lambda_nm": 532.0,
+   "sep_mrad": 11.724517906336088,
+   "scan_mrad": 4.3966942148760335,
+   "mrad_per_MHz": 0.14655647382920112,
+   "transit_us": 0.5509641873278237,
+   "resolvable_spots": 16.52892561983471,
+   "eff_at_plus5dBm": 0.007782334918029686,
+   "eff_at_0p5W": 0.8028499335394067,
+   "gain_needed_dB_for_Psat": 25.0
+  },
+  "TeO2 longitudinal AOM 200 MHz": {
+   "lambda_nm": 532.0,
+   "sep_mrad": 25.333333333333336,
+   "scan_mrad": 6.333333333333334,
+   "mrad_per_MHz": 0.12666666666666668,
+   "transit_us": 0.11904761904761904,
+   "resolvable_spots": 5.9523809523809526,
+   "eff_at_plus5dBm": 0.007782334918029686,
+   "eff_at_0p5W": 0.8028499335394067,
+   "gain_needed_dB_for_Psat": 25.0
+  },
+  "TeO2 GHz AOM (Brimrose TEF-1000)": {
+   "lambda_nm": 532.0,
+   "sep_mrad": 126.66666666666667,
+   "scan_mrad": 38.00000000000001,
+   "mrad_per_MHz": 0.12666666666666668,
+   "transit_us": 0.018095238095238095,
+   "resolvable_spots": 5.428571428571429,
+   "eff_at_plus5dBm": 0.007782334918029686,
+   "eff_at_0p5W": 0.8028499335394067,
+   "gain_needed_dB_for_Psat": 25.0
+  },
+  "GaP GHz AOM (Brimrose GPF-1500)": {
+   "lambda_nm": 650.0,
+   "sep_mrad": 154.27215189873417,
+   "scan_mrad": 51.424050632911396,
+   "mrad_per_MHz": 0.10284810126582278,
+   "transit_us": 0.012025316455696202,
+   "resolvable_spots": 6.012658227848101,
+   "eff_at_plus5dBm": 0.007782334918029686,
+   "eff_at_0p5W": 0.8028499335394067,
+   "gain_needed_dB_for_Psat": 25.0
+  }
+ },
+ "ao_chirp_lens": {
+  "50MHz_in_10us": 0.1588345864661654,
+  "50MHz_in_100us": 1.5883458646616542,
+  "20MHz_in_1000us": 39.70864661654135
+ },
+ "heterodyne": {
+  "nm_per_degree": 0.7388888888888889,
+  "shot_noise_rad_rtHz_at_10uW": 3.2680269276736385e-07
+ },
+ "eom": {
+  "Vpk_at_plus5dBm": 0.5623413251903491,
+  "phase_index_rad": 0.3533294752055899,
+  "first_sideband_dBc": -14.919666720798263,
+  "bulk_LiNbO3_dn_per_V_m": 1.6397920000000004e-10,
+  "freespace_dn_at_array_field": 1.0130251179661003e-10,
+  "kerr_nitrobenzene_dn": 7.003953797132521e-16
+ },
+ "rf_over_fibre": {
+  "link_gain_dB": -21.938200260161125,
+  "NF_dB": 33.83903858308199,
+  "cascade_NF_after_21dB_LNA_dB": 13.145256424902762,
+  "fibre_ps_per_m": 4896.597731821214,
+  "mm_per_ps": 0.2042234332425068,
+  "deg_at_6GHz_per_K_10m": 0.8639999999999999,
+  "dispersive_TTD_nm_for_352ps_1km_SMF": 20.705882352941178,
+  "smallest_TTD_bit_38p5ps_mm": 7.862602179836512
+ },
+ "faraday_TGG_1cm": {
+  "rad_at_array_far_field": 7.731480266006254e-08,
+  "rad_at_10uT_loop": 1.34e-05,
+  "shot_noise_rad_rtHz_1mW": 9.661748273436236e-09
+ },
+ "nv_drive": {
+  "loop_I_peak_mA": 22.493653007613965,
+  "B1_uT_1mm_loop": 14.133179008223596,
+  "rabi_kHz": 280.1224780617647,
+  "rabi_kHz_array_far_field": 1.1435784250404846,
+  "P_for_1MHz_rabi_dBm": 16.05304080771254
+ },
+ "nv_wireless": {
+  "S_W_m2": 0.0791785634238816,
+  "P_received_dBm": -5.627027825990183,
+  "rabi_kHz": 82.4131602907821
+ },
+ "nv_sensitivity_T_rtHz": {
+  "hobby C=1% 10MHz 10uW": 4.693989190614388e-09,
+  "good  C=3% 1MHz 100uW": 4.947899051517245e-11,
+  "reported LED teaching build": 1e-06,
+  "Schloss 2018 lab": 5e-11
+ },
+ "nv_lines": {
+  "zeeman_MHz_per_mT": 28.03,
+  "earth_50uT_split_MHz": 2.8030000000000004,
+  "span_at_5mT_MHz": 280.3,
+  "temp_kHz_per_K": -74.2
+ },
+ "rydberg_vs_antenna": {
+  "antenna_E_rms_nV_cm_rtHz": 0.41442987853727864,
+  "rydberg_uV_cm_rtHz": {
+   "Sedlacek2012": 30,
+   "Kumar2017": 3,
+   "2026 heterodyne": 0.76
+  }
+ },
+ "light_to_rf": {
+  "HeNe_mode_beat_MHz": {
+   "L=15cm": 999.3333333333334,
+   "L=23cm": 651.7391304347826,
+   "L=30cm": 499.6666666666667,
+   "L=45cm": 333.1111111111111
+  },
+  "DFB_pm_per_GHz_1550": 8.013675783855904,
+  "DFB_GHz_per_K": 12.5,
+  "self_het_delay_km_for_1MHz_linewidth": 0.06500633779148532,
+  "radiation_pressure_nN_per_W": 3.33555703802535
+ }
+}

@@ -1,0 +1,34 @@
+N = 4 whips
+  ring4_133mm            | nominal: p95 max 174.38, gross max 29.6 %, med 0.45 | elevated: p95 max 174.14, gross max 57.8 %, med 0.75 | stress: p95 max 173.78, gross max 58.9 %, med 1.97
+  ring4_74mm             | nominal: p95 max 169.76, gross max 13.9 %, med 0.72 | elevated: p95 max 174.81, gross max 30.8 %, med 0.79 | stress: p95 max 174.18, gross max 32.5 %, med 2.20
+  ring4_42mm             | nominal: p95 max  12.13, gross max 10.1 %, med 1.23 | elevated: p95 max  12.48, gross max 13.0 %, med 1.26 | stress: p95 max  34.79, gross max 52.1 %, med 3.26
+  N=4: evolved  3872 evaluations + 10 finalists re-scored: mean score 5.65
+  N=4: climbed  3870 evaluations + 1 finalists re-scored: mean score 6.68
+  N=4: random   3872 evaluations + 8 finalists re-scored: mean score 5.14
+  N=4: searches took 36 s
+  evolved4               | nominal: p95 max   5.45, gross max  0.0 %, med 0.60 | elevated: p95 max   5.88, gross max  2.6 %, med 0.57 | stress: p95 max  14.35, gross max 17.8 %, med 1.49
+  climbed4               | nominal: p95 max   6.41, gross max  0.4 %, med 0.64 | elevated: p95 max   7.24, gross max  3.2 %, med 0.90 | stress: p95 max 140.13, gross max 22.7 %, med 1.75
+  random4                | nominal: p95 max   6.16, gross max  0.1 %, med 0.64 | elevated: p95 max   6.94, gross max  0.5 %, med 0.77 | stress: p95 max  16.67, gross max 23.4 %, med 1.71
+N = 8 whips
+  ring8_225mm            | nominal: p95 max   1.61, gross max  0.0 %, med 0.16 | elevated: p95 max 172.41, gross max 30.3 %, med 0.18 | stress: p95 max 171.67, gross max 30.3 %, med 0.43
+  ring8_112mm            | nominal: p95 max   3.21, gross max  0.0 %, med 0.33 | elevated: p95 max   3.49, gross max  1.0 %, med 0.35 | stress: p95 max   8.42, gross max  2.9 %, med 0.85
+  ring8_78mm             | nominal: p95 max   4.61, gross max  0.0 %, med 0.46 | elevated: p95 max   5.02, gross max  0.1 %, med 0.50 | stress: p95 max  11.89, gross max  9.9 %, med 1.22
+  rings8_225_112mm       | nominal: p95 max   2.05, gross max  0.1 %, med 0.21 | elevated: p95 max 173.89, gross max 28.1 %, med 0.23 | stress: p95 max 174.16, gross max 28.1 %, med 0.53
+  N=8: evolved  8040 evaluations + 10 finalists re-scored: mean score 4.10
+  N=8: climbed  8037 evaluations + 1 finalists re-scored: mean score 2.35
+  N=8: random   8040 evaluations + 10 finalists re-scored: mean score 1.85
+  N=8: searches took 88 s
+  evolved8               | nominal: p95 max   1.81, gross max  0.0 %, med 0.18 | elevated: p95 max   1.87, gross max  2.7 %, med 0.19 | stress: p95 max   4.44, gross max  3.1 %, med 0.47
+  climbed8               | nominal: p95 max   2.55, gross max  0.0 %, med 0.28 | elevated: p95 max   3.26, gross max  0.0 %, med 0.50 | stress: p95 max   6.80, gross max  0.4 %, med 0.81
+  random8                | nominal: p95 max   2.13, gross max  0.0 %, med 0.23 | elevated: p95 max   2.55, gross max  0.1 %, med 0.36 | stress: p95 max   5.25, gross max  0.2 %, med 0.65
+N = 16 whips
+  ring16_225mm           | nominal: p95 max   1.14, gross max  0.0 %, med 0.12 | elevated: p95 max   1.26, gross max  4.1 %, med 0.13 | stress: p95 max   2.76, gross max  4.2 %, med 0.29
+  rings16_225_112mm      | nominal: p95 max   1.38, gross max  0.0 %, med 0.14 | elevated: p95 max   1.50, gross max  0.0 %, med 0.16 | stress: p95 max   3.62, gross max  0.1 %, med 0.38
+  N=16: evolved  8040 evaluations + 10 finalists re-scored: mean score 1.06
+  N=16: climbed  8037 evaluations + 1 finalists re-scored: mean score 2.04
+  N=16: random   8040 evaluations + 10 finalists re-scored: mean score 0.99
+  N=16: searches took 124 s
+  evolved16              | nominal: p95 max   1.10, gross max  0.0 %, med 0.11 | elevated: p95 max   1.17, gross max  0.5 %, med 0.12 | stress: p95 max   2.74, gross max  1.5 %, med 0.27
+  climbed16              | nominal: p95 max   1.22, gross max  0.0 %, med 0.14 | elevated: p95 max   1.59, gross max  0.8 %, med 0.25 | stress: p95 max   3.25, gross max  1.1 %, med 0.40
+  random16               | nominal: p95 max   1.27, gross max  0.0 %, med 0.13 | elevated: p95 max   1.33, gross max  0.1 %, med 0.14 | stress: p95 max   3.16, gross max  0.1 %, med 0.33
+EXIT 0

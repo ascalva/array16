@@ -1,0 +1,207 @@
+cross-check against experiments/evolve_layout.py
+  cross-check ring8_225mm (isotropic, sources 0-30 deg up, azimuth-only): median / p95 / gross %
+    0.4 GHz  this study 0.60 /   1.59 /  0.0   check() 0.55 /   1.75 /  0.0   results.json 0.55 /   1.75 /  0.0
+    1.0 GHz  this study 0.23 /   0.70 /  0.0   check() 0.24 /   0.69 /  0.0   results.json 0.23 /   0.66 /  0.0
+    1.6 GHz  this study 0.17 /  85.55 /  6.3   check() 0.16 /  84.78 /  5.4   results.json 0.15 /  85.56 /  5.9
+    2.0 GHz  this study 0.16 / 173.52 / 21.5   check() 0.16 / 173.80 / 22.7   results.json 0.15 / 172.41 / 21.1
+    2.3 GHz  this study 0.16 / 127.86 / 27.1   check() 0.15 / 127.30 / 26.4   results.json 0.14 / 127.27 / 23.9
+  cross-check rings16_225_112mm (isotropic, sources 0-30 deg up, azimuth-only): median / p95 / gross %
+    0.4 GHz  this study 0.50 /   1.44 /  0.0   check() 0.51 /   1.50 /  0.0   results.json 0.51 /   1.50 /  0.0
+    1.0 GHz  this study 0.22 /   0.61 /  0.0   check() 0.21 /   0.58 /  0.0   results.json 0.21 /   0.59 /  0.0
+    1.6 GHz  this study 0.12 /   0.38 /  0.0   check() 0.12 /   0.37 /  0.0   results.json 0.13 /   0.38 /  0.0
+    2.0 GHz  this study 0.10 /   0.31 /  0.0   check() 0.11 /   0.31 /  0.0   results.json 0.11 /   0.32 /  0.0
+    2.3 GHz  this study 0.09 /   0.27 /  0.0   check() 0.10 /   0.27 /  0.0   results.json 0.09 /   0.28 /  0.0
+search in the 500 x 500 x 300 mm volume (fast single-snapshot model, joint azimuth/elevation)
+  search: evolved 3-D                    8040 evaluations + 10 finalists re-scored: mean score 1.32
+  search: climbed 3-D                    8037 evaluations + 1 finalists re-scored: mean score 1.75
+  search: random 3-D                     8040 evaluations + 10 finalists re-scored: mean score 1.62
+  search: evolved planar (joint score)   8040 evaluations + 10 finalists re-scored: mean score 3.38
+  searches took 345 s
+  search score of planar rings 225/112                     3.87
+  search score of inner ring +150 mm                       1.95
+  search score of inner ring +300 mm                       1.52
+  search score of stacked rings 225/225, 300 mm apart      1.31
+  search score of ring of 12 + mast of 4                   1.70
+  search score of cone 8/5/3                               1.67
+  search score of helix r 225, 2 turns                     1.60
+final numbers: covariance model, 20 frequencies x 3 elevation bins x 600 trials
+  planar rings 225/112  (41 s)
+    0.4-1 GHz    el  0-10: az-only med   0.29 p95   0.96 gross   0.0 % (worst f   0.0) | joint az med  0.29 p95   0.95 gross  0.0 % (worst f  0.0) | joint el med  2.47 p95   7.35
+    0.4-1 GHz    el 10-30: az-only med   0.31 p95   1.03 gross   0.0 % (worst f   0.0) | joint az med  0.31 p95   1.02 gross  0.0 % (worst f  0.0) | joint el med  0.87 p95   3.22
+    0.4-1 GHz    el 30-60: az-only med   0.49 p95   1.74 gross   0.0 % (worst f   0.0) | joint az med  0.41 p95   1.49 gross  0.0 % (worst f  0.0) | joint el med  0.42 p95   1.51
+    1-2.3 GHz    el  0-10: az-only med   0.12 p95   0.37 gross   0.0 % (worst f   0.0) | joint az med  0.12 p95   0.37 gross  0.0 % (worst f  0.0) | joint el med  1.24 p95   4.39
+    1-2.3 GHz    el 10-30: az-only med   0.13 p95   0.42 gross   0.0 % (worst f   0.0) | joint az med  0.13 p95   0.39 gross  0.0 % (worst f  0.0) | joint el med  0.34 p95   1.27
+    1-2.3 GHz    el 30-60: az-only med  93.95 p95 172.79 gross  61.1 % (worst f  88.7) | joint az med  0.17 p95   0.57 gross  0.0 % (worst f  0.0) | joint el med  0.17 p95   0.56
+    0.4-2.3 GHz  el  0-10: az-only med   0.15 p95   0.68 gross   0.0 % (worst f   0.0) | joint az med  0.15 p95   0.68 gross  0.0 % (worst f  0.0) | joint el med  1.54 p95   5.77
+    0.4-2.3 GHz  el 10-30: az-only med   0.17 p95   0.74 gross   0.0 % (worst f   0.0) | joint az med  0.16 p95   0.73 gross  0.0 % (worst f  0.0) | joint el med  0.45 p95   2.23
+    0.4-2.3 GHz  el 30-60: az-only med   0.85 p95 167.64 gross  39.7 % (worst f  88.7) | joint az med  0.22 p95   1.02 gross  0.0 % (worst f  0.0) | joint el med  0.22 p95   1.02
+    stress 5 deg/0 dB el  0-10: az-only p95   1.62 gross   0.0 % | joint az med  0.36 p95   1.62 gross  0.0 % (worst f  0.0) | joint el med  2.98 p95   9.08
+    stress 5 deg/0 dB el 10-30: az-only p95   1.73 gross   0.0 % | joint az med  0.40 p95   1.75 gross  0.0 % (worst f  0.0) | joint el med  1.15 p95   5.63
+    stress 5 deg/0 dB el 30-60: az-only p95 169.21 gross  41.3 % | joint az med  0.68 p95   3.30 gross  0.2 % (worst f  2.7) | joint el med  0.68 p95   2.94
+  inner ring +150 mm  (42 s)
+    0.4-1 GHz    el  0-10: az-only med   0.29 p95   0.98 gross   0.0 % (worst f   0.0) | joint az med  0.28 p95   0.98 gross  0.0 % (worst f  0.0) | joint el med  0.47 p95   1.61
+    0.4-1 GHz    el 10-30: az-only med   0.34 p95   1.11 gross   0.0 % (worst f   0.0) | joint az med  0.31 p95   1.02 gross  0.0 % (worst f  0.0) | joint el med  0.43 p95   1.47
+    0.4-1 GHz    el 30-60: az-only med   0.91 p95 167.59 gross  16.8 % (worst f  63.0) | joint az med  0.42 p95   1.47 gross  0.0 % (worst f  0.0) | joint el med  0.36 p95   1.25
+    1-2.3 GHz    el  0-10: az-only med   0.12 p95   0.39 gross   0.0 % (worst f   0.0) | joint az med  0.12 p95   0.37 gross  0.0 % (worst f  0.0) | joint el med  0.19 p95   0.61
+    1-2.3 GHz    el 10-30: az-only med   0.33 p95 170.02 gross  31.8 % (worst f  70.2) | joint az med  0.12 p95   0.40 gross  0.0 % (worst f  0.0) | joint el med  0.18 p95   0.58
+    1-2.3 GHz    el 30-60: az-only med  92.90 p95 172.13 gross  96.3 % (worst f 100.0) | joint az med  0.17 p95   0.56 gross  0.0 % (worst f  0.0) | joint el med  0.14 p95   0.46
+    0.4-2.3 GHz  el  0-10: az-only med   0.16 p95   0.68 gross   0.0 % (worst f   0.0) | joint az med  0.15 p95   0.68 gross  0.0 % (worst f  0.0) | joint el med  0.25 p95   1.09
+    0.4-2.3 GHz  el 10-30: az-only med   0.34 p95 164.09 gross  20.7 % (worst f  70.2) | joint az med  0.16 p95   0.71 gross  0.0 % (worst f  0.0) | joint el med  0.23 p95   1.03
+    0.4-2.3 GHz  el 30-60: az-only med  71.57 p95 170.83 gross  68.5 % (worst f 100.0) | joint az med  0.22 p95   1.00 gross  0.0 % (worst f  0.0) | joint el med  0.18 p95   0.85
+    stress 5 deg/0 dB el  0-10: az-only p95   1.66 gross   0.0 % | joint az med  0.36 p95   1.64 gross  0.0 % (worst f  0.0) | joint el med  0.61 p95   2.73
+    stress 5 deg/0 dB el 10-30: az-only p95 166.16 gross  21.6 % | joint az med  0.41 p95   1.78 gross  0.0 % (worst f  0.0) | joint el med  0.58 p95   2.49
+    stress 5 deg/0 dB el 30-60: az-only p95 170.80 gross  69.9 % | joint az med  0.66 p95   3.22 gross  0.1 % (worst f  1.0) | joint el med  0.58 p95   2.55
+  inner ring +300 mm  (46 s)
+    0.4-1 GHz    el  0-10: az-only med   0.30 p95   1.00 gross   0.0 % (worst f   0.0) | joint az med  0.29 p95   0.97 gross  0.0 % (worst f  0.0) | joint el med  0.24 p95   0.80
+    0.4-1 GHz    el 10-30: az-only med   0.55 p95 155.91 gross  14.7 % (worst f  48.2) | joint az med  0.31 p95   1.05 gross  0.0 % (worst f  0.0) | joint el med  0.24 p95   0.85
+    0.4-1 GHz    el 30-60: az-only med  56.51 p95 170.07 gross  56.7 % (worst f  92.8) | joint az med  0.42 p95   1.46 gross  0.0 % (worst f  0.0) | joint el med  0.26 p95   0.88
+    1-2.3 GHz    el  0-10: az-only med   0.15 p95 121.00 gross   6.4 % (worst f  23.3) | joint az med  0.12 p95   0.36 gross  0.0 % (worst f  0.0) | joint el med  0.10 p95   0.31
+    1-2.3 GHz    el 10-30: az-only med  30.12 p95 167.97 gross  53.2 % (worst f  66.3) | joint az med  0.12 p95   0.40 gross  0.0 % (worst f  0.0) | joint el med  0.11 p95   0.53
+    1-2.3 GHz    el 30-60: az-only med  68.76 p95 173.32 gross  64.9 % (worst f  91.8) | joint az med  0.17 p95   0.57 gross  0.0 % (worst f  0.0) | joint el med  0.11 p95   0.34
+    0.4-2.3 GHz  el  0-10: az-only med   0.19 p95   1.23 gross   4.2 % (worst f  23.3) | joint az med  0.15 p95   0.68 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.57
+    0.4-2.3 GHz  el 10-30: az-only med   0.73 p95 165.92 gross  39.7 % (worst f  66.3) | joint az med  0.16 p95   0.73 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.83
+    0.4-2.3 GHz  el 30-60: az-only med  64.45 p95 172.48 gross  62.0 % (worst f  92.8) | joint az med  0.22 p95   1.01 gross  0.0 % (worst f  0.0) | joint el med  0.14 p95   0.63
+    stress 5 deg/0 dB el  0-10: az-only p95   2.86 gross   4.1 % | joint az med  0.36 p95   1.61 gross  0.0 % (worst f  0.0) | joint el med  0.30 p95   1.32
+    stress 5 deg/0 dB el 10-30: az-only p95 165.65 gross  41.2 % | joint az med  0.41 p95   1.80 gross  0.0 % (worst f  0.0) | joint el med  0.35 p95   2.28
+    stress 5 deg/0 dB el 30-60: az-only p95 172.06 gross  64.9 % | joint az med  0.67 p95   3.29 gross  0.1 % (worst f  0.7) | joint el med  0.44 p95   1.92
+  stacked rings 225/225, 300 mm apart  (42 s)
+    0.4-1 GHz    el  0-10: az-only med   0.22 p95   0.81 gross   0.0 % (worst f   0.0) | joint az med  0.22 p95   0.78 gross  0.0 % (worst f  0.0) | joint el med  0.24 p95   0.82
+    0.4-1 GHz    el 10-30: az-only med   0.42 p95 172.48 gross  13.6 % (worst f  60.0) | joint az med  0.24 p95   0.81 gross  0.0 % (worst f  0.0) | joint el med  0.23 p95   0.83
+    0.4-1 GHz    el 30-60: az-only med   3.02 p95 176.26 gross  41.4 % (worst f  93.2) | joint az med  0.33 p95   1.18 gross  0.0 % (worst f  0.0) | joint el med  0.23 p95   0.83
+    1-2.3 GHz    el  0-10: az-only med   0.12 p95   0.51 gross   4.4 % (worst f  18.8) | joint az med  0.09 p95   0.29 gross  0.0 % (worst f  0.0) | joint el med  0.10 p95   0.31
+    1-2.3 GHz    el 10-30: az-only med  62.20 p95 140.65 gross  63.0 % (worst f  85.0) | joint az med  0.10 p95   0.31 gross  0.0 % (worst f  0.0) | joint el med  0.10 p95   0.43
+    1-2.3 GHz    el 30-60: az-only med  68.76 p95 173.23 gross  83.8 % (worst f 100.0) | joint az med  0.14 p95   0.44 gross  0.0 % (worst f  0.0) | joint el med  0.10 p95   0.31
+    0.4-2.3 GHz  el  0-10: az-only med   0.15 p95   0.74 gross   2.8 % (worst f  18.8) | joint az med  0.12 p95   0.53 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.57
+    0.4-2.3 GHz  el 10-30: az-only med   0.82 p95 162.60 gross  45.7 % (worst f  85.0) | joint az med  0.13 p95   0.57 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.73
+    0.4-2.3 GHz  el 30-60: az-only med  61.17 p95 174.78 gross  69.0 % (worst f 100.0) | joint az med  0.18 p95   0.81 gross  0.0 % (worst f  0.0) | joint el med  0.12 p95   0.56
+    stress 5 deg/0 dB el  0-10: az-only p95   1.74 gross   2.8 % | joint az med  0.29 p95   1.30 gross  0.0 % (worst f  0.0) | joint el med  0.30 p95   1.35
+    stress 5 deg/0 dB el 10-30: az-only p95 160.18 gross  44.9 % | joint az med  0.32 p95   1.42 gross  0.0 % (worst f  0.0) | joint el med  0.33 p95   2.01
+    stress 5 deg/0 dB el 30-60: az-only p95 173.61 gross  76.0 % | joint az med  0.54 p95   2.59 gross  0.1 % (worst f  1.0) | joint el med  0.38 p95   1.76
+  ring of 12 + mast of 4  (46 s)
+    0.4-1 GHz    el  0-10: az-only med   0.26 p95   0.90 gross   0.0 % (worst f   0.0) | joint az med  0.26 p95   0.90 gross  0.0 % (worst f  0.0) | joint el med  0.39 p95   1.30
+    0.4-1 GHz    el 10-30: az-only med   0.29 p95   0.99 gross   0.0 % (worst f   0.0) | joint az med  0.28 p95   0.94 gross  0.0 % (worst f  0.0) | joint el med  0.37 p95   1.27
+    0.4-1 GHz    el 30-60: az-only med   0.66 p95  77.29 gross  25.8 % (worst f  54.2) | joint az med  0.38 p95   1.30 gross  0.0 % (worst f  0.0) | joint el med  0.30 p95   1.04
+    1-2.3 GHz    el  0-10: az-only med   0.11 p95   0.34 gross   0.0 % (worst f   0.0) | joint az med  0.11 p95   0.34 gross  0.0 % (worst f  0.0) | joint el med  0.16 p95   0.51
+    1-2.3 GHz    el 10-30: az-only med   0.13 p95   0.65 gross   4.7 % (worst f  15.7) | joint az med  0.11 p95   0.36 gross  0.0 % (worst f  0.0) | joint el med  0.14 p95   0.48
+    1-2.3 GHz    el 30-60: az-only med 108.56 p95 174.75 gross  87.0 % (worst f 100.0) | joint az med  0.16 p95   0.52 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.41
+    0.4-2.3 GHz  el  0-10: az-only med   0.14 p95   0.63 gross   0.0 % (worst f   0.0) | joint az med  0.14 p95   0.62 gross  0.0 % (worst f  0.0) | joint el med  0.20 p95   0.91
+    0.4-2.3 GHz  el 10-30: az-only med   0.17 p95   0.97 gross   3.1 % (worst f  15.7) | joint az med  0.15 p95   0.66 gross  0.0 % (worst f  0.0) | joint el med  0.19 p95   0.88
+    0.4-2.3 GHz  el 30-60: az-only med  62.22 p95 171.77 gross  65.6 % (worst f 100.0) | joint az med  0.20 p95   0.92 gross  0.0 % (worst f  0.0) | joint el med  0.17 p95   0.74
+    stress 5 deg/0 dB el  0-10: az-only p95   1.48 gross   0.0 % | joint az med  0.34 p95   1.46 gross  0.0 % (worst f  0.0) | joint el med  0.49 p95   2.20
+    stress 5 deg/0 dB el 10-30: az-only p95   2.59 gross   3.5 % | joint az med  0.37 p95   1.64 gross  0.0 % (worst f  0.0) | joint el med  0.49 p95   2.20
+    stress 5 deg/0 dB el 30-60: az-only p95 169.98 gross  68.3 % | joint az med  0.61 p95   3.04 gross  0.1 % (worst f  0.7) | joint el med  0.50 p95   2.26
+  cone 8/5/3  (47 s)
+    0.4-1 GHz    el  0-10: az-only med   0.28 p95   0.93 gross   0.0 % (worst f   0.0) | joint az med  0.28 p95   0.92 gross  0.0 % (worst f  0.0) | joint el med  0.30 p95   1.05
+    0.4-1 GHz    el 10-30: az-only med   0.36 p95   1.26 gross   0.8 % (worst f   5.7) | joint az med  0.31 p95   1.05 gross  0.0 % (worst f  0.0) | joint el med  0.31 p95   1.05
+    0.4-1 GHz    el 30-60: az-only med   2.31 p95 171.38 gross  46.5 % (worst f  97.5) | joint az med  0.40 p95   1.44 gross  0.0 % (worst f  0.0) | joint el med  0.30 p95   0.98
+    1-2.3 GHz    el  0-10: az-only med   0.12 p95   0.39 gross   0.0 % (worst f   0.3) | joint az med  0.11 p95   0.37 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.40
+    1-2.3 GHz    el 10-30: az-only med  82.34 p95 167.41 gross  67.2 % (worst f  93.3) | joint az med  0.12 p95   0.40 gross  0.0 % (worst f  0.0) | joint el med  0.12 p95   0.40
+    1-2.3 GHz    el 30-60: az-only med 122.16 p95 174.50 gross  99.8 % (worst f 100.0) | joint az med  0.17 p95   0.56 gross  0.0 % (worst f  0.0) | joint el med  0.12 p95   0.39
+    0.4-2.3 GHz  el  0-10: az-only med   0.16 p95   0.67 gross   0.0 % (worst f   0.3) | joint az med  0.15 p95   0.66 gross  0.0 % (worst f  0.0) | joint el med  0.16 p95   0.73
+    0.4-2.3 GHz  el 10-30: az-only med   0.78 p95 161.13 gross  44.0 % (worst f  93.3) | joint az med  0.16 p95   0.73 gross  0.0 % (worst f  0.0) | joint el med  0.16 p95   0.73
+    0.4-2.3 GHz  el 30-60: az-only med 106.55 p95 173.61 gross  81.1 % (worst f 100.0) | joint az med  0.22 p95   0.98 gross  0.0 % (worst f  0.0) | joint el med  0.16 p95   0.70
+    stress 5 deg/0 dB el  0-10: az-only p95   1.67 gross   0.1 % | joint az med  0.36 p95   1.66 gross  0.0 % (worst f  0.0) | joint el med  0.40 p95   1.74
+    stress 5 deg/0 dB el 10-30: az-only p95 162.77 gross  44.0 % | joint az med  0.40 p95   1.86 gross  0.0 % (worst f  0.0) | joint el med  0.41 p95   1.87
+    stress 5 deg/0 dB el 30-60: az-only p95 173.55 gross  82.2 % | joint az med  0.66 p95   3.25 gross  0.1 % (worst f  1.7) | joint el med  0.48 p95   2.22
+  helix r 225, 2 turns  (46 s)
+    0.4-1 GHz    el  0-10: az-only med   0.41 p95   1.28 gross   0.0 % (worst f   0.0) | joint az med  0.22 p95   0.77 gross  0.0 % (worst f  0.0) | joint el med  0.39 p95   1.28
+    0.4-1 GHz    el 10-30: az-only med   1.68 p95   4.15 gross   0.0 % (worst f   0.3) | joint az med  0.25 p95   0.86 gross  0.0 % (worst f  0.0) | joint el med  0.34 p95   1.17
+    0.4-1 GHz    el 30-60: az-only med   5.95 p95 166.32 gross  30.8 % (worst f  76.5) | joint az med  0.34 p95   1.19 gross  0.0 % (worst f  0.0) | joint el med  0.28 p95   0.96
+    1-2.3 GHz    el  0-10: az-only med   0.35 p95   1.17 gross   0.0 % (worst f   0.0) | joint az med  0.09 p95   0.30 gross  0.0 % (worst f  0.0) | joint el med  0.16 p95   0.51
+    1-2.3 GHz    el 10-30: az-only med   2.70 p95 168.52 gross  37.3 % (worst f  73.5) | joint az med  0.10 p95   0.32 gross  0.0 % (worst f  0.0) | joint el med  0.15 p95   0.47
+    1-2.3 GHz    el 30-60: az-only med 111.94 p95 173.09 gross  97.4 % (worst f 100.0) | joint az med  0.13 p95   0.46 gross  0.0 % (worst f  0.0) | joint el med  0.11 p95   0.38
+    0.4-2.3 GHz  el  0-10: az-only med   0.37 p95   1.21 gross   0.0 % (worst f   0.0) | joint az med  0.12 p95   0.54 gross  0.0 % (worst f  0.0) | joint el med  0.21 p95   0.90
+    0.4-2.3 GHz  el 10-30: az-only med   2.18 p95 162.03 gross  24.3 % (worst f  73.5) | joint az med  0.13 p95   0.59 gross  0.0 % (worst f  0.0) | joint el med  0.19 p95   0.83
+    0.4-2.3 GHz  el 30-60: az-only med  89.91 p95 171.93 gross  74.1 % (worst f 100.0) | joint az med  0.18 p95   0.83 gross  0.0 % (worst f  0.0) | joint el med  0.15 p95   0.66
+    stress 5 deg/0 dB el  0-10: az-only p95   1.66 gross   0.0 % | joint az med  0.29 p95   1.30 gross  0.0 % (worst f  0.0) | joint el med  0.50 p95   2.24
+    stress 5 deg/0 dB el 10-30: az-only p95 159.87 gross  24.8 % | joint az med  0.32 p95   1.43 gross  0.0 % (worst f  0.0) | joint el med  0.46 p95   2.03
+    stress 5 deg/0 dB el 30-60: az-only p95 171.83 gross  74.2 % | joint az med  0.53 p95   2.55 gross  0.0 % (worst f  0.3) | joint el med  0.46 p95   2.02
+  evolved16 planar (evolve_layout)  (54 s)
+    0.4-1 GHz    el  0-10: az-only med   0.22 p95   0.73 gross   0.0 % (worst f   0.0) | joint az med  0.22 p95   0.73 gross  0.0 % (worst f  0.0) | joint el med  2.10 p95   6.51
+    0.4-1 GHz    el 10-30: az-only med   0.24 p95   0.81 gross   0.0 % (worst f   0.0) | joint az med  0.23 p95   0.79 gross  0.0 % (worst f  0.0) | joint el med  0.65 p95   2.47
+    0.4-1 GHz    el 30-60: az-only med   0.55 p95  67.86 gross  12.0 % (worst f  37.7) | joint az med  0.32 p95   1.12 gross  0.0 % (worst f  0.0) | joint el med  0.34 p95   1.13
+    1-2.3 GHz    el  0-10: az-only med   0.09 p95   0.29 gross   0.0 % (worst f   0.0) | joint az med  0.09 p95   0.29 gross  0.0 % (worst f  0.0) | joint el med  0.97 p95   3.66
+    1-2.3 GHz    el 10-30: az-only med   0.11 p95   0.36 gross   0.1 % (worst f   1.5) | joint az med  0.10 p95   0.30 gross  0.0 % (worst f  0.0) | joint el med  0.26 p95   0.96
+    1-2.3 GHz    el 30-60: az-only med  28.47 p95 169.21 gross  70.7 % (worst f  93.3) | joint az med  0.13 p95   0.43 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.44
+    0.4-2.3 GHz  el  0-10: az-only med   0.12 p95   0.51 gross   0.0 % (worst f   0.0) | joint az med  0.12 p95   0.51 gross  0.0 % (worst f  0.0) | joint el med  1.25 p95   5.00
+    0.4-2.3 GHz  el 10-30: az-only med   0.14 p95   0.58 gross   0.1 % (worst f   1.5) | joint az med  0.12 p95   0.55 gross  0.0 % (worst f  0.0) | joint el med  0.35 p95   1.74
+    0.4-2.3 GHz  el 30-60: az-only med  10.55 p95 164.25 gross  50.1 % (worst f  93.3) | joint az med  0.17 p95   0.77 gross  0.0 % (worst f  0.0) | joint el med  0.18 p95   0.80
+    stress 5 deg/0 dB el  0-10: az-only p95   1.23 gross   0.0 % | joint az med  0.28 p95   1.24 gross  0.0 % (worst f  0.0) | joint el med  2.38 p95   7.93
+    stress 5 deg/0 dB el 10-30: az-only p95   1.42 gross   0.1 % | joint az med  0.30 p95   1.39 gross  0.0 % (worst f  0.0) | joint el med  0.87 p95   4.19
+    stress 5 deg/0 dB el 30-60: az-only p95 165.31 gross  50.6 % | joint az med  0.51 p95   2.45 gross  0.0 % (worst f  0.3) | joint el med  0.52 p95   2.31
+  evolved 3-D  (45 s)
+    0.4-1 GHz    el  0-10: az-only med   0.29 p95   0.88 gross   0.0 % (worst f   0.0) | joint az med  0.22 p95   0.74 gross  0.0 % (worst f  0.0) | joint el med  0.27 p95   0.90
+    0.4-1 GHz    el 10-30: az-only med   0.94 p95  56.04 gross   7.8 % (worst f  29.5) | joint az med  0.23 p95   0.77 gross  0.0 % (worst f  0.0) | joint el med  0.26 p95   0.88
+    0.4-1 GHz    el 30-60: az-only med  66.55 p95 164.11 gross  68.4 % (worst f 100.0) | joint az med  0.32 p95   1.12 gross  0.0 % (worst f  0.0) | joint el med  0.24 p95   0.83
+    1-2.3 GHz    el  0-10: az-only med   0.20 p95   0.76 gross   2.1 % (worst f  12.3) | joint az med  0.09 p95   0.29 gross  0.0 % (worst f  0.0) | joint el med  0.11 p95   0.34
+    1-2.3 GHz    el 10-30: az-only med  41.49 p95 168.85 gross  62.9 % (worst f  71.8) | joint az med  0.10 p95   0.30 gross  0.0 % (worst f  0.0) | joint el med  0.11 p95   0.34
+    1-2.3 GHz    el 30-60: az-only med  57.43 p95 168.97 gross  89.5 % (worst f  97.5) | joint az med  0.13 p95   0.44 gross  0.0 % (worst f  0.0) | joint el med  0.10 p95   0.33
+    0.4-2.3 GHz  el  0-10: az-only med   0.23 p95   0.82 gross   1.3 % (worst f  12.3) | joint az med  0.12 p95   0.52 gross  0.0 % (worst f  0.0) | joint el med  0.14 p95   0.62
+    0.4-2.3 GHz  el 10-30: az-only med   2.06 p95 163.58 gross  43.6 % (worst f  71.8) | joint az med  0.13 p95   0.54 gross  0.0 % (worst f  0.0) | joint el med  0.14 p95   0.61
+    0.4-2.3 GHz  el 30-60: az-only med  62.00 p95 167.52 gross  82.1 % (worst f 100.0) | joint az med  0.17 p95   0.79 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.57
+    stress 5 deg/0 dB el  0-10: az-only p95   1.54 gross   1.4 % | joint az med  0.29 p95   1.25 gross  0.0 % (worst f  0.0) | joint el med  0.33 p95   1.54
+    stress 5 deg/0 dB el 10-30: az-only p95 164.56 gross  44.3 % | joint az med  0.30 p95   1.40 gross  0.0 % (worst f  0.0) | joint el med  0.35 p95   1.55
+    stress 5 deg/0 dB el 30-60: az-only p95 168.39 gross  83.4 % | joint az med  0.52 p95   2.69 gross  0.0 % (worst f  0.7) | joint el med  0.39 p95   1.78
+  climbed 3-D  (45 s)
+    0.4-1 GHz    el  0-10: az-only med   0.57 p95   2.04 gross   0.0 % (worst f   0.0) | joint az med  0.26 p95   0.87 gross  0.0 % (worst f  0.0) | joint el med  0.38 p95   1.28
+    0.4-1 GHz    el 10-30: az-only med   2.75 p95   7.84 gross   1.0 % (worst f   1.8) | joint az med  0.28 p95   0.96 gross  0.0 % (worst f  0.0) | joint el med  0.37 p95   1.25
+    0.4-1 GHz    el 30-60: az-only med  12.99 p95 148.93 gross  60.0 % (worst f  77.0) | joint az med  0.38 p95   1.35 gross  0.0 % (worst f  0.0) | joint el med  0.30 p95   1.07
+    1-2.3 GHz    el  0-10: az-only med   0.53 p95   2.11 gross   0.0 % (worst f   0.0) | joint az med  0.11 p95   0.34 gross  0.0 % (worst f  0.0) | joint el med  0.16 p95   0.48
+    1-2.3 GHz    el 10-30: az-only med   6.53 p95 169.91 gross  43.0 % (worst f  69.3) | joint az med  0.12 p95   0.37 gross  0.0 % (worst f  0.0) | joint el med  0.14 p95   0.48
+    1-2.3 GHz    el 30-60: az-only med  88.06 p95 169.86 gross  85.0 % (worst f  91.2) | joint az med  0.15 p95   0.52 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.40
+    0.4-2.3 GHz  el  0-10: az-only med   0.55 p95   2.09 gross   0.0 % (worst f   0.0) | joint az med  0.14 p95   0.62 gross  0.0 % (worst f  0.0) | joint el med  0.20 p95   0.90
+    0.4-2.3 GHz  el 10-30: az-only med   4.19 p95 164.05 gross  28.3 % (worst f  69.3) | joint az med  0.15 p95   0.66 gross  0.0 % (worst f  0.0) | joint el med  0.19 p95   0.87
+    0.4-2.3 GHz  el 30-60: az-only med  32.94 p95 167.46 gross  76.2 % (worst f  91.2) | joint az med  0.20 p95   0.93 gross  0.0 % (worst f  0.0) | joint el med  0.16 p95   0.74
+    stress 5 deg/0 dB el  0-10: az-only p95   2.46 gross   0.0 % | joint az med  0.33 p95   1.48 gross  0.0 % (worst f  0.0) | joint el med  0.47 p95   2.00
+    stress 5 deg/0 dB el 10-30: az-only p95 164.58 gross  28.3 % | joint az med  0.36 p95   1.62 gross  0.0 % (worst f  0.0) | joint el med  0.47 p95   2.14
+    stress 5 deg/0 dB el 30-60: az-only p95 168.68 gross  78.0 % | joint az med  0.62 p95   3.02 gross  0.0 % (worst f  0.3) | joint el med  0.50 p95   2.26
+  random 3-D  (59 s)
+    0.4-1 GHz    el  0-10: az-only med   0.29 p95   0.94 gross   0.0 % (worst f   0.0) | joint az med  0.26 p95   0.86 gross  0.0 % (worst f  0.0) | joint el med  0.37 p95   1.29
+    0.4-1 GHz    el 10-30: az-only med   0.67 p95   2.55 gross   0.1 % (worst f   1.0) | joint az med  0.27 p95   0.93 gross  0.0 % (worst f  0.0) | joint el med  0.35 p95   1.21
+    0.4-1 GHz    el 30-60: az-only med   7.10 p95 156.19 gross  45.9 % (worst f  90.3) | joint az med  0.38 p95   1.30 gross  0.0 % (worst f  0.0) | joint el med  0.30 p95   0.99
+    1-2.3 GHz    el  0-10: az-only med   0.16 p95   0.56 gross   0.0 % (worst f   0.0) | joint az med  0.10 p95   0.33 gross  0.0 % (worst f  0.0) | joint el med  0.15 p95   0.50
+    1-2.3 GHz    el 10-30: az-only med  26.08 p95 164.79 gross  56.3 % (worst f  89.5) | joint az med  0.11 p95   0.36 gross  0.0 % (worst f  0.0) | joint el med  0.15 p95   0.45
+    1-2.3 GHz    el 30-60: az-only med 109.99 p95 173.48 gross  99.3 % (worst f 100.0) | joint az med  0.15 p95   0.49 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.39
+    0.4-2.3 GHz  el  0-10: az-only med   0.20 p95   0.72 gross   0.0 % (worst f   0.0) | joint az med  0.14 p95   0.60 gross  0.0 % (worst f  0.0) | joint el med  0.19 p95   0.88
+    0.4-2.3 GHz  el 10-30: az-only med   1.29 p95 157.58 gross  36.7 % (worst f  89.5) | joint az med  0.14 p95   0.64 gross  0.0 % (worst f  0.0) | joint el med  0.19 p95   0.84
+    0.4-2.3 GHz  el 30-60: az-only med  86.56 p95 170.89 gross  80.6 % (worst f 100.0) | joint az med  0.20 p95   0.92 gross  0.0 % (worst f  0.0) | joint el med  0.16 p95   0.71
+    stress 5 deg/0 dB el  0-10: az-only p95   1.50 gross   0.0 % | joint az med  0.32 p95   1.42 gross  0.0 % (worst f  0.0) | joint el med  0.47 p95   2.08
+    stress 5 deg/0 dB el 10-30: az-only p95 155.73 gross  36.0 % | joint az med  0.36 p95   1.61 gross  0.0 % (worst f  0.0) | joint el med  0.45 p95   2.10
+    stress 5 deg/0 dB el 30-60: az-only p95 170.42 gross  81.5 % | joint az med  0.60 p95   2.82 gross  0.0 % (worst f  0.7) | joint el med  0.51 p95   2.23
+  evolved planar (joint score)  (79 s)
+    0.4-1 GHz    el  0-10: az-only med   0.21 p95   0.71 gross   0.0 % (worst f   0.0) | joint az med  0.21 p95   0.71 gross  0.0 % (worst f  0.0) | joint el med  2.10 p95   6.34
+    0.4-1 GHz    el 10-30: az-only med   0.27 p95   0.85 gross   0.0 % (worst f   0.0) | joint az med  0.23 p95   0.79 gross  0.0 % (worst f  0.0) | joint el med  0.63 p95   2.52
+    0.4-1 GHz    el 30-60: az-only med   0.95 p95  67.89 gross  13.2 % (worst f  36.8) | joint az med  0.30 p95   1.10 gross  0.0 % (worst f  0.0) | joint el med  0.31 p95   1.10
+    1-2.3 GHz    el  0-10: az-only med   0.09 p95   0.28 gross   0.0 % (worst f   0.0) | joint az med  0.09 p95   0.28 gross  0.0 % (worst f  0.0) | joint el med  0.96 p95   3.66
+    1-2.3 GHz    el 10-30: az-only med   0.16 p95   0.54 gross   1.4 % (worst f   7.3) | joint az med  0.09 p95   0.30 gross  0.0 % (worst f  0.0) | joint el med  0.26 p95   0.99
+    1-2.3 GHz    el 30-60: az-only med  27.23 p95 171.13 gross  70.7 % (worst f  97.8) | joint az med  0.13 p95   0.44 gross  0.0 % (worst f  0.0) | joint el med  0.13 p95   0.42
+    0.4-2.3 GHz  el  0-10: az-only med   0.12 p95   0.51 gross   0.0 % (worst f   0.0) | joint az med  0.11 p95   0.51 gross  0.0 % (worst f  0.0) | joint el med  1.23 p95   4.93
+    0.4-2.3 GHz  el 10-30: az-only med   0.19 p95   0.69 gross   0.9 % (worst f   7.3) | joint az med  0.12 p95   0.54 gross  0.0 % (worst f  0.0) | joint el med  0.34 p95   1.68
+    0.4-2.3 GHz  el 30-60: az-only med  11.34 p95 167.06 gross  50.6 % (worst f  97.8) | joint az med  0.17 p95   0.76 gross  0.0 % (worst f  0.0) | joint el med  0.17 p95   0.75
+    stress 5 deg/0 dB el  0-10: az-only p95   1.21 gross   0.0 % | joint az med  0.27 p95   1.21 gross  0.0 % (worst f  0.0) | joint el med  2.48 p95   8.07
+    stress 5 deg/0 dB el 10-30: az-only p95   1.52 gross   1.0 % | joint az med  0.31 p95   1.36 gross  0.0 % (worst f  0.0) | joint el med  0.87 p95   4.25
+    stress 5 deg/0 dB el 30-60: az-only p95 166.94 gross  51.7 % | joint az med  0.51 p95   2.41 gross  0.0 % (worst f  0.3) | joint el med  0.50 p95   2.30
+panel band: one tile, prisms, rotator
+panel band: one tile, prisms, rotator
+  panel 2.44 GHz (boresight 6.4 dBi):
+    one fixed tile                     min gain   -inf dBi, azimuth within 3 dB of boresight  30.6 %, DF usable (<1 % gross)  44.4 %, median / p95 at boresight 0.34 / 0.96, worst covered 4.14 deg
+    one tile on a rotator              min gain    6.4 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.34 / 0.96, worst covered 0.96 deg
+    3-face prism, best tile            min gain    2.5 dBi, azimuth within 3 dB of boresight  88.9 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.34 / 0.96, worst covered 2.13 deg
+    3-face prism, all visible tiles    min gain    4.9 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.36 / 1.04, worst covered 1.22 deg
+    4-face prism, best tile            min gain    4.4 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.34 / 0.96, worst covered 1.50 deg
+    4-face prism, all visible tiles    min gain    6.3 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.34 / 1.01, worst covered 1.01 deg
+  panel 3.50 GHz (boresight 10.7 dBi):
+    one fixed tile                     min gain   -inf dBi, azimuth within 3 dB of boresight  30.6 %, DF usable (<1 % gross)  44.4 %, median / p95 at boresight 0.24 / 0.69, worst covered 2.94 deg
+    one tile on a rotator              min gain   10.7 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.24 / 0.69, worst covered 0.69 deg
+    3-face prism, best tile            min gain    6.8 dBi, azimuth within 3 dB of boresight  88.9 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.24 / 0.69, worst covered 1.47 deg
+    3-face prism, all visible tiles    min gain    9.2 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.24 / 0.72, worst covered 0.86 deg
+    4-face prism, best tile            min gain    8.7 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.24 / 0.69, worst covered 1.02 deg
+    4-face prism, all visible tiles    min gain   10.6 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.25 / 0.73, worst covered 0.73 deg
+  panel 5.80 GHz (boresight 15.5 dBi):
+    one fixed tile                     min gain   -inf dBi, azimuth within 3 dB of boresight  30.6 %, DF usable (<1 % gross)  44.4 %, median / p95 at boresight 0.15 / 0.43, worst covered 1.80 deg
+    one tile on a rotator              min gain   15.5 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.15 / 0.43, worst covered 0.43 deg
+    3-face prism, best tile            min gain   11.6 dBi, azimuth within 3 dB of boresight  88.9 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.15 / 0.43, worst covered 0.94 deg
+    3-face prism, all visible tiles    min gain   14.0 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.15 / 0.46, worst covered 0.53 deg
+    4-face prism, best tile            min gain   13.5 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.15 / 0.43, worst covered 0.66 deg
+    4-face prism, all visible tiles    min gain   15.4 dBi, azimuth within 3 dB of boresight 100.0 %, DF usable (<1 % gross) 100.0 %, median / p95 at boresight 0.15 / 0.44, worst covered 0.46 deg
+done in 151 s

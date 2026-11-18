@@ -1,0 +1,2589 @@
+{
+ "astro": {
+  "bands": [
+   {
+    "f_mhz": 408.0,
+    "band": "406.1-410 continuum",
+    "bw_mhz": 3.9,
+    "front_end": "whip",
+    "tsys_k": 233.59236999100887,
+    "ae_cm2": 680.9437148224894,
+    "sefd_element_jy": 9472414.973968565,
+    "ds_1s_all16_jy": 309.6155691866295,
+    "ds_1s_switched_jy": 1384.6429191871857,
+    "sources": {
+     "Cyg A": {
+      "flux_jy": 5075.984483991147,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.37205317136390925,
+      "t_10sigma_switched_s": 7.441063427278185
+     },
+     "Cas A (2016)": {
+      "flux_jy": 4466.7381535707855,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.4804681392243826,
+      "t_10sigma_switched_s": 9.609362784487654
+     },
+     "Tau A": {
+      "flux_jy": 1078.7391740509029,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 8.23782728066953,
+      "t_10sigma_switched_s": 164.7565456133906
+     },
+     "Vir A": {
+      "flux_jy": 569.2618858900737,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 29.58158010145705,
+      "t_10sigma_switched_s": 591.631602029141
+     },
+     "quiet Sun": {
+      "flux_jy": 289999.9999999999,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.00011398549427201027,
+      "t_10sigma_switched_s": 0.0022797098854402055
+     }
+    },
+    "dT_mK_10kHz_1000s_one_element": 73.86839332083538,
+    "dT_mK_10kHz_1000s_16_elements_added_incoherently": 18.467098330208845
+   },
+   {
+    "f_mhz": 611.0,
+    "band": "608-614 continuum",
+    "bw_mhz": 6.0,
+    "front_end": "whip",
+    "tsys_k": 242.29445418135805,
+    "ae_cm2": 303.63310540851137,
+    "sefd_element_jy": 22034724.79859968,
+    "ds_1s_all16_jy": 580.6659831547496,
+    "ds_1s_switched_jy": 2596.817221111536,
+    "sources": {
+     "Cyg A": {
+      "flux_jy": 3579.2678778231493,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 2.6318695761066726,
+      "t_10sigma_switched_s": 52.63739152213347
+     },
+     "Cas A (2016)": {
+      "flux_jy": 3298.7347684400306,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 3.0985461833517545,
+      "t_10sigma_switched_s": 61.9709236670351
+     },
+     "Tau A": {
+      "flux_jy": 992.0503577601278,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 34.25984023272437,
+      "t_10sigma_switched_s": 685.1968046544877
+     },
+     "Vir A": {
+      "flux_jy": 415.00334031067007,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 195.77155249669968,
+      "t_10sigma_switched_s": 3915.4310499339954
+     },
+     "quiet Sun": {
+      "flux_jy": 420305.24756912614,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.00019086361488448083,
+      "t_10sigma_switched_s": 0.0038172722976896178
+     }
+    },
+    "dT_mK_10kHz_1000s_one_element": 76.62023396403994,
+    "dT_mK_10kHz_1000s_16_elements_added_incoherently": 19.155058491009985
+   },
+   {
+    "f_mhz": 1420.4,
+    "band": "H I, 1400-1427",
+    "bw_mhz": 20.0,
+    "front_end": "whip",
+    "tsys_k": 242.29445418135805,
+    "ae_cm2": 56.18368423404659,
+    "sefd_element_jy": 119082114.47205906,
+    "ds_1s_all16_jy": 1718.802271152828,
+    "ds_1s_switched_jy": 7686.717436357499,
+    "sources": {
+     "Cyg A": {
+      "flux_jy": 1555.722510721682,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 122.06399115198622,
+      "t_10sigma_switched_s": 2441.2798230397243
+     },
+     "Cas A (2016)": {
+      "flux_jy": 1748.8529057648743,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 96.59291485644812,
+      "t_10sigma_switched_s": 1931.8582971289622
+     },
+     "Tau A": {
+      "flux_jy": 826.4144820376295,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 432.5696045113609,
+      "t_10sigma_switched_s": 8651.392090227218
+     },
+     "Vir A": {
+      "flux_jy": 209.7918017899014,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 6712.353373181799,
+      "t_10sigma_switched_s": 134247.067463636
+     },
+     "quiet Sun": {
+      "flux_jy": 610338.4409318923,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.0007930679327571926,
+      "t_10sigma_switched_s": 0.01586135865514385
+     }
+    },
+    "dT_mK_10kHz_1000s_one_element": 76.62023396403994,
+    "dT_mK_10kHz_1000s_16_elements_added_incoherently": 19.155058491009985
+   },
+   {
+    "f_mhz": 1665.4,
+    "band": "OH, 1660-1670",
+    "bw_mhz": 10.0,
+    "front_end": "whip",
+    "tsys_k": 251.1992359515795,
+    "ae_cm2": 40.86903856858348,
+    "sefd_element_jy": 169721621.09236184,
+    "ds_1s_all16_jy": 3464.428083285612,
+    "ds_1s_switched_jy": 15493.393394771861,
+    "sources": {
+     "Cyg A": {
+      "flux_jy": 1309.5038908988538,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 699.9217904506473,
+      "t_10sigma_switched_s": 13998.435809012944
+     },
+     "Cas A (2016)": {
+      "flux_jy": 1546.582559288287,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 501.7840865654402,
+      "t_10sigma_switched_s": 10035.6817313088
+     },
+     "Tau A": {
+      "flux_jy": 795.235700921006,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 1897.8914231650597,
+      "t_10sigma_switched_s": 37957.82846330119
+     },
+     "Vir A": {
+      "flux_jy": 183.84852662790038,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 35509.3557814752,
+      "t_10sigma_switched_s": 710187.1156295037
+     },
+     "quiet Sun": {
+      "flux_jy": 624646.4175176707,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.0030760585225355318,
+      "t_10sigma_switched_s": 0.06152117045071062
+     }
+    },
+    "dT_mK_10kHz_1000s_one_element": 79.43617321010454,
+    "dT_mK_10kHz_1000s_16_elements_added_incoherently": 19.859043302526135
+   },
+   {
+    "f_mhz": 2695.0,
+    "band": "2690-2700 continuum",
+    "bw_mhz": 10.0,
+    "front_end": "panel",
+    "tsys_k": 219.61902581372294,
+    "ae_cm2": 6.25,
+    "sefd_element_jy": 970293722.7862105,
+    "ds_1s_all16_jy": 19806.037678764395,
+    "ds_1s_switched_jy": 88575.29322927864,
+    "sources": {
+     "Cyg A": {
+      "flux_jy": 758.3974232469276,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 68202.69002903125,
+      "t_10sigma_switched_s": 1364053.8005806243
+     },
+     "Cas A (2016)": {
+      "flux_jy": 1053.2962916477056,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 35358.52106016404,
+      "t_10sigma_switched_s": 707170.4212032807
+     },
+     "Tau A": {
+      "flux_jy": 698.4061970463338,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 80422.77108744964,
+      "t_10sigma_switched_s": 1608455.4217489925
+     },
+     "Vir A": {
+      "flux_jy": 122.53501877616841,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 2612611.0448139138,
+      "t_10sigma_switched_s": 52252220.89627826
+     },
+     "quiet Sun": {
+      "flux_jy": 669999.9999999998,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.08738675173371244,
+      "t_10sigma_switched_s": 1.7477350346742486
+     }
+    },
+    "dT_mK_10kHz_1000s_one_element": 69.44963390786786,
+    "dT_mK_10kHz_1000s_16_elements_added_incoherently": 17.362408476966966
+   },
+   {
+    "f_mhz": 4830.0,
+    "band": "H2CO, 4800-5000",
+    "bw_mhz": 20.0,
+    "front_end": "panel",
+    "tsys_k": 338.62607134097505,
+    "ae_cm2": 6.25,
+    "sefd_element_jy": 1496075989.6667068,
+    "ds_1s_all16_jy": 21593.996884055225,
+    "ds_1s_switched_jy": 96571.28987733224,
+    "sources": {
+     "Cyg A": {
+      "flux_jy": 376.58653670388696,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 328803.5437792107,
+      "t_10sigma_switched_s": 6576070.875584212
+     },
+     "Cas A (2016)": {
+      "flux_jy": 638.4404981517465,
+      "within_fit_range": false,
+      "t_10sigma_all16_s": 114399.78629238944,
+      "t_10sigma_switched_s": 2287995.725847787
+     },
+     "Tau A": {
+      "flux_jy": 575.1242850589916,
+      "within_fit_range": false,
+      "t_10sigma_all16_s": 140975.17940411283,
+      "t_10sigma_switched_s": 2819503.5880822544
+     },
+     "Vir A": {
+      "flux_jy": 73.96987625289192,
+      "within_fit_range": false,
+      "t_10sigma_all16_s": 8522289.528302023,
+      "t_10sigma_switched_s": 170445790.56604037
+     },
+     "quiet Sun": {
+      "flux_jy": 1290378.30378656,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.028004767031256775,
+      "t_10sigma_switched_s": 0.5600953406251353
+     }
+    },
+    "dT_mK_10kHz_1000s_one_element": 107.08296605521492,
+    "dT_mK_10kHz_1000s_16_elements_added_incoherently": 26.77074151380373
+   },
+   {
+    "f_mhz": 4995.0,
+    "band": "4990-5000 continuum",
+    "bw_mhz": 10.0,
+    "front_end": "panel",
+    "tsys_k": 338.62607134097505,
+    "ae_cm2": 6.25,
+    "sefd_element_jy": 1496075989.6667068,
+    "ds_1s_all16_jy": 30538.523259273254,
+    "ds_1s_switched_jy": 136572.42788038685,
+    "sources": {
+     "Cyg A": {
+      "flux_jy": 361.4234488747335,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 713942.7910878146,
+      "t_10sigma_switched_s": 14278855.821756288
+     },
+     "Cas A (2016)": {
+      "flux_jy": 619.3872105583029,
+      "within_fit_range": false,
+      "t_10sigma_all16_s": 243092.52086160018,
+      "t_10sigma_switched_s": 4861850.417232003
+     },
+     "Tau A": {
+      "flux_jy": 567.8674812699103,
+      "within_fit_range": false,
+      "t_10sigma_all16_s": 289202.5147632063,
+      "t_10sigma_switched_s": 5784050.295264125
+     },
+     "Vir A": {
+      "flux_jy": 71.8202489504214,
+      "within_fit_range": false,
+      "t_10sigma_all16_s": 18080159.275293924,
+      "t_10sigma_switched_s": 361603185.50587845
+     },
+     "quiet Sun": {
+      "flux_jy": 1339999.9999999995,
+      "within_fit_range": true,
+      "t_10sigma_all16_s": 0.05193814896731868,
+      "t_10sigma_switched_s": 1.038762979346373
+     }
+    },
+    "dT_mK_10kHz_1000s_one_element": 107.08296605521492,
+    "dT_mK_10kHz_1000s_16_elements_added_incoherently": 26.77074151380373
+   }
+  ],
+  "baseline_costs": [
+   {
+    "baseline_m": 0.45,
+    "f_mhz": 408.0,
+    "resolution_deg": 93.55578743601846,
+    "delay_ns_at_horizon": 1.5010384283916842,
+    "delay_times_bandwidth": 0.005854049870727568,
+    "channel_khz_for_1pct_loss": 51964.02605333333,
+    "fringe_rate_mhz_max": 0.044658547080594004,
+    "sun_visibility": 0.9999604073610975
+   },
+   {
+    "baseline_m": 0.45,
+    "f_mhz": 1420.4,
+    "resolution_deg": 26.873247869540652,
+    "delay_ns_at_horizon": 1.5010384283916842,
+    "delay_times_bandwidth": 0.030020768567833686,
+    "channel_khz_for_1pct_loss": 51964.02605333333,
+    "fringe_rate_mhz_max": 0.1554730398854797,
+    "sun_visibility": 0.9995202094234706
+   },
+   {
+    "baseline_m": 3.0,
+    "f_mhz": 408.0,
+    "resolution_deg": 14.033368115402771,
+    "delay_ns_at_horizon": 10.00692285594456,
+    "delay_times_bandwidth": 0.03902699913818379,
+    "channel_khz_for_1pct_loss": 7794.603908,
+    "fringe_rate_mhz_max": 0.2977236472039601,
+    "sun_visibility": 0.9982413358104265
+   },
+   {
+    "baseline_m": 3.0,
+    "f_mhz": 1420.4,
+    "resolution_deg": 4.030987180431098,
+    "delay_ns_at_horizon": 10.00692285594456,
+    "delay_times_bandwidth": 0.20013845711889122,
+    "channel_khz_for_1pct_loss": 7794.603908,
+    "fringe_rate_mhz_max": 1.0364869325698647,
+    "sun_visibility": 0.9788236452601281
+   },
+   {
+    "baseline_m": 10.0,
+    "f_mhz": 408.0,
+    "resolution_deg": 4.210010434620831,
+    "delay_ns_at_horizon": 33.3564095198152,
+    "delay_times_bandwidth": 0.1300899971272793,
+    "channel_khz_for_1pct_loss": 2338.3811724,
+    "fringe_rate_mhz_max": 0.9924121573465334,
+    "sun_visibility": 0.9805748363005016
+   },
+   {
+    "baseline_m": 10.0,
+    "f_mhz": 1420.4,
+    "resolution_deg": 1.2092961541293292,
+    "delay_ns_at_horizon": 33.3564095198152,
+    "delay_times_bandwidth": 0.6671281903963041,
+    "channel_khz_for_1pct_loss": 2338.3811724,
+    "fringe_rate_mhz_max": 3.454956441899549,
+    "sun_visibility": 0.7810249339803952
+   },
+   {
+    "baseline_m": 30.0,
+    "f_mhz": 408.0,
+    "resolution_deg": 1.4033368115402771,
+    "delay_ns_at_horizon": 100.0692285594456,
+    "delay_times_bandwidth": 0.3902699913818379,
+    "channel_khz_for_1pct_loss": 779.4603907999999,
+    "fringe_rate_mhz_max": 2.9772364720396,
+    "sun_visibility": 0.8340547065027827
+   },
+   {
+    "baseline_m": 30.0,
+    "f_mhz": 1420.4,
+    "resolution_deg": 0.40309871804310976,
+    "delay_ns_at_horizon": 100.0692285594456,
+    "delay_times_bandwidth": 2.001384571188912,
+    "channel_khz_for_1pct_loss": 779.4603907999999,
+    "fringe_rate_mhz_max": 10.364869325698645,
+    "sun_visibility": 0.055348470653552244
+   },
+   {
+    "baseline_m": 100.0,
+    "f_mhz": 408.0,
+    "resolution_deg": 0.42100104346208317,
+    "delay_ns_at_horizon": 333.564095198152,
+    "delay_times_bandwidth": 1.3008999712727929,
+    "channel_khz_for_1pct_loss": 233.83811724,
+    "fringe_rate_mhz_max": 9.924121573465335,
+    "sun_visibility": 0.024650657154740893
+   },
+   {
+    "baseline_m": 100.0,
+    "f_mhz": 1420.4,
+    "resolution_deg": 0.12092961541293294,
+    "delay_ns_at_horizon": 333.564095198152,
+    "delay_times_bandwidth": 6.671281903963041,
+    "channel_khz_for_1pct_loss": 233.83811724,
+    "fringe_rate_mhz_max": 34.54956441899549,
+    "sun_visibility": 0.013433086854537512
+   }
+  ],
+  "assumptions": "Assumptions (ESTIMATES, not measurements): one polarisation; a whip over the plate has 2 dBi towards a source 30-60 deg up; a panel element has the lattice-cell gain 4 pi (25 mm)^2 / lambda^2; system temperature = receiver (REDESIGN.md noise figures) + 150 K of ground and sky for a whip (it sees the ground as well as it sees the sky) or + 50 K for the panel pointed up; 20 MHz of bandwidth, except where the protected band is narrower; cross-correlations only, point sources, gains stable for the whole integration. Interferometer noise: dS = SEFD / sqrt(Npairs_simultaneous * 2 * B * t), SEFD = 2 k Tsys / Ae, Ae = G lambda^2 / 4 pi. 'switched' = 4 of the 16 elements at a time (6 of the 120 pairs), any schedule."
+ },
+ "mimo": {
+  "panel_5800": [
+   {
+    "case": "a: 1 TX horn, 4x4 RX (rev B radar)",
+    "virtual_x_positions": 4,
+    "note": "receive pattern only",
+    "hpbw_deg": 27.230405140191404,
+    "psl_db": -11.303337691267117,
+    "hpbw_at_30deg": 31.997840300609035,
+    "psl_db_at_30deg": -11.303337691267117
+   },
+   {
+    "case": "b: 4x4 phased TX x 4x4 RX, beam scanned",
+    "virtual_x_positions": 7,
+    "note": "needs one dwell per transmit beam",
+    "hpbw_deg": 19.564009796752842,
+    "psl_db": -22.606675382534238,
+    "hpbw_at_30deg": 22.784502029778437,
+    "psl_db_at_30deg": -22.606675382534238
+   },
+   {
+    "case": "c: 4 quadrant TX (orthogonal) x 16 RX",
+    "virtual_x_positions": 6,
+    "note": "existing hardware; quadrant = 2x2 subarray at fixed steer",
+    "hpbw_deg": 19.564009796752842,
+    "psl_db": -22.606675382534235,
+    "hpbw_at_30deg": 21.034078789123384,
+    "psl_db_at_30deg": -12.476628183865436
+   },
+   {
+    "case": "d: 2x2 TX at 100 mm pitch x 16 RX -> 8x8",
+    "virtual_x_positions": 8,
+    "note": "4 extra TX antennas beside the panel",
+    "hpbw_deg": 13.241857771581174,
+    "psl_db": -12.797348668947064,
+    "hpbw_at_30deg": 15.348604895990782,
+    "psl_db_at_30deg": -12.797348668947064
+   },
+   {
+    "case": "e: 4 TX in a row at 100 mm x 16 RX -> 16x4",
+    "virtual_x_positions": 16,
+    "note": "4 extra TX antennas in a row",
+    "hpbw_deg": 6.58117276491897,
+    "psl_db": -13.146833382443022,
+    "hpbw_at_30deg": 7.606291037031304,
+    "psl_db_at_30deg": -13.146833382443022
+   },
+   {
+    "case": "f: 2x2 TX at 100 mm x 4 quadrant RX (no switching)",
+    "virtual_x_positions": 4,
+    "note": "16 virtual subarrays at 50 mm = 0.97 wavelength: grating lobes",
+    "hpbw_deg": 13.241857771581174,
+    "psl_db": -12.797348668947066,
+    "hpbw_at_30deg": 14.67830171394495,
+    "psl_db_at_30deg": -0.40718284480330535
+   }
+  ],
+  "whips_915": [
+   {
+    "case": "16 RX only",
+    "hpbw_deg": 38.7,
+    "worst_psl_db": -6.926031700253712
+   },
+   {
+    "case": "4 TX (outer ring, 90 deg apart) x 16 RX = 64 virtual",
+    "hpbw_deg": 24.1125,
+    "worst_psl_db": -11.477907815506079
+   },
+   {
+    "case": "16 phased TX x 16 RX (not buildable: 4 TX ports)",
+    "hpbw_deg": 27.700000000000003,
+    "worst_psl_db": -13.852063400507431
+   }
+  ],
+  "tdm": [
+   {
+    "v_mps": 0.0,
+    "phase_step_deg": 0.0,
+    "peak_at_deg": 0.0,
+    "loss_at_true_dir_db": 0.0,
+    "psl_db": -13.146833382443022
+   },
+   {
+    "v_mps": 0.3,
+    "phase_step_deg": 4.1788909846424485,
+    "peak_at_deg": -0.320858042306193,
+    "loss_at_true_dir_db": -0.028900060439194478,
+    "psl_db": -13.024759783160109
+   },
+   {
+    "v_mps": 1.0,
+    "phase_step_deg": 13.92963661547483,
+    "peak_at_deg": -1.0772241168836134,
+    "loss_at_true_dir_db": -0.32359762738757036,
+    "psl_db": -12.7444764997113
+   },
+   {
+    "v_mps": 2.0,
+    "phase_step_deg": 27.85927323094966,
+    "peak_at_deg": -2.154829248454001,
+    "loss_at_true_dir_db": -1.3292566796157046,
+    "psl_db": -12.353415013386584
+   }
+  ],
+  "tdm_v_unambiguous_mps": 3.2305221767241377,
+  "assumptions": "Assumptions: point targets in the far field, isotropic elements (so sidelobes at wide angles are pessimistic), perfectly orthogonal transmit waveforms unless 'TDM' is named, a target that does not move during the coherent interval unless a speed is named, calibration perfect. Patterns are two-way (transmit x receive) azimuth cuts of the panel at 5.8 GHz and of the whip plate at 915 MHz."
+ },
+ "threshold": {
+  "hpbw_deg": 38.60000000000055,
+  "runs": [
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 0.0,
+    "snr_db": -10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 0.0,
+    "snr_db": 0,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 0.0,
+    "snr_db": 10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 0.0,
+    "snr_db": 20,
+    "p_resolved": 0.47
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 0.0,
+    "snr_db": 30,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 0.0,
+    "snr_db": 40,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 1.0,
+    "snr_db": -10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 1.0,
+    "snr_db": 0,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 1.0,
+    "snr_db": 10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 1.0,
+    "snr_db": 20,
+    "p_resolved": 0.2866666666666667
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 1.0,
+    "snr_db": 30,
+    "p_resolved": 0.6
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 1.0,
+    "snr_db": 40,
+    "p_resolved": 0.6733333333333333
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 3.0,
+    "snr_db": -10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 3.0,
+    "snr_db": 0,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 3.0,
+    "snr_db": 10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 3.0,
+    "snr_db": 20,
+    "p_resolved": 0.09666666666666666
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 3.0,
+    "snr_db": 30,
+    "p_resolved": 0.21666666666666667
+   },
+   {
+    "sep_beamwidths": 0.1,
+    "sep_deg": 3.860000000000055,
+    "cal_deg": 3.0,
+    "snr_db": 40,
+    "p_resolved": 0.25333333333333335
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 0.0,
+    "snr_db": -10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 0.0,
+    "snr_db": 0,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 0.0,
+    "snr_db": 10,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 0.0,
+    "snr_db": 20,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 0.0,
+    "snr_db": 30,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 0.0,
+    "snr_db": 40,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 1.0,
+    "snr_db": -10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 1.0,
+    "snr_db": 0,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 1.0,
+    "snr_db": 10,
+    "p_resolved": 0.9866666666666667
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 1.0,
+    "snr_db": 20,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 1.0,
+    "snr_db": 30,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 1.0,
+    "snr_db": 40,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 3.0,
+    "snr_db": -10,
+    "p_resolved": 0.0
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 3.0,
+    "snr_db": 0,
+    "p_resolved": 0.006666666666666667
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 3.0,
+    "snr_db": 10,
+    "p_resolved": 0.78
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 3.0,
+    "snr_db": 20,
+    "p_resolved": 0.9066666666666666
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 3.0,
+    "snr_db": 30,
+    "p_resolved": 0.9366666666666666
+   },
+   {
+    "sep_beamwidths": 0.25,
+    "sep_deg": 9.650000000000137,
+    "cal_deg": 3.0,
+    "snr_db": 40,
+    "p_resolved": 0.9166666666666666
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 0.0,
+    "snr_db": -10,
+    "p_resolved": 0.0033333333333333335
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 0.0,
+    "snr_db": 0,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 0.0,
+    "snr_db": 10,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 0.0,
+    "snr_db": 20,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 0.0,
+    "snr_db": 30,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 0.0,
+    "snr_db": 40,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 1.0,
+    "snr_db": -10,
+    "p_resolved": 0.0033333333333333335
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 1.0,
+    "snr_db": 0,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 1.0,
+    "snr_db": 10,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 1.0,
+    "snr_db": 20,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 1.0,
+    "snr_db": 30,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 1.0,
+    "snr_db": 40,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 3.0,
+    "snr_db": -10,
+    "p_resolved": 0.0033333333333333335
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 3.0,
+    "snr_db": 0,
+    "p_resolved": 0.9966666666666667
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 3.0,
+    "snr_db": 10,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 3.0,
+    "snr_db": 20,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 3.0,
+    "snr_db": 30,
+    "p_resolved": 1.0
+   },
+   {
+    "sep_beamwidths": 0.5,
+    "sep_deg": 19.300000000000274,
+    "cal_deg": 3.0,
+    "snr_db": 40,
+    "p_resolved": 1.0
+   }
+  ],
+  "assumptions": "Assumptions: two uncorrelated equal-power sources at the horizon, 915 MHz, the 16-whip two-ring layout, all 16 whips sampled together (256 samples), number of sources known; calibration residual per whip of 0 / 1 / 3 deg (with 0 / 0.17 / 0.5 dB). Resolved = MUSIC shows two peaks, each within half the separation of a source."
+ },
+ "rotation": {
+  "turntable": [
+   {
+    "f_mhz": 1420.4,
+    "case": "rings16 static",
+    "n_uv": 120,
+    "umax_wavelengths": 2.1320880393166113,
+    "hpbw_deg": 23.983419529614853,
+    "first_min_deg": 31.3322514975943,
+    "peak_sidelobe": 0.06666666626089153,
+    "rms_sidelobe": 0.05883854449988829,
+    "uv_cells_filled": 1.0
+   },
+   {
+    "f_mhz": 1420.4,
+    "case": "rings16 turntable 45 deg / 16 steps",
+    "n_uv": 1920,
+    "umax_wavelengths": 2.1320880393166113,
+    "hpbw_deg": 23.98341931188908,
+    "first_min_deg": 31.3322514975943,
+    "peak_sidelobe": 0.06666550524036,
+    "rms_sidelobe": 0.05872333233889915,
+    "uv_cells_filled": 1.0
+   },
+   {
+    "f_mhz": 1420.4,
+    "case": "evolved16 static",
+    "n_uv": 120,
+    "umax_wavelengths": 2.260151548722602,
+    "hpbw_deg": 18.02245290542539,
+    "first_min_deg": 19.876874070078852,
+    "peak_sidelobe": 0.14264818592092063,
+    "rms_sidelobe": 0.057508697222929894,
+    "uv_cells_filled": 1.0
+   },
+   {
+    "f_mhz": 1420.4,
+    "case": "evolved16 turntable 180 deg / 60 steps",
+    "n_uv": 7200,
+    "umax_wavelengths": 2.2601515487226025,
+    "hpbw_deg": 18.02348549269507,
+    "first_min_deg": 19.876874070078852,
+    "peak_sidelobe": 0.09944365857144771,
+    "rms_sidelobe": 0.04902319974628058,
+    "uv_cells_filled": 1.0
+   },
+   {
+    "f_mhz": 1420.4,
+    "case": "ring4_133mm static",
+    "n_uv": 6,
+    "umax_wavelengths": 1.2602932125797508,
+    "hpbw_deg": 27.51766507290707,
+    "first_min_deg": 36.86989764584406,
+    "peak_sidelobe": 0.8425382002522134,
+    "rms_sidelobe": 0.3118068252795243,
+    "uv_cells_filled": 0.5
+   },
+   {
+    "f_mhz": 1420.4,
+    "case": "ring4_133mm turntable 90 deg / 30 steps",
+    "n_uv": 180,
+    "umax_wavelengths": 1.260293212579751,
+    "hpbw_deg": 27.52322992112688,
+    "first_min_deg": 36.86989764584406,
+    "peak_sidelobe": 0.32273264031312154,
+    "rms_sidelobe": 0.17627238528454978,
+    "uv_cells_filled": 1.0
+   },
+   {
+    "f_mhz": 1420.4,
+    "case": "2 whips 450 mm apart, turntable 180 deg / 60 steps",
+    "n_uv": 60,
+    "umax_wavelengths": 2.1320749836875486,
+    "hpbw_deg": 13.034866362057254,
+    "first_min_deg": 16.26020470831197,
+    "peak_sidelobe": 0.4027593784446495,
+    "rms_sidelobe": 0.19487953525407803,
+    "uv_cells_filled": 0.6923076923076923
+   },
+   {
+    "f_mhz": 2300.0,
+    "case": "rings16 static",
+    "n_uv": 120,
+    "umax_wavelengths": 3.452409525787248,
+    "hpbw_deg": 14.715834524009189,
+    "first_min_deg": 18.6629248849425,
+    "peak_sidelobe": 0.24105881522424905,
+    "rms_sidelobe": 0.07656749075841514,
+    "uv_cells_filled": 0.6621621621621622
+   },
+   {
+    "f_mhz": 2300.0,
+    "case": "rings16 turntable 45 deg / 16 steps",
+    "n_uv": 1920,
+    "umax_wavelengths": 3.4524095257872482,
+    "hpbw_deg": 14.71583476430616,
+    "first_min_deg": 18.6629248849425,
+    "peak_sidelobe": 0.06666527479850075,
+    "rms_sidelobe": 0.04270727166032495,
+    "uv_cells_filled": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "case": "evolved16 static",
+    "n_uv": 120,
+    "umax_wavelengths": 3.659777923163887,
+    "hpbw_deg": 11.115946735624656,
+    "first_min_deg": 12.709032994395448,
+    "peak_sidelobe": 0.14266016157080105,
+    "rms_sidelobe": 0.048218748557416986,
+    "uv_cells_filled": 0.9146341463414634
+   },
+   {
+    "f_mhz": 2300.0,
+    "case": "evolved16 turntable 180 deg / 60 steps",
+    "n_uv": 7200,
+    "umax_wavelengths": 3.6597779231638876,
+    "hpbw_deg": 11.11563891728252,
+    "first_min_deg": 12.709032994395448,
+    "peak_sidelobe": 0.09944332485349872,
+    "rms_sidelobe": 0.03805776244814702,
+    "uv_cells_filled": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "case": "ring4_133mm static",
+    "n_uv": 6,
+    "umax_wavelengths": 2.0407451344222944,
+    "hpbw_deg": 16.871038886470714,
+    "first_min_deg": 21.10019602409304,
+    "peak_sidelobe": 0.9999999839862018,
+    "rms_sidelobe": 0.3810111214027233,
+    "uv_cells_filled": 0.15384615384615385
+   },
+   {
+    "f_mhz": 2300.0,
+    "case": "ring4_133mm turntable 90 deg / 30 steps",
+    "n_uv": 180,
+    "umax_wavelengths": 2.0407451344222944,
+    "hpbw_deg": 16.875443243108613,
+    "first_min_deg": 21.10019602409304,
+    "peak_sidelobe": 0.3227757857906319,
+    "rms_sidelobe": 0.12598461597878383,
+    "uv_cells_filled": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "case": "2 whips 450 mm apart, turntable 180 deg / 60 steps",
+    "n_uv": 60,
+    "umax_wavelengths": 3.452388385300874,
+    "hpbw_deg": 8.033292641358065,
+    "first_min_deg": 10.369759805477429,
+    "peak_sidelobe": 0.40151569370287277,
+    "rms_sidelobe": 0.15612336347850586,
+    "uv_cells_filled": 0.35135135135135137
+   }
+  ],
+  "earth": [
+   {
+    "source": "Cas A",
+    "dec_deg": 58.8,
+    "hours": 0.0,
+    "n_uv": 120,
+    "umax_wavelengths": 44.93765153125942,
+    "hpbw_deg": 0.9161044405228872,
+    "first_min_deg": 1.031379730854556,
+    "peak_sidelobe": 0.2679000863186044,
+    "rms_sidelobe": 0.05487544451088,
+    "uv_cells_filled": 0.009370078740157481
+   },
+   {
+    "source": "Cas A",
+    "dec_deg": 58.8,
+    "hours": 2.0,
+    "n_uv": 7320,
+    "umax_wavelengths": 45.15976179105731,
+    "hpbw_deg": 0.9183684175067051,
+    "first_min_deg": 1.031379730854556,
+    "peak_sidelobe": 0.16726346690953792,
+    "rms_sidelobe": 0.03701069379501223,
+    "uv_cells_filled": 0.22500781005935644
+   },
+   {
+    "source": "Cas A",
+    "dec_deg": 58.8,
+    "hours": 6.0,
+    "n_uv": 21720,
+    "umax_wavelengths": 45.20302952470783,
+    "hpbw_deg": 0.9357363758065781,
+    "first_min_deg": 1.031379730854556,
+    "peak_sidelobe": 0.11949657152289431,
+    "rms_sidelobe": 0.028309136704696883,
+    "uv_cells_filled": 0.5238540692235735
+   },
+   {
+    "source": "Cyg A",
+    "dec_deg": 40.7,
+    "hours": 0.0,
+    "n_uv": 120,
+    "umax_wavelengths": 45.20157770988653,
+    "hpbw_deg": 0.8914045623717856,
+    "first_min_deg": 1.031379730854556,
+    "peak_sidelobe": 0.2678658748066268,
+    "rms_sidelobe": 0.05498341130333685,
+    "uv_cells_filled": 0.009276582475834114
+   },
+   {
+    "source": "Cyg A",
+    "dec_deg": 40.7,
+    "hours": 2.0,
+    "n_uv": 7320,
+    "umax_wavelengths": 45.20294808308988,
+    "hpbw_deg": 0.8945821897574736,
+    "first_min_deg": 1.031379730854556,
+    "peak_sidelobe": 0.16731799582680865,
+    "rms_sidelobe": 0.03762986637947855,
+    "uv_cells_filled": 0.20252572497661367
+   },
+   {
+    "source": "Cyg A",
+    "dec_deg": 40.7,
+    "hours": 6.0,
+    "n_uv": 21720,
+    "umax_wavelengths": 45.20294808308988,
+    "hpbw_deg": 0.9191664755508523,
+    "first_min_deg": 1.031379730854556,
+    "peak_sidelobe": 0.11969357049615709,
+    "rms_sidelobe": 0.029393663306885583,
+    "uv_cells_filled": 0.48105706267539755
+   },
+   {
+    "source": "Sun at equinox",
+    "dec_deg": 0.0,
+    "hours": 0.0,
+    "n_uv": 120,
+    "umax_wavelengths": 44.26942318517696,
+    "hpbw_deg": 1.009463607551425,
+    "first_min_deg": 1.203299823365148,
+    "peak_sidelobe": 0.26726597253678885,
+    "rms_sidelobe": 0.05479024489520602,
+    "uv_cells_filled": 0.00966065919792174
+   },
+   {
+    "source": "Sun at equinox",
+    "dec_deg": 0.0,
+    "hours": 2.0,
+    "n_uv": 7320,
+    "umax_wavelengths": 45.15944798139433,
+    "hpbw_deg": 1.0147432359348907,
+    "first_min_deg": 1.203299823365148,
+    "peak_sidelobe": 0.16547603885966286,
+    "rms_sidelobe": 0.041086143236617675,
+    "uv_cells_filled": 0.12019681349578257
+   },
+   {
+    "source": "Sun at equinox",
+    "dec_deg": 0.0,
+    "hours": 6.0,
+    "n_uv": 21720,
+    "umax_wavelengths": 45.20279536788453,
+    "hpbw_deg": 1.0545734808521698,
+    "first_min_deg": 1.203299823365148,
+    "peak_sidelobe": 0.14355792870811795,
+    "rms_sidelobe": 0.029559318897945004,
+    "uv_cells_filled": 0.3041004053632679
+   }
+  ],
+  "assumptions": "Assumptions: the sky does not change while the aperture is synthesised (minutes for the turntable, hours for Earth rotation); gains are calibrated across the whole synthesis; a planar array, so the response depends only on the horizontal direction cosines (l, m) and the point-spread function is shift-invariant; cross-correlations only, natural weighting. Sidelobes are relative to the peak (1 = as strong as the main lobe); they measure how well several sources can be told apart in one image."
+ },
+ "freqdiv": {
+  "ring": [
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 1420.4,
+    "r_over_lambda": 0.6301466062898754,
+    "frac_bw": 0.0,
+    "gross_pct": 7.76,
+    "median_deg": 0.4127494198683195,
+    "p95_deg": 69.56451655275363
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 1420.4,
+    "r_over_lambda": 0.6301466062898754,
+    "frac_bw": 0.01,
+    "gross_pct": 7.359999999999999,
+    "median_deg": 0.41435050439298493,
+    "p95_deg": 69.17668356310696
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 1420.4,
+    "r_over_lambda": 0.6301466062898754,
+    "frac_bw": 0.024,
+    "gross_pct": 5.48,
+    "median_deg": 0.41089862910696695,
+    "p95_deg": 68.33445132961543
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 1420.4,
+    "r_over_lambda": 0.6301466062898754,
+    "frac_bw": 0.05,
+    "gross_pct": 2.88,
+    "median_deg": 0.3965665570081427,
+    "p95_deg": 1.3010006934904492
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 1420.4,
+    "r_over_lambda": 0.6301466062898754,
+    "frac_bw": 0.1,
+    "gross_pct": 0.4,
+    "median_deg": 0.36873339803769056,
+    "p95_deg": 1.1191615004265327
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 1420.4,
+    "r_over_lambda": 0.6301466062898754,
+    "frac_bw": 0.2,
+    "gross_pct": 0.0,
+    "median_deg": 0.38093115715595616,
+    "p95_deg": 1.1061928488373751
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 1420.4,
+    "r_over_lambda": 0.6301466062898754,
+    "frac_bw": 0.4,
+    "gross_pct": 0.0,
+    "median_deg": 0.3773983865121977,
+    "p95_deg": 1.1101472947059334
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 1420.4,
+    "r_over_lambda": 0.6301466062898754,
+    "frac_bw": 0.67,
+    "gross_pct": 0.0,
+    "median_deg": 0.3617949588574021,
+    "p95_deg": 1.0216560176711622
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.0203725672111472,
+    "frac_bw": 0.0,
+    "gross_pct": 26.96,
+    "median_deg": 0.37972463691789926,
+    "p95_deg": 163.20352268534936
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.0203725672111472,
+    "frac_bw": 0.01,
+    "gross_pct": 23.04,
+    "median_deg": 0.3491498575227041,
+    "p95_deg": 162.93116777331306
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.0203725672111472,
+    "frac_bw": 0.024,
+    "gross_pct": 16.6,
+    "median_deg": 0.32074862337704246,
+    "p95_deg": 105.31606351362929
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.0203725672111472,
+    "frac_bw": 0.05,
+    "gross_pct": 6.4799999999999995,
+    "median_deg": 0.2781826797814233,
+    "p95_deg": 41.35863089721845
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.0203725672111472,
+    "frac_bw": 0.1,
+    "gross_pct": 1.5599999999999998,
+    "median_deg": 0.2514332715688994,
+    "p95_deg": 0.7925975069493877
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.0203725672111472,
+    "frac_bw": 0.2,
+    "gross_pct": 0.0,
+    "median_deg": 0.2580562358453875,
+    "p95_deg": 0.7149421141659346
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.0203725672111472,
+    "frac_bw": 0.4,
+    "gross_pct": 0.0,
+    "median_deg": 0.259631095171315,
+    "p95_deg": 0.7186421936933108
+   },
+   {
+    "layout": "ring4_133mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.0203725672111472,
+    "frac_bw": 0.67,
+    "gross_pct": 0.0,
+    "median_deg": 0.24094220116884912,
+    "p95_deg": 0.7003153151460133
+   },
+   {
+    "layout": "ring8_225mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.726194192650437,
+    "frac_bw": 0.0,
+    "gross_pct": 0.0,
+    "median_deg": 0.14271202998325805,
+    "p95_deg": 0.3811295949719948
+   },
+   {
+    "layout": "ring8_225mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.726194192650437,
+    "frac_bw": 0.01,
+    "gross_pct": 0.0,
+    "median_deg": 0.1356666976201808,
+    "p95_deg": 0.3920669893573587
+   },
+   {
+    "layout": "ring8_225mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.726194192650437,
+    "frac_bw": 0.024,
+    "gross_pct": 0.0,
+    "median_deg": 0.1512675396363079,
+    "p95_deg": 0.38906824416886104
+   },
+   {
+    "layout": "ring8_225mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.726194192650437,
+    "frac_bw": 0.05,
+    "gross_pct": 0.0,
+    "median_deg": 0.14136925295673564,
+    "p95_deg": 0.37775206714977805
+   },
+   {
+    "layout": "ring8_225mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.726194192650437,
+    "frac_bw": 0.1,
+    "gross_pct": 0.0,
+    "median_deg": 0.14197535511023318,
+    "p95_deg": 0.397582974622986
+   },
+   {
+    "layout": "ring8_225mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.726194192650437,
+    "frac_bw": 0.2,
+    "gross_pct": 0.0,
+    "median_deg": 0.1373970888270577,
+    "p95_deg": 0.3926600301599079
+   },
+   {
+    "layout": "ring8_225mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.726194192650437,
+    "frac_bw": 0.4,
+    "gross_pct": 0.0,
+    "median_deg": 0.14698677560566864,
+    "p95_deg": 0.38286390838696704
+   },
+   {
+    "layout": "ring8_225mm",
+    "fc_mhz": 2300.0,
+    "r_over_lambda": 1.726194192650437,
+    "frac_bw": 0.67,
+    "gross_pct": 0.0,
+    "median_deg": 0.1403309615614745,
+    "p95_deg": 0.37464548678418463
+   }
+  ],
+  "crt": [
+   {
+    "p": 2,
+    "q": 3,
+    "sigma_deg": 2.0,
+    "p_correct": 1.0,
+    "p_theory": 1.0,
+    "rms_x_when_correct": 0.0015512124025618868,
+    "rms_x_single_halfwave": 0.005555555555555556
+   },
+   {
+    "p": 2,
+    "q": 3,
+    "sigma_deg": 4.2,
+    "p_correct": 1.0,
+    "p_theory": 1.0,
+    "rms_x_when_correct": 0.00324287540034309,
+    "rms_x_single_halfwave": 0.011666666666666667
+   },
+   {
+    "p": 2,
+    "q": 3,
+    "sigma_deg": 8.0,
+    "p_correct": 1.0,
+    "p_theory": 0.9999999995634831,
+    "rms_x_when_correct": 0.006158116489391025,
+    "rms_x_single_halfwave": 0.022222222222222223
+   },
+   {
+    "p": 2,
+    "q": 3,
+    "sigma_deg": 12.0,
+    "p_correct": 1.0,
+    "p_theory": 0.9999682102623826,
+    "rms_x_when_correct": 0.009195859437278723,
+    "rms_x_single_halfwave": 0.03333333333333333
+   },
+   {
+    "p": 2,
+    "q": 3,
+    "sigma_deg": 20.0,
+    "p_correct": 0.9879,
+    "p_theory": 0.9874450814030334,
+    "rms_x_when_correct": 0.015367042186814117,
+    "rms_x_single_halfwave": 0.05555555555555555
+   },
+   {
+    "p": 3,
+    "q": 4,
+    "sigma_deg": 2.0,
+    "p_correct": 1.0,
+    "p_theory": 1.0,
+    "rms_x_when_correct": 0.0011158963941424172,
+    "rms_x_single_halfwave": 0.005555555555555556
+   },
+   {
+    "p": 3,
+    "q": 4,
+    "sigma_deg": 4.2,
+    "p_correct": 1.0,
+    "p_theory": 1.0,
+    "rms_x_when_correct": 0.0023192822153455493,
+    "rms_x_single_halfwave": 0.011666666666666667
+   },
+   {
+    "p": 3,
+    "q": 4,
+    "sigma_deg": 8.0,
+    "p_correct": 1.0,
+    "p_theory": 0.9999932046537505,
+    "rms_x_when_correct": 0.004487497901667871,
+    "rms_x_single_halfwave": 0.022222222222222223
+   },
+   {
+    "p": 3,
+    "q": 4,
+    "sigma_deg": 12.0,
+    "p_correct": 0.9967,
+    "p_theory": 0.9973002039367398,
+    "rms_x_when_correct": 0.006675731383029276,
+    "rms_x_single_halfwave": 0.03333333333333333
+   },
+   {
+    "p": 3,
+    "q": 4,
+    "sigma_deg": 20.0,
+    "p_correct": 0.92755,
+    "p_theory": 0.9281393617741484,
+    "rms_x_when_correct": 0.011137259156461111,
+    "rms_x_single_halfwave": 0.05555555555555555
+   },
+   {
+    "p": 5,
+    "q": 7,
+    "sigma_deg": 2.0,
+    "p_correct": 1.0,
+    "p_theory": 1.0,
+    "rms_x_when_correct": 0.0006432802434962001,
+    "rms_x_single_halfwave": 0.005555555555555556
+   },
+   {
+    "p": 5,
+    "q": 7,
+    "sigma_deg": 4.2,
+    "p_correct": 1.0,
+    "p_theory": 0.999999370831155,
+    "rms_x_when_correct": 0.001367672311490092,
+    "rms_x_single_halfwave": 0.011666666666666667
+   },
+   {
+    "p": 5,
+    "q": 7,
+    "sigma_deg": 8.0,
+    "p_correct": 0.9919,
+    "p_theory": 0.9910921828178801,
+    "rms_x_when_correct": 0.0025555833258154807,
+    "rms_x_single_halfwave": 0.022222222222222223
+   },
+   {
+    "p": 5,
+    "q": 7,
+    "sigma_deg": 12.0,
+    "p_correct": 0.92125,
+    "p_theory": 0.9187911284718013,
+    "rms_x_when_correct": 0.003872629981376295,
+    "rms_x_single_halfwave": 0.03333333333333333
+   },
+   {
+    "p": 5,
+    "q": 7,
+    "sigma_deg": 20.0,
+    "p_correct": 0.7028,
+    "p_theory": 0.7045445672540742,
+    "rms_x_when_correct": 0.006422884465642489,
+    "rms_x_single_halfwave": 0.05555555555555555
+   },
+   {
+    "p": 8,
+    "q": 9,
+    "sigma_deg": 2.0,
+    "p_correct": 1.0,
+    "p_theory": 0.9999999999999223,
+    "rms_x_when_correct": 0.00046085373308676187,
+    "rms_x_single_halfwave": 0.005555555555555556
+   },
+   {
+    "p": 8,
+    "q": 9,
+    "sigma_deg": 4.2,
+    "p_correct": 0.9993,
+    "p_theory": 0.9996278608256625,
+    "rms_x_when_correct": 0.0009613056373143666,
+    "rms_x_single_halfwave": 0.011666666666666667
+   },
+   {
+    "p": 8,
+    "q": 9,
+    "sigma_deg": 8.0,
+    "p_correct": 0.9366,
+    "p_theory": 0.9383108340190753,
+    "rms_x_when_correct": 0.0018377303526848916,
+    "rms_x_single_halfwave": 0.022222222222222223
+   },
+   {
+    "p": 8,
+    "q": 9,
+    "sigma_deg": 12.0,
+    "p_correct": 0.78715,
+    "p_theory": 0.787118908172237,
+    "rms_x_when_correct": 0.0027394423123396224,
+    "rms_x_single_halfwave": 0.03333333333333333
+   },
+   {
+    "p": 8,
+    "q": 9,
+    "sigma_deg": 20.0,
+    "p_correct": 0.54245,
+    "p_theory": 0.5451834779314615,
+    "rms_x_when_correct": 0.004552579150055675,
+    "rms_x_single_halfwave": 0.05555555555555555
+   },
+   {
+    "p": 15,
+    "q": 16,
+    "sigma_deg": 2.0,
+    "p_correct": 1.0,
+    "p_theory": 0.9999593311759127,
+    "rms_x_when_correct": 0.0002536574149004276,
+    "rms_x_single_halfwave": 0.005555555555555556
+   },
+   {
+    "p": 15,
+    "q": 16,
+    "sigma_deg": 4.2,
+    "p_correct": 0.95155,
+    "p_theory": 0.9493126783600545,
+    "rms_x_when_correct": 0.0005317815208447592,
+    "rms_x_single_halfwave": 0.011666666666666667
+   },
+   {
+    "p": 15,
+    "q": 16,
+    "sigma_deg": 8.0,
+    "p_correct": 0.6919,
+    "p_theory": 0.6950667896551057,
+    "rms_x_when_correct": 0.001019156325269125,
+    "rms_x_single_halfwave": 0.022222222222222223
+   },
+   {
+    "p": 15,
+    "q": 16,
+    "sigma_deg": 12.0,
+    "p_correct": 0.5068,
+    "p_theory": 0.5059876586500066,
+    "rms_x_when_correct": 0.0015222735544714434,
+    "rms_x_single_halfwave": 0.03333333333333333
+   },
+   {
+    "p": 15,
+    "q": 16,
+    "sigma_deg": 20.0,
+    "p_correct": 0.32125,
+    "p_theory": 0.31846154636520885,
+    "rms_x_when_correct": 0.002541783493891192,
+    "rms_x_single_halfwave": 0.05555555555555555
+   }
+  ],
+  "assumptions": "Assumptions: one source 0-15 deg above the horizon, azimuth-only Bartlett beamscan (assumes 0 deg); 3 deg / 0.5 dB calibration residual per whip, the SAME at every tone; 20 dB per-whip SNR and 64 samples in total, split evenly over J = 8 tones spread across the stated fractional bandwidth (an emitter that really occupies that band: a hopper, a wideband burst, or our own stepped radar/calibration signal); spectra added incoherently. Gross error = more than 10 deg."
+ },
+ "coarray": {
+  "sources_vs_n": [
+   {
+    "n": 4,
+    "ula": 3,
+    "nested": 5,
+    "nested_aperture": 5,
+    "coprime": 3,
+    "coprime_pair": null,
+    "wichmann": 6,
+    "wichmann_aperture": 6,
+    "pairs_bound": 6
+   },
+   {
+    "n": 6,
+    "ula": 5,
+    "nested": 11,
+    "nested_aperture": 11,
+    "coprime": 7,
+    "coprime_pair": [
+     2,
+     3
+    ],
+    "wichmann": 12,
+    "wichmann_aperture": 12,
+    "pairs_bound": 15
+   },
+   {
+    "n": 8,
+    "ula": 7,
+    "nested": 19,
+    "nested_aperture": 19,
+    "coprime": 11,
+    "coprime_pair": [
+     2,
+     5
+    ],
+    "wichmann": 22,
+    "wichmann_aperture": 22,
+    "pairs_bound": 28
+   },
+   {
+    "n": 12,
+    "ula": 11,
+    "nested": 41,
+    "nested_aperture": 41,
+    "coprime": 23,
+    "coprime_pair": [
+     4,
+     5
+    ],
+    "wichmann": 50,
+    "wichmann_aperture": 50,
+    "pairs_bound": 66
+   },
+   {
+    "n": 16,
+    "ula": 15,
+    "nested": 71,
+    "nested_aperture": 71,
+    "coprime": 39,
+    "coprime_pair": [
+     5,
+     7
+    ],
+    "wichmann": 90,
+    "wichmann_aperture": 90,
+    "pairs_bound": 120
+   },
+   {
+    "n": 24,
+    "ula": 23,
+    "nested": 155,
+    "nested_aperture": 155,
+    "coprime": 83,
+    "coprime_pair": [
+     7,
+     11
+    ],
+    "wichmann": 198,
+    "wichmann_aperture": 198,
+    "pairs_bound": 276
+   },
+   {
+    "n": 32,
+    "ula": 31,
+    "nested": 271,
+    "nested_aperture": 271,
+    "coprime": 143,
+    "coprime_pair": [
+     8,
+     17
+    ],
+    "wichmann": 350,
+    "wichmann_aperture": 350,
+    "pairs_bound": 496
+   }
+  ],
+  "arrays": {
+   "ula16": {
+    "positions": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "contiguous_lags": 15,
+    "aperture": 15
+   },
+   "nested8+8": {
+    "positions": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     17,
+     26,
+     35,
+     44,
+     53,
+     62,
+     71
+    ],
+    "contiguous_lags": 71,
+    "aperture": 71
+   },
+   "coprime(5,7)": {
+    "positions": [
+     0,
+     5,
+     7,
+     10,
+     14,
+     15,
+     20,
+     21,
+     25,
+     28,
+     30,
+     35,
+     42,
+     49,
+     56,
+     63
+    ],
+    "contiguous_lags": 39,
+    "aperture": 63
+   },
+   "wichmann(2,5)": {
+    "positions": [
+     0,
+     1,
+     2,
+     5,
+     10,
+     15,
+     26,
+     37,
+     48,
+     59,
+     70,
+     76,
+     82,
+     88,
+     89,
+     90
+    ],
+    "contiguous_lags": 90,
+    "aperture": 90
+   }
+  },
+  "k24_vs_snapshots": [
+   {
+    "snr_db": 0,
+    "T": 100,
+    "rmse_u": 0.022639925334322894,
+    "ok": 0.7666666666666667
+   },
+   {
+    "snr_db": 0,
+    "T": 300,
+    "rmse_u": 0.001204122769931472,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 0,
+    "T": 1000,
+    "rmse_u": 0.0006382881803934858,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 0,
+    "T": 3000,
+    "rmse_u": 0.00035793103402577734,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 0,
+    "T": 10000,
+    "rmse_u": 0.0001975089494908968,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 10,
+    "T": 100,
+    "rmse_u": 0.018122510379266914,
+    "ok": 0.8333333333333334
+   },
+   {
+    "snr_db": 10,
+    "T": 300,
+    "rmse_u": 0.0011426888522232958,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 10,
+    "T": 1000,
+    "rmse_u": 0.0006265309040166951,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 10,
+    "T": 3000,
+    "rmse_u": 0.00033653828377277063,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 10,
+    "T": 10000,
+    "rmse_u": 0.00019457117956007944,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 20,
+    "T": 100,
+    "rmse_u": 0.026378514545653858,
+    "ok": 0.6833333333333333
+   },
+   {
+    "snr_db": 20,
+    "T": 300,
+    "rmse_u": 0.001148737014773424,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 20,
+    "T": 1000,
+    "rmse_u": 0.0006147230700955619,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 20,
+    "T": 3000,
+    "rmse_u": 0.00033986534728805255,
+    "ok": 1.0
+   },
+   {
+    "snr_db": 20,
+    "T": 10000,
+    "rmse_u": 0.00019036961798925243,
+    "ok": 1.0
+   }
+  ],
+  "vs_k": [
+   {
+    "K": 8,
+    "rmse_u": 0.00010685312995910672,
+    "ok": 1.0
+   },
+   {
+    "K": 15,
+    "rmse_u": 0.00020801554951539966,
+    "ok": 1.0
+   },
+   {
+    "K": 24,
+    "rmse_u": 0.00035630431546404307,
+    "ok": 1.0
+   },
+   {
+    "K": 40,
+    "rmse_u": 0.0006332269374845782,
+    "ok": 1.0
+   },
+   {
+    "K": 56,
+    "rmse_u": 0.0008938571429163854,
+    "ok": 1.0
+   },
+   {
+    "K": 64,
+    "rmse_u": 0.0009766705937962268,
+    "ok": 1.0
+   },
+   {
+    "K": 71,
+    "rmse_u": 0.04453378867526063,
+    "ok": 0.0
+   }
+  ],
+  "k24_cal3deg": {
+   "rmse_u": 0.0005666664067836743,
+   "ok": 1.0
+  },
+  "k24_coherent_pairs": {
+   "rmse_u": 0.09704628117597033,
+   "ok": 0.0
+  },
+  "k24_wichmann": {
+   "rmse_u": 0.0002313644822047653,
+   "ok": 1.0
+  },
+  "k24_coprime": {
+   "rmse_u": 0.0006837713254029272,
+   "ok": 1.0
+  },
+  "k8_T300_rmse_u": {
+   "ula16": 0.00024507393028280186,
+   "nested": 0.0005002708250970855
+  },
+  "plate_coarray_rank": [
+   {
+    "f_mhz": 408.0,
+    "rings16": {
+     "element_rank_1e2": 8,
+     "coarray_rank_1e2": 13,
+     "coarray_rank_1e4": 17,
+     "modes_2kD_plus_1": 8.695990046236224,
+     "modes_2kR_plus_1": 4.847995023118112
+    },
+    "evolved16": {
+     "element_rank_1e2": 11,
+     "coarray_rank_1e2": 15,
+     "coarray_rank_1e4": 21,
+     "modes_2kD_plus_1": 9.158248393687245,
+     "modes_2kR_plus_1": 5.105150581749841
+    }
+   },
+   {
+    "f_mhz": 611.0,
+    "rings16": {
+     "element_rank_1e2": 11,
+     "coarray_rank_1e2": 16,
+     "coarray_rank_1e4": 24,
+     "modes_2kD_plus_1": 12.525122348652776,
+     "modes_2kR_plus_1": 6.762561174326388
+    },
+    "evolved16": {
+     "element_rank_1e2": 13,
+     "coarray_rank_1e2": 19,
+     "coarray_rank_1e4": 27,
+     "modes_2kD_plus_1": 13.217376883683592,
+     "modes_2kR_plus_1": 7.147664229042041
+    }
+   },
+   {
+    "f_mhz": 915.0,
+    "rings16": {
+     "element_rank_1e2": 15,
+     "coarray_rank_1e2": 24,
+     "coarray_rank_1e4": 32,
+     "modes_2kD_plus_1": 18.259389441926825,
+     "modes_2kR_plus_1": 9.629694720963412
+    },
+    "evolved16": {
+     "element_rank_1e2": 15,
+     "coarray_rank_1e2": 27,
+     "coarray_rank_1e4": 34,
+     "modes_2kD_plus_1": 19.29607176525448,
+     "modes_2kR_plus_1": 10.206403878188983
+    }
+   },
+   {
+    "f_mhz": 1420.4,
+    "rings16": {
+     "element_rank_1e2": 16,
+     "coarray_rank_1e2": 32,
+     "coarray_rank_1e4": 41,
+     "modes_2kD_plus_1": 27.79260848449493,
+     "modes_2kR_plus_1": 14.396304242247465
+    },
+    "evolved16": {
+     "element_rank_1e2": 16,
+     "coarray_rank_1e2": 37,
+     "coarray_rank_1e4": 46,
+     "modes_2kD_plus_1": 29.40190200586608,
+     "modes_2kR_plus_1": 15.29155854489577
+    }
+   },
+   {
+    "f_mhz": 1665.4,
+    "rings16": {
+     "element_rank_1e2": 16,
+     "coarray_rank_1e2": 36,
+     "coarray_rank_1e4": 48,
+     "modes_2kD_plus_1": 32.413975056376984,
+     "modes_2kR_plus_1": 16.706987528188492
+    },
+    "evolved16": {
+     "element_rank_1e2": 16,
+     "coarray_rank_1e2": 42,
+     "coarray_rank_1e4": 51,
+     "modes_2kD_plus_1": 34.300850183447885,
+     "modes_2kR_plus_1": 17.75666122266222
+    }
+   },
+   {
+    "f_mhz": 2300.0,
+    "rings16": {
+     "element_rank_1e2": 16,
+     "coarray_rank_1e2": 48,
+     "coarray_rank_1e4": 55,
+     "modes_2kD_plus_1": 44.38425761358655,
+     "modes_2kR_plus_1": 22.692128806793274
+    },
+    "evolved16": {
+     "element_rank_1e2": 16,
+     "coarray_rank_1e2": 55,
+     "coarray_rank_1e4": 67,
+     "modes_2kD_plus_1": 46.9901257487271,
+     "modes_2kR_plus_1": 24.141780240256455
+    }
+   }
+  ],
+  "assumptions": "Assumptions: narrowband far-field sources, mutually UNCORRELATED and stationary over the T snapshots, equal power, SNR per source per sensor; sensors on a half-wavelength grid; white noise; number of sources known. 'ok' = every source matched to within half the source spacing."
+ },
+ "switched": {
+  "pairs_measured": {
+   "all 16 at once (16 radios, hypothetical)": 120,
+   "4 slots (each whip once)": 24,
+   "16 slots (orthogonal array)": 96
+  },
+  "runs": [
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 1,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 1,
+    "scheme": "4 slots (each whip once)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 1,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 2,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 2,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.98
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 2,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 3,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 3,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.92
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 3,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 4,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 4,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.81
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 4,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 6,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.99
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 6,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.28
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 6,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.97
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 8,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.96
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 8,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.03
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 8,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.78
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 10,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.78
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 10,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.02
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": false,
+    "K": 10,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.4
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 2,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 2,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.88
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 2,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.95
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 3,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.98
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 3,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.66
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 3,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.87
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 4,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.86
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 4,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.5
+   },
+   {
+    "f_mhz": 915.0,
+    "bursty": true,
+    "K": 4,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.63
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 1,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 1,
+    "scheme": "4 slots (each whip once)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 1,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 2,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 2,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.95
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 2,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 3,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 3,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.97
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 3,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 4,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 4,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.87
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 4,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 6,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 6,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.5
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 6,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.99
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 8,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.99
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 8,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.13
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 8,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.92
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 10,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.98
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 10,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.02
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 10,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.75
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 12,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.93
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 12,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 12,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.54
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 14,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.81
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 14,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 14,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.43
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 16,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.71
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 16,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 16,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.29
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 20,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.37
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 20,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": false,
+    "K": 20,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 2,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 1.0
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 2,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.9
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 2,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.94
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 3,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.99
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 3,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.59
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 3,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.88
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 4,
+    "scheme": "all 16 at once (16 radios, hypothetical)",
+    "success": 0.93
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 4,
+    "scheme": "4 slots (each whip once)",
+    "success": 0.38
+   },
+   {
+    "f_mhz": 2300.0,
+    "bursty": true,
+    "K": 4,
+    "scheme": "16 slots (orthogonal array)",
+    "success": 0.72
+   }
+  ],
+  "assumptions": "Assumptions: K uncorrelated equal-power sources at the horizon, at least 0.8 beamwidth apart (30 deg at 915 MHz, 12 deg at 2300 MHz), 10 dB per-whip SNR, 3 deg / 0.5 dB calibration residual, 4096 samples IN TOTAL however they are split into slots (so a 16-slot scheme has 256 per slot); the sources are stationary unless 'bursty': the observation is cut into 16 equal intervals and each source is on or off for a whole interval with probability 1/2 (on at least once); every scheme sees the same 16 intervals (one slot of the 16-slot scheme = one interval, one slot of the 4-slot scheme = four). A trial is a success when all K sources are found within a third of the minimum separation. The number of sources is given to the peak picker. Port-to-group assignment: whip index mod 4 (an assumption; REDESIGN.md section 4 lists the groups by port, not by position on the plate)."
+ }
+}

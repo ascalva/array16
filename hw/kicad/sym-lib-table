@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "array16")(type "KiCad")(uri "${KIPRJMOD}/array16.kicad_sym")(options "")(descr "array16 custom symbols"))
+)

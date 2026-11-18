@@ -1,0 +1,330 @@
+{
+ "investigate:light": {
+  "summary": "CORRECTION FIRST. The knotted and vortex fields made in optics labs were made of light itself, shaped by holograms or spatial light modulators. An RF field does not bend light in vacuum: Maxwell's equations are linear, so two fields pass through each other. The only exception is QED light-by-light scattering. Its cross-section is 1.2e-63 cm^2 at 532 nm (derived from the Euler-Heisenberg formula), 39 orders below Thomson scattering. The array's field at 0.3 m (17 V/m peak, 58 nT; 12.6 mW from four channels, 15.5 dBi) changes the vacuum index by 1.3e-38. PVLAS, with 2.5 T and 25 years of work, has not yet seen the effect.\n\nEvery real route goes through matter. None of the parallel studies named in the task existed as files, so nothing was cross-checked against them.\n\nROUTES THIS SDR CAN DRIVE\n- **Acousto-optics (this is \"bending light with RF\").** Deflection angle = lambda*f/v. A slow-shear TeO2 deflector (v about 650 m/s) at 80 MHz and 532 nm gives 0.82 mrad per MHz: a 40.9 mrad (2.3 degree) scan over 50 MHz, with about 300 resolvable spots. PbMoO4 or longitudinal TeO2 give only 0.13-0.15 mrad per MHz. The bladeRF (47 MHz-6 GHz) and LMX2572 (from 12.5 MHz) both cover the 80/110/200 MHz parts; GHz parts exist up to 3.5 GHz but have 76 micron apertures and lab prices. Full efficiency needs about 0.5-1 W (22-25 dB of gain); at +5 dBm unamplified I estimate about 1 % diffraction, still a visible spot. Multi-tone drive gives one beam per tone, and a chirp makes a lens (F = v^2/(lambda*chirp rate) = 0.16 m for 50 MHz in 10 us). The diffracted beam is shifted by exactly the RF frequency, so a photodiode into the SDR receiver makes a heterodyne interferometer (0.74 nm per degree of RF phase).\n- **Electro-optics.** +5 dBm (0.56 V peak) into a 5 V V-pi lithium niobate modulator gives 0.35 rad of phase and -15 dBc sidebands with no amplifier. A free-space RF field on bulk crystal or a Kerr liquid is hopeless (index change 1e-10 to 1e-15).\n- **RF over fibre.** An intrinsic direct-modulation link is about -22 dB gain and 34 dB noise figure (estimate), so 13 dB behind the 21 dB LNA. Fibre drifts 40 ps/km/K, or 0.86 degrees at 6 GHz per kelvin on 10 m. It pays only for antennas tens of metres away. Optical true-time delay is real but poor value here: 352 ps needs a 20.7 nm wavelength swing on 1 km of fibre, and the 38.5 ps bit is 7.9 mm of fibre.\n- **NV diamond (2.87 GHz).** RF changes the red fluorescence of a green-pumped diamond by about 1 %. +5 dBm into a 1 mm shorted loop gives 14 uT and a 280 kHz Rabi frequency (estimate), enough for CW resonance without an amplifier; 1 MHz needs +16 dBm. The array's far field gives only 1.1 kHz, so a wireless version needs a patch-plus-loop relay (-5.6 dBm received at 0.3 m, 82 kHz). Shot-noise limits are 4.7 nT/rtHz (hobby) to 50 pT/rtHz (good diamond); a reported LED teaching build reached about 1 uT/rtHz and a lab vector instrument 50 pT/rtHz. Open builds cost about \u00a3115 to under \u20ac250. The SDR adds multi-tone drive of all four NV orientations at once (the published lab method), lock-in modulation, and mapping the array's own 2.87 GHz near field.\n- **Magneto-optic.** Faraday rotation in 1 cm of TGG is 7.7e-8 rad from the array's far field, 1.3e-5 rad in a 10 uT loop, against 1e-8 rad/rtHz shot noise at 1 mW. Measurable, low value.\n- **Liquid crystals.** Millisecond response, useful only as slow tunable RF dielectrics; this is from general knowledge and was not researched.\n- **Rydberg electrometry.** Lab-only (two locked lasers). Published sensitivities of 30 to 0.76 uV/cm/rtHz are 1,800 to 72,000 times worse than a 0 dBi antenna with a 1.5 dB LNA (0.41 nV/cm/rtHz, derived). Its value is SI traceability, not sensitivity.\n\nLIGHT ACTING ON RF. An infrared LED on silicon makes a 0.6 dB / 20 dB microwave switch at 2 GHz. HeNe longitudinal-mode beats fall at c/2L, 333-1000 MHz for 45-15 cm tubes, directly in the SDR band. Two DFB lasers beat at 8 pm per GHz.\n\nRANKING (physics value, cost, safety)\n1. NV diamond vector magnetometer and RF-field probe: about $150-300. A high-power green LED avoids the laser hazard; if a laser is used, keep it at or below 5 mW (Class 3R), enclosed, with OD2+ 532 nm eyewear during alignment.\n2. Acousto-optic beam steering, multi-beam and heterodyne interferometer: about $150-400 used. Class 2 (under 1 mW) red laser, no eyewear but no staring.\n3. HeNe or laser-diode mode beats on a photodiode: about $50, Class 2/3R, receive-only.\n4. SDR waveforms over a directly modulated laser link: under 1 mW, Class 1/2.\n5. Fibre electro-optic modulator and RF-over-fibre: $850+ new at 1550 nm (invisible; keep it in fibre, Class 1 when closed).\n6. Rb-85 double resonance at 3.036 GHz: hard (laser wavelength control).\n7. Rydberg: lab-only.\n\nRF safety: the FCC general-population limit is 1 mW/cm^2 above 1.5 GHz (f/1500 below). The bare array meets it beyond 6 cm on boresight; a 1 W amplifier into the panel needs more than 0.53 m.\n\nPARTS, EXPERIMENT 1 (NV): NV diamond (about \u00a310 in the open kit; Element Six DNV-B1 class is better); 520-532 nm source of 5 mW or less, or a 1-3 W green LED; 600-650 nm long-pass filter; silicon photodiode and transimpedance amplifier; 1 mm loop on SMA driven from a bladeRF transmit port; 1-5 mT bias magnet; audio ADC or the RP2040 for lock-in; optional +20 dB amplifier; printed light-tight enclosure.\n\nPARTS, EXPERIMENT 2 (acousto-optic): used 80 MHz slow-shear TeO2 deflector, or Isomet 1205C-2 (1.0 W at 633 nm); 1-2 W, 40-200 MHz amplifier plus 10 dB pad and low-pass filter; Class 2 red module; iris, screen, f = 100-200 mm lens; 150 MHz or faster photodiode with 20 dB attenuator into the receiver; heat sink and 50 ohm dump. Never run the amplifier without the cell connected.\n\nPrices marked \"about\" and the amplifier needs are my estimates.",
+  "findings": [
+   {
+    "topic": "Correction: fields do not bend light in vacuum",
+    "claim": "Lab 'knotted' fields were made of light itself, shaped by holograms or spatial light modulators. Maxwell's equations in vacuum are linear, so RF and light superpose without interacting. The only vacuum coupling is QED light-by-light scattering: sigma = 973/(10125 pi) alpha^4 (omega/m)^6 (reduced Compton wavelength)^2 = 1.2e-63 cm^2 at 532 nm and 7e-66 cm^2 at 1 eV, against Thomson 6.65e-25 cm^2. It has been observed only at GeV energies (ATLAS, Pb+Pb, 8.2 sigma, fiducial cross-section 120 nb).",
+    "source": "Derivation in /Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light.py; formula per https://arxiv.org/pdf/1106.0592 (the search snippet showed pi^2 where I used pi; a factor of 3 that does not change the conclusion); ATLAS: https://link.springer.com/article/10.1038/nphys4208 and https://pos.sissa.it/398/322/pdf",
+    "confidence": "high"
+   },
+   {
+    "topic": "Vacuum birefringence scale for this array",
+    "claim": "QED predicts an index change of 4e-24 per T^2. The array's field at 0.3 m (12.6 mW total, 15.5 dBi: 0.40 W/m^2, 17 V/m peak, 58 nT) gives 1.3e-38, a 1.6e-31 rad phase over 1 m at 532 nm. PVLAS with 2.5 T measured (12 +/- 17)e-23 against a prediction of 2.5e-23, so the effect is still undetected in the best experiment.",
+    "source": "https://arxiv.org/pdf/2005.12913 plus derivation in rf_light.py (results in /Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light_results.json)",
+    "confidence": "high"
+   },
+   {
+    "topic": "Acousto-optic deflection: RF frequency steers a laser",
+    "claim": "Angle between 0th and 1st order = lambda*f/v. Slow-shear TeO2 (617-663 m/s): 0.82 mrad/MHz at 532 nm, 40.9 mrad scan over a 50 MHz bandwidth (datasheet: 40.1 mrad at 514 nm, 80 MHz centre, 50 MHz bandwidth, 80 % efficiency), about 300 resolvable spots for a 4 mm aperture (bandwidth times transit time 6.2 us). PbMoO4 (3.63 mm/us, Isomet 1205C) gives 0.15 mrad/MHz and about 17 spots.",
+    "source": "https://www.polytec.com/fileadmin/website/optical-systems/laserzubehoer/pdf/PH_WL_IAC_ATD-80Series_2003.pdf ; https://l3harris.com/sites/default/files/2024-08/l3harris-model-h-424-acousto-optic-deflector-spec-sheet-sas.pdf ; https://neurophysics.ucsd.edu/Manuals/Isomet/1205c%20.pdf ; derivation in rf_light.py (4 mm aperture assumed)",
+    "confidence": "high"
+   },
+   {
+    "topic": "Acousto-optic parts versus the SDR's range and power",
+    "claim": "Common parts sit at 80/110/200 MHz, inside the bladeRF (47 MHz-6 GHz) and LMX2572 (12.5 MHz-6.4 GHz, about +4.5 dBm typical per a TI forum post). Brimrose GHz parts reach 3.5 GHz (TEF-1000: 1 GHz, 40 % efficiency; GPF-1500: 1.5 GHz, 10 %; both 76 um aperture). Drive for full efficiency is 0.6-1.0 W for the 1205C-2, so 22-25 dB of gain after +5 dBm. Unamplified at +5 dBm, efficiency is about 0.8-1.6 %, still a visible spot.",
+    "source": "https://gaiascience.com.sg/productdetails/free-space-acousto--optic-modulators-aom ; https://neurophysics.ucsd.edu/Manuals/Isomet/1205c%20.pdf ; https://e2e.ti.com/support/clock-timing-group/clock-and-timing/f/clock-timing-forum/1350966/lmx2572-lmx2572-output-power ; unamplified efficiency is an estimate: sin^2((pi/2)sqrt(P/Psat)) with Psat 0.5-1 W assumed",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Multi-tone and chirped acousto-optic drive",
+    "claim": "Each RF tone makes its own beam; atom-array labs drive deflectors with multi-tone RF (100 tweezers at 0.49 MHz tone spacing). The SDR's 56 MHz arbitrary waveform does the same, so the RF spectrum is displayed as a row of light spots. A linear chirp makes a cylindrical lens of focal length F = v^2/(lambda * chirp rate): 0.16 m for 50 MHz in 10 us on slow-shear TeO2 at 532 nm.",
+    "source": "https://arxiv.org/html/2510.09398v1 ; https://ar5iv.arxiv.org/html/1607.03044 ; focal-length formula is my derivation (angle gradient across the aperture = lambda*alpha/v^2), not checked against a source",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Heterodyne interferometer read by the SDR",
+    "claim": "The first-order beam is frequency-shifted by exactly the RF drive. Beating it with the undeflected beam on a photodiode gives an 80 MHz tone whose phase is the optical path: 0.74 nm per degree of RF phase at 532 nm (double pass), shot-noise 3e-7 rad/rtHz at 10 uW. This is the optical route to the owner's 'precision microscope' interest: displacement, vibration and refractive index at the nanometre level, with the coherent SDR as the phase meter.",
+    "source": "Derivation in rf_light.py (0.3 A/W photodiode assumed); estimate",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Electro-optic modulation driven directly by the SDR",
+    "claim": "+5 dBm is 0.56 V peak in 50 ohm. On a 10 GHz lithium niobate waveguide modulator with V-pi of 5-6 V this gives 0.35 rad phase index and first sidebands at -15 dBc, with no amplifier, anywhere in 0.4-6 GHz. Prices: Agiltron 10 GHz, 6 V V-pi, from $850; Thorlabs LN81S-FC $1,275 (older catalogue); iXblue 2,200 EUR. Free-space RF on bulk LiNbO3 gives an index change near 1e-10; Kerr effect in nitrobenzene near 7e-16.",
+    "source": "https://agiltron.com/product/lithium-niobate-modulator/ ; https://www.thorlabs.us/catalogpages/v20/1167.pdf ; https://ixblue.com/photonics-space/in-stock-modulators ; derivation in rf_light.py (r33 = 30.8 pm/V, Kerr constant 4.4e-12 m/V^2 and the 1/eps_r field reduction are textbook values from memory, unsourced)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "RF over fibre and optical true-time delay",
+    "claim": "Standard fibre delay drifts 33-43 ps/km/K (about 8 ppm/K), so 10 m of fibre moves 0.86 degrees at 6 GHz per kelvin; phase-stable fibre is below 5 ps/km/K, and 3 GHz has been sent over 300 m with under 0.017 degree RMS error using active correction. An intrinsic direct-modulation link is about -22 dB gain and 34 dB noise figure (estimate), giving 13 dB behind the panel's 21 dB LNA. Dispersive true-time delay needs 20.7 nm of tuning on 1 km of SMF (17 ps/nm/km assumed) for the 352 ps range; switched fibre needs 7.9 mm for the 38.5 ps bit (0.20 mm per ps). Verdict: no gain on the bench; worthwhile only for antennas tens of metres away.",
+    "source": "https://eprints.soton.ac.uk/474697/1/ol_48_3_763.pdf ; https://jacow.org/IBIC2018/papers/WEPA06.pdf ; https://www.febo.com/pipermail/time-nuts/2008-November/034665.html ; https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/6768458 ; link budget is an estimate in rf_light.py (0.1 W/A, 0.8 A/W, RIN -150 dB/Hz, 2 mA)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "NV diamond: RF drive this SDR can supply",
+    "claim": "CW resonance needs a Rabi frequency of roughly 0.1-1 MHz. +5 dBm into a shorted 1 mm-radius loop gives 22 mA peak, 14 uT, Rabi 280 kHz; 1 MHz needs +16 dBm. The array's far field at 0.3 m (58 nT) gives only 1.1 kHz, too weak directly. A patch-plus-loop relay at 0.3 m receives -5.6 dBm and gives 82 kHz, so a 'wireless' resonance driven by the panel is marginal but plausible.",
+    "source": "Derivation in rf_light.py (estimate: electrically small shorted loop on a 50 ohm line, 28.03 GHz/T, panel gain 8.5 dBi at 2.87 GHz assumed); tutorial context https://arxiv.org/pdf/1802.07857",
+    "confidence": "medium"
+   },
+   {
+    "topic": "NV diamond: sensitivity and hobby builds",
+    "claim": "Shot-noise limit = (4/(3 sqrt 3)) * linewidth / (gamma * contrast * sqrt(photon rate)): 4.7 nT/rtHz for 1 % contrast, 10 MHz linewidth, 10 uW of red; 50 pT/rtHz for 3 %, 1 MHz, 100 uW. Reported: an LED-based teaching magnetometer at about 1 uT/rtHz; a fibre device with 1.2 % contrast and 11.9 MHz linewidth; a lab vector instrument at 50 pT/rtHz per axis. Open builds: Uncut Gem about \u00a3115 (ADF4350 source, 40 dB gain, ESP32; no performance figures published); Stegemann 3D-printed setup under \u20ac250.",
+    "source": "https://arxiv.org/abs/2512.03106v2 ; https://github.com/jrobgood/UncutGem ; https://inspirehep.net/files/417ac4fd9c69c532f3d1ed8b6b38c5f0 ; https://arxiv.org/pdf/1803.03718 ; https://arxiv.org/pdf/2404.14089 ; formula per https://arxiv.org/pdf/1910.00061 ; numbers from rf_light.py",
+    "confidence": "high"
+   },
+   {
+    "topic": "NV diamond: what this SDR adds over hobby builds",
+    "claim": "(1) One 56 MHz capture or a 2.75-2.99 GHz sweep covers the eight lines of the four NV orientations at a few mT (28 MHz/mT), giving the full field vector. (2) Multi-tone drive addresses all four orientations at once with separate lock-in frequencies, the published method that reached 50 pT/rtHz with a 4x speed-up. (3) Coherent IQ gives frequency-modulation lock-in and three-tone hyperfine drive. (4) The diamond becomes a calibrated vector probe of the array's own 2.87 GHz magnetic near field; labs image microwave fields this way at 0.8 um to micrometre resolution (9 uT/rtHz at 2.57 GHz).",
+    "source": "https://arxiv.org/pdf/1803.03718 ; https://arxiv.org/html/2409.16528v2 ; https://arxiv.org/html/2512.05986v1 ; 28 GHz/T is standard, taken from memory and used in rf_light.py",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Other optically read spin defects in the SDR band",
+    "claim": "The boron vacancy in hexagonal boron nitride has a ground-state zero-field splitting near 3.47 GHz (E about 50 MHz), inside the SDR's range, read out optically like NV. Silicon-carbide defects (about 70 MHz and 1.3 GHz) are recalled from memory and were not verified.",
+    "source": "https://www.nature.com/articles/s41524-023-01111-7.pdf ; https://ar5iv.labs.arxiv.org/html/2105.12029",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Magneto-optic (Faraday) route",
+    "claim": "TGG has a Verdet constant of about 134 rad/T/m at 632.8 nm (40 at 1064 nm). A 1 cm crystal rotates polarisation by 7.7e-8 rad in the array's far field and 1.3e-5 rad in a 10 uT loop, against a shot-noise floor of about 1e-8 rad/rtHz at 1 mW. Real and measurable with a near-field coil, but a weak effect of low value; whether TGG responds fully at GHz rates was not checked.",
+    "source": "https://www.crylink.com/wp-content/uploads/Magneto-optic-crystal-TGG-CRYLINK.pdf ; https://pmc.ncbi.nlm.nih.gov/articles/PMC4354094 ; derivation in rf_light.py",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Rydberg-atom electrometry",
+    "claim": "Vapour-cell Rydberg sensors read RF fields with two lasers (probe near 780 or 852 nm, coupling near 480 nm): 30 uV/cm/rtHz (2012), about 3 uV/cm/rtHz (2017), 0.76 uV/cm/rtHz (2026 preprint). A 0 dBi antenna with a 1.5 dB noise figure at 2.4 GHz reaches 0.41 nV/cm/rtHz, 1,800 to 72,000 times better. The Rydberg advantage is SI traceability and a non-metallic probe. Needs two frequency-locked narrow lasers, so lab-only for this project.",
+    "source": "https://arxiv.org/pdf/1205.4461 ; https://ar5iv.arxiv.org/html/1702.00494 ; https://arxiv.org/html/2601.19305v1 ; antenna figure derived in rf_light.py; 'lab-only' is my judgement, no cost source found",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Rubidium routes inside the SDR band",
+    "claim": "Coherent population trapping in Rb-87 uses a VCSEL modulated at 3.417 GHz (half of 6.835 GHz), inside the SDR and LMX2572 range. The 795 nm VCSELs cost about $500-800 each and need wavelength stabilisation; a finished commercial unit is about $1,100. The Rb-85 alternative (3.036 GHz, or 1.518 GHz modulation, with 780 nm diodes) is my suggestion from memory and unverified.",
+    "source": "https://tf.nist.gov/general/pdf/2080.pdf ; https://www.febo.com/pipermail/time-nuts/2018-June/110664.html ; https://www.febo.com/pipermail/time-nuts/2018-June/110665.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Light acting on RF",
+    "claim": "Silicon lit by an infrared LED works as a microwave switch or attenuator (0.6 dB loss, 20 dB attenuation at 2 GHz); a VCSEL-driven switch gave 0.17 dB loss and 25 dB isolation at 1 GHz with 15 mW of light. HeNe longitudinal modes beat at c/2L (student labs measured 328.6 and 657.1 MHz); 45 to 15 cm cavities give 333-1000 MHz, in the SDR band. Two 1550 nm DFB lasers beat at 8 pm per GHz. Radiation pressure is 3.3 nN per watt.",
+    "source": "https://core.ac.uk/download/195285421.pdf ; https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5214275 ; https://arxiv.org/pdf/1006.5462 ; derivations in rf_light.py. The two switch figures were matched to these URLs from a search summary and should be re-checked.",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Safety limits",
+    "claim": "Lasers (500-700 nm, continuous): Class 1 below 0.39 mW, visible 1-5 mW is Class 3R, up to 500 mW is Class 3B and requires laser eyewear. Recommended: Class 2 (under 1 mW) red for acousto-optics; LED or enclosed 5 mW-or-less green for NV with OD2+ 532 nm eyewear during alignment; 1550 nm kept inside fibre. RF: FCC general-population limit is f/1500 mW/cm^2 at 300-1500 MHz and 1.0 mW/cm^2 above, averaged over 30 minutes. The bare array (12.6 mW, 15.5 dBi) meets it beyond 6 cm on boresight; 1 W into the panel needs more than 0.53 m.",
+    "source": "https://www.lasermet.com/us/?p=1175 ; https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-1/subpart-I/section-1.1310 ; distances derived in rf_light.py (far-field formula, so the 6 cm figure is indicative only); the eyewear rating is my recommendation",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Ranking and the two best experiments",
+    "claim": "Ranked by physics value, cost and safety: (1) NV diamond vector magnetometer and RF near-field probe, about $150-300; (2) acousto-optic steering, multi-beam and heterodyne interferometer, about $150-400 with used parts (new: free-space cell $1,021-1,695, driver $690-695); (3) HeNe or diode mode beats on a photodiode, about $50, receive-only; (4) SDR waveforms over a directly modulated sub-1 mW laser; (5) fibre electro-optic modulator, $850+; (6) rubidium double resonance, hard; (7) Rydberg, lab-only. Parts lists for the top two are in the summary.",
+    "source": "estimate: my judgement from the costs and numbers above; new prices from https://agiltron.com/category/optical-modulators/free-space-high-speed-modulators/free-space-acoustic-optic-modulators-shifters/ and https://www.LaserDiodeSource.com/shop/80MHz-analog-aom-modulator-driver ; used prices are unverified estimates",
+    "confidence": "medium"
+   }
+  ],
+  "files": [
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light.py",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light_results.json",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/rf_light.png"
+  ],
+  "open_questions": [
+   "None of the parallel studies named in the task (local_fields.md, field_uses.md, fields_study.md, capabilities.md) existed as files, so overlap with them could not be checked; only code and figures for local_fields and fields were present.",
+   "Used-market prices for acousto-optic cells and drivers were not found; the $150-400 figure for experiment 2 is an estimate. New parts cost $1,000-1,700 for the cell and about $690 for a driver.",
+   "Diffraction efficiency at +5 dBm without an amplifier (about 1 %) assumes a 0.5-1 W saturation power; the slow-shear TeO2 deflector's actual drive power was not found in a datasheet.",
+   "Uncut Gem publishes no contrast, linewidth or sensitivity, and its laser wavelength, power and class are not stated; the Stegemann paper's figures were not retrieved. Hobby-grade NV performance therefore rests on one teaching-lab number (about 1 uT/rtHz).",
+   "Diamond price and source: Element Six DNV-B1 and Adamas microdiamond prices were not found (one reseller lists 150 um NV powder at \u00a3435.76, quantity unstated).",
+   "Whether the panel can drive NV resonance wirelessly depends on its real gain at 2.87 GHz (8.5 dBi assumed) and the relay loop's match; 82 kHz Rabi frequency is marginal.",
+   "Unverified recollections used or mentioned: NV temperature shift of -74 kHz/K, the 28 GHz/T gyromagnetic ratio, silicon-carbide defect frequencies, eddy-current imaging of metals with NV (paper not found in search), the LiNbO3 and Kerr coefficients, Rb-85 at 3.036 GHz, and liquid-crystal response times.",
+   "The Euler-Heisenberg prefactor: one source snippet showed pi^2 where the standard formula I used has pi; this changes the 1.2e-63 cm^2 figure by a factor of about 3 at most.",
+   "Whether a transmit amplifier is permitted depends on the band: Part 15 limits radiated power, so the 1 W cases apply only to conducted drive of an acousto-optic cell or loop, or to amateur allocations."
+  ]
+ },
+ "investigate:matter": {
+  "summary": "Lens: RF, matter and the microwave microscope. New script, results and four figures are in /Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/ (matter_microscope.py; numpy only, scipy is not installed). No existing files were changed. The parallel notes local_fields.md, field_uses.md, fields_study.md and capabilities.md were not present, so nothing was cross-checked against them.\n\nCorrection to state plainly: the knotted fields in optics labs were made OF light; RF does not bend light in vacuum. RF acts on light only through matter. The cleanest in-band route is NV-diamond ODMR: 2.87 GHz at about +8 dBm changes the red fluorescence of a diamond under green light, and a published LED build costs under EUR 100.\n\n1. Forces at this power are negligible in free space. All 16 channels (50.6 mW) give a radiation force of 0.17-0.34 nN. Focused into one half-wave spot at 6 GHz this is at most 8 mW/cm2, 247 V/m peak. Dielectrophoresis on a 1 mm bead is 5e-14 N against 5e-6 N of weight (1e-8); on a 1 um particle in water it is 1e-20 N against 4e-15 N thermal. Ponderomotive energy is 2e-6 eV. The exception is microelectrodes: +5 dBm across a 10 um gap gives 8e4 V/m and about 1.3 pN on a 1 um bead (300 times thermal) with 0.1 K heating. Heating is real but small: 0.7 K/min in 1 mL of water if all 50 mW is absorbed, 14 K/min at 1 W.\n\n2. Spin resonance is in band. Electron resonance is 28.04 MHz/mT: 14.3 mT at 0.4 GHz, 87.4 mT at 2.45 GHz, 214 mT at 6 GHz, all neodymium-magnet fields. The SDR can sweep frequency at fixed field; the DPPH line is about 5.6 MHz wide. Estimated signal for a few mg of DPPH at 2.45 GHz: 7 % reflection change in a loop-gap resonator (Q 200, fill 0.05), -55 dB on a microstrip resonator, -89 dB on a bare shorted line (needs field modulation). Proton NMR would need 9.4 T at 0.4 GHz, so it is out of band. A YIG sphere resonates from about 1.63 GHz (61 mT) to 6 GHz (214 mT) with Q of 700-2100.\n\n3. Material detection. Water (Debye, 25 C) is 77.2 - j9.2 at 2.45 GHz and 72.3 - j20.2 at 5.8 GHz; plastics, wood, ice and concrete sit at 2-5, so moisture dominates contrast. A DIY SMA open-ended probe is reported good to 3 % up to 6 GHz. A split-ring probe (model fitted to Isakov 2017) shifts 114 MHz per unit permittivity at 2.5 and 14 MHz at 25; 0.1 % frequency repeatability gives 0.02 in permittivity near 3.\n\nNear-field microscopy: labs reach 100 nm to 1 um. For a quarter-wave coax tip at 2.45 GHz, a 50 um tip shifts 1.6 MHz on PTFE, 3.9 MHz on FR-4, 18 MHz on water, with a noise floor near 8 kHz (permittivity step about 0.01). The decisive limit is lift-off: a 0.76 um gap change mimics a 5 % permittivity change, so a hobby build must scan in contact.\n\nArray imaging (back-projection, point target): the panel at 6 GHz resolves 30 mm at 50 mm, 72 mm at 150 mm, 234 mm at 500 mm; 2.45 GHz gives 84 and 207 mm. Stepped 2.3-6 GHz gives about 45-60 mm in range. Carrying one element over 200 mm on a printer bed gives 14 mm at 50 mm (about a quarter wave) and 25 mm at 150 mm. Ground radar (estimate, 70 dB two-way loss): 1-3 m at 0.4-0.9 GHz in moist soil, 0.4-0.75 m at 2.45 GHz, under 0.2 m at 5.8 GHz. The 16 external ports match the Dartmouth 16-monopole tomography layout (0.5-2 GHz), but only X0-X3 transmit.\n\nBest two builds (costs are my estimates):\n- Scanning microwave microscope, about $40-90 plus an existing 3D printer: needle tip or split ring, directional coupler, two coherent receive channels. Expect 0.1-0.3 mm resolution with a needle in contact (about 1/1000 wavelength), 0.2-2 mm with a ring, permittivity to 5-8 %.\n- Spin-resonance bench, about $60-150: magnets on a screw yoke, resonator, modulation coil, DPPH; add NV diamond and a YIG sphere. Expect DPPH at signal-to-noise above 100 with mg samples.\n\nSafety: the public exposure limit is 1 mW/cm2 above 1.5 GHz. The panel's main beam meets it beyond 14 cm at 6 GHz (6 cm at 2.45 GHz); a 1 W amplifier into 6 dBi needs 18 cm. Unmodulated carriers radiated under Part 15.249 are limited to about -1 dBm EIRP, so probe and resonator work should stay cabled or shielded. For ODMR prefer LEDs; a 532 nm laser above 5 mW is Class 3B and needs OD4+ eyewear.",
+  "findings": [
+   {
+    "topic": "Correction: RF and light",
+    "claim": "Knotted fields in optics labs are made of light itself. RF fields do not deflect light in vacuum; RF acts on light only through matter (spins, atoms, heated or moved material).",
+    "source": "derivation: Maxwell's equations are linear in vacuum; photon-photon scattering is negligible at these field strengths (247 V/m peak, matter_results.json)",
+    "confidence": "high"
+   },
+   {
+    "topic": "RF acting on light: NV diamond ODMR",
+    "claim": "A 2.87 GHz drive changes the red fluorescence of NV diamond under green light. A published teaching build costs under EUR 100, uses green LEDs (13.2 mW max), an ADF4351 at up to +8 dBm with no amplifier, an LC loop resonator at 2.86 GHz and HPHT microdiamonds. The platform's LMX2572 or AD9361 covers this; the line splits at 28 MHz/mT.",
+    "source": "https://mdpi.com/2673-8724/5/3/18 (via summary https://6ccvd-research-starlight-i18n.pages.dev/research/literature-reviews/2025/08/components-for-an-inexpensive-cw-odmr-nv-based-magnetometer-4412890482); LED alternative https://arxiv.org/html/2512.03106v1",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Radiation pressure",
+    "claim": "All 16 channels at +5 dBm (50.6 mW) give 0.17 nN on an absorber and 0.34 nN on a mirror; 1 W gives 3.3-6.7 nN. A 1 mm water bead weighs 5.1 uN, so this is negligible without a torsion balance.",
+    "source": "derivation F = P/c, /Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/matter_results.json (forces)",
+    "confidence": "high"
+   },
+   {
+    "topic": "Field strength at a focus",
+    "claim": "Upper bound with all 50.6 mW in one half-wave spot: 8.1 mW/cm2 and 247 V/m peak at 6 GHz; 1.35 mW/cm2 and 101 V/m at 2.45 GHz.",
+    "source": "estimate: S = P/(lambda/2)^2, matter_results.json (forces)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Dielectrophoresis and ponderomotive force",
+    "claim": "Free-space dielectrophoresis is negligible: 5e-14 N on a 1 mm bead (1e-8 of its weight) and 1.6e-20 N on a 1 um particle in water against 4e-15 N thermal force. Ponderomotive energy of an electron is 1.9e-6 eV against 0.025 eV thermal. With +5 dBm on a 10 um electrode gap the field is 8e4 V/m rms and the force on a 1 um bead is about 1.3 pN (300 times thermal) with about 0.1 K steady heating.",
+    "source": "derivation F = 2 pi r^3 eps_m Re[K] grad(E_rms^2) (formula per https://pmc.ncbi.nlm.nih.gov/articles/PMC2917862), matter_results.json (forces)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Heating",
+    "claim": "50.6 mW fully absorbed heats 1 mL of water at 0.73 K/min; 1 W at 14 K/min. Measurable with a thermistor or thermal camera, not a way to move or reshape objects.",
+    "source": "derivation dT/dt = P/(m c_p), matter_results.json",
+    "confidence": "high"
+   },
+   {
+    "topic": "Electron spin resonance fields",
+    "claim": "Resonance is 28.04 MHz/mT for g = 2.0036: 14.3 mT at 0.4 GHz, 32.6 mT at 0.915 GHz, 87.4 mT at 2.45 GHz, 207 mT at 5.8 GHz, 214 mT at 6 GHz. All are within reach of neodymium magnets with an adjustable gap.",
+    "source": "derivation B = h f/(g muB), matter_results.json (esr); g value https://en.wikipedia.com/wiki/DPPH",
+    "confidence": "high"
+   },
+   {
+    "topic": "DPPH sample and line",
+    "claim": "DPPH has g = 2.0036 and a line 1.5-4.7 G wide (0.15-0.47 mT), which is about 4-13 MHz in a frequency sweep; 1 mg holds 1.53e18 spins.",
+    "source": "https://workbench.lafayette.edu/~doughera/courses/phys338/labs/esr.pdf and https://en.wikipedia.com/wiki/DPPH; spins per mg derived from molar mass 394.32",
+    "confidence": "medium"
+   },
+   {
+    "topic": "ESR signal size on this platform",
+    "claim": "Estimated reflection change for DPPH at 2.45 GHz: 7 % (-23 dB) in a loop-gap resonator with Q 200 and fill 0.05; -55 dB on a microstrip resonator (Q 50, fill 0.005); -89 dB on a bare shorted line. Signal scales with frequency: at 0.4 GHz each is about 16 dB weaker.",
+    "source": "estimate: Curie susceptibility chi0 = 5.7e-5, chi'' = chi0 B0/(2 dB_hwhm), delta(1/Q) = fill x chi''; matter_results.json (esr.dpph)",
+    "confidence": "low"
+   },
+   {
+    "topic": "ESR precedents",
+    "claim": "Homebuilt and SDR-based ESR exist: a 3D-printed continuous-wave spectrometer at 115 MHz with DPPH; an SDR-based benchtop spectrometer from Cardiff; an S-band spectrometer using a shorted coplanar waveguide resonator and a VNA on DPPH. Commercial benchtop sensitivity is about 5e9 spins per gauss.",
+    "source": "https://archive.ismrm.org/2017/5602.html ; https://orca.cardiff.ac.uk/id/eprint/176660 ; https://arxiv.org/abs/2004.08061 ; https://www.news-medical.net/news/20200422/The-Latest-Electron-Paramagnetic-Resonance-(EPR)-Spectroscopy-Technology.aspx",
+    "confidence": "medium"
+   },
+   {
+    "topic": "NMR is out of band",
+    "claim": "Protons resonate at 42.58 MHz/T, so 0.4 GHz needs 9.4 T and the bladeRF's 47 MHz floor needs 1.1 T. A 0.5 T permanent magnet puts protons at 21 MHz, below the board's 330 MHz high-pass filter.",
+    "source": "derivation, matter_results.json (esr.proton_field_T_for); filter value from /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md section 3",
+    "confidence": "high"
+   },
+   {
+    "topic": "YIG ferromagnetic resonance",
+    "claim": "A YIG sphere tunes at 28 GHz/T once saturated, which sets a floor near 1.63 GHz (61 mT) for 1750 G material and reaches 6 GHz at 214 mT. Linewidths of 0.5-1.5 Oe give Q of 700-2100 at 3 GHz. A vendor lists 0.25 mm spheres at 1600 +/- 80 G with linewidth under 1.5 Oe.",
+    "source": "derivation f_min = gamma mu0 Ms/3, matter_results.json (yig); https://matesy.de/en/products/yig-cubes-and-spheres ; https://www.nature.com/articles/s41598-019-45699-7",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Water and common materials, 0.4-6 GHz",
+    "claim": "Water at 25 C (static 78.4, relaxation 8.27 ps): 78.4 - j1.5 at 0.4 GHz, 77.2 - j9.2 at 2.45 GHz, 72.3 - j20.2 at 5.8 GHz; field penetration depth 1.4 m, 37 mm and 7 mm. Dry materials: PTFE 2.1 (loss tangent 0.0003), dry concrete 4.5 (0.011), wood 1.2-5, ice 3.2. Moisture is therefore the dominant contrast.",
+    "source": "Debye model in matter_microscope.py with parameters from https://water.lsbu.ac.uk/water/microwave_water.html and https://arxiv.org/pdf/1910.08159 ; materials https://www.rohde-schwarz.com/file/RAC-0607-0019_1_5E.pdf and https://cris.unibo.it/retrieve/e1dcb336-54e6-7715-e053-1705fe0a6cc9/pp09136075.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Moisture content",
+    "claim": "The Topp polynomial maps permittivity to volumetric water content: about 3.8 at 5 % water, 8.1 at 15 %, 16.6 at 30 %; a simple mixing rule gives 3.8, 7.4, 15.2. Dry mineral soil is 3-5.",
+    "source": "https://www.caee.utexas.edu/prof/zornberg/pdfs/CP/Pozzato_Tarantino_McCartney_Zornberg_2008.pdf ; https://caas.usu.edu/files/TDRMeasurment_Prncple_App.pdf ; matter_results.json (dielectric)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Open-ended coaxial probe",
+    "claim": "A probe made from an SMA connector, with a VNA and a radiation model, measured liquids, saline and tissue accurately up to at least 6 GHz; three independently built probes agreed within 3 %. A NanoVNA was unstable above 700 MHz, so the coherent SDR is the better reflectometer.",
+    "source": "https://dspace.umh.es/bitstream/11000/37845/1/sensors-25-03935-v2.pdf ; https://nora.nerc.ac.uk/id/eprint/532422/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Split-ring resonator probe",
+    "claim": "A copper split ring (7-11 mm radius, 0.1-0.4 mm gap) between two 3 mm loops works at 1-3 GHz with Q 30-100, resolution 0.1-2 mm set by the gap, permittivity range 2-27, average accuracy 7.7 %, scanned with NEMA17 steppers at 0.2 mm steps. Fitting its 1.933 to 1.731 GHz shift on permittivity 2.5 gives a capacitance share q = 0.165, hence 159, 114, 75, 41 and 14 MHz per unit permittivity at 1, 2.5, 5, 10 and 25.",
+    "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5435736/ ; model in matter_microscope.py (srr_probe)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Small-sample resonator perturbation",
+    "claim": "On a 20 mm microstrip-class resonator at 2.45 GHz (effective volume 320 mm3, estimate), a cube of permittivity 3 shifts the resonance 7.7 kHz at 0.1 mm, 207 kHz at 0.3 mm and 7.7 MHz at 1 mm; a water droplet of the same sizes shifts 11 kHz, 298 kHz and 11 MHz.",
+    "source": "estimate: df/f = -(eps-1) Vs/(2 Veff), matter_results.json (perturbation)",
+    "confidence": "low"
+   },
+   {
+    "topic": "Lab near-field microwave microscopy",
+    "claim": "Resolution is set by the tip, not the wavelength. Labs reached 100 nm (about a millionth of a wavelength) with a sharpened tip on a coaxial resonator, and about 1 um with a permittivity sensitivity of 2 in 500 at 7.2 GHz. Sharper tips trade away capacitive contrast.",
+    "source": "https://www.osti.gov/biblio/542532-high-spatial-resolution-quantitative-microwave-impedance-microscopy-scanning-tip-microwave-near-field-microscope ; https://arxiv.org/abs/cond-mat/0004439 ; https://arxiv.org/pdf/1404.0534",
+    "confidence": "high"
+   },
+   {
+    "topic": "Hobby tip-probe numbers",
+    "claim": "Quarter-wave 50 ohm coax resonator at 2.45 GHz, tip in contact: a 50 um tip shifts 1.57 MHz on PTFE, 3.86 MHz on FR-4, 7.2 MHz on permittivity 10 and 18.4 MHz on water; a 10 um tip shifts one fifth of that. With Q 150 and 60 dB signal-to-noise the frequency precision is about 8 kHz, a permittivity step of 0.01 near 4.4 for a 50 um tip (0.05 for 10 um, 0.5 for 1 um).",
+    "source": "estimate: image-charge series of Gao and Xiang (Rev. Sci. Instrum. 1998) with A = 4 pi eps0 R0/(2 C_eff) derived here; matter_results.json (tip_probe), probe_shift.png",
+    "confidence": "low"
+   },
+   {
+    "topic": "Lift-off is the hobby limit",
+    "claim": "Signal falls to about half at a gap of 0.3-1 tip radius. For a 50 um tip a gap change of 0.76 um mimics a 5 % permittivity change (2.3 um for a 150 um tip), finer than a printer's Z axis. A hobby microscope should scan in spring-loaded contact or treat the image as mixed topography and permittivity.",
+    "source": "same model, matter_results.json (tip_probe.gap_change_um_equal_to_5pct_eps)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Low-cost scanner precedent",
+    "claim": "A 2025 conference paper reports a microwave imaging system under EUR 800 built from a 3D printer under numerical control and an SDR, with a planar monopole probe at 5.36 GHz.",
+    "source": "https://ursifr-2025.sciencesconf.org/620010/document (details from search snippet only; PDF text could not be extracted)",
+    "confidence": "low"
+   },
+   {
+    "topic": "Panel imaging resolution",
+    "claim": "Back-projection of a point target with all 16 elements transmitting and receiving: at 6 GHz the width is 30 mm at 50 mm range, 72 mm at 150 mm, 234 mm at 500 mm; at 2.45 GHz 84 mm and 207 mm at 50 and 150 mm. Using only the four quadrant channels changes this little (45 vs 45 mm, 111 vs 102 mm wideband). Half a wavelength is 25 mm at 6 GHz and 61 mm at 2.45 GHz.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/matter_results.json (imaging), imaging_psf.png",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Range resolution and synthetic aperture",
+    "claim": "Stepping 2.3-6 GHz gives 41 mm range resolution in air (45-60 mm simulated); one 56 MHz channel gives 2.7 m. Moving one element over a 200 mm square on a printer bed gives 14 mm at 50 mm range and 25 mm at 150 mm at 6 GHz, close to a quarter wavelength.",
+    "source": "derivation c/(2B) and simulation, matter_results.json (imaging, imaging_rules)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Through-wall and ground radar",
+    "claim": "MIT's through-wall radar used 2-4 GHz chirps at 1 W and located people behind 10 and 20 cm concrete; a garage rail radar worked at 10 mW with -125 dBm sensitivity; the coffee-can radar costs a few hundred dollars. Estimated soil depth for a 70 dB two-way loss allowance: 2.7 m at 0.4 GHz and 2.1 m at 0.915 GHz in soil with 15 % water and 20 mS/m; 0.75 m at 2.45 GHz; under 0.2 m at 5.8 GHz. Wet conductive soil (30 %, 50 mS/m) halves these.",
+    "source": "https://archive.ll.mit.edu/mission/space/Real-time%20Through-wall%20Imaging.pdf ; https://sites.google.com/view/glcharvat/imaging/synthetic-aperture-radar-sar/range-gated-s-band-rail-sar ; https://spectrum.ieee.org/coffeecan-radar ; estimate in matter_results.json (gpr_budget)",
+    "confidence": "low"
+   },
+   {
+    "topic": "Microwave tomography",
+    "claim": "The Dartmouth breast-imaging systems use 16 monopoles in a lossy coupling liquid at 0.5-2 GHz (clinical prototype 0.3-1 GHz) with a VNA, the same count as the 16 external ports. Rev B transmits only on X0-X3, giving 4 x 16 paths instead of 16 x 15, so the object would need rotating on a turntable. Expected resolution of 1-2 cm in a liquid of permittivity about 25 is my estimate.",
+    "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4808070 ; https://profiles.wustl.edu/en/publications/a-clinical-prototype-for-active-microwave-imaging-of-the-breast/ ; REDESIGN.md section 4; estimate: quarter to half wavelength in the liquid",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Best build 1: scanning microwave microscope",
+    "claim": "Parts: 30 mm semi-rigid coax quarter-wave resonator with a needle tip or a copper split ring with two 3 mm loops, a directional coupler, two coherent receive channels as reflectometer, a holder on an existing 3D printer. Expected: 0.1-0.3 mm resolution with a needle in contact, 0.2-2 mm with a ring, permittivity accuracy 5-8 %, detectable step about 0.01-0.02. Cost about $40-90 excluding printer and radios.",
+    "source": "estimate: basis is Isakov 2017 (https://pmc.ncbi.nlm.nih.gov/articles/PMC5435736/) and the tip model in matter_results.json; prices are my estimates, not quotes",
+    "confidence": "low"
+   },
+   {
+    "topic": "Best build 2: spin-resonance bench",
+    "claim": "Parts: two neodymium discs on a steel screw yoke (14-214 mm T by gap), a loop-gap or microstrip resonator, a 1 kHz modulation coil, a few mg of DPPH; optional NV microdiamonds with green LED and photodiode, and a YIG sphere. Expected: DPPH line at signal-to-noise above 100 in a loop-gap resonator at 2.45 GHz; field uniformity of 0.2 % over the sample is needed to keep the line narrow. Cost about $60-150.",
+    "source": "estimate: basis is matter_results.json (esr) and the EUR 100 ODMR build (https://mdpi.com/2673-8724/5/3/18); prices are my estimates",
+    "confidence": "low"
+   },
+   {
+    "topic": "RF exposure and emission limits",
+    "claim": "The FCC general-public limit is 1.0 mW/cm2 from 1.5 to 100 GHz and f/1500 mW/cm2 from 300 to 1500 MHz, averaged over 30 minutes. With an ideal 100 mm aperture the panel's EIRP is 0.42 W at 2.45 GHz and 2.5 W at 6 GHz, meeting the limit beyond 6 cm and 14 cm; a 1 W amplifier into 6 dBi needs 18 cm. An unmodulated carrier under Part 15.249 is limited to 50 mV/m at 3 m, about -1 dBm EIRP, so resonator and probe experiments should be cabled or shielded.",
+    "source": "https://hallikainen.org/org/FCC/FccRules/2021/1/1310 ; derivation in matter_results.json (safety); Part 15.249 figure recalled, check https://www.ecfr.gov/current/title-47/section-15.249",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Optical safety for ODMR",
+    "claim": "The LED build avoids laser hazards. If a 532 nm laser is used, up to 5 mW is Class 3R and above that Class 3B, which needs eyewear of optical density 4 or more at 532 nm and an enclosed beam; cheap green pointers often exceed their label and leak infrared.",
+    "source": "https://arxiv.org/html/2512.03106v1 (LED version avoids laser safety procedures); laser class thresholds and pointer leakage recalled from IEC 60825-1, not fetched",
+    "confidence": "medium"
+   }
+  ],
+  "files": [
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/matter_microscope.py",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/matter_results.json",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/probe_shift.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/imaging_psf.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/spin_resonance.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/beyond_rf/water_debye.png"
+  ],
+  "open_questions": [
+   "Can rev B switch single panel elements on transmit and receive (via SW_CAL and the per-amplifier load switches), and with what isolation? The 16 x 16 imaging numbers assume yes; the quadrant-only case is given as the fallback.",
+   "Only X0-X3 transmit on the external ports. Is a turntable acceptable for tomography, or should more ports get a transmit path?",
+   "The tip-probe constant A (2.7e-3 for a 50 um tip at 2.45 GHz) is my own derivation from line capacitance; it has not been checked against Gao and Xiang's published values or an openEMS model.",
+   "The ESR signal estimates rest on assumed filling factors (0.05 and 0.005) and Q values; a field solve of the actual resonator is needed before trusting them to better than about 10 dB.",
+   "Ultra-high-frequency dielectrophoresis on microelectrodes looks feasible on paper (about 1 pN at +5 dBm) but I did not find or cite a build at GHz frequencies; the Clausius-Mossotti factor used (0.48, polystyrene in water) is an assumption.",
+   "Part 15.249 field-strength limit and laser class thresholds were recalled, not fetched; verify before transmitting unmodulated carriers or buying a laser.",
+   "The under-EUR-800 3D-printer plus SDR scanner paper could not be read (PDF text extraction unavailable); its achieved resolution and SDR model are unconfirmed.",
+   "Soil loss figures ignore clay and salinity beyond a fixed conductivity; real ground radar depth should be measured on site.",
+   "Rb-85 hyperfine double resonance at 3.036 GHz is another in-band route from RF to light that was not researched here.",
+   "The parallel study notes (local_fields.md, field_uses.md, fields_study.md, capabilities.md) were not present in experiments/, so overlap with them, especially on YIG, was not checked."
+  ]
+ }
+}

@@ -1,0 +1,437 @@
+2026-11-15 21:46:57 === all: pid 12637, engine gpu, 1 jobs x 4 threads ===
+2026-11-15 21:46:57 cache: 7 evaluations on disk
+2026-11-15 21:46:57 validate: already complete, skipped
+2026-11-15 21:46:57 search: climb from the starting design (25 steps x 8)
+2026-11-15 21:46:57   [search] 2d988f5d220002d9 cached  score -6.18
+2026-11-15 21:47:05   [search] 279981d83efe4f23 ran 8 s  score -4.88  worst -1.29 dB  x=40.3 0.12 1.55 6.7 22.7 0.43 11.1
+2026-11-15 21:47:12   [search] 9b9f77aa21d48c24 ran 7 s  score -5.68  worst -2.27 dB  x=40.5 0.11 1.55 8 22.4 0.35 11.7
+2026-11-15 21:47:19   [search] 33b4e7e4f9c02618 ran 8 s  score -5.71  worst -2.23 dB  x=39.6 0.115 1.5 7.7 21.4 0.38 12
+2026-11-15 21:47:26   [search] 466ae509230246bf ran 6 s  score -4.41  worst -0.78 dB  x=39.8 0.13 1.65 5.4 20.5 0.39 11.3
+2026-11-15 21:47:34   [search] 4ccd57437b22e745 ran 8 s  score -3.91  worst -0.70 dB  x=40.2 0.105 1.85 6.9 21.7 0.54 13.1
+2026-11-15 21:47:44 === all: pid 13287, engine gpu, 1 jobs x 4 threads ===
+2026-11-15 21:47:44 cache: 12 evaluations on disk
+2026-11-15 21:47:44 validate: already complete, skipped
+2026-11-15 21:47:44 search: climb from the starting design (25 steps x 8)
+2026-11-15 21:47:44   [search] 2d988f5d220002d9 cached  score -6.18
+2026-11-15 21:47:44   [search] 279981d83efe4f23 cached  score -4.88
+2026-11-15 21:47:44   [search] 9b9f77aa21d48c24 cached  score -5.68
+2026-11-15 21:47:44   [search] 33b4e7e4f9c02618 cached  score -5.71
+2026-11-15 21:47:44   [search] 466ae509230246bf cached  score -4.41
+2026-11-15 21:47:44   [search] 4ccd57437b22e745 cached  score -3.91
+2026-11-15 21:47:50   [search] f591ee315d437bf1 ran 6 s  score -6.84  worst -3.29 dB  x=40.5 0.09 1.25 8.2 22.1 0.32 10.8
+2026-11-15 21:47:57   [search] fafb3ab80a6ee6bc ran 7 s  score -5.19  worst -2.22 dB  x=39.9 0.08 1.5 8.1 22 0.37 13
+2026-11-15 21:48:05   [search] 1760f9e069cc99cd ran 8 s  score -4.51  worst -1.05 dB  x=40.7 0.105 1.35 8.7 21.6 0.46 10.2
+2026-11-15 21:48:05 search: climb step 0 best -6.84
+2026-11-15 21:48:05   [search] f591ee315d437bf1 cached  score -6.84
+2026-11-15 21:48:12   [search] 4803539f3c44908f ran 6 s  score -7.39  worst -3.52 dB  x=41.4 0.09 1 7.8 22.2 0.34 8.7
+2026-11-15 21:48:18   [search] 198e21494ff565f0 ran 6 s  score -7.08  worst -3.53 dB  x=39.4 0.095 1.15 8.5 22.8 0.18 11.3
+2026-11-15 21:48:27   [search] 22b56b369a64ae3a ran 8 s  score -6.77  worst -3.12 dB  x=41.7 0.08 1.1 9.1 22.3 0.39 10.1
+2026-11-15 21:48:33   [search] cf3481046552fef3 ran 6 s  score -6.45  worst -3.04 dB  x=39.1 0.085 1.15 9.1 22.3 0.18 8.3
+2026-11-15 21:48:42   [search] 97dc466380667f4d ran 8 s  score -6.39  worst -2.50 dB  x=41.4 0.11 1.1 8.2 22.5 0.36 12.6
+2026-11-15 21:48:49   [search] b9c3acf7373a64c5 ran 7 s  score -7.33  worst -3.67 dB  x=40.8 0.085 1.2 9.4 19.9 0.31 10.9
+2026-11-15 21:48:56   [search] 6900376c273d88cb ran 8 s  score -7.50  worst -3.81 dB  x=39.1 0.1 1.1 9.2 22 0.38 13.4
+2026-11-15 21:49:03   [search] 35290f1fd7fb33b7 ran 6 s  score -5.35  worst -2.07 dB  x=40.9 0.065 1.05 10.3 22 0.26 11.1
+2026-11-15 21:49:03 search: climb step 1 best -7.50
+2026-11-15 21:49:03   [search] 6900376c273d88cb cached  score -7.50
+2026-11-15 21:49:12   [search] c2e56db21e7ad6bb ran 8 s  score -4.64  worst -0.67 dB  x=38.9 0.13 1.1 9.2 21.1 0.43 10.7
+2026-11-15 21:49:20   [search] bda25beb8c9d82e7 ran 8 s  score -4.59  worst -0.99 dB  x=39.9 0.15 1.25 5.7 22.7 0.64 10.8
+2026-11-15 21:49:29   [search] 2e1f9cb77d028ae5 ran 8 s  score -7.70  worst -3.86 dB  x=37.6 0.12 1.1 8.5 21.6 0.43 12.4
+2026-11-15 21:49:36   [search] 5d190b8d0c8799be ran 8 s  score -7.46  worst -3.69 dB  x=39.4 0.095 1.1 8.7 20.9 0.38 10.5
+2026-11-15 21:49:43   [search] ba05c48fdb659b1f ran 6 s  score -6.97  worst -3.06 dB  x=37.8 0.15 1.1 9.1 22.6 0.34 12.8
+2026-11-15 21:49:50   [search] 88c640c36face5e9 ran 7 s  score -8.19  worst -4.50 dB  x=39.6 0.11 1.2 10.4 21.3 0.27 11.1
+2026-11-15 21:49:59   [search] 0abd0eb96c2c4845 ran 9 s  score -6.80  worst -2.47 dB  x=38.6 0.155 1.2 9.4 19.4 0.38 15.7
+2026-11-15 21:50:12   [search] 697801b88786d396 ran 12 s  score -3.35  worst -0.79 dB  x=38.8 0.08 1.15 10.2 22.8 0.58 13.9
+2026-11-15 21:50:12 search: climb step 2 best -8.19
+2026-11-15 21:50:12   [search] 88c640c36face5e9 cached  score -8.19
+2026-11-15 21:50:19   [search] f81779184f4a23b7 ran 6 s  score -8.54  worst -4.74 dB  x=38.7 0.105 1.2 10.6 21.3 0.29 5.9
+2026-11-15 21:50:27   [search] 5e1f3fe065b14384 ran 8 s  score -6.31  worst -2.79 dB  x=40.8 0.085 1.15 11.5 23.2 0.33 11.6
+2026-11-15 21:50:36   [search] eb4877731f7738da ran 8 s  score -4.22  worst -1.61 dB  x=38.2 0.225 1.45 8.4 20.2 0.28 6.2
+2026-11-15 21:50:47   [search] 1b5c47effabc8d93 ran 10 s  score -7.86  worst -4.65 dB  x=39.8 0.09 1.55 12.1 17.3 0.28 6
+2026-11-15 21:50:56   [search] 76c56e0f8e9e0aac ran 9 s  score -3.96  worst -0.59 dB  x=41.2 0.115 1.35 8.5 24 0.52 7.8
+2026-11-15 21:51:04   [search] 73abe57d1e14d200 ran 7 s  score -5.94  worst -2.69 dB  x=40.1 0.085 1.2 8.2 24 0.15 10.2
+2026-11-15 21:51:10   [search] 46d7bc49afb72f37 ran 6 s  score -6.81  worst -3.38 dB  x=40.3 0.085 1.15 9.4 21.1 0.12 9.7
+2026-11-15 21:51:17   [search] 80a1c2446002697f ran 6 s  score -6.84  worst -3.34 dB  x=39.3 0.095 1.2 9.9 22.4 0.23 10.7
+2026-11-15 21:51:17 search: climb step 3 best -8.54
+2026-11-15 21:51:17   [search] f81779184f4a23b7 cached  score -8.54
+2026-11-15 21:51:23   [search] 015db718b09b6137 ran 7 s  score -6.41  worst -3.14 dB  x=37.5 0.08 1.25 11.7 19.3 0.18 7.3
+2026-11-15 21:51:30   [search] d05ca5fd244097b1 ran 6 s  score -5.54  worst -2.72 dB  x=39.4 0.085 1.5 11.5 21.8 0.08 8.8
+2026-11-15 21:51:37   [search] fe11634baf31ccce ran 6 s  score -3.47  worst -1.07 dB  x=37.5 0.05 1.25 10.2 21.7 0.05 12.8
+2026-11-15 21:51:43   [search] 474f26772d87553f ran 6 s  score -2.71  worst -0.56 dB  x=37.6 0.03 1.4 9.8 21.9 0.24 5.7
+2026-11-15 21:51:50   [search] a5d655f560fadb1e ran 6 s  score -5.46  worst -2.45 dB  x=39.1 0.07 1.45 9.6 19.8 0.3 7.6
+2026-11-15 21:51:56   [search] 073f8aaaec5eb469 ran 6 s  score -4.74  worst -2.02 dB  x=38.3 0.06 1.4 6.8 19.5 0.3 5.3
+2026-11-15 21:52:02   [search] 3b9b36918c0ffa42 ran 6 s  score -6.79  worst -3.59 dB  x=38.7 0.1 1.5 8.6 20.2 0.34 9.5
+2026-11-15 21:52:09   [search] 5b58f0c72a5484ec ran 7 s  score -7.06  worst -3.34 dB  x=44.2 0.07 1.05 12.4 21.2 0.08 8.3
+2026-11-15 21:52:09 search: climb step 4 best -8.54
+2026-11-15 21:52:09   [search] f81779184f4a23b7 cached  score -8.54
+2026-11-15 21:52:17   [search] 6d868858284bede5 ran 7 s  score -7.12  worst -3.44 dB  x=40.1 0.085 1.1 11.6 19.8 0.35 6.6
+2026-11-15 21:52:23   [search] ee46b62107ab060b ran 6 s  score -2.66  worst -0.41 dB  x=37.6 0.04 1.1 8.8 23 0.31 8.7
+2026-11-15 21:52:29   [search] ec5a52d2709d7f17 ran 6 s  score -9.57  worst -5.39 dB  x=38.9 0.115 1.05 12 23.7 0.25 3.7
+2026-11-15 21:52:36   [search] 594bc78617e591a7 ran 7 s  score -3.70  worst -0.65 dB  x=38.4 0.08 1.05 10.9 20.8 0.5 5.9
+2026-11-15 21:52:43   [search] 66ae4ed54f6c7d61 ran 7 s  score -8.95  worst -5.50 dB  x=39.2 0.15 1.1 13.5 20.2 0.17 4.6
+2026-11-15 21:52:49   [search] 6dbeb2f1b6920de5 ran 5 s  score -3.07  worst -0.63 dB  x=38.5 0.04 1.2 7.2 23.7 0.28 3.6
+2026-11-15 21:52:54   [search] f375f4b409608ecf ran 5 s  score -7.74  worst -4.03 dB  x=37.2 0.085 1.1 8.5 19.7 0.26 4
+2026-11-15 21:53:05   [search] c184abea9731bb69 ran 11 s  score -7.67  worst -3.86 dB  x=40.3 0.16 1.2 11.6 19 0.38 5.8
+2026-11-15 21:53:05 search: climb step 5 best -9.57
+2026-11-15 21:53:05   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 21:53:15   [search] 4fc4234646d17208 ran 10 s  score -4.87  worst -2.65 dB  x=39.9 0.21 1.9 12.6 21.4 0.35 8.1
+2026-11-15 21:53:22   [search] 67a9fd0f8d844c83 ran 7 s  score -7.52  worst -4.05 dB  x=37.9 0.125 1.3 12.2 22.1 0.15 7.6
+2026-11-15 21:53:29   [search] 3c6fd39cf84b9eba ran 6 s  score -2.78  worst -0.61 dB  x=38.9 0.025 1.4 13 22.5 0.19 7.4
+2026-11-15 21:53:34   [search] ec2e8ba9712fd372 ran 6 s  score -8.58  worst -5.20 dB  x=36.7 0.15 1.15 13.7 22.2 0.12 3.5
+2026-11-15 21:53:42   [search] 857ebada29441335 ran 8 s  score -5.31  worst -1.65 dB  x=39 0.185 1.35 9 23.4 0.38 13.1
+2026-11-15 21:53:48   [search] 624b2b213ec24401 ran 6 s  score -4.71  worst -2.15 dB  x=35.4 0.085 1.6 8.6 21.2 0.34 8.2
+2026-11-15 21:53:57   [search] 7cd6051509d24661 ran 8 s  score -4.86  worst -1.13 dB  x=37.5 0.145 1.1 14.2 23.7 0.42 6.3
+2026-11-15 21:54:05   [search] 87ab5a22cce93c65 ran 8 s  score -3.89  worst -0.95 dB  x=38.5 0.11 1.5 13.4 22.1 0.37 7.1
+2026-11-15 21:54:05 search: climb step 6 best -9.57
+2026-11-15 21:54:05   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 21:54:11   [search] 5b7e25d4025af51a ran 6 s  score -8.06  worst -4.28 dB  x=38.7 0.1 1.05 8 23.9 0.29 6
+2026-11-15 21:54:16   [search] 7a3000c24122174a ran 6 s  score -4.25  worst -1.42 dB  x=40.4 0.04 1.15 10.9 20.4 0.12 6.1
+2026-11-15 21:54:27   [search] dac35a4831547876 ran 10 s  score -6.81  worst -2.98 dB  x=40.8 0.135 1.5 9.6 19.2 0.38 7.4
+2026-11-15 21:54:35   [search] 64507017eff9588b ran 8 s  score -2.79  worst -0.55 dB  x=38.3 0.05 1.45 14 22.3 0.4 4.2
+2026-11-15 21:54:42   [search] e8cd52b525c9dc6f ran 7 s  score -9.04  worst -4.99 dB  x=38.6 0.12 1.05 13.5 23.7 0.19 8
+2026-11-15 21:54:50   [search] 89ef59905ed72843 ran 8 s  score -4.11  worst -0.76 dB  x=37.7 0.13 1.2 14.5 22.7 0.54 4.4
+2026-11-15 21:54:56   [search] 9d0e79bea0c3a22a ran 6 s  score -6.80  worst -3.48 dB  x=38.5 0.08 1.3 12.1 21.5 0.06 4.7
+2026-11-15 21:55:04   [search] dc8f018b1ecbdabb ran 8 s  score -6.11  worst -3.63 dB  x=37.6 0.175 1.6 14.1 23.6 0.18 3.9
+2026-11-15 21:55:04 search: climb step 7 best -9.57
+2026-11-15 21:55:04   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 21:55:10   [search] e0727c7da67c4346 ran 6 s  score -5.16  worst -2.39 dB  x=40.6 0.225 1.4 11.4 23.8 0.17 5.4
+2026-11-15 21:55:18   [search] ef409053489af939 ran 7 s  score -3.19  worst -0.54 dB  x=38.6 0.125 1.75 12.1 21.8 0.53 4
+2026-11-15 21:55:24   [search] 93a92c7bc788442d ran 6 s  score -6.92  worst -3.57 dB  x=41.9 0.15 1.1 12.6 23.7 0.21 3.1
+2026-11-15 21:55:32   [search] df7c28c10937699e ran 8 s  score -8.32  worst -4.60 dB  x=39.2 0.14 1.3 12 20.9 0.29 6.2
+2026-11-15 21:55:39   [search] 03989173af9c322f ran 7 s  score -8.85  worst -5.10 dB  x=39.2 0.13 1.25 10.5 23.3 0.33 7.7
+2026-11-15 21:55:49   [search] c0bda787863e9364 ran 10 s  score -4.83  worst -2.88 dB  x=39.6 0.25 1 14.2 21.9 0.23 5.6
+2026-11-15 21:55:56   [search] fe92e796d7838d07 ran 6 s  score -6.42  worst -3.37 dB  x=36.7 0.125 1.45 12.6 24 0.19 6
+2026-11-15 21:56:01   [search] 31dea9df2b2c4ad9 ran 5 s  score -8.15  worst -4.17 dB  x=35.1 0.125 1.05 8.9 20.2 0.07 6.6
+2026-11-15 21:56:01 search: climb step 8 best -9.57
+2026-11-15 21:56:01   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 21:56:08   [search] 138a074a13982c62 ran 7 s  score -7.50  worst -4.23 dB  x=36.8 0.17 1.25 13.4 23.3 0.29 7.3
+2026-11-15 21:56:17   [search] a765640ff6ceaf85 ran 9 s  score -6.53  worst -3.28 dB  x=37.8 0.2 1.4 10.2 23.4 0.37 4.7
+2026-11-15 21:56:28   [search] d2ad7598cf5c8f87 ran 11 s  score -2.60  worst -0.25 dB  x=40.2 0.06 1.4 13.2 20.9 0.48 12.5
+2026-11-15 21:56:34   [search] 6e46423b84f9653c ran 6 s  score -6.41  worst -3.24 dB  x=37.5 0.12 1.55 8.8 20.2 0.05 4.5
+2026-11-15 21:56:41   [search] 3edc2bcd764d783d ran 7 s  score -4.02  worst -0.25 dB  x=37.9 0.145 1.15 9.3 23.3 0.53 8.3
+2026-11-15 21:56:47   [search] 18524e3d11f5b3b8 ran 6 s  score -7.47  worst -4.00 dB  x=40.7 0.115 1.4 9.9 23 0.24 8
+2026-11-15 21:56:53   [search] f90ea57d73ea31a8 ran 6 s  score -5.70  worst -2.57 dB  x=39.7 0.06 1.1 14.6 21.7 0.17 5.2
+2026-11-15 21:57:00   [search] 27d0416e06a4437a ran 7 s  score -6.50  worst -3.82 dB  x=36.2 0.165 1.5 13.7 23.9 0.24 4.6
+2026-11-15 21:57:00 search: climb step 9 best -9.57
+2026-11-15 21:57:00   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 21:57:08   [search] 50c751a61099eb29 ran 8 s  score -7.34  worst -4.44 dB  x=37.7 0.155 1.4 13.9 22.8 0.26 3.1
+2026-11-15 21:57:19   [search] 91cd6a7e28d2ebe5 ran 10 s  score -7.06  worst -3.98 dB  x=41.9 0.125 1.6 12.8 21.1 0.35 6.9
+2026-11-15 21:57:25   [search] 25f91422770efcc8 ran 6 s  score -1.91  worst 0.02 dB  x=39 0.02 1.55 9.5 23.5 0.29 6.2
+2026-11-15 21:57:32   [search] 1fdd3801ebd60163 ran 6 s  score -7.25  worst -3.82 dB  x=38.3 0.16 1.05 10.6 22.9 0.12 12.2
+2026-11-15 21:57:38   [search] f006f594783ed7c3 ran 6 s  score -5.61  worst -2.72 dB  x=37.1 0.12 2 11.3 23.1 0.06 7.7
+2026-11-15 21:57:46   [search] 6142f7cf23c4ca06 ran 7 s  score -6.53  worst -3.52 dB  x=38.1 0.09 1.5 12.8 21 0.13 6.3
+2026-11-15 21:57:55   [search] dc713f243dfbe6d1 ran 9 s  score -8.19  worst -4.50 dB  x=42.1 0.135 1.15 14.2 23.7 0.21 7.4
+2026-11-15 21:58:02   [search] 187c8920241bdab6 ran 8 s  score -5.84  worst -3.10 dB  x=38 0.22 1.45 12 21.3 0.27 6.9
+2026-11-15 21:58:02 search: climb step 10 best -9.57
+2026-11-15 21:58:02   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 21:58:12   [search] fd0524a5f3e9247d ran 9 s  score -4.98  worst -1.79 dB  x=38.5 0.15 1.3 12.9 21.5 0.36 3.4
+2026-11-15 21:58:19   [search] c3a654eb66dda3e6 ran 7 s  score -3.79  worst -0.83 dB  x=37.8 0.075 1.2 11.4 19.9 0.5 3
+2026-11-15 21:58:25   [search] 6fbf25e8e71f8a19 ran 6 s  score -6.32  worst -3.29 dB  x=38.4 0.19 1.55 11.1 22.8 0.13 4
+2026-11-15 21:58:33   [search] 919638588f775f18 ran 8 s  score -8.80  worst -4.91 dB  x=38.3 0.145 1.1 12.8 23.3 0.25 7.5
+2026-11-15 21:58:40   [search] 3da9f25b7720d9fb ran 7 s  score -3.20  worst -1.00 dB  x=37.7 0.05 1.5 8.9 22.8 0.39 4.3
+2026-11-15 21:58:46   [search] 3c8e24db6bce1025 ran 6 s  score -5.58  worst -2.51 dB  x=37.9 0.065 1.1 11.2 22.8 0.05 3.9
+2026-11-15 21:58:51   [search] ea80c0f9b00c1dd3 ran 5 s  score -2.30  worst -0.03 dB  x=40.5 0.025 1.05 7.9 24 0.15 9.5
+2026-11-15 21:58:59   [search] 5e632ef289215b2a ran 8 s  score -7.39  worst -4.57 dB  x=39.1 0.195 1.1 14.2 23.6 0.15 5.4
+2026-11-15 21:58:59 search: climb step 11 best -9.57
+2026-11-15 21:58:59   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 21:59:08   [search] 1fa19d70f02f9eda ran 8 s  score -3.68  worst -1.35 dB  x=38.3 0.05 1.3 12.5 22.9 0.36 5.2
+2026-11-15 21:59:14   [search] 688de266fa0de8d1 ran 6 s  score -5.77  worst -2.48 dB  x=39.9 0.075 1.2 10 22 0.28 8.4
+2026-11-15 21:59:20   [search] 4de1f3e00d9d2f9b ran 6 s  score -6.85  worst -3.45 dB  x=37.6 0.095 1.3 7 22.1 0.38 5.2
+2026-11-15 21:59:25   [search] 00d49bbea73b2392 ran 5 s  score -7.91  worst -4.30 dB  x=40.4 0.1 1.2 10.7 21.6 0.07 4.1
+2026-11-15 21:59:31   [search] d42389278d6a430c ran 6 s  score -4.55  worst -1.72 dB  x=38.1 0.09 2.05 8.3 22.9 0.29 4.2
+2026-11-15 21:59:38   [search] 426c6de9852d742b ran 7 s  score -1.84  worst -0.24 dB  x=37.6 0.025 1.65 10 21.7 0.45 4.6
+2026-11-15 21:59:46   [search] f3894deea5d7bf51 ran 7 s  score -7.93  worst -4.49 dB  x=38 0.12 1.3 12.5 23.7 0.32 6.8
+2026-11-15 21:59:52   [search] f43a31ff339a9f52 ran 6 s  score -7.84  worst -4.44 dB  x=41.6 0.1 1.35 10.5 22.3 0.17 5.5
+2026-11-15 21:59:52 search: climb step 12 best -9.57
+2026-11-15 21:59:52   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 21:59:58   [search] b4ae7ab928ec7e38 ran 6 s  score -6.99  worst -3.62 dB  x=40.3 0.155 1.4 12 23.9 0.18 5.9
+2026-11-15 22:00:06   [search] 0d467f5fec68be8a ran 8 s  score -8.22  worst -4.53 dB  x=39.6 0.125 1.25 13 21.2 0.23 4.3
+2026-11-15 22:00:13   [search] aa891e661939d016 ran 7 s  score -4.89  worst -2.13 dB  x=38.1 0.07 1.35 13 22.6 0.27 6.4
+2026-11-15 22:00:19   [search] ea99513f7112109c ran 6 s  score -6.14  worst -3.08 dB  x=38.3 0.065 1.2 14.1 23.8 0.17 3.5
+2026-11-15 22:00:25   [search] e69d5ccf7a676df4 ran 6 s  score -4.82  worst -1.95 dB  x=39.2 0.055 1.1 12.3 22.9 0.2 4.2
+2026-11-15 22:00:32   [search] ca3fe9da4fd70005 ran 7 s  score -5.70  worst -2.64 dB  x=37.7 0.08 1.25 12.4 21.9 0.13 7.9
+2026-11-15 22:00:37   [search] c04458e651eceb81 ran 5 s  score -7.49  worst -3.55 dB  x=40.2 0.155 1.15 9.4 23.6 0.07 3.5
+2026-11-15 22:00:43   [search] 5fd19d03690d170a ran 6 s  score -6.43  worst -3.54 dB  x=35.7 0.105 1.6 11.5 22.1 0.21 6
+2026-11-15 22:00:43 search: climb step 13 best -9.57
+2026-11-15 22:00:43   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 22:00:51   [search] 4f65aa479694c6bc ran 8 s  score -3.50  worst -1.01 dB  x=38 0.08 1.4 13.7 23.6 0.44 5.9
+2026-11-15 22:00:59   [search] 742a36de526e0ef7 ran 7 s  score -6.81  worst -3.82 dB  x=38.5 0.115 1.45 15 22.7 0.11 7.6
+2026-11-15 22:01:04   [search] 47b2ed3df46d0b2d ran 6 s  score -8.44  worst -4.71 dB  x=40.7 0.11 1.15 11.8 20.1 0.06 6.3
+2026-11-15 22:01:10   [search] 716d147c4dc5a823 ran 6 s  score -7.46  worst -3.95 dB  x=39.4 0.12 1.25 12.9 21.9 0.1 3.6
+2026-11-15 22:01:17   [search] ddc6a21e41333fa0 ran 6 s  score -9.09  worst -5.04 dB  x=38.2 0.125 1.05 11.7 22.4 0.24 4.3
+2026-11-15 22:01:24   [search] 0128ef1f4356549f ran 7 s  score -8.44  worst -4.81 dB  x=38.6 0.11 1.2 10.9 23.2 0.37 3.1
+2026-11-15 22:01:30   [search] a59032787cec74f8 ran 6 s  score -8.33  worst -4.62 dB  x=38.5 0.145 1.1 12.1 23.9 0.1 4.9
+2026-11-15 22:01:36   [search] 7f265a23b2b0ad7a ran 7 s  score -7.47  worst -4.07 dB  x=40.7 0.135 1.4 12.4 22.4 0.22 4
+2026-11-15 22:01:37 search: climb step 14 best -9.57
+2026-11-15 22:01:37   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 22:01:46   [search] fe655240f24b789d ran 9 s  score -4.94  worst -1.62 dB  x=37.3 0.165 1 13.2 23.5 0.4 7
+2026-11-15 22:01:52   [search] e93ddae2c1a3b2c0 ran 6 s  score -6.66  worst -3.67 dB  x=36.9 0.115 1.5 11.2 23.4 0.35 7.3
+2026-11-15 22:02:00   [search] 74b1b813d90f6fb2 ran 8 s  score -8.74  worst -4.82 dB  x=38.4 0.125 1.05 14 22.2 0.21 14.3
+2026-11-15 22:02:07   [search] 431d0ae1a040f503 ran 6 s  score -6.99  worst -3.52 dB  x=38.9 0.1 1.2 13.2 23.6 0.17 7.8
+2026-11-15 22:02:13   [search] d5364eb4c9550213 ran 6 s  score -7.29  worst -3.59 dB  x=38.9 0.17 1.4 9.9 22.4 0.14 4.3
+2026-11-15 22:02:18   [search] 67c5b40b951383d4 ran 5 s  score -7.98  worst -4.26 dB  x=38.9 0.125 1.15 12.6 22.5 0.1 3.1
+2026-11-15 22:02:27   [search] af22f40a82821c4f ran 9 s  score -5.47  worst -1.23 dB  x=39.2 0.11 1 14.8 22.6 0.34 4.5
+2026-11-15 22:02:35   [search] f1e2f5b6f738202a ran 7 s  score -5.16  worst -1.42 dB  x=41.8 0.13 1.1 11.4 23 0.49 4.2
+2026-11-15 22:02:35 search: climb step 15 best -9.57
+2026-11-15 22:02:35   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 22:02:41   [search] 1c761ba3c8e05bad ran 6 s  score -3.37  worst -0.95 dB  x=39 0.04 1.25 10.4 22.3 0.31 4.7
+2026-11-15 22:02:48   [search] fc5509371ca0ed9f ran 7 s  score -7.74  worst -4.27 dB  x=39.9 0.155 1.4 11.8 21.7 0.24 6.1
+2026-11-15 22:02:54   [search] 6e3cb1f907896768 ran 6 s  score -7.62  worst -4.59 dB  x=37.2 0.18 1.05 10.2 23.5 0.33 6.1
+2026-11-15 22:03:03   [search] 363be85189000b80 ran 8 s  score -4.29  worst -1.65 dB  x=38.9 0.065 1.35 12.2 23.1 0.36 5.8
+2026-11-15 22:03:09   [search] 7e0193ff8fc00538 ran 7 s  score -7.70  worst -5.12 dB  x=38.4 0.18 1 14 23.9 0.17 3
+2026-11-15 22:03:15   [search] 487e13207996c1de ran 6 s  score -8.47  worst -4.69 dB  x=39 0.1 1.15 10.8 21.8 0.26 4.7
+2026-11-15 22:03:22   [search] a6576c2e975ba5db ran 6 s  score -4.29  worst -1.54 dB  x=39.8 0.05 1.25 11.9 21.9 0.26 5.8
+2026-11-15 22:03:28   [search] f4b11207cc6ae0f5 ran 6 s  score -7.09  worst -3.74 dB  x=39.5 0.14 1.3 13.3 23.6 0.07 4.4
+2026-11-15 22:03:28 search: climb step 16 best -9.57
+2026-11-15 22:03:28   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 22:03:36   [search] 9ab84d111560893e ran 7 s  score -4.01  worst -0.81 dB  x=39.3 0.1 1.2 13.1 23.7 0.44 4.9
+2026-11-15 22:03:43   [search] 990815249efba43f ran 7 s  score -4.67  worst -1.07 dB  x=40 0.1 1.15 12.8 22.9 0.34 5.3
+2026-11-15 22:03:49   [search] e468d096ea3052f4 ran 6 s  score -7.89  worst -3.88 dB  x=38.9 0.085 1 11.4 22.3 0.31 5.5
+2026-11-15 22:03:57   [search] 26cf5aa7160332fc ran 8 s  score -4.21  worst -0.95 dB  x=37.7 0.145 1.3 12.9 23.9 0.48 5.4
+2026-11-15 22:04:04   [search] 625cfe9e6f886588 ran 7 s  score -6.33  worst -3.20 dB  x=38 0.08 1.25 12.4 23 0.35 3.1
+2026-11-15 22:04:11   [search] 896fc29d1bc0d088 ran 6 s  score -6.15  worst -3.26 dB  x=37.9 0.08 1.55 13.4 23.6 0.21 3.2
+2026-11-15 22:04:17   [search] 0bd7931832d2fb82 ran 6 s  score -7.07  worst -4.03 dB  x=38.5 0.105 1.55 11.9 23.2 0.28 4.2
+2026-11-15 22:04:25   [search] c410c5e6c83c3c1c ran 7 s  score -5.19  worst -1.41 dB  x=39.9 0.115 1.25 8.3 22.4 0.42 5.5
+2026-11-15 22:04:25 search: climb step 17 best -9.57
+2026-11-15 22:04:25   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 22:04:31   [search] b5b7d80399d040af ran 6 s  score -8.05  worst -4.32 dB  x=38.6 0.135 1.15 13 22.1 0.06 5.6
+2026-11-15 22:04:38   [search] be2bb0c13485ce15 ran 7 s  score -4.26  worst -0.59 dB  x=37 0.115 1.05 12.4 22.5 0.49 3.4
+2026-11-15 22:04:45   [search] 703453fd3b5c6bfb ran 7 s  score -9.10  worst -5.17 dB  x=38.8 0.13 1 11.1 23.8 0.34 5.3
+2026-11-15 22:04:52   [search] 89def4187bb27962 ran 7 s  score -4.91  worst -1.39 dB  x=40 0.095 1.15 14.7 23.4 0.29 5.5
+2026-11-15 22:04:57   [search] fcb9dac603d3c4ca ran 5 s  score -6.90  worst -3.30 dB  x=40.5 0.07 1.05 11.4 23.3 0.08 3.4
+2026-11-15 22:05:03   [search] dfcd62d22b260b21 ran 6 s  score -8.68  worst -4.88 dB  x=35.6 0.125 1.15 12.8 22.3 0.34 4.4
+2026-11-15 22:05:09   [search] a35531282ba79428 ran 6 s  score -6.91  worst -3.55 dB  x=37.5 0.085 1.15 12.2 23.4 0.05 3.6
+2026-11-15 22:05:14   [search] 1907b4af1faad255 ran 5 s  score -8.46  worst -4.59 dB  x=39.9 0.12 1.15 10 23.2 0.1 4.2
+2026-11-15 22:05:14 search: climb step 18 best -9.57
+2026-11-15 22:05:14   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 22:05:21   [search] 03ea0f73e16adc4a ran 7 s  score -7.75  worst -4.39 dB  x=40.4 0.17 1.15 13.1 23 0.21 6.4
+2026-11-15 22:05:27   [search] 7817dc106cfbece9 ran 6 s  score -7.73  worst -4.16 dB  x=38.9 0.11 1.25 12.2 23.6 0.18 3.5
+2026-11-15 22:05:32   [search] 41320f94912b830e ran 6 s  score -8.99  worst -5.23 dB  x=40.6 0.12 1 10.5 23 0.23 6.9
+2026-11-15 22:05:39   [search] ccc2985a3c087602 ran 6 s  score -8.27  worst -5.00 dB  x=38.2 0.17 1.15 11.5 23.4 0.23 4.2
+2026-11-15 22:05:45   [search] e464eac17061f03e ran 6 s  score -7.74  worst -4.16 dB  x=38.8 0.13 1.3 11.7 23.6 0.21 5.4
+2026-11-15 22:05:55   [search] 31f32d8cbdee3d3e ran 9 s  score -4.58  worst -0.78 dB  x=38.3 0.105 1.05 12.9 23.5 0.39 4.4
+2026-11-15 22:06:01   [search] 937f2574240386b6 ran 6 s  score -5.28  worst -1.31 dB  x=40.3 0.09 1 12.5 22.1 0.33 3.2
+2026-11-15 22:06:09   [search] e46629a731d7c5b0 ran 7 s  score -5.52  worst -1.62 dB  x=40.3 0.11 1.1 12.6 23.8 0.34 3.6
+2026-11-15 22:06:09 search: climb step 19 best -9.57
+2026-11-15 22:06:09   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 22:06:17   [search] cc5ac7f4a5f9fa07 ran 8 s  score -9.47  worst -5.53 dB  x=39.3 0.135 1.1 12 23 0.33 4
+2026-11-15 22:06:23   [search] 014037553d3b06ab ran 6 s  score -9.50  worst -5.42 dB  x=39.4 0.105 1.05 10.7 23.8 0.32 3.9
+2026-11-15 22:06:30   [search] 44fef7231206a2d8 ran 7 s  score -8.01  worst -4.44 dB  x=39.8 0.125 1.35 11.8 22 0.29 3.3
+2026-11-15 22:06:37   [search] e61d7f4bafb012d4 ran 7 s  score -9.17  worst -5.14 dB  x=37.9 0.135 1.1 12.5 23.4 0.27 4.3
+2026-11-15 22:06:43   [search] d286178c9ceecb6d ran 6 s  score -8.01  worst -4.19 dB  x=40.7 0.095 1.05 12.4 21.9 0.11 8.5
+2026-11-15 22:06:49   [search] b81ee4a8ca6c3d3c ran 6 s  score -8.62  worst -4.50 dB  x=37.1 0.13 1.1 11.1 21.7 0.17 5.4
+2026-11-15 22:06:58   [search] 69d560f3660e7a0e ran 9 s  score -5.15  worst -1.30 dB  x=37.5 0.13 1.1 14.5 23.2 0.36 5.7
+2026-11-15 22:07:05   [search] f7255f084d82e737 ran 6 s  score -4.40  worst -1.69 dB  x=38.6 0.065 1.35 10.3 23.2 0.33 6.2
+2026-11-15 22:07:05 search: climb step 20 best -9.57
+2026-11-15 22:07:05   [search] ec5a52d2709d7f17 cached  score -9.57
+2026-11-15 22:07:12   [search] af4acbb676c112b8 ran 7 s  score -9.38  worst -5.45 dB  x=38.1 0.115 1 13.4 21.9 0.1 5.6
+2026-11-15 22:07:17   [search] 58852b663fd87819 ran 5 s  score -8.63  worst -4.99 dB  x=36.1 0.115 1.15 14.3 23.9 0.19 3.3
+2026-11-15 22:07:25   [search] 56e01a38dc83c276 ran 7 s  score -10.01  worst -5.85 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
+2026-11-15 22:07:31   [search] 9a249fcaa1913c9c ran 6 s  score -6.91  worst -3.51 dB  x=37.3 0.095 1.25 11.6 23 0.26 5.3
+2026-11-15 22:07:37   [search] bd36bb920e478eaa ran 6 s  score -9.41  worst -5.52 dB  x=37.8 0.13 1 11.5 24 0.2 3.7
+2026-11-15 22:07:44   [search] 3daff3fbdb8623b9 ran 6 s  score -9.35  worst -5.40 dB  x=38.5 0.13 1.05 10.6 23.4 0.3 7.6
+2026-11-15 22:07:52   [search] 8b4d9e9346e3eb82 ran 8 s  score -4.81  worst -0.80 dB  x=37.8 0.125 1 13 23.9 0.37 4.8
+2026-11-15 22:08:01   [search] 2ef8b957bf776f21 ran 9 s  score -4.00  worst -0.42 dB  x=38.4 0.1 1.15 12.5 22 0.39 4.8
+2026-11-15 22:08:01 search: climb step 21 best -10.01
+2026-11-15 22:08:01   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:08:09   [search] 2b0ed94b61922737 ran 7 s  score -5.05  worst -2.21 dB  x=38.7 0.075 1.4 13.9 23.5 0.2 9.1
+2026-11-15 22:08:15   [search] 877d9c1c5f525a94 ran 6 s  score -5.92  worst -2.84 dB  x=37.1 0.08 1.15 13.1 22.6 0.3 5.5
+2026-11-15 22:08:22   [search] 6a8aad076961bc0d ran 6 s  score -7.07  worst -3.97 dB  x=38.1 0.115 1.45 10.9 23.5 0.24 6.3
+2026-11-15 22:08:33   [search] 3e019d867b8bba1b ran 10 s  score -4.69  worst -1.16 dB  x=39.8 0.11 1.05 14.2 23.6 0.5 8.8
+2026-11-15 22:08:40   [search] 37a05f612210b463 ran 8 s  score -8.51  worst -4.74 dB  x=39.2 0.115 1.2 11.2 23.4 0.36 4.5
+2026-11-15 22:08:48   [search] 9f04fd33ff45e7f5 ran 7 s  score -7.92  worst -4.45 dB  x=39.3 0.1 1.25 12.9 22.8 0.31 4.6
+2026-11-15 22:08:56   [search] 116ec4477c462fd2 ran 8 s  score -3.54  worst -0.40 dB  x=41.3 0.065 1.05 14.6 23.7 0.28 9.4
+2026-11-15 22:09:03   [search] 5d7e5ed68b66343d ran 7 s  score -5.41  worst -2.49 dB  x=37 0.075 1.15 10.7 20 0.4 6.9
+2026-11-15 22:09:03 search: climb step 22 best -10.01
+2026-11-15 22:09:03   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:09:12   [search] 0fca09d60c6b3d82 ran 8 s  score -4.54  worst -0.72 dB  x=39.1 0.105 1.05 11.5 23.2 0.39 6.7
+2026-11-15 22:09:19   [search] 17b87807f556cebb ran 7 s  score -6.12  worst -2.98 dB  x=36.1 0.145 1.35 14.5 23.7 0.31 4.1
+2026-11-15 22:09:25   [search] ff60002aa8a6f8d7 ran 6 s  score -9.01  worst -5.15 dB  x=39 0.13 1.05 12.4 23.3 0.2 4.8
+2026-11-15 22:09:34   [search] ec88501db61d9d18 ran 9 s  score -6.91  worst -3.75 dB  x=37.6 0.155 1.3 14.5 23.7 0.17 10
+2026-11-15 22:09:41   [search] c33656b6fb98559b ran 7 s  score -8.31  worst -4.14 dB  x=38.9 0.115 1 12.3 23.3 0.34 4
+2026-11-15 22:09:49   [search] adf85375583cc7f2 ran 7 s  score -7.66  worst -4.09 dB  x=35.4 0.12 1.1 13.5 22.6 0.35 7.4
+2026-11-15 22:09:55   [search] 371785e03c52676b ran 6 s  score -7.16  worst -4.02 dB  x=37.8 0.165 1.45 11.1 21.8 0.07 3.5
+2026-11-15 22:10:04   [search] b9a3d20d763d3de9 ran 10 s  score -8.25  worst -5.20 dB  x=39.7 0.16 1 14.9 23.1 0.26 5.5
+2026-11-15 22:10:04 search: climb step 23 best -10.01
+2026-11-15 22:10:04   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:10:14   [search] 612823d09d987b19 ran 9 s  score -4.35  worst -0.99 dB  x=38.2 0.14 1.3 14.1 22.3 0.39 4.7
+2026-11-15 22:10:21   [search] d91de31ee9713972 ran 7 s  score -8.57  worst -4.76 dB  x=37.8 0.12 1.2 11.2 23.4 0.35 3.7
+2026-11-15 22:10:29   [search] b2ba82cd0472c947 ran 8 s  score -8.77  worst -5.12 dB  x=39.6 0.125 1.25 14.2 23.6 0.26 3.9
+2026-11-15 22:10:37   [search] c6717e145f647897 ran 8 s  score -4.54  worst -1.07 dB  x=38.9 0.13 1.2 11.9 23.5 0.53 7.2
+2026-11-15 22:10:44   [search] edb90ab56008ebeb ran 7 s  score -8.89  worst -5.03 dB  x=39.1 0.115 1.15 13.9 22.9 0.22 4.3
+2026-11-15 22:10:50   [search] 9a8de3bde7e27cfe ran 6 s  score -8.90  worst -5.24 dB  x=36.3 0.155 1.05 12.1 22.5 0.19 5.6
+2026-11-15 22:10:58   [search] ef858c941f4edd3f ran 7 s  score -7.46  worst -4.48 dB  x=39.7 0.155 1.35 14.6 22 0.13 4
+2026-11-15 22:11:05   [search] ff42b76dd3735bbd ran 7 s  score -3.93  worst -0.46 dB  x=37.3 0.12 1.2 10.8 22.5 0.49 3.3
+2026-11-15 22:11:05 search: climb step 24 best -10.01
+2026-11-15 22:11:05 search: evolve, population 12, 10 generations, seeded with the climb result and the start
+2026-11-15 22:11:05   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:11:05   [search] 2d988f5d220002d9 cached  score -6.18
+2026-11-15 22:11:14   [search] ba24601bf0337779 ran 8 s  score -4.78  worst -0.75 dB  x=38.2 0.105 1 11.9 23 0.39 3.5
+2026-11-15 22:11:21   [search] a24e24839e202e4a ran 7 s  score -5.70  worst -2.32 dB  x=41.1 0.085 1.5 7.2 21.8 0.4 11.3
+2026-11-15 22:11:28   [search] 11833d9e2d64dd11 ran 7 s  score -7.65  worst -4.00 dB  x=37.7 0.105 1.15 11.3 22.6 0.34 6.5
+2026-11-15 22:11:34   [search] c82c7b38a4d342b9 ran 6 s  score -4.49  worst -0.93 dB  x=40.5 0.155 1.55 7.6 23.5 0.33 13.7
+2026-11-15 22:11:42   [search] 3f139c792db8cbc5 ran 8 s  score -7.67  worst -4.18 dB  x=37.5 0.13 1.3 13.7 22.7 0.24 7.8
+2026-11-15 22:11:49   [search] 28a98e0d35abe03a ran 7 s  score -4.96  worst -2.31 dB  x=35.4 0.215 1.9 13.8 22.4 0.38 23.9
+2026-11-15 22:11:56   [search] ab764448afc973bd ran 7 s  score -2.54  worst -0.85 dB  x=40.9 0.235 1.8 5.4 15.7 0.2 16
+2026-11-15 22:12:04   [search] 06fd91e34ecd9d33 ran 8 s  score -0.45  worst 0.70 dB  x=36.1 0.025 2.65 4.2 18.5 0.47 16.3
+2026-11-15 22:12:15   [search] fe03a68b8a21c771 ran 11 s  score -2.50  worst -1.19 dB  x=40 0.28 2.5 9.9 20.2 0.48 23.7
+2026-11-15 22:12:24   [search] 4586269952be4ade ran 9 s  score -3.71  worst -1.71 dB  x=37.3 0.215 2.1 3.5 17 0.84 19.9
+2026-11-15 22:12:24   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:12:24   [search] 3f139c792db8cbc5 cached  score -7.67
+2026-11-15 22:12:32   [search] af28ab83220d2915 ran 7 s  score -8.78  worst -4.68 dB  x=39.3 0.135 1.1 10.2 23.2 0.35 4.6
+2026-11-15 22:12:39   [search] e6201f38606df998 ran 7 s  score -4.47  worst -1.15 dB  x=39.1 0.085 1.05 12.3 22.7 0.42 4.4
+2026-11-15 22:12:47   [search] 1cc32c26e6ea7374 ran 8 s  score -8.92  worst -5.05 dB  x=39.7 0.12 1.05 11.6 23.4 0.31 13.8
+2026-11-15 22:12:55   [search] dd2671412a57a11d ran 8 s  score -8.34  worst -4.66 dB  x=38.1 0.14 1.2 13.2 22.8 0.23 9.4
+2026-11-15 22:13:01   [search] 1b149ed36c5a68dc ran 6 s  score -3.45  worst -1.01 dB  x=37 0.06 1.25 7.5 23.1 0.28 13.8
+2026-11-15 22:13:09   [search] 2c90a8ed521410af ran 7 s  score -5.45  worst -1.89 dB  x=41 0.1 1.5 7.2 21.7 0.42 11.6
+2026-11-15 22:13:17   [search] f7a13951093bb507 ran 8 s  score -5.31  worst -1.92 dB  x=40.6 0.185 1.2 9.1 23.2 0.35 6.9
+2026-11-15 22:13:25   [search] 70b812cd30bec4fb ran 8 s  score -3.20  worst -0.90 dB  x=35.3 0.185 1.85 14.3 22.3 0.41 22.4
+2026-11-15 22:13:30   [search] 4fff923a7feab211 ran 5 s  score -5.49  worst -2.23 dB  x=40.4 0.075 1.3 5.9 21.1 0.36 10.9
+2026-11-15 22:13:37   [search] 50f34d45ad1064bb ran 6 s  score -6.95  worst -3.58 dB  x=37.8 0.17 1.05 9.6 22.7 0.34 8.1
+2026-11-15 22:13:37 search: evolve generation 1 best -10.01
+2026-11-15 22:13:37   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:13:37   [search] 1cc32c26e6ea7374 cached  score -8.92
+2026-11-15 22:13:44   [search] bc70ab53999ef071 ran 7 s  score -7.46  worst -4.02 dB  x=37.5 0.155 1.25 12.2 22.8 0.2 8.1
+2026-11-15 22:13:51   [search] 580112a509587874 ran 6 s  score -3.49  worst -0.46 dB  x=40.8 0.085 1.4 6.3 21.9 0.5 10
+2026-11-15 22:13:59   [search] 8935a944d01341ca ran 8 s  score -5.44  worst -1.45 dB  x=40.4 0.12 1.05 12.1 23.4 0.36 5.3
+2026-11-15 22:14:08   [search] 5615d6e9c4895c87 ran 9 s  score -2.73  worst -0.69 dB  x=39.4 0.035 1.5 14.6 23.3 0.3 11.2
+2026-11-15 22:14:16   [search] 7fffde9d80fe7589 ran 8 s  score -5.64  worst -1.95 dB  x=39.8 0.105 1.1 12.9 22.2 0.38 9.9
+2026-11-15 22:14:26   [search] e9a73112a26d19a0 ran 10 s  score -4.65  worst -0.94 dB  x=39 0.145 1.15 13 22.9 0.47 10
+2026-11-15 22:14:32   [search] d2e51008f4ef079e ran 6 s  score -6.12  worst -3.24 dB  x=39.9 0.175 1.05 10.6 23.7 0.3 5.6
+2026-11-15 22:14:39   [search] f874f3e431625393 ran 6 s  score -8.23  worst -4.53 dB  x=39.4 0.15 1.1 12.4 23.6 0.17 9.8
+2026-11-15 22:14:44   [search] 07a3b6ba3be86b29 ran 5 s  score -5.09  worst -1.01 dB  x=39.7 0.14 1.2 6 20.9 0.33 13.1
+2026-11-15 22:14:50   [search] 7de97340e58dca7a ran 6 s  score -8.14  worst -4.44 dB  x=37.7 0.1 1.1 12.6 23.7 0.22 4.1
+2026-11-15 22:14:50 search: evolve generation 2 best -10.01
+2026-11-15 22:14:50   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:14:50   [search] 1cc32c26e6ea7374 cached  score -8.92
+2026-11-15 22:14:59   [search] 7eaa4dac80d619f3 ran 8 s  score -6.27  worst -2.57 dB  x=38.1 0.115 1.05 11.8 24 0.4 15.5
+2026-11-15 22:15:07   [search] f752c9c19cf69486 ran 8 s  score -3.98  worst -0.40 dB  x=38.9 0.1 1.15 10.5 23.1 0.41 6.8
+2026-11-15 22:15:14   [search] cdfe7d7d9592f2f5 ran 8 s  score -6.33  worst -2.78 dB  x=41 0.11 1.2 12.5 23 0.35 12.9
+2026-11-15 22:15:21   [search] 8b6b54cee5b289ff ran 6 s  score -8.12  worst -4.27 dB  x=39.2 0.115 1.15 13.4 22.5 0.11 4.9
+2026-11-15 22:15:28   [search] 285ac982f568bba2 ran 8 s  score -5.94  worst -1.89 dB  x=38.9 0.125 1.1 13.4 22.7 0.32 5.6
+2026-11-15 22:15:36   [search] 29e6490997ef6dbc ran 7 s  score -7.41  worst -3.99 dB  x=39.3 0.16 1.25 12.7 23.5 0.18 8.6
+2026-11-15 22:15:45   [search] 5b91cc08146c4b2e ran 9 s  score -7.41  worst -4.20 dB  x=40.7 0.12 1.45 14.2 22.7 0.25 9
+2026-11-15 22:15:53   [search] 3db3064e8bba5ac1 ran 9 s  score -3.73  worst -0.53 dB  x=37.2 0.12 1.35 10.3 23.2 0.45 4.2
+2026-11-15 22:16:02   [search] 8ea7041e32523fd8 ran 8 s  score -10.28  worst -5.90 dB  x=38.8 0.115 1.05 14 21.6 0.28 4.4
+2026-11-15 22:16:10   [search] ecb0057c73c81466 ran 8 s  score -4.89  worst -1.05 dB  x=39.7 0.155 1.25 10.3 23 0.45 4.9
+2026-11-15 22:16:10 search: evolve generation 3 best -10.28
+2026-11-15 22:16:10   [search] 8ea7041e32523fd8 cached  score -10.28
+2026-11-15 22:16:10   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:16:17   [search] 344f5487528c7d86 ran 7 s  score -3.88  worst -0.63 dB  x=38.5 0.095 1.15 13.4 22.5 0.41 3.6
+2026-11-15 22:16:25   [search] 41ad5c96e1d85c0c ran 7 s  score -8.31  worst -4.71 dB  x=39.3 0.12 1.15 13.2 22 0.16 12.2
+2026-11-15 22:16:33   [search] 98163c492c94e490 ran 8 s  score -5.95  worst -2.61 dB  x=41.9 0.12 1.55 10.3 21.6 0.41 9.9
+2026-11-15 22:16:44   [search] 2193ee5b507fdafd ran 11 s  score -5.11  worst -2.29 dB  x=37.9 0.19 1.05 14.6 22.3 0.35 4.8
+2026-11-15 22:16:51   [search] 650000de4622fa40 ran 7 s  score -3.74  worst -1.24 dB  x=37.8 0.05 1.1 12.1 22.6 0.26 7
+2026-11-15 22:16:56   [search] f03df22ce48b03c8 ran 5 s  score -5.16  worst -1.73 dB  x=41.7 0.045 1 11.9 22.2 0.17 5
+2026-11-15 22:17:04   [search] 972161303fff0c2d ran 7 s  score -4.16  worst -0.72 dB  x=37.1 0.095 1.1 14.3 23.3 0.33 3.7
+2026-11-15 22:17:10   [search] c57bdc7b2dbc3424 ran 6 s  score -8.98  worst -5.13 dB  x=38.6 0.14 1.1 13 22.2 0.16 5.4
+2026-11-15 22:17:17   [search] 82f83a63d06e253b ran 7 s  score -7.36  worst -3.81 dB  x=38.3 0.13 1.25 11.9 23.2 0.11 7
+2026-11-15 22:17:23   [search] 6e5828a4c57d652b ran 6 s  score -2.38  worst -0.09 dB  x=40.6 0.025 1.25 10.4 23.1 0.16 11.3
+2026-11-15 22:17:23 search: evolve generation 4 best -10.28
+2026-11-15 22:17:23   [search] 8ea7041e32523fd8 cached  score -10.28
+2026-11-15 22:17:23   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:17:30   [search] 739ed0f121fbb4f9 ran 6 s  score -8.34  worst -4.42 dB  x=38.6 0.09 1.05 12.5 22 0.29 3.9
+2026-11-15 22:17:36   [search] bd8b171ce82bcdf4 ran 7 s  score -8.86  worst -5.31 dB  x=39.2 0.14 1.15 13.2 22.1 0.2 3
+2026-11-15 22:17:46   [search] 235faa80c1f784e0 ran 9 s  score -4.10  worst -1.52 dB  x=37 0.25 1.4 11.1 20.1 0.53 17.2
+2026-11-15 22:17:52   [search] 69d3de192438d28d ran 7 s  score -6.50  worst -3.70 dB  x=38.2 0.145 1.75 10.6 21.8 0.15 9
+2026-11-15 22:17:58   [search] 0a2111877747ef47 ran 6 s  score -9.07  worst -5.09 dB  x=37.8 0.095 1.05 14.3 21.3 0.13 3.2
+2026-11-15 22:18:06   [search] 173042d63fd8a042 ran 7 s  score -8.25  worst -4.56 dB  x=37.4 0.14 1.1 13.6 22.8 0.15 12.1
+2026-11-15 22:18:13   [search] 9859f38e4ba85b29 ran 7 s  score -8.67  worst -4.85 dB  x=38.3 0.12 1.2 10.7 22.6 0.33 7.5
+2026-11-15 22:18:19   [search] 1cadf4c5129051a2 ran 6 s  score -7.84  worst -4.44 dB  x=38.5 0.145 1.35 10.9 22 0.11 9.1
+2026-11-15 22:18:26   [search] 3b94d265fe2bf772 ran 7 s  score -7.13  worst -3.89 dB  x=37.9 0.12 1.35 11.5 23.4 0.17 10.7
+2026-11-15 22:18:34   [search] db241cec7f80bf24 ran 8 s  score -8.20  worst -4.83 dB  x=39.1 0.125 1.3 13.7 20.8 0.17 12.3
+2026-11-15 22:18:34 search: evolve generation 5 best -10.28
+2026-11-15 22:18:34   [search] 8ea7041e32523fd8 cached  score -10.28
+2026-11-15 22:18:34   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:18:43   [search] a0623da10480e5e0 ran 9 s  score -6.48  worst -2.54 dB  x=39.4 0.135 1.05 15 21.9 0.25 5.2
+2026-11-15 22:18:51   [search] 805f98014305e85b ran 8 s  score -3.08  worst -0.58 dB  x=36.7 0.205 1 14.1 20.2 0.52 8.4
+2026-11-15 22:18:58   [search] 55db9737b4e25c66 ran 7 s  score -5.46  worst -2.42 dB  x=39 0.07 1.25 13.3 21.2 0.13 8.3
+2026-11-15 22:19:06   [search] ccb66c5b91548c1b ran 8 s  score -8.39  worst -4.24 dB  x=39.7 0.08 1 13.7 19.8 0.25 6
+2026-11-15 22:19:13   [search] 74c131119e4710ff ran 7 s  score -7.25  worst -3.64 dB  x=37.4 0.09 1.15 13.3 20.8 0.23 6.4
+2026-11-15 22:19:22   [search] 15b8fea5738393fd ran 9 s  score -3.77  worst -0.69 dB  x=38.2 0.09 1.35 13.7 21 0.37 6.5
+2026-11-15 22:19:28   [search] afea5a7cfa13b503 ran 6 s  score -9.98  worst -5.82 dB  x=41.1 0.09 1 12.8 20.1 0.17 4
+2026-11-15 22:19:33   [search] daab9a1d6d216de4 ran 5 s  score -8.51  worst -4.40 dB  x=36.3 0.145 1.15 8.9 21.2 0.23 6.1
+2026-11-15 22:19:41   [search] a248c85b0ed8ec9f ran 7 s  score -9.31  worst -5.20 dB  x=38.3 0.125 1.1 13.5 22.8 0.25 4.7
+2026-11-15 22:19:46   [search] 1e1698b2c3ae2419 ran 5 s  score -7.85  worst -4.20 dB  x=39.3 0.1 1.2 10.5 23 0.13 3.8
+2026-11-15 22:19:46 search: evolve generation 6 best -10.28
+2026-11-15 22:19:46   [search] 8ea7041e32523fd8 cached  score -10.28
+2026-11-15 22:19:46   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:19:52   [search] 332861af5dc0b8a4 ran 6 s  score -6.40  worst -3.02 dB  x=38 0.06 1.05 11.7 20.7 0.13 3.6
+2026-11-15 22:20:02   [search] b68051eaef18df7e ran 10 s  score -6.18  worst -2.30 dB  x=39.1 0.145 1.1 13.7 21.8 0.34 6.4
+2026-11-15 22:20:08   [search] 0557ab35cda07d49 ran 6 s  score -9.27  worst -5.27 dB  x=40 0.095 1.1 13 19.4 0.15 5.4
+2026-11-15 22:20:16   [search] 3d49c0d3ecb692f8 ran 8 s  score -3.95  worst -0.52 dB  x=39.2 0.085 1.05 11.5 23.5 0.4 3.1
+2026-11-15 22:20:22   [search] d8e00fd829deac65 ran 6 s  score -3.60  worst -1.11 dB  x=38.5 0.025 1.05 13.7 22.4 0.06 5.2
+2026-11-15 22:20:29   [search] acd7be29c6d4303d ran 7 s  score -7.11  worst -3.93 dB  x=37 0.135 1.45 12.6 21.5 0.28 5.5
+2026-11-15 22:20:35   [search] 8fcc762907088402 ran 6 s  score -8.13  worst -4.17 dB  x=39.1 0.14 1.15 9.9 22.1 0.1 6.4
+2026-11-15 22:20:41   [search] c8343d65ab530110 ran 6 s  score -8.76  worst -4.89 dB  x=38.6 0.12 1.15 13.5 23.3 0.23 3.4
+2026-11-15 22:20:50   [search] 7a1d04025628d59d ran 8 s  score -9.81  worst -5.46 dB  x=38.7 0.11 1 14.2 20.9 0.24 7.5
+2026-11-15 22:20:57   [search] ff49fc0bb84dde5b ran 8 s  score -6.92  worst -3.35 dB  x=42 0.16 1.5 12.8 17.2 0.17 5.7
+2026-11-15 22:20:57 search: evolve generation 7 best -10.28
+2026-11-15 22:20:57   [search] 8ea7041e32523fd8 cached  score -10.28
+2026-11-15 22:20:57   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:21:03   [search] 36724b2aeeae6e0d ran 5 s  score -4.69  worst -1.49 dB  x=40.4 0.09 1.5 6.2 20.8 0.07 10.6
+2026-11-15 22:21:12   [search] 032dcb05ec63f2f9 ran 9 s  score -3.97  worst -1.98 dB  x=43.5 0.24 1.1 8 16.1 0.32 6.6
+2026-11-15 22:21:21   [search] d589032028fd3d04 ran 9 s  score -8.96  worst -5.30 dB  x=37.9 0.14 1.2 14 19.4 0.28 4.1
+2026-11-15 22:21:28   [search] a5881454f407dd28 ran 8 s  score -5.52  worst -1.57 dB  x=39.9 0.12 1 12.5 23.6 0.35 6.6
+2026-11-15 22:21:35   [search] dbbe5b88296cd34e ran 6 s  score -8.28  worst -4.66 dB  x=38.6 0.14 1.25 12.5 21.1 0.21 3.7
+2026-11-15 22:21:42   [search] 4f421dbb1fafffe3 ran 8 s  score -6.91  worst -2.88 dB  x=44.4 0.145 1.6 12.5 17.6 0.13 6.9
+2026-11-15 22:21:49   [search] ef4788d4a40a325b ran 7 s  score -9.27  worst -4.98 dB  x=37.1 0.11 1.05 12 19.2 0.29 8.8
+2026-11-15 22:21:55   [search] 9aa62552832d5f96 ran 5 s  score -8.62  worst -4.66 dB  x=40 0.095 1.1 14.1 19.5 0.07 4.2
+2026-11-15 22:22:05   [search] 7d5425c29b5f1af8 ran 10 s  score -5.72  worst -1.89 dB  x=37.3 0.165 1.3 10.7 18.6 0.42 6.5
+2026-11-15 22:22:13   [search] 9df13ea1e5fe2edf ran 8 s  score -8.82  worst -5.01 dB  x=39.3 0.115 1.15 14 21.8 0.28 7.8
+2026-11-15 22:22:13 search: evolve generation 8 best -10.28
+2026-11-15 22:22:13   [search] 8ea7041e32523fd8 cached  score -10.28
+2026-11-15 22:22:13   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:22:22   [search] 7cc575934bf160f3 ran 8 s  score -5.78  worst -1.49 dB  x=38.6 0.12 1 14.5 23 0.31 5.9
+2026-11-15 22:22:30   [search] e305269471b4a325 ran 8 s  score -6.52  worst -2.77 dB  x=44.8 0.16 1.15 12.6 15.5 0.15 10.4
+2026-11-15 22:22:36   [search] 2f02b116e14a49a2 ran 6 s  score -8.54  worst -4.61 dB  x=36.9 0.11 1.1 11.3 19.2 0.26 10.6
+2026-11-15 22:22:42   [search] f4f2e1488c462e99 ran 6 s  score -8.69  worst -4.81 dB  x=38.4 0.1 1.1 12.6 21.4 0.27 4.6
+2026-11-15 22:22:52   [search] 3ffbdd473a485843 ran 10 s  score -4.43  worst -1.47 dB  x=38.2 0.18 1.1 12.7 21 0.42 4
+2026-11-15 22:23:01   [search] eab56b7c7b61ef8c ran 9 s  score -8.85  worst -4.97 dB  x=39.4 0.115 1.15 13.6 20.9 0.3 9.6
+2026-11-15 22:23:09   [search] 19131c740a9206bf ran 7 s  score -9.38  worst -5.29 dB  x=37.2 0.13 1.05 12.9 19.9 0.26 11.5
+2026-11-15 22:23:16   [search] f04bdabe5d1e0c6d ran 7 s  score -7.30  worst -4.24 dB  x=39.4 0.155 1.4 14.2 18.8 0.15 3.6
+2026-11-15 22:23:26   [search] c75a426e57fda4f1 ran 10 s  score -6.84  worst -3.57 dB  x=40.8 0.17 1.55 14.4 18.1 0.2 9.2
+2026-11-15 22:23:32   [search] aadad079dfdef9ea ran 6 s  score -6.57  worst -3.41 dB  x=38.6 0.145 1.5 11.1 23.1 0.23 3.7
+2026-11-15 22:23:32 search: evolve generation 9 best -10.28
+2026-11-15 22:23:32   [search] 8ea7041e32523fd8 cached  score -10.28
+2026-11-15 22:23:32   [search] 56e01a38dc83c276 cached  score -10.01
+2026-11-15 22:23:39   [search] c8f5cc6c1f45e48e ran 7 s  score -9.34  worst -5.46 dB  x=38.6 0.13 1.05 12.6 21 0.24 13.9
+2026-11-15 22:23:45   [search] 587808ea90db0a8d ran 6 s  score -8.03  worst -4.53 dB  x=36.4 0.14 1.15 15 23.2 0.06 6.3
+2026-11-15 22:23:53   [search] 07ef7d0a9c35a8ea ran 7 s  score -8.04  worst -4.27 dB  x=37.2 0.115 1.1 13.2 20.2 0.23 13.2
+2026-11-15 22:24:00   [search] 2bf50f476a1c59de ran 7 s  score -9.88  worst -5.58 dB  x=37.2 0.12 1 13.8 23.9 0.31 3.8
+2026-11-15 22:24:07   [search] d3d1d69f60bd8e1e ran 7 s  score -8.62  worst -4.86 dB  x=36.6 0.115 1.2 14.9 19.2 0.25 6.2
+2026-11-15 22:24:13   [search] 1cfe12cdc00eb7c1 ran 6 s  score -6.99  worst -3.94 dB  x=36 0.08 1.35 14.1 20.1 0.26 4.2
+2026-11-15 22:24:20   [search] f3f5e739c75c996c ran 6 s  score -8.56  worst -4.74 dB  x=37.3 0.14 1.15 11.3 23.2 0.22 8.4
+2026-11-15 22:24:27   [search] 549d00ee81f2d3ea ran 7 s  score -8.60  worst -4.81 dB  x=36.9 0.12 1.2 12.6 22.7 0.34 5.4
+2026-11-15 22:24:35   [search] a180154af3e0ac8e ran 8 s  score -5.29  worst -1.26 dB  x=38.7 0.125 1.1 14.2 22 0.33 6.2
+2026-11-15 22:24:42   [search] db69609e83b25463 ran 7 s  score -9.95  worst -6.44 dB  x=37.3 0.145 1 12.3 21.7 0.33 4
+2026-11-15 22:24:42 search: evolve generation 10 best -10.28
+2026-11-15 22:24:42 search: re-scoring 4 finalists and the start at eps_r 4.2 and 4.6
+2026-11-15 22:24:50   [finalist] fe1718538f3fac36 ran 7 s  score -10.42  worst -5.94 dB  x=38.8 0.115 1.05 14 21.6 0.28 4.4
+2026-11-15 22:24:58   [finalist] 8da21060ec46bbf9 ran 8 s  score -9.47  worst -5.21 dB  x=38.8 0.115 1.05 14 21.6 0.28 4.4
+2026-11-15 22:25:05   [finalist] 94c70375db30c676 ran 7 s  score -9.96  worst -5.70 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
+2026-11-15 22:25:13   [finalist] 9dc6deaef46616d9 ran 7 s  score -9.85  worst -5.80 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
+2026-11-15 22:25:19   [finalist] 9034a8c7469bd2a3 ran 6 s  score -9.81  worst -5.58 dB  x=41.1 0.09 1 12.8 20.1 0.17 4
+2026-11-15 22:25:25   [finalist] e972e956d6b9f580 ran 6 s  score -10.24  worst -6.15 dB  x=41.1 0.09 1 12.8 20.1 0.17 4
+2026-11-15 22:25:31   [finalist] 414834abbbc8f4eb ran 7 s  score -10.08  worst -6.47 dB  x=37.3 0.145 1 12.3 21.7 0.33 4
+2026-11-15 22:25:39   [finalist] 69ee0a726694474a ran 7 s  score -9.70  worst -6.29 dB  x=37.3 0.145 1 12.3 21.7 0.33 4
+2026-11-15 22:25:46   [finalist] afc38714c4c751ed ran 7 s  score -6.38  worst -3.01 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 22:25:53   [finalist] 541573a392ad5fe2 ran 7 s  score -5.97  worst -2.56 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 22:25:53 search: winner [38.3, 0.12, 1.0, 12.8, 22.8, 0.31, 4.9] robust score -9.85 (start -5.97)
+2026-11-15 22:25:54 report: wrote /Users/ascalva/Documents/code/sdr_array/array16/experiments/vivaldi/summary.md
+2026-11-15 22:25:54 check: winner on the finer row mesh
+2026-11-15 22:25:54   [check] 616b3ba2f68b61b1 cached  score -6.19
+2026-11-15 22:26:10   [check] 96d87b431938da8d ran 16 s  score -8.65  worst -5.00 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
+2026-11-15 22:26:10 check: 6 x 6 tile, start, eps_r 4.2
+2026-11-15 22:27:53   [check] e3cf325f38e2388d ran 101 s  score -5.95  worst -2.89 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 22:27:53 check: 6 x 6 tile, winner, eps_r 4.2
+2026-11-15 22:29:20   [check] fb716696959943f2 ran 86 s  score -9.16  worst -5.07 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
+2026-11-15 22:29:20 check: 6 x 6 tile, start, eps_r 4.6
+2026-11-15 22:31:03   [check] 3d5abb7f923ece15 ran 102 s  score -5.91  worst -2.78 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 22:31:03 check: 6 x 6 tile, winner, eps_r 4.6
+2026-11-15 22:32:34   [check] d5d4509b0c434ab0 ran 89 s  score -9.09  worst -4.97 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
+2026-11-15 22:32:34 check: 6 x 6 tile, start, eps_r 4.4
+2026-11-15 22:34:17   [check] 284ac613851bb71e ran 102 s  score -5.93  worst -2.85 dB  x=40 0.1 1.5 8 22 0.4 12
+2026-11-15 22:34:17 check: 6 x 6 tile, winner, eps_r 4.4
+2026-11-15 22:35:48   [check] aaa0e594e69f9f87 ran 90 s  score -9.13  worst -5.02 dB  x=38.3 0.12 1 12.8 22.8 0.31 4.9
+2026-11-15 22:35:49 report: wrote /Users/ascalva/Documents/code/sdr_array/array16/experiments/vivaldi/summary.md
+2026-11-15 22:35:49 === all: finished ===

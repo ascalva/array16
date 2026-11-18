@@ -1,0 +1,565 @@
+{
+ "investigate:theory": {
+  "summary": "Theory lens on moving the array. Scripts and results are in the scratch folder (files below); no repository file was changed. The three parallel studies (array3d, band_plan, topology .md) did not exist yet when I looked, so I only checked topology_study.py to avoid repeating its u-v rotation-synthesis demo.\n\n**Model.** An orientation is a rotation matrix R(t) in SO(3) (store it as a unit quaternion). Element n sits at R(t)p_n, so its phase for a source in unit direction u is k\u00b7u\u00b7R(t)p_n. Rotating the array is the same as rotating the source the other way in the array frame, and each element traces a curve on a sphere of radius |p_n|. Motion never makes the aperture larger than the array's own radius; it fills it, and changes which directions the aperture is projected onto.\n\n**Two ways to combine K orientations.**\n- **Non-coherent** (add per-orientation spectra or Fisher matrices): needs only a source that stays put. Information adds, and sidelobes average but do not cancel.\n- **Coherent** (a true synthetic aperture): needs a phase reference that does not move, such as an element on the rotation axis or a fixed antenna on one of the four channels.\n\n**Main results.**\n- **Turntable under the single 225 mm ring of 8** (sources 20-30\u00b0 up, azimuth-only estimator, 64 snapshots in total): gross errors fall from 17 / 66 / 76 % at 1.6 / 2.0 / 2.3 GHz with no rotation to 0 / 0 / 1.7 % with 8 orientations. A static elevation-aware (2-D) estimator gives 0 % at all three, so software fixes this failure better than a motor.\n- **Calibration residuals average out.** They are fixed in the array frame, so a full turn cut the 95th-percentile error from 1.20\u00b0 to 0.49\u00b0 (1 GHz, 5\u00b0 residual, 8 orientations).\n- **Elevation near the horizon.** For a planar array the Fisher information splits into a part across the normal (full) and a part towards it, which scales as cos\u00b2\u03b3 (\u03b3 = angle from the normal). A horizontal plate therefore has zero elevation information at the horizon, and spinning it about the vertical adds none. Elevation CRLB for the 16-whip plate at 1 GHz (20 dB, 64 snapshots, noise only): 0.55\u00b0 at 5\u00b0 elevation and unbounded at 0\u00b0 when flat; 0.095\u00b0 with the plate tilted 30\u00b0 and spun.\n- **Tilt 54.7\u00b0 and spin equals a full tumble.** For isotropic elements, a fixed tilt of arccos(1/\u221a3) spun about the vertical gives exactly isotropic information, 2/3 of broadside in every direction. A uniform tumble over SO(3) gives the same (0.65-0.67 numerically). One motor and a wedge match the \"gyroscopic\" tumble for direction finding.\n- **What the third axis adds.** Roll about boresight gives polarisation diversity and removes the zenith keyhole. The panel is linearly polarised, so power against roll angle \u03c8 is \u00bd(I + Q cos2\u03c8 + U sin2\u03c8): three roll angles give I, Q and U. V needs a phase reference or a circular feed. The third axis adds no aperture, no SNR and no instantaneous coverage: under a uniform tumble the panel's \u00b160\u00b0 cone sees any given direction 25 % of the time.\n- **Path design for the panel** (upper hemisphere, worst-direction information in broadside looks): 12 poses coned at 30\u00b0 tilt score 1.74; 12 Fibonacci az-el pointings score 1.05. With 24 poses, adding 0/60/120\u00b0 roll lifts the worst-case polarisation metric from 0.03 to 2.15. The repo's `evolve` found nothing better than coning plus roll in 4,832 evaluations.\n- **Continuous motion.** Doppler is \u03c9r/\u03bb: 1.9 Hz at 0.4 GHz and 10.8 Hz at 2.3 GHz for a whip at 225 mm and 60 rpm; 6.4 Hz at 5.8 GHz for the panel corner. That is useless as a Doppler direction finder (500 Hz deviation at 0.4 GHz would need about 16,000 rpm), which is why pseudo-Doppler switches electronically. What matters is phase slew: 3.9\u00b0/ms at 2.3 GHz and 60 rpm, so coherent blocks must stay under about 1.5 ms or be de-rotated with the known R(t). At 1 rpm the limit is 88 ms. Step-and-stare or 10 rpm or slower is the sensible regime.\n- **Gyroscopic torque** is small: 0.15 N\u00b7m for a 1.5 kg, 500 mm plate (estimate) spun at 60 rpm and tilted at 30\u00b0/s; 1.5 N\u00b7m at 600 rpm. A 5 cm centre-of-gravity offset already costs 0.74 N\u00b7m.\n- **Error budget.** Heading error maps one-to-one into azimuth bias. Position error costs 0.48 / 2.9 / 7.0\u00b0 of phase per mm at 0.4 / 2.4 / 5.8 GHz. A 0.2\u00b0 axis wobble is 0.4 / 2.3 / 5.5\u00b0 at 225 mm radius (0.5\u00b0 and 1.3\u00b0 at the panel corner at 2.4 and 5.8 GHz). Hobby IMU heading (about 2\u00b0 static, 3.5\u00b0 dynamic) is worse than the 0.5\u00b0 manifold target, so use shaft encoders. Flexed coax costs about \u00b12\u00b0 up to 4 GHz and \u00b14\u00b0 at 4-8 GHz, so the radios and core board should ride on the rotor.",
+  "findings": [
+   {
+    "topic": "Mathematical model",
+    "claim": "Orientation is R(t) in SO(3), stored as a unit quaternion. Element n is at R(t)p_n and its phase is k u\u00b7R(t)p_n = k (R^T u)\u00b7p_n, so rotating the array equals counter-rotating the source in the array frame. Each element moves on a sphere of radius |p_n|, so the synthesised aperture is bounded by the array radius: 225 mm for the whips, 53 mm for the panel's 4x4 corner. Motion fills or re-projects the aperture; it does not enlarge it.",
+    "source": "derivation",
+    "confidence": "high"
+   },
+   {
+    "topic": "Coherent vs non-coherent combining",
+    "claim": "Non-coherent combining over K orientations (sum of a_k^H R_k a_k, or summed Fisher matrices) needs only a stationary source. Coherent synthesis of a K\u00b7N-element virtual array needs a phase reference that does not move with the elements: an element on the rotation axis, or a fixed antenna on one of the four channels, leaving three moving. Without it the source's own modulation and the LO phase between dwells destroy coherence.",
+    "source": "derivation; rotating arrays degrade superresolution unless motion-compensated: Zatman, Asilomar 2000, https://search.isc.ac/inventory/49/1743166.htm ; two-element rotating-baseline virtual circular array (R-MUSIC): https://doi.org/10.3390/fi6010155",
+    "confidence": "high"
+   },
+   {
+    "topic": "Turntable under the single 225 mm ring of 8",
+    "claim": "Sources 20-30 deg up, azimuth-only Bartlett, 3 deg cal residual, 20 dB, 64 snapshots in total split over K orientations spread across 45 deg. Gross-error rate: 1.6 GHz 17.3 % (K=1) to 0 % (K>=2); 2.0 GHz 65.8 / 6.5 / 0.2 / 0 % for K=1/2/4/8; 2.3 GHz 75.5 / 26.3 / 14.2 / 1.7 / 2.3 % for K=1/2/4/8/16. A static 2-D (azimuth and elevation) estimator gives 0 % at all three frequencies with 95th percentile 0.60-0.70 deg. A 0.5 deg orientation error changes nothing material (95th percentile 0.77 deg at 2.3 GHz).",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/tt_cache.json (from rot_theory.py)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Ambiguity function under rotation",
+    "claim": "2.3 GHz, source 30 deg up, azimuth-only steering, ring of 8 at 225 mm. Highest sidelobe over mainlobe: 2.98 static (the wrong peak wins); non-coherent sum 1.60 / 1.22 / 0.91 for K=2/4/8, with no further gain beyond 8; coherent sum 0.56 for K>=4, equal to the filled-ring limit J0^2 (main 0.289, largest elsewhere 0.162). Rotation about the normal turns the 8-point ring into a continuous ring; it cannot beat the J0 pattern or repair the elevation mismatch itself.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json",
+    "confidence": "high"
+   },
+   {
+    "topic": "Calibration residuals average under rotation",
+    "claim": "Per-whip calibration errors are fixed in the array frame, so the DF bias they cause rotates with the array and averages down over a turn. At 1 GHz with a 5 deg residual, 30 dB and sources 0-15 deg up, the median / 95th percentile go from 0.41 / 1.20 deg static to 0.25 / 0.49 deg with 8 orientations over a full turn. Orientation-dependent multipath from the mount and ground should average the same way, but that was not simulated.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/tt_cache.json",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Fisher information of a moving planar array",
+    "claim": "For direction u with tangent basis T, J = 2\u00b7SNR\u00b7L\u00b7k^2 \u00b7 sum over poses of T^T R S R^T T, where S = sum p p^T. For a rotationally symmetric planar array S = s(I - n n^T), giving eigenvalues s (across the normal) and s\u00b7cos^2(gamma) (towards the normal), gamma being the angle between u and the normal n. A horizontal plate has elevation information proportional to sin^2(el): zero at the horizon, plus an up/down mirror ambiguity. Spinning about the vertical leaves n unchanged and adds no elevation information.",
+    "source": "derivation; checked numerically in rot_theory.py (static and turntable both give worst-direction information 0.0 and elevation information 0.25 at 30 deg)",
+    "confidence": "high"
+   },
+   {
+    "topic": "Elevation CRLB with tilt (two rings of 8, 225/112 mm)",
+    "claim": "20 dB, 64 snapshots, noise only, averaged over a spin. At 1 GHz: flat plate, unbounded at el 0, 1.38 deg at 2 deg, 0.55 deg at 5 deg, 0.28 deg at 10 deg, 0.096 deg at 30 deg; tilted 15 deg, 0.19 deg at el 0; tilted 30 deg, 0.096 deg at el 0. At 0.4 GHz and el 5 deg: 1.38 deg flat, 0.24 deg at 30 deg tilt. At 2.3 GHz and el 5 deg: 0.24 deg flat, 0.041 deg at 30 deg tilt. Calibration residuals will dominate these noise-only figures in practice.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json (crlb_el_deg_rings16)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Magic-angle coning equals a full tumble",
+    "claim": "The average of (I - n n^T) over a uniform tumble on SO(3) is (2/3)I, so DF information is isotropic at 2/3 of broadside in every direction (numerical 0.65-0.67 with 2000 random poses). A fixed tilt of arccos(1/sqrt 3) = 54.7 deg spun about the vertical gives exactly the same (0.667 everywhere), because the cone average of n n^T is I/3. A 30 deg cone gives worst-direction 0.25 and mean 0.46. For isotropic elements, the full tumble adds nothing for DF over one motor and a fixed wedge.",
+    "source": "derivation and /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json",
+    "confidence": "high"
+   },
+   {
+    "topic": "3-D shell virtual aperture",
+    "claim": "Tumbling the 16-whip plate coherently (200 poses, 1 GHz) fills a ball of radius 225 mm. For a source in the plate's plane, the elevation half-power half-width drops from 46 deg (static, edge-on) to 23 deg, peak sidelobe -17.3 dB, the same in every direction and with no mirror ambiguity. A thin shell has point-spread sinc(2kr sin(delta/2)), first null near lambda/(2r). This needs the fixed phase reference; non-coherently only the Fisher result applies.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json (psf_1GHz); derivation",
+    "confidence": "medium"
+   },
+   {
+    "topic": "What the third axis adds and does not",
+    "claim": "SO(3) has three degrees of freedom: boresight direction (two) and roll about boresight (one). An az-el mount fixes roll as a function of pointing and has a keyhole at zenith, where the azimuth rate needed grows as 1/cos(el). Roll adds polarisation diversity for a linear panel, baseline rotation at fixed pointing, and keyhole-free tracking. It adds no aperture, no SNR and no instantaneous field of view: under a uniform tumble the +/-60 deg cone sees a given direction (1 - cos 60)/2 = 25 % of the time (numerical 0.250).",
+    "source": "derivation; keyhole: https://en.wikipedia.org/wiki/Keyhole_problem ; tumble duty in rot_theory_results.json",
+    "confidence": "high"
+   },
+   {
+    "topic": "Polarisation from roll about boresight",
+    "claim": "For a linearly polarised panel rolled by psi, P(psi) = 1/2 (I + Q cos 2psi + U sin 2psi). Mismatch loss to a linear wave is cos^2(psi - psi0) (3 dB at 45 deg, a null at 90 deg); to a circular wave it is a constant 3 dB. Three roll angles (0/60/120 or 0/45/90) give I, Q, U; with K evenly spaced angles var(Q) = var(U) = 8 sigma^2/K and var(I) = 4 sigma^2/K. V (handedness) cannot be had from power through a linear element alone; it needs a phase reference between rolls or a circular or dual-polarised feed. Spinning vertical whips about the vertical gives no polarisation information; tilting them does mix polarisations.",
+    "source": "derivation; Stokes measurement relations: https://en.wikipedia.org/wiki/Stokes_parameters",
+    "confidence": "high"
+   },
+   {
+    "topic": "Path design as optimisation (panel, upper hemisphere)",
+    "claim": "Metric: worst-direction DF information in units of one broadside look; +/-60 deg field of view with cos-gamma power gain. 12 poses: azimuth spin with boresight horizontal 0.0 (13.5 % of the hemisphere never seen); coning with boresight 30 deg up 1.74; Fibonacci az-el pointings 1.05. The repo's `evolve` reached 1.67 from the Fibonacci seed and did not improve on the coning seed in 4,832 evaluations. With 24 poses, coning gives 3.88; adding 0/60/120 deg roll leaves DF unchanged and lifts the worst-case Stokes design-matrix eigenvalue from 0.03 to 2.15 (Fibonacci plus roll: 0.51).",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_paths2_results.json and rot_theory_results.json",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Gimbal lock",
+    "claim": "A three-ring gimbal loses a degree of freedom when two axes become parallel (middle ring at +/-90 deg); nearby, the rates needed scale as 1/cos(theta). Remedies: keep orientation as quaternions or matrices in software; limit the middle axis mechanically (Apollo warned at 70 deg and froze the platform at 85 deg); add a redundant fourth gimbal; or choose the axis order so the singular direction is one you do not need. For this project a tilt-then-spin mount with the tilt limited to about 60 deg never approaches lock.",
+    "source": "https://en.wikipedia.org/wiki/Gimbal_lock ; derivation",
+    "confidence": "high"
+   },
+   {
+    "topic": "Cables across the joint",
+    "claim": "Continuous rotation needs slip rings or RF rotary joints for 4-5 RF lines plus USB 3, unless everything rides on the rotor. Rotations in 3-D have a topological loophole: the anti-twister mechanism (Adams, US 3,586,413) passes a flexible cable to a continuously spinning platform with no slip ring by carrying the cable loop at half the platform speed. The simplest option is a limited-angle wrap (+/-180 or 360 deg, step-and-stare) or a battery, radios and small computer on the rotor.",
+    "source": "https://en.wikipedia.org/wiki/Anti-twister_mechanism ; https://uspto.report/patent/grant/3586413",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Doppler from continuous rotation",
+    "claim": "v = omega x r and peak shift is omega\u00b7r/lambda. Whip at 225 mm: 1 rpm gives 0.03 Hz (0.4 GHz) and 0.18 Hz (2.3 GHz); 60 rpm gives 1.41 m/s, 1.9 and 10.8 Hz; 600 rpm gives 19 and 108 Hz. Panel corner at 53 mm: 60 rpm gives 2.7 Hz (2.4 GHz) and 6.4 Hz (5.8 GHz). Mechanical Doppler DF with 500 Hz deviation at 0.4 GHz and r = 225 mm would need about 1,670 rad/s, roughly 16,000 rpm; pseudo-Doppler gets the same effect by switching around a ring. With coherent channels the array measures phase directly and needs neither.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json (doppler); formula S = r\u00b7W/lambda and the 60,000 rpm disk example: https://en.wikipedia.org/wiki/Doppler_radio_direction_finding",
+    "confidence": "high"
+   },
+   {
+    "topic": "Coherent integration and snapshot switching under motion",
+    "claim": "Worst-case phase slew is k\u00b7r\u00b7omega. At 60 rpm: 3.9 deg/ms at 2.3 GHz (whip), 2.3 deg/ms at 5.8 GHz (panel corner), 0.68 deg/ms at 0.4 GHz. Blocks that stay under 0.1 rad of smear must be shorter than 1.5 ms, 2.5 ms and 8.4 ms respectively; at 10 rpm 8.8 ms (2.3 GHz) and at 1 rpm 88 ms. Longer integration, and the four slots of a 16-element snapshot cycle, must use a(theta, t) with the encoder-known R(t), which is exact for one source. Slot times of 15 us to 1 ms are harmless at 10 rpm or less. Step-and-stare avoids the issue.",
+    "source": "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json (doppler); derivation; slot time from REDESIGN.md section 8",
+    "confidence": "high"
+   },
+   {
+    "topic": "Gyroscopic and gravity torques",
+    "claim": "Torque = I\u00b7omega_spin\u00b7Omega_tilt. For a 1.5 kg, 500 mm disc (mass and shape are estimates) I = 0.047 kg\u00b7m^2: spinning at 60 rpm and tilting at 30 deg/s gives 0.15 N\u00b7m (0.46 N\u00b7m at 90 deg/s); at 600 rpm, 1.5 N\u00b7m at 30 deg/s. Rim acceleration is about 1 g at 60 rpm and 100 g at 600 rpm. A 5 cm centre-of-gravity offset gives a static gravity torque of 0.74 N\u00b7m, larger than the gyroscopic term at any sensible rate. Balance the payload and stay at or below about 60 rpm.",
+    "source": "estimate: thin-disc inertia with assumed 1.5 kg mass; /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json (torque)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Orientation error into DF bias",
+    "claim": "An error delta about the vertical axis is an azimuth bias of exactly delta. A tilt error delta of the normal gives an elevation bias up to delta and an azimuth bias up to delta\u00b7tan(el). The AS5600 magnetic encoder resolves 360/4096 = 0.088 deg; a search result quotes a system INL of about +/-1 deg before linearisation, which I did not confirm against the datasheet table, so calibrate it against the turntable. BNO08x fused heading is listed at 2.0 deg static, 3.5 deg dynamic, and 0.5 deg/min drift in gaming mode. That is worse than the 0.5 deg manifold target, so shaft encoders should carry the budget, with an IMU only for tilt sanity checks.",
+    "source": "derivation; AS5600: https://www.infineon.com/assets/row/public/documents/24/49/infineon-as5600-datasheet-en.pdf ; BNO086 figures as listed at https://www.sparkfun.com/products/22857",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Wobble, vibration and position error into phase",
+    "claim": "Phase error is 360\u00b7delta_r/lambda: 0.48 / 2.88 / 6.96 deg per mm at 0.4 / 2.4 / 5.8 GHz, so a 3 deg budget is 6.3 / 1.0 / 0.43 mm. Axis wobble of 0.2 deg at 225 mm radius (0.79 mm) is 0.38 / 2.3 / 5.5 deg; at the panel corner (53 mm) it is 0.09 / 0.53 / 1.3 deg. Sinusoidal vibration of 0.1 mm amplitude gives a phase-modulation index of 2\u00b7pi\u00b7a/lambda = 0.0008 / 0.005 / 0.012 rad, sidebands at -68 / -52 / -44 dBc. Rigid common-mode translation is a common phase and drops out for simultaneous channels, but appears as slot-to-slot phase under snapshot switching.",
+    "source": "derivation; /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json (error_budget)",
+    "confidence": "high"
+   },
+   {
+    "topic": "Cable flexure",
+    "claim": "One flexible-assembly specification allows a phase change with flexure of +/-2 deg up to 4 GHz, +/-4 deg at 4-8 GHz and +/-6 deg at 8-18 GHz; ordinary cable is quoted at 5-20 deg per flexure at 10 GHz. Any RF cable that flexes outside the calibration loop adds an orientation-dependent error of that order. In rev B the tile-to-core jumpers are inside the PN calibration loop (recalibrate at each pose, 5-20 ms), but whip cables are outside it. Mount the plate, core and radios on the rotor so only USB and power cross the joint.",
+    "source": "https://www.smithsinterconnect.com/getattachment/08eb4a13-193b-4394-bca1-55065ba23953/PHASE-FLEXURE-ENG-DATA.pdf ; https://rfessentials.com/rf-knowledge-base/what-causes-phase-instability-in-a-coaxial-cable-assembly-and-how-do-i-test-for-/ ; calibration planes from REDESIGN.md section 6",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Near environment and stationarity",
+    "claim": "The turntable manifold is a(R^T u) only in free space. With a mast, mount and ground the true response is a(u, R): scattering changes with orientation. REDESIGN.md's own figure is that a -10 dB bounce moves phases by +/-18 deg, and tilting changes the ground-bounce geometry and the whips' ground-plane image. Either measure the manifold with the mount attached, per tilt, or rely on averaging over orientations. All K-orientation combining assumes the emitter is on and stationary for K\u00b7(move + settle + dwell); bursty emitters give one orientation per burst and can only be combined non-coherently.",
+    "source": "derivation; REDESIGN.md section 6 (manifold)",
+    "confidence": "medium"
+   }
+  ],
+  "files": [
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_theory_results.json",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/tt_cache.json",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_paths2.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/rot_paths2_results.json"
+  ],
+  "open_questions": [
+   "Is a non-rotating phase reference acceptable (an on-axis receive element, or one of the four channels on a fixed antenna)? Without it only non-coherent combining is available and the 3-D shell aperture result does not apply.",
+   "Real whips tilted 30-55 deg over a finite plate have pattern nulls, polarisation mixing and a changed ground image; the Fisher results assume isotropic elements and need a pattern-aware re-run (NEC or openEMS).",
+   "The panel coning tilt (30 deg) was a hand choice and was not swept; the path optimisation used 12-24 discrete poses and a hard +/-60 deg field of view, not a continuous trajectory with slew-rate and cable-wrap limits or an information-per-second objective.",
+   "The 1.7-2.3 % residual gross errors at 2.3 GHz with 8-16 non-coherent orientations come from the azimuth-only estimator's elevation mismatch; a 2-D estimator combined with rotation was not simulated.",
+   "Averaging of orientation-dependent multipath (mast, ground) under rotation is argued but not simulated; it needs a scatterer model or a measurement.",
+   "Cable strategy is undecided: everything on the rotor with battery and wireless or USB wrap, a limited-angle wrap, slip ring, or anti-twister loop. The 320 MB/s four-radio USB 3 stream across a moving joint is the hard part.",
+   "The AS5600 INL figure (about +/-1 deg) came from a garbled search snippet and was not confirmed against the datasheet table; stepper and gear backlash figures were not sourced.",
+   "The parallel studies (array3d_study.md, band_plan_study.md, topology_study.md) were not yet written when this ran, so overlap with their rotator and rotation-synthesis sections has not been reconciled."
+  ]
+ },
+ "investigate:simulate": {
+  "summary": "Simulation lens complete. The script /Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation_study.py (a draft already existed from an interrupted earlier pass; I reviewed it, added a hemisphere-prior case and ran it in full: 1178 s, OMP_NUM_THREADS=3) writes tables.md, results.json and two plots into /Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/. No existing repo file was modified. No external facts are used; everything is Monte Carlo output or derivation, with model assumptions marked as estimates.\n\nCross-check: the K=1 azimuth model reproduces evolve_layout.check() exactly (same random stream), e.g. 4 whips at 0.354 wavelength 0.72 / 173.3 deg / 8.9 % gross, 225 mm ring at 2.3 GHz with sources 0-30 deg up 26.3 % gross.\n\n(a) Turning a fragile layout about the vertical axis removes its gross errors at equal total time (64 samples split over K): 4 whips at 0.354-1.0 wavelength 7-20 % -> 0.0 % at K=2; 164 mm grid (1.26 wavelength) 14.7 % -> 0 %; 225 mm ring at 2.3 GHz 27.3 % -> 9.9 / 4.3 / 0.6 % at K = 2/4/8. Steps must fill one symmetry sector (45/K deg for a ring of 8); naive 360/K steps land the ring on itself and fix nothing (27.7 % at K=8). However the 225 mm ring failure is an estimator fault: a joint az-el search on one capture gives 0.0 % gross with no motion. Second effect: full-turn steps cancel body-fixed calibration bias to first order (sum of sin(phi - b_n - theta_k) over evenly spaced theta_k is zero): median 0.15 -> 0.03-0.04 deg.\n\n(b) Unknown orientation error passes almost 1:1 into bearing: 0.1 deg is invisible, 0.5 deg gives 0.17-0.21 deg median, 1 deg gives 0.25-0.39 deg (against 0.13 fixed), so motion makes an already-good layout worse unless angles are known to about 0.1 deg. Zero-mean cable-flex drift of 1-10 deg barely matters (worst 0.54 -> 0.70 deg for 4 whips at 10 deg). Neither brings gross errors back.\n\n(c) Panel on an azimuth axis: fixed panel is usable to 60 deg off boresight (0.8 deg median at 2.44 GHz, gain down 4.5 dB), 67 % gross at 90 deg, blind behind. Three stops give 0 % gross over 360 deg (worst-azimuth gain 1.9 / 11.0 dBi at 2.44 / 5.8 GHz), four stops 4.1 / 13.2 dBi. A 360 deg look takes 8-11 s at 30 deg/s with 0.05-0.5 s dwell, 12 s continuous.\n\n(d) A second (tilt) axis is what fixes elevation: flat plate at 1.575 GHz has 1.4-2.2 deg elevation error below 5 deg and cannot tell up from down (about 50 %, free-space whip model); tilted 30 deg at 4 azimuths gives 0.20-0.25 deg and 0 % wrong hemisphere. The panel needs an elevation axis only above about 60 deg.\n\n(e) Polarisation: loss is 20 log10 cos (3 dB at 45, 11.7 dB at 75 deg); DF holds to 85 deg, fails at 90 deg (98 % gross). Rolling about boresight recovers the polarisation angle to 0.3 deg with 3 or more roll angles (2 leaves 22 deg), but it measures power, so 1 dB source fading between captures costs 3 deg and 3 dB costs 8-10 deg.\n\n(f) Whole sphere, random polarisation, 24 captures: fixed plate 41-49 % gross, fixed panel 56 %; azimuth-only plate still 45-47 %, panel 1-2 % but polarisation lost (43-45 deg). Any two-axis path reaches 0 % gross by 360 deg of travel (12 s at 30 deg/s) for the plate, 720 deg for the panel. A third (roll) axis adds little direction accuracy but the best polarisation (panel 5.8 GHz, 720 deg: 1.2 deg against 2.5-4.4 deg; 0.6 deg at 1440 deg). The evolved path beats the plain tumble only for the panel (95th percentile 0.6 against 1.4 deg) and random search is nearly as good: path shape matters little once the sphere is covered. With 1 deg jitter + 0.5 deg axis offset + 3 deg flex all moving paths degrade to 0.6-0.9 deg median (1.1-1.4 deg at 2.44 GHz), still 0 % gross. Too short a tumble is harmful for the panel (180 deg: 13-14 % gross).",
+  "findings": [
+   {
+    "topic": "Cross-check against evolve_layout",
+    "claim": "rotation_study.az_mc at K=1 reproduces evolve_layout.check() exactly with the same seed (1500 trials): 4 whips r 0.25 wl 0.91/2.7 deg/0.0 %, r 0.354 wl 0.72/173.3/8.9 %, 8 whips r 0.5 wl 0.33/1.0/0.0 %, 225 mm ring of 8 at 2.3 GHz with sources 0-30 deg up 0.15/128.2/26.3 % (evolve_study.md: 0.93/2.62/0.0, 0.75/170.7/10.6, 0.33/0.93/0.0, up to 30 %). The sphere model's single snapshot at SNR+18 dB matches a 64-sample covariance (panel 5.8 GHz 0.30/0.60 against 0.28/0.62 deg).",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md section 0",
+    "confidence": "high"
+   },
+   {
+    "topic": "(a) One-axis rotation cures ambiguous layouts",
+    "claim": "At equal total time (64 samples split over K orientations inside one symmetry sector) gross errors fall: 4 whips at 0.354/0.45/0.60/1.0 wl 7.2/4.5/9.1/20.4 % -> 0.0 % at K=2; 4x4 grid at 1.26 wl pitch 14.7 % -> 0.0 % at K=2; ring of 8 at 3.3 wl spacing (5.8 GHz) 21.8 -> 1.3 -> 0.0 % at K=1/2/4; 225 mm ring at 2.3 GHz, sources 0-30 deg up, 27.3 -> 9.9 -> 4.3 -> 0.6 % at K=1/2/4/8. Giving every orientation the full 64 samples changes little (0.1 % at K=8).",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md tables a1, a2",
+    "confidence": "high"
+   },
+   {
+    "topic": "(a) Step choice matters",
+    "claim": "Steps of 360/K deg map a symmetric layout onto itself and remove no ambiguity: the 225 mm ring stays at 27.7 % gross at K=8, 4-whip rings stay at 5-18 % until K=8 (45 deg steps). Steps must subdivide one symmetry sector (45/K deg for a ring of 8, 90/K for 4 whips or a square grid).",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md table a3",
+    "confidence": "high"
+   },
+   {
+    "topic": "(a) Rotation is not needed for the 225 mm ring failure",
+    "claim": "The elevated-source failure of the single 225 mm ring is caused by the azimuth-only estimator: the same single capture searched jointly over azimuth and elevation (0-60 deg) gives 0.0 % gross at 2.3 GHz (0.10/0.3 deg) and at 1.8 GHz, with no motion.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md table a4",
+    "confidence": "high"
+   },
+   {
+    "topic": "(a) Full-turn rotation cancels calibration bias",
+    "claim": "Body-fixed per-element phase errors give a first-order bearing bias proportional to sum_n eps_n sin(phi - b_n - theta); summed over orientations evenly spaced over 360 deg this is zero. Simulated: median error 0.15 -> 0.04 deg (K=2, 180 deg) -> 0.03 deg (K=4) for the 225 mm ring; two-ring plate azimuth median 0.13 -> 0.02 deg with 4 azimuths. Applies only to errors that turn with the array, not to site multipath.",
+    "source": "derivation + /Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md tables a3, d1",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(b) Orientation error",
+    "claim": "Unknown per-move angle error degrades accuracy roughly in proportion and does not restore gross errors: for the two-ring plate at 1.575 GHz (fixed: 0.13/0.4 deg) 0.1 deg error leaves 0.13, 0.5 deg gives 0.17-0.21, 1 deg gives 0.26-0.38 deg median (95th 0.8-1.1). Sparse grid: 0.05 -> 0.16 (0.5 deg) -> 0.29 deg (1 deg) at K=4. For a layout with nothing to fix, moving it with worse than about 0.1 deg angle knowledge makes DF worse than not moving.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md section b",
+    "confidence": "high"
+   },
+   {
+    "topic": "(b) Cable-flex phase drift",
+    "claim": "Per-element phase drift varying with orientation (modelled as flex x (sin(theta+psi_n) - sin(psi_n)), zero at home; the model is an estimate) of 1 or 3 deg has no measurable effect; 10 deg raises the 4-whip median from 0.49 to 0.60-0.70 deg and leaves the 8- and 16-element layouts within 0.01-0.02 deg. Gross-error rates are unchanged.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md section b",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(c) Panel on one axis: coverage and gain",
+    "claim": "Fixed panel azimuth error (median, 2.44/3.5/5.8 GHz): 0.38/0.26/0.16 deg on boresight, 0.79/0.54/0.29 at 60 deg, 1.58/1.05/0.63 at 75 deg, 57-67 % gross at 90 deg, 100 % behind. Stepped to K azimuths: K=2 leaves gaps (67 %/88 % of azimuths within 1 deg), K=3 gives 0 % gross with worst-azimuth gain 1.9/11.0 dBi, K=4 4.1/13.2 dBi, K=8 5.9/15.0 dBi (2.44/5.8 GHz). Element pattern cos^1.5 in power and a -20 dB incoherent back response are estimates.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md tables c1, c2",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(c) Time to cover 360 deg",
+    "claim": "Time = K x dwell + (K-1)(360/K)/rate (acceleration ignored): at 30 deg/s, 3 stops 8.2/9.5/23 s and 4 stops 9.2/11/29 s for 0.05/0.5/5 s dwell; continuous turn 12 s. At 6 deg/s 40-65 s; at 90 deg/s 2.8-5 s for short dwells. A 64-sample capture at 20 MSPS lasts 3.2 us, in which a 30 deg/s mount turns 1e-4 deg, so capture on the fly does not smear; a 4-slot switched snapshot of 4 ms would turn 0.12 deg.",
+    "source": "derivation; /Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md table c3",
+    "confidence": "high"
+   },
+   {
+    "topic": "(d) Two axes: whip plate elevation near the horizon",
+    "claim": "1.575 GHz, 4 captures, median elevation error: flat fixed plate 2.15/1.90/1.36/0.65 deg at el 0/2/5/10 deg and the up/down sign is a coin flip (28-55 % below the horizon; free-space whip model, no ground-plane shadow); flat with 4 azimuths 1.12/0.47/0.21 deg, sign still ambiguous; tilted 30 deg at 4 azimuths 0.25/0.23/0.24/0.20 deg with 0 % wrong hemisphere above el 0; on edge fails at el 0 (31 deg). At 433 MHz tilted 30 deg gives 0.4-0.5 deg against 2-4.6 deg flat. One fixed tilt without azimuth motion is worse than flat (1.7-3.3 deg).",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md table d1",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(d) Two axes: panel elevation",
+    "claim": "Fixed panel with boresight on the horizon: elevation error 0.32-0.64 deg (2.44 GHz) and 0.14-0.30 deg (5.8 GHz) up to el 60, 1.84/0.85 deg at el 75, 96-99 % gross at the zenith. An elevation axis (0/30/60/90 deg) gives 0.26-0.58 deg and 0.13-0.26 deg at every elevation with 0 % gross. Near the horizon the elevation axis buys nothing.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md table d2",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(e) Panel polarisation loss and DF",
+    "claim": "With an ideal single-polarisation flare the loss is 20 log10 cos(angle): 1.2/3.0/6.0/11.7/21.2 dB at 30/45/60/75/85 deg. DF error at 5.8 GHz stays 0.26-0.33 deg to 75 deg, 0.62 deg at 85 deg, and fails at 90 deg (97.7 % gross; 98 % at 2.44 GHz). Real flares have finite cross-polar response, so the 90 deg collapse is the ideal-element limit.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md table e1",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(e) Polarisation estimation by rolling about boresight",
+    "claim": "Polarisation-angle error (median/95th) against the number of roll angles over 180 deg at 5.8 GHz, 20 dB: K=1 46/85 deg (none), K=2 22/45 deg (sign ambiguous), K=3 0.3/0.6, K=4 0.3/0.5, K=8 0.3/0.5 deg; at 0 dB SNR 1.1/1.0/0.7 deg for K=3/4/8. It is a power measurement across captures, so source power changes between captures of 1 dB (1 sigma) give 3.3 deg (K=4) or 2.7 deg (K=8) and 3 dB gives 10.0 or 7.5 deg. Direction error improves slightly (0.31 -> 0.18 deg at K=8).",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md table e2",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(f) Whole sphere, equal time: number of axes",
+    "claim": "24 captures, sources anywhere on the sphere with random linear polarisation, L = 720 deg of axis travel (24 s at 30 deg/s), great-circle median / 95th / gross / polarisation error. Plate 1.575 GHz: fixed 3.1/135/46 %/61 deg; azimuth only 5.4/125/47 %/61; tilt only 0.39/2.4/0 %/4.0; raster 0.15/0.5/0 %/0.6; spiral 0.13/0.4/0 %/0.3; 2-axis tumble 0.13/0.4/0 %/0.3; 3-axis tumble 0.11/0.3/0 %/0.3. Panel 5.8 GHz: fixed 70/152/56 %/55; azimuth only 0.30/0.8/1 %/43; roll only 70/154/57 %/17; raster 0.33/1.2/0 %/4.4; spiral 0.33/1.4/0 %/2.5; 2-axis tumble 0.31/1.8/0 %/2.5; 3-axis tumble 0.25/1.4/0 %/1.2; evolved 0.25/0.6/0 %/0.7.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md tables f1",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(f) Accuracy against path length",
+    "claim": "Plate, 3-axis tumble at L = 90/180/360/720/1440 deg: median 0.34/0.24/0.17/0.11/0.08 deg, 0 % gross throughout, polarisation 7.3/1.1/0.6/0.3/0.3 deg. Panel 5.8 GHz, 3-axis tumble: gross 30/14/0/0/0 %, polarisation 18/5.7/3.9/1.2/0.6 deg; spiral gross 25/3/0/0/0 %; azimuth only 31/2/1/1/1 %. Panel 2.44 GHz, 3-axis tumble: gross 31/14/2/1/0 %, median 2.3/1.2/0.9/0.65/0.44 deg. Short tumbles (under 360 deg) are worse than a plain azimuth turn for the panel.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md tables f1; plot /Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/f_paths.png",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(f) Optimised paths",
+    "claim": "Paths of 6 waypoints x 3 axes designed with array16.evolve (evolve, 496 evaluations, then reselect) against random_search at the same budget and the plain 3-axis tumble; search score (lower is better): plate L=180 0.77/0.91/0.85, plate L=720 0.40/0.41/0.42, panel L=180 5.05/5.27/6.50, panel L=720 0.70/0.76/1.33. On the independent check the evolved panel path at 720 deg gives 95th 0.6 deg and polarisation 0.7 deg against 1.4 and 1.2 deg for the tumble; for the plate there is no difference. Random search is within 10 % of the evolved path, so path shape is second order once the sphere is covered.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md section f; waypoints in /Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/results.json (f.*.designs)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(f) Imperfect orientation knowledge on multi-axis paths",
+    "claim": "L = 720 deg, per-axis errors unknown to the estimator. Plate 3-axis tumble median: perfect 0.11, jitter 0.2 deg 0.15, jitter 1 deg 0.51, axis zero offset 0.5 deg 0.41, flex 3 deg 0.17, all three 0.66 deg (95th 1.4), 0 % gross. Panel 5.8 GHz 3-axis tumble: 0.25/0.29/0.69/0.57/0.32/0.88 deg, 0 % gross, polarisation 1.2 -> 2.0 deg. Panel 2.44 GHz: 0.65 -> 1.12 deg. Two- and three-axis paths degrade alike; the extra axis does not add sensitivity beyond its own angle error.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md tables f2",
+    "confidence": "medium"
+   },
+   {
+    "topic": "(f) Where the fixed array already works",
+    "claim": "Plate, sources 15-60 deg up, estimator told the hemisphere: fixed 0.29/0.7 deg, azimuth turn 0.03/0.2 deg (bias cancellation), 3-axis tumble 0.10/0.3 deg; without the hemisphere prior the fixed and azimuth-only plate show 52-55 % gross from the up/down mirror. Panel 5.8 GHz, sources within 45 deg az / 30 deg el of boresight: fixed 0.28/0.6 deg with polarisation unknown (44 deg); roll about boresight 0.05/0.2 deg and 0.3 deg polarisation; 3-axis tumble at 720 deg 0.20/0.6 deg and 0.7 deg; 2-axis spiral and tumble are worse than fixed in direction (0.37 median, 95th 1.9-2.5 deg) because many captures point away.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md tables f3",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Model limits",
+    "claim": "Whips are short dipoles in free space with no ground-plane shadow (so the flat plate's up/down ambiguity is a model property; a metal plate would shadow the lower hemisphere instead), the panel element is cos^0.75 in amplitude with a -20 dB incoherent back response, there is one source, no multipath, no mutual coupling and a static scene over the whole path; all are estimates. Each capture is assumed to carry the full 16-element snapshot at 20 dB SNR, and the polarisation estimate assumes constant source power between captures.",
+    "source": "estimate: model assumptions stated in the docstring of /Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation_study.py",
+    "confidence": "high"
+   }
+  ],
+  "files": [
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation_study.py",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/results.json",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/a_gross_vs_K.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/f_paths.png",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables_quick.md",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/results_quick.json",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/full_run.log"
+  ],
+  "open_questions": [
+   "The whip model is free-space (no ground-plane shadow): with the real 500 mm metal plate the lower hemisphere is shadowed rather than mirrored, so the 41-55 % 'gross' figures for the fixed and azimuth-only plate on the whole sphere overstate the real fault; an element pattern over a finite ground plane was not simulated.",
+   "Sources are assumed static and of constant power over the whole path (3-48 s). Polarisation recovery degrades to 3-10 deg with 1-3 dB fading between captures; direction finding of bursty or moving emitters during a tumble was not simulated.",
+   "Multipath and site errors (fixed in the world frame) were not modelled; the bias-cancellation gain from full-turn rotation (0.15 -> 0.03 deg) applies only to errors that turn with the array, and outdoors REDESIGN expects 1-3 deg from the site.",
+   "Cable flex was modelled as a zero-mean per-element drift; a systematic drift (all cables wound the same way on one axis) or a step change at a connector was not tested, nor were slip rings or rotary joints.",
+   "A 16-element snapshot needs 4 switched slots on 4 channels; capture on the fly is free of smear only if the 4 slots complete within about 1 ms at 30 deg/s (0.03 deg). The real slot time including per-retune recalibration was not modelled.",
+   "The three sibling studies (array3d_study.md, band_plan_study.md, topology_study.md) did not exist when this ran, so overlap with topology_study's rotation synthesis and array3d's panel-on-rotator case was not checked.",
+   "Path optimisation used 6 waypoints, 16 captures and 496 evaluations at one frequency per array; no acceleration, torque or cable-wrap limits were imposed on the paths, so the 30 deg/s time axis is an assumption for a 1-2 kg payload.",
+   "An earlier pass of this task left the draft script and tables_quick_0a.md / results_quick_0a.json in experiments/rotation/; they are superseded by tables.md and results.json and can be deleted."
+  ]
+ },
+ "investigate:mechanics": {
+  "summary": "Mechanics lens: what it takes to move rev B on one to three axes, and what that costs. Derived numbers come from mech_study.py (this pass) and mech/rotation_mech.py (an earlier pass), both in the scratchpad. External facts carry their source URLs in the findings.\n\n**Payload.** The panel module (tile, core, two bladeRFs, enclosure) is about 1.3 kg (estimate). The whip plate is the heavy part. 500 mm of 2-3 mm aluminium alone weighs 1.06-2.03 kg, so plate + 16 whips + core + radios comes to 2.3-3.3 kg. Mounting the board and radios under the plate balances the whips.\n\n**Loads.** At the DF study's 30 deg/s (60 deg/s\u00b2), the acceleration torque is 0.07 N m for the plate and at most 0.02 N m for the panel.\n- **Gyroscopic coupling** (Euler's equations) with all three axes at 30 deg/s is 0.016 N m, which is negligible. It reaches 2.3 N m only at camera-gimbal speed (360 deg/s). A fast-spinning \"gyroscope\" adds load and gives DF nothing.\n- **Wind sizes the drives.** Face-on, the plate takes 19 N and up to about 2.4 N m at 11 m/s, and 3.9 N m at 14 m/s. The panel stays at or below 0.3 N m.\n- **DIY drive.** A NEMA 17 through SatNOGS-style 54:1 worm-and-belt gearing gives about 10-16 N m and self-locks, but 30 deg/s needs 270 rpm at the motor.\n- **Ham rotators.** The Yaesu G-5500DC gives 59/118 N m at 6/2.8 deg/s, with a 3-minute duty limit.\n- **Tipping.** A 9 kg tripod set-up with the plate face-on at 1.5 m tips over at about 9 m/s. Staying up at 14 m/s needs about 23 kg in total.\n\n**Joints.** Rev B's conducted PN calibration covers everything after each element. Board-to-radio coax and the tile jumpers can therefore flex in a cable wrap: phase-stable assemblies move \u00b12-4 deg up to 8 GHz, and the 100 ms calibration slot removes it. Whips, plate and board must still be one rigid rotor.\n\nNo DF use needs unlimited rotation:\n- I folded the DF study's three-axis tumble into \u00b1180 deg and ran it through that study's own model. DF is unchanged: plate at 1.575 GHz 0.14/0.3 deg against 0.11/0.3; panel at 5.8 GHz 0.25/0.8 against 0.25/1.4 (median/95th).\n- The cost is about 1 s of reversals. Stop-and-go pose sets take 1-36 % longer.\n\nSo the recommended layout is:\n- radios on the rotor;\n- only USB and 24 V crossing a cable wrap with less than 360 deg of travel, so a single-turn absolute encoder is never ambiguous.\n\nSlip rings for power are cheap ($20 for 12 circuits at 2 A), but USB 3 slip rings are quote-only. RF rotary joints run from $46 (one channel, 6 GHz) to $1,067 (two channels, 4.5 GHz). A Wi-Fi radio on the rotor sits in the panel's band.\n\n**Orientation knowledge.**\n- **Requirement.** The DF study tolerates 0.2 deg of jitter. 1 deg of jitter or a 0.5 deg zero offset multiplies the median error by 2-4.\n- **IMUs.** MEMS IMU fusion gives 2-3.5 deg (BNO08x), and motor magnets corrupt magnetometer heading. An accelerometer can still measure mast tilt to about 0.1 deg.\n- **Encoders.** AS5048 encoders have 0.06 deg rms noise and \u00b10.8-1.2 deg of repeatable nonlinearity. Calibrated on the output shaft, they reach about 0.1 deg.\n- **Absolute offsets.** ADS-B aircraft at 1090 MHz broadcast GPS positions every second, which gives the plate an absolute reference.\n- **Timing.** Latch encoder angles on the RP2040 trigger. At 30 deg/s, 0.1 deg needs time tags within 3.3 ms. Motion during a 64-sample snapshot is about 1e-4 deg. Multi-slot HackRF codes lasting tens of ms need a stop.\n- **Stiffness.** A mast must stay above about 8-10 Hz. Otherwise it settles for seconds and tilts by up to degrees in wind.\n\n**\"Gyroscopic\" rotation in any direction.**\n- With a three-ring gimbal or an azimuth-tilt-spin mount, 35-43 % of random constant-rate turns need a joint faster than 3x the body rate, and 10-11 % faster than 10x (gimbal lock).\n- Pointing a spin axis first (azimuth + tilt) and then spinning gives constant rotation about any direction, with one joint moving at 1x.\n- A sphere on omni-wheels has no singularity, but no cable can reach it, and IMU-only attitude misses the 0.2 deg budget about 10x.\n\n**Cost and effort against REDESIGN** ($50 manual turntable, 520 h):\n- **Azimuth turntable** with output encoder and cable wrap: +$50-130, +40-70 h. It also automates the manifold measurement: \u00b160 x \u00b160 deg at 5 deg steps takes about 30 min.\n- **Tilt axis:** +$100-170 and +30-50 h DIY, or a G-5500DC for about $750.\n- **Third axis:** +$100-150, +40-70 h.\n- **DJI RS 4 Pro** ($869, 4.5 kg): panel only.\n- **Hexapods** (\u00b17.5-21 deg) and **ring gimbals**: not recommended.",
+  "findings": [
+   {
+    "topic": "Payload mass and inertia",
+    "claim": "Panel module (tile, core, two bladeRFs, enclosure) is about 1.3 kg with inertia 0.005-0.015 kg m^2; the 500 mm whip plate dominates: the 6061 plate alone is 1.06-2.03 kg (2-3 mm, disc or square), so plate + 16 whips + core + radios is 2.3-3.3 kg with I about the normal 0.05-0.10 kg m^2. Board and radios mounted under the plate put the CG within a few mm of the plate plane (tilt axis self-balanced).",
+    "source": "derivation: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech_study.py section 1 (component masses ESTIMATE; Al 2.70 g/cm3, https://en.wikipedia.org/wiki/6061_aluminium_alloy)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Acceleration torque",
+    "claim": "At 30 deg/s with 60 deg/s^2: 0.07 N m (plate azimuth or spin), 0.04 N m (plate tilt), <=0.02 N m (panel any axis); at camera-gimbal 360 deg/s and 720 deg/s^2: 0.85 N m for the plate.",
+    "source": "derivation: mech_study.py section 2a, mech_tables.txt table 2a",
+    "confidence": "high"
+   },
+   {
+    "topic": "Gyroscopic torque",
+    "claim": "With azimuth, tilt and spin all turning at 30 deg/s the gyroscopic term w x Iw is 0.016 N m for the plate and 0.001 N m for the panel (total 0.033 / 0.003 N m); 0.15 N m at 90 deg/s and 2.3 N m at 360 deg/s. Gyroscopic effects are irrelevant at DF speeds; spinning fast only adds load.",
+    "source": "Euler's equations https://en.wikipedia.org/wiki/Euler%27s_equations_(rigid_body_dynamics); derivation mech_study.py section 2c",
+    "confidence": "high"
+   },
+   {
+    "topic": "Wind load",
+    "claim": "Plate face-on (Cd 1.28, 0.196 m2): 11 / 19 / 31 N at 8.6 / 11.1 / 14.2 m/s (Beaufort 5-6), torque about a centre axis bounded by a quarter-chord arm at 1.4 / 2.4 / 3.9 N m; panel face-on 2.3-6.3 N and <=0.12-0.32 N m. Wind, not inertia or gyroscopic coupling, sizes the plate's drives.",
+    "source": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/shape-effects-on-drag/ ; https://www.grc.nasa.gov/www/K-12/airplane/kitecp.html ; https://www.hko.gov.hk/en/education/weather/meteorology-basics/00112-beaufort-wind-scale.html ; derivation mech_study.py section 3a (arm bound ESTIMATE)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Tripod tip-over (safety)",
+    "claim": "With the plate face-on at 1.5 m, a 9 kg tripod set-up (legs at 0.45 m) tips at about 9 m/s; it needs about 23 kg total to survive 14 m/s and about 45 kg for 20 m/s gusts (30 kg at 1.0 m height). The panel alone survives to about 20 m/s. Ballast, guy lines or taking the plate down above Beaufort 5 are required outdoors.",
+    "source": "derivation: mech_study.py section 3b and extra_calcs.txt (tripod geometry ESTIMATE); consistent with mech/rotation_mech_tables.txt table 12",
+    "confidence": "medium"
+   },
+   {
+    "topic": "DIY drive capability",
+    "claim": "A NEMA 17 (0.59 N m holding, about $10-14) through the SatNOGS v3 30:1 worm x 1.8 belt gives about 10-16 N m at the output (efficiency 0.3-0.5 ESTIMATE) and self-locks, but 30 deg/s needs 270 rpm at the motor (SatNOGS lists 7 deg/s); a 6:1 belt gives about 3 N m and 300 deg/s but is back-drivable, so it needs holding current or a brake in wind. Microstepping adds resolution, not accuracy: incremental torque at 16 microsteps is about 10 % of holding torque.",
+    "source": "https://omc-stepperonline.com/nema-17-bipolar-59ncm-84oz-in-2a-42x48mm-4-wires-w-1m-cable-and-connector.html ; https://wiki.satnogs.org/SatNOGS_Rotator_v3 ; https://www.analog.com/en/resources/analog-dialogue/articles/mastering-precision-understanding-microstepping.html ; https://www.ti.com/document-viewer/lit/html/SLOA293A",
+    "confidence": "medium"
+   },
+   {
+    "topic": "SatNOGS rotator v3",
+    "claim": "Open-source az-el rotator: $300-400, two NEMA 17 (or DC motors), single-start worm i = 30 plus GT2 belt 1.8-2.0, 7 deg/s listed, homing end-stops with axis encoders as a design goal (<1 deg, no measured accuracy), ferrite beads on motor leads, about 5 kg.",
+    "source": "https://wiki.satnogs.org/SatNOGS_Rotator_v3",
+    "confidence": "high"
+   },
+   {
+    "topic": "Yaesu G-5500DC",
+    "claim": "Azimuth 360 deg in 60 s +/-20 % (about 6 deg/s), elevation 180 deg in 65 s (2.8 deg/s); rotation torque 6 kg m az / 12 kg m el, braking 40 kg m; pointing accuracy +/-4 percent (of scale); maximum continuous operation 3 minutes (up to 5 min, then rest 15 min); 450 deg azimuth range; about $750. Not a continuous-duty or sub-degree instrument without added output encoders.",
+    "source": "https://deltron.nl/cdn/shop/files/Yaesu_G-5500DC_Manual.pdf (text in scratchpad/rotation/txt/g5500dc.txt) ; https://wiki.satnogs.org/G-5500",
+    "confidence": "high"
+   },
+   {
+    "topic": "SPID rotators",
+    "claim": "SPID RAS lists at EUR 1,240 incl. VAT with 1 deg precision and reed-switch sensing; the RAS/HR (hall sensor, MD-02/HR controller, about EUR 1,435 per SatNOGS) is specified at 0.2 deg, measured steps land within 0.05 deg, but azimuth backlash measured about 0.35 deg.",
+    "source": "https://www.wimo.com/de/ras ; https://bobatkins.com/radio/spid_ras_hr.html ; https://wiki.satnogs.org/Review_of_Commercial_Rotator",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Other low-cost two-axis mounts",
+    "claim": "Sky-Watcher AZ-GTi alt-az mount: 11 lb (5 kg) payload, fastest slew 800x sidereal (about 3.3 deg/s), dual encoders, $525, Wi-Fi control. KrakenRF Discovery Drive az-el: $799, ESP32-S3 with 2.4 GHz Wi-Fi, Hamlib over USB-serial or TCP, limits az 0-360 / el 0-90, shipping estimated August 2026. Both carry a 2.4 GHz radio inside the panel's band, so use their wired interfaces and turn the radio off.",
+    "source": "https://www.skywatcherusa.com/products/az-gti-mount ; https://www.highpointscientific.com/brands/sky-watcher-az-gti-multi-purpose-mount-tripod-s21110 ; https://www.crowdsupply.com/krakenrf/discovery-drive ; https://www.crowdsupply.com/krakenrf/discovery-drive/updates/compatible-software",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Brushless camera gimbal",
+    "claim": "DJI RS 4 Pro: 4.5 kg tested payload (balanced camera), pan 360 deg continuous, tilt -112 to +214 deg, roll -95 to +240 deg, 360 deg/s, gimbal 1.24 kg, 30 Wh battery, $869; the RS SDK (RS 5, RS 4, RS 4 Pro, RS 3 Pro) can set position and read motor and attitude data. Torque and angle accuracy are unpublished. The 1.3 kg panel module fits; the 2.3-3.3 kg, 500 mm plate does not (arm clearance, 2-4 N m wind torque). Angles come from the gimbal's IMU, so the absolute reference must come from RF.",
+    "source": "https://www.dji.com/au/rs-4-pro/specs ; https://store.dji.com/product/dji-rs-4-pro?vid=163971 ; https://www.dji.com/rs-sdk ; https://ardupilot.org/copter/docs/common-djirs2-gimbal.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Hexapods / Stewart platforms",
+    "claim": "Commercial hexapods give small angles: PI H-811 +/-10 / +/-10 / +/-21 deg with 5 kg; PI H-824 +/-7.5 / +/-7.5 / +/-12.5 deg with 10 kg; quote-only. A DIY servo Stewart platform was built for about $250, 'two orders of magnitude' below commercial. The DF lens needs 30-90 deg tilts, so hexapods only suit small-angle dithering.",
+    "source": "https://www.physikinstrumente.com/en/products/parallel-kinematic-hexapods/h-811i2-6-axis-miniature-hexapod-700886 ; https://www.pi-usa.us/en/products/6-axis-hexapods-parallel-positioners ; https://arxiv.org/abs/1712.02923",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Roll-over-azimuth positioners",
+    "claim": "The standard spherical-measurement positioner (a roll axis on an azimuth turntable) covers 360 x 360 deg; NSI-MI systems take 4.5-454 kg depending on CG offset, sold as quoted systems. For array16 the DIY equivalent is az + tilt (+ roll about boresight for polarisation).",
+    "source": "https://www.nsi-mi.com/system-solutions/near-field-systems/spherical-near-field/roll-over-azimuth/roll-over-azimuth-scanner-system",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Gimbal lock for 'rotate along any direction'",
+    "claim": "One full constant-rate turn about a random axis from a random start (300 trials): with an az + tilt + spin mount the fastest joint must run at a median 2.4x, 90th percentile 11x, 99th about 100x the body rate (43 % of turns above 3x, 11 % above 10x); a three-ring 'gyroscope' gimbal gives 2.3x / 9.7x / 54x (35 % / 10 %). Pointing the spin axis along the desired rotation axis first (a tilting turntable) gives exactly 1x with one moving joint.",
+    "source": "derivation: mech_study.py section 4 (mech_tables.txt table 4); consistent with mech/rotation_mech_tables.txt table 3c",
+    "confidence": "high"
+   },
+   {
+    "topic": "Keyhole and fourth gimbal",
+    "claim": "Two-axis az-el mounts cannot track through the zenith keyhole (azimuth rate diverges; dynamic trouble from about 70-80 deg elevation). Three gimbals lose a degree of freedom when two axes align (Apollo 11's IMU warned at 70 deg and froze at 85 deg); a fourth gimbal avoids lock only if actively driven.",
+    "source": "https://en.wikipedia.org/wiki/Keyhole_problem ; https://archive.org/download/nasa_techdoc_19660022787/19660022787.pdf ; https://en.wikipedia.org/wiki/Gimbal_lock",
+    "confidence": "high"
+   },
+   {
+    "topic": "Sphere on omni-wheels",
+    "claim": "The Atlas platform (a sphere on three omni-wheels) gives unbounded, singularity-free rotation about any axis. For array16 no cable can reach the payload: it needs battery, rotor computer and a link, and has only IMU attitude (2-3.5 deg, about 10x over the 0.2 deg budget) without external optical tracking. Not recommended.",
+    "source": "https://carleton.ca/johnhayes/wp-content/uploads/Atlas-IJMRS-Published.pdf ; derivation from the IMU finding",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Cable wraps are enough (no slip rings needed)",
+    "claim": "Orientation is periodic in azimuth and spin, so DF depends only on the set of poses. The DF study's three-axis tumble (L = 720 deg) folded into +/-180 or +/-270 deg of travel gives the same DF in that study's own model: plate 1.575 GHz 0.14/0.3 deg and 0.09/0.2 deg against 0.11/0.3 as drawn; panel 5.8 GHz 0.25/0.8 and 0.23/1.2 against 0.25/1.4; panel 2.44 GHz 0.69/2.2 against 0.65/4.4 (median/95th, 0-1 % gross). The cost is 1-2 reversals, about 1 s. Rotation synthesis in the topology study uses 45-180 deg spans.",
+    "source": "derivation: mech_study.py section 5b using experiments/rotation_study.py sphere_mc read-only (mech_tables.txt table 5b); /Users/ascalva/Documents/code/sdr_array/array16/experiments/topology_study.py demo_rotation",
+    "confidence": "high"
+   },
+   {
+    "topic": "Stop-and-go time with travel limits",
+    "claim": "Visiting the tumble's 24 poses stop-and-go at 30 deg/s and 60 deg/s^2 takes 35.5 s with effectively unlimited travel, 39.9 s (plate) / 48.3 s (panel) with azimuth and spin limited to +/-180 deg (+12-36 %), and almost the same for L = 1440 deg (54.2 vs 53.6 s). On-the-fly capture along the path takes 24.5 s.",
+    "source": "derivation: mech_study.py section 5 (greedy + 2-opt/or-opt planner, a heuristic)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Encoder ambiguity and travel",
+    "claim": "A single-turn absolute encoder on an output shaft cannot tell +90 from -270 deg, so keep each wrapped axis under 360 deg of travel (about +/-175 deg with hard stops). The encoder is then unambiguous after power loss, no homing is needed, and a cable wrap cannot be wound the wrong way.",
+    "source": "derivation (geometry); travel cost from mech_study.py section 5",
+    "confidence": "high"
+   },
+   {
+    "topic": "AS5048 / AS5600 accuracy",
+    "claim": "AS5048A/B: 14-bit, output noise 2.73 LSB rms = 0.06 deg; INL +/-0.8 deg at 25 C with optimum magnet placement, +/-1 deg over temperature, +/-1.2 deg with 0.5 mm displacement and -40 to 150 C. AS5600: 12-bit (0.088 deg LSB), system INL +/-1 deg, noise 0.015-0.043 deg rms. The error is repeatable (an AS5047 user reports about +/-1 deg out of the box with a 180-deg-period shape removed by a lookup table); distributors quote 0.05 deg with external linearisation and averaging. AS5048A boards cost about $17-22.",
+    "source": "https://www.infineon.com/row/public/documents/24/49/infineon-as5048a-as5048b-datasheet-en.pdf (v1-11, text extracted) ; https://www.infineon.com/assets/row/public/documents/24/49/infineon-as5600-datasheet-en.pdf (v1-06) ; https://hackaday.io/project/11224/log/38559 ; https://www.mouser.com/es/ams-as5048-sensor/ ; https://shop.iflight.com/as5048a-magnetic-encoder-pro262",
+    "confidence": "high"
+   },
+   {
+    "topic": "MEMS IMU orientation",
+    "claim": "BNO08x fusion: rotation vector 2.0 deg static / 3.5 deg dynamic, game rotation vector 1.5 / 2.5 deg with 0.5 deg/min heading drift, geomagnetic vector 3.0 / 4.5 deg (Adafruit BNO085 board $29.50). Users report NDOF heading errors up to +/-10 deg near motors; stepper magnets move with the axes, so hard-iron calibration does not hold. An IMU fails the 0.2 deg budget about 10x for heading; use it only for tilt and vibration.",
+    "source": "https://docs.sparkfun.com/SparkFun_VR_IMU_Breakout_BNO086_QWIIC/single_page ; https://community.bosch-sensortec.com/t5/MEMS-sensors-forum/BNO055-Home-Robot-Tips/m-p/13176 ; https://www.adafruit.com/products/4754",
+    "confidence": "high"
+   },
+   {
+    "topic": "Accelerometer tilt",
+    "claim": "1 mg of accelerometer offset equals 0.057 deg of tilt; ADI quotes compensated tilt accuracy of 0.1 deg (ADXL345) and 0.005 deg (ADXL355) at 25 C, against about 2 deg uncompensated from a 35 mg offset. This is the right sensor for wind-driven mast tilt that axis encoders cannot see.",
+    "source": "https://www.analog.com/en/resources/analog-dialogue/articles/how-to-improve-the-accuracy-of-inclination-measurement-using-an-accelerometer.html",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Orientation-knowledge requirement",
+    "claim": "From the DF lens: 0.2 deg per-axis jitter costs about +0.03-0.04 deg median; 1 deg jitter or a 0.5 deg axis zero offset raises the median error 2-4x (plate 1.575 GHz multi-axis 0.11-0.15 to 0.40-0.55 deg). Cable-flex phase drift of 3 deg is minor. My run: an unmeasured 0.35 deg (1 sigma) rocking within SPID-class backlash doubles the plate median (0.11 to 0.23 deg). Measure on the output shaft at the capture instant.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md (sections b, f2); mech_tables.txt table 5b",
+    "confidence": "high"
+   },
+   {
+    "topic": "Attitude budgets by option",
+    "claim": "RSS 1-sigma estimates: DIY turntable with a calibrated AS5048A on the output shaft, RP2040-latched, stiff 1 m mast, beacon-referenced: about 0.14 deg; hobby rotator as delivered (Discovery Drive class, +/-1.5 deg spec): about 0.7 deg; hobby rotator plus output encoders and beacon calibration: about 0.3 deg; IMU only: 2-3.5 deg.",
+    "source": "derivation with ESTIMATE components: /private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech/rotation_mech_tables.txt table 13",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Absolute reference from ADS-B",
+    "claim": "ADS-B aircraft broadcast their satellite-navigation positions at 1090 MHz, updated about once per second. 1090 MHz falls in the whip plate's band, so the plate can fit its mount's axis offsets and north reference against aircraft in any pose, with no survey. The panel can then share the calibrated mount, or use a fixed 2.4/5.8 GHz beacon.",
+    "source": "https://en.wikipedia.org/wiki/Automatic_Dependent_Surveillance%E2%80%93Broadcast ; method is a proposal",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Time-tagging",
+    "claim": "Orientation error = rate x timing error: 0.1 deg needs tags within 16.7 / 3.3 / 1.1 / 0.28 ms at 6 / 30 / 90 / 360 deg/s. Host USB timestamps are too loose, so latch the encoder angles in hardware on the RP2040 TRIG/marker line (one extra wire to the rotator MCU).",
+    "source": "derivation: mech_study.py section 6b",
+    "confidence": "high"
+   },
+   {
+    "topic": "Moving while capturing",
+    "claim": "A 64-sample snapshot at 20 MSPS turns 1e-4 deg at 30 deg/s, and four 15 us switching slots turn 0.002 deg, so on-the-fly capture is fine. Long integrations are not: the plate's outer whip drifts 325 deg/s at 2.3 GHz (849 deg/s at 6 GHz) at 30 deg/s, so 3 deg of phase allows 9 ms (3.5 ms). A panel on a 0.12 m crossboom allows 4.8 ms at 5.8 GHz. HackRF-mode codes spanning tens of ms need a stop or about 5 deg/s or less. Doppler is at most 0.2-2.4 Hz at 30 deg/s.",
+    "source": "derivation: mech_study.py section 6a",
+    "confidence": "high"
+   },
+   {
+    "topic": "Settling, mast stiffness and wind tilt",
+    "claim": "Cantilever-mast model with the 3.5 kg plate head: a 25x2 mm aluminium mast gives a 3.7 Hz first mode at 1 m and 1.3 Hz at 2 m, settling 2.5-18 s (damping 5-2 %); 40x3 mm at 1 m gives 9.2 Hz and 1.0-2.6 s. Face-on at 15 m/s the top tilts 0.24 deg (40x3 mm, 1 m) to 6 deg (25x2 mm, 2 m), unseen by axis encoders. An abrupt 60 deg/s^2 stop leaves 0.17 deg of ringing at 3 Hz and 0.02 deg at 8 Hz. Jerk-limited or input-shaped moves cut residual vibration (a factor of 25 in Singer and Seering's RMS case) for about one mode period of delay.",
+    "source": "derivation: mech/rotation_mech_tables.txt table 5 and mech_tables.txt table 7 (damping ESTIMATE); https://dspace.mit.edu/handle/1721.1/6048",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Flexing coax is inside rev B's calibration",
+    "claim": "Rev B injects PN calibration behind every flare and jack and covers everything after it, from the LNA to the radios, with a calibration slot every 100 ms. Coax between board and radios (and the tile jumpers; the CAL feed is common-mode) can therefore flex in a cable wrap. At 30 deg/s a 100 ms slot sees 3 deg of wrap travel, about 0.02 deg of phase (ESTIMATE). Whip-to-jack cables and antennas are outside the calibration plane, so whips, plate and board must rotate as one rigid body. In HackRF mode a single coax carries all four channels, so its drift is common-mode.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md sections 2 and 6; estimate from the cable finding",
+    "confidence": "high"
+   },
+   {
+    "topic": "Coax phase stability with flexure",
+    "claim": "EMC RF Labs/Smiths low-loss assemblies, coiled on a mandrel: within +/-2 deg up to 4 GHz, +/-4 deg at 4-8 GHz, +/-6 deg at 8-18 GHz. Gore PHASEFLEX at 18 GHz, wrapped 360 deg on a 57 mm radius mandrel: guaranteed type 0U +/-2.0 typical / +/-4.7 maximum; non-guaranteed types +/-2 to +/-15 deg typical (0M). Linear scaling to 5.8 GHz gives about 0.6-4.8 deg (ESTIMATE). No datasheet figure was found for RG-316-class cable; a vendor guide (unverified) says 5-20 deg per 90 deg flex at 18 GHz. PTFE cables also step in phase near 19 C (15-25 C knee); foamed TF4 avoids it.",
+    "source": "https://www.smithsinterconnect.com/getattachment/08eb4a13-193b-4394-bca1-55065ba23953/PHASE-FLEXURE-ENG-DATA.pdf ; https://www.gore.com/sites/default/files/resources/pdf/2025-07/gore-phaseflex-gmca-datasheet-us.pdf ; https://timesmicrowave.com/phase-track-cable-tf4-dielectric-the-knee-replacement/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Slip rings",
+    "claim": "Power and control: Adafruit 1196, 12 circuits at 2 A / 240 V, 300 rpm, $19.95. USB: a through-bore USB slip ring at about $65 (indicative, data rate not stated). 5 Gbps USB 3 slip rings (ByTune, Ingiant) are quote-only. Gigabit Ethernet: about $360 indicative through-bore (DirectIndustry) to $2,821-3,093 (DSTI). Continuous rotation of the bladeRF four-radio mode is therefore not a hobby-priced option.",
+    "source": "https://www.adafruit.com/products/1196 ; https://directindustry.com/prod/jiujiang-ingiant-technology-co-ltd/product-204639-2266055.html ; https://www.ingiant-slipring.com/ingiant-solid-shaft-30mm-series-3-0-usb-slip-ring-for-machine-vision-product/ ; https://store.dsti.com/ese2358-45-circuit-slip-ring ; https://store.dsti.com/eset8-8-circuit-slip-ring",
+    "confidence": "medium"
+   },
+   {
+    "topic": "RF rotary joints",
+    "claim": "Single-channel: Pasternack PE1401, DC-6 GHz, VSWR 1.15, 100 rpm average, listed $46.43; Fairview FMRJ1002, DC-18 GHz, about $464. Two-channel DC-4.5 GHz (Zomwave): $1,066.67, 100 rpm. Four-channel DC-6 GHz (Qualwave): quote. Only one channel can sit on an axis without a multi-channel joint, so RF across a continuous joint suits HackRF mode (one combined coax), not four channels.",
+    "source": "https://pasternack.com/rotary-joint-6-ghz-sma-female-pcb-pin-connectors-pe1401-p.aspx ; https://octopart.com/part/fairview-microwave/FMRJ1002 ; https://zomwave.com/2-channel-rf-rotary-joint-operating-to-4-5-ghz-sma-female-to-sma-female-straight-adapter ; https://www.qualwaves.com/rotary-joints-product/",
+    "confidence": "medium"
+   },
+   {
+    "topic": "What crosses the joints (radios on the rotor)",
+    "claim": "Put the core, tile and radios on the rotor. Then only two USB 3 links (one per bladeRF), the controller's USB and DC power cross; the 10 MHz reference, J51 trigger and all RF stay on the rotor. USB 3 high-power devices draw at most 900 mA (4.5 W) and passive copper USB 3 cables reach about 3 m, which the wrap's service loop eats into. HackRF One streams 8-bit I/Q up to 20 Msps over USB 2.0, so HackRF mode can cross a USB 2 slip ring at full rate. libbladeRF's SC8_Q7 8-bit format targets USB 2-limited hosts, at reduced rates.",
+    "source": "https://en.wikipedia.org/wiki/USB_3.0 ; https://www.sparkfun.com/hackrf-one.html ; https://greatscottgadgets.com/hackrf/one/ ; https://www.nuand.com/2023/02 ; /Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md section 5",
+    "confidence": "high"
+   },
+   {
+    "topic": "Power across the joint",
+    "claim": "Rotor loads: 7.3-13.3 W for the board, about 22 W with two bladeRFs at the USB 3 bus limit, about 40 W with a rotor computer and inner-axis steppers (ESTIMATE). At 5 V that is 4.5-8.1 A (3-5 pairs of 2 A circuits); at 24 V with a 90 % rotor converter it is 1.0-1.9 A (one pair). Send 24 V and make 5 V on the rotor. The rotor's 5 V source must advertise 3 A on USB-C for the board's current interlock.",
+    "source": "derivation: mech_study.py section 8; board power from REDESIGN.md section 10",
+    "confidence": "high"
+   },
+   {
+    "topic": "Wi-Fi on the rotor is in-band",
+    "claim": "A +20 dBm Wi-Fi radio 0.15-1 m from the panel puts -2 to -36 dBm on an element at 2.44/5.8 GHz (Friis, element gain 0 or -10 dBi ESTIMATE), against the QAMP's -20 dBm compression point. A battery + Wi-Fi rotor, or a rotator's own ESP32/AZ-GTi Wi-Fi, desensitises the panel. Use wired links, or switch the radios off during captures.",
+    "source": "derivation: mech/rotation_mech_tables.txt table 8; REDESIGN.md section 5 (QAMP compression)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Automated manifold measurement",
+    "claim": "REDESIGN plans an azimuth-only, +/-60 deg, 5 deg manifold by hand ('a weekend'). On a motorised az-el positioner, a 2-D +/-60 x +/-60 deg grid at 5 deg (625 poses, 38 frequencies 2.3-6 GHz, 50 ms per point, 1 s settle) takes about 30 min; four roll angles take about 2 h; the whip plate (72 azimuths x 7 tilts x 20 frequencies) takes about 18 min. Use the operational mount: the mount's own metal is part of the manifold. A phase centre 100 mm off the axis with the horn at 5 m causes up to 1.15 deg direction error and 0.35 dB swing.",
+    "source": "derivation: mech_study.py section 9; mech/rotation_mech_tables.txt table 14; REDESIGN.md section 6",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Plate sag and whip droop when tilted",
+    "claim": "With the plate on edge, the rim of a centre-supported 2/3/4 mm aluminium plate sags at most 0.28/0.12/0.06 mm (0.8/0.3/0.2 deg at 2.3 GHz). Stiff 1-2 mm steel whips of 0.18 m droop 0.2-0.8 mm horizontal (at most 0.7 deg at 2.3 GHz, assuming the phase centre moves a third of the tip; ESTIMATE). A 0.5 m whip droops 48 mm and rubber-duck whips on springs must be measured. Tilting the plate therefore needs stiff whips, and the manifold should be measured at several tilts.",
+    "source": "derivation: mech_study.py section 10 (cantilever bounds; E = 69 GPa from https://en.wikipedia.org/wiki/6061_aluminium_alloy; steel ESTIMATE)",
+    "confidence": "medium"
+   },
+   {
+    "topic": "Motor noise and EMI",
+    "claim": "Stepper choppers and switch-mode converters near a receiver with 1-2 dB noise figure can add spurs; SatNOGS already fits ferrites on its motor leads. Mitigations: keep drivers under the ground plate or off the rotor, use twisted, ferrited motor leads, run TMC2209 StealthChop2 (256-microstep interpolation, StallGuard4 sensorless stall detection), and cut motor current during captures where a self-locking worm holds the load. The level is unquantified: measure it with the board's own receiver.",
+    "source": "https://wiki.satnogs.org/SatNOGS_Rotator_v3 ; https://www.analog.com/en/tmc2209 ; level is an ESTIMATE to be measured",
+    "confidence": "low"
+   },
+   {
+    "topic": "Safety",
+    "claim": "Hazards by priority: (1) tip-over in wind with the plate: ballast 23-45 kg or guy lines, or take the plate down; (2) crush and pinch at worm-driven axes (10-137 N m): guards, current limits, stall detection, an e-stop; (3) whip tips at eye height when the plate tilts: tip caps and a keep-out zone; (4) cable-wrap overtravel: hard stops plus absolute encoders with under 360 deg of travel; (5) duty cycle: the G-5500DC allows 3 minutes continuous; (6) electrical: 24 V SELV, fused, no mains on the rotor, care with a rotor LiPo, mast down in storms. Kinetic energy is trivial at 30 deg/s: plate rim 0.13 m/s, 0.01 J.",
+    "source": "derivations: mech_study.py sections 2-3; mech/rotation_mech_tables.txt table 6; https://deltron.nl/cdn/shop/files/Yaesu_G-5500DC_Manual.pdf",
+    "confidence": "medium"
+   },
+   {
+    "topic": "What each axis buys (DF lens, for the cost side)",
+    "claim": "One azimuth axis: the panel reaches 360 deg with 3-4 stops (0 % gross; 95th 0.9 deg at 2.44 GHz, 0.5 deg at 5.8 GHz) and the elevated-source failure of the 225 mm ring disappears. That failure is also fixed in software alone by an az-el search (0 % gross with no motion). Two axes (tilting the plate 30-60 deg, or az + tilt paths) give elevation, up/down discrimination and whole-sphere DF (median 0.13-0.16 deg at L = 720 deg). A third axis adds little: plate median 0.11 against 0.13 deg; it mainly sharpens the panel's polarisation and 95th percentile.",
+    "source": "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md sections a4, c2, d1, e2, f1",
+    "confidence": "high"
+   },
+   {
+    "topic": "Cost and effort deltas against REDESIGN",
+    "claim": "Basis: REDESIGN's $50 manual turntable and 520 h; part prices from the findings above; other parts and all hours are ESTIMATES. (A) Azimuth turntable: NEMA 17 + TMC2209 + worm or belt, AS5048A on the output, <360 deg cable wrap, RP2040-latched; +$50-130, +40-70 h; doubles as the automated manifold turntable. (B) Add a tilt axis with counterweight and encoder: +$150-300 total, +70-120 h; SatNOGS v3 + encoders +$285-395; G-5500DC + encoders and interface about +$800, +25-50 h, but 6 / 2.8 deg/s and 3-min duty. (C) Add roll or spin: +$100-150, +40-70 h. (D) DJI RS 4 Pro for the panel only: +$869, +25-50 h. (E) Hexapod: DIY about $250, +60-120 h, angles too small; commercial quote-only. (F) Three-ring continuous gimbal: +$500-1,000, +200-400 h, slip rings on every axis and gimbal lock. (G) Atlas sphere: +$400-900, +200-400 h, attitude unsolved. Recommendation: A at build step 4, B if elevation or polarisation matters, skip F and G.",
+    "source": "estimate: basis listed in the claim; REDESIGN.md sections 10 and 12",
+    "confidence": "low"
+   }
+  ],
+  "files": [
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech_study.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech_tables.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech_results.json",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/extra_calcs.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech/rotation_mech.py",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech/rotation_mech_tables.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/txt/g5500dc.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech/gore.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/rotation/mech/as5600.txt",
+   "/private/tmp/claude-501/-Users-ascalva--claude-spares-spare-iFcbz1/8b6bf486-3081-448c-8f46-b00ba3ebceb0/scratchpad/dl_as5048/as5048.txt",
+   "/Users/ascalva/Documents/code/sdr_array/array16/experiments/rotation/tables.md",
+   "/Users/ascalva/Documents/code/sdr_array/array16/REDESIGN.md"
+  ],
+  "open_questions": [
+   "Real masses and whip type: weigh the plate, whips, board and radios in their cases. Rubber-duck or telescopic whips may droop several mm when tilted, which decides whether the plate can take a tilt axis at all.",
+   "The built mount's first mode and damping are unknown. Tap-test it with an accelerometer or gyro: below about 8 Hz, stop-and-go needs seconds of settling per pose or jerk-limited or input-shaped moves.",
+   "Does the owner want on-the-fly capture (fine for 64-sample snapshots) or long integrations? HackRF-mode codes over tens of ms and weak-signal integrations need stops or 5 deg/s or less.",
+   "Where and in what wind will it run (rooftop or tripod, mast height)? That sets ballast (23-45 kg for the plate), mast tube size and whether the plate is removed above Beaufort 5.",
+   "DJI RS 4 Pro holding torque and the accuracy of attitude read through the RS SDK are unpublished; test with the panel before relying on it. Can the AZ-GTi and Discovery Drive Wi-Fi be switched off when driven over serial?",
+   "How much stepper-driver and converter noise reaches the 0.4-6 GHz chain is not quantified; measure it with the board's own receiver with motors energised, idle and off.",
+   "Will the two bladeRFs stream reliably at 4 x 20 MSPS through a cable-wrapped USB 3 run longer than about 3 m (active or optical extenders)? If not, the Mac moves onto the mount, or the rate drops.",
+   "The radar horn stays fixed beside the array: its TX coax would flex through the wrap and the TX-RX isolation geometry changes with pose. Is radar ever wanted while the array moves?",
+   "The cost and effort deltas are estimates. Build hours for SatNOGS v3 and a DIY tilt stage should be checked against community build logs before committing."
+  ]
+ }
+}

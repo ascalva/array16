@@ -1,0 +1,43 @@
+; array16 beam controller: the 74HC595 chain and the slot clock.
+;
+; shifter  Shifts each 56-bit control word into the chain on SR_DATA / SR_CLK, then pulses
+;          SR_LATCH once IRQ flag 0 is set. Two FIFO words per control word, from ctrl_pack():
+;          bits 55..24, then bits 23..0 in the top 24 bits, most significant bit first.
+;          IRQ 0 comes from the ticker at a slot edge, or from the CPU for an immediate latch.
+;          16 cycles per bit: SR_CLK runs at 7.8 MHz and one word takes 7.2 us at 125 MHz.
+;
+; ticker   Counts rising edges of the 1 MHz slot clock (GPOUT0, divided down from the selected
+;          reference and read back from its own pin) and sets IRQ 0 after N0 edges, then every
+;          N1 edges. FIFO: N0 - 1, then N1 - 1.
+
+.program shifter
+.side_set 1 opt
+.wrap_target
+    pull block              side 0
+    set x, 31
+high_bits:
+    out pins, 1             side 0 [7]
+    jmp x-- high_bits       side 1 [7]
+    pull block              side 0
+    set x, 23
+low_bits:
+    out pins, 1             side 0 [7]
+    jmp x-- low_bits        side 1 [7]
+    wait 1 irq 0            side 0
+    set pins, 1                    [7]
+    set pins, 0
+.wrap
+
+.program ticker
+    pull block
+    mov x, osr
+    pull block
+    mov y, osr
+.wrap_target
+edge:
+    wait 0 pin 0
+    wait 1 pin 0
+    jmp x-- edge
+    irq set 0
+    mov x, y
+.wrap

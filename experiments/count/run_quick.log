@@ -1,0 +1,49 @@
+self-test: make_score3('az') == evolve_layout.make_score: [2.4433 9.1749]
+  N=4 2-D search: 84 evaluations, 0 s; start 10.14 -> 6.30 (climbed kept: False)
+  N=4 3-D search: 84 evaluations, 0 s; start 12.02 -> 12.03 (climbed kept: False)
+  planar_ring_4      | az-only elevated: p95 165.40 gross 66.0 | az-el elevated: p95 160.62 gross 74.0 el p95  31.9 | az-only stress: p95 165.39 gross 66.0 | az-el stress: p95 166.67 gross 75.0 el p95  34.0
+  planar_opt_4       | az-only elevated: p95  8.23 gross  3.0 | az-el elevated: p95  6.72 gross  0.0 el p95  19.2 | az-only stress: p95 13.52 gross 13.0 | az-el stress: p95 15.97 gross 15.0 el p95  25.2
+  vol_stack_4        | az-el elevated: p95 170.35 gross 66.0 el p95  32.8 | az-el stress: p95 170.71 gross 67.0 el p95  34.7
+  vol_cone_4         | az-el elevated: p95 151.84 gross 33.0 el p95   5.2 | az-el stress: p95 157.79 gross 44.0 el p95  14.0
+  vol_helix_4        | az-el elevated: p95 166.66 gross 50.0 el p95  32.1 | az-el stress: p95 163.60 gross 54.0 el p95  33.8
+  vol_opt_4          | az-el elevated: p95  8.26 gross  2.0 el p95  11.0 | az-el stress: p95 64.95 gross 33.0 el p95  25.6
+  planar_opt_4 MUSIC success by source count: 0.40 GHz 2; 1.00 GHz 3; 1.42 GHz 2; 2.30 GHz 2
+N=4 done in 1 s
+  N=8 2-D search: 84 evaluations, 0 s; start 4.00 -> 1.38 (climbed kept: False)
+  N=8 3-D search: 84 evaluations, 0 s; start 1.77 -> 1.76 (climbed kept: True)
+  planar_ring_8      | az-only elevated: p95 76.89 gross 10.0 | az-el elevated: p95  1.43 gross  0.0 el p95   7.8 | az-only stress: p95 76.31 gross 11.0 | az-el stress: p95  3.88 gross  0.0 el p95  16.6
+  planar_rings_8     | az-only elevated: p95  1.64 gross  0.0 | az-el elevated: p95  1.60 gross  0.0 el p95  11.4 | az-only stress: p95  5.44 gross  0.0 | az-el stress: p95  5.42 gross  0.0 el p95  18.5
+  planar_opt_8       | az-only elevated: p95  2.10 gross  0.0 | az-el elevated: p95  2.12 gross  0.0 el p95  10.4 | az-only stress: p95  5.32 gross  0.0 | az-el stress: p95  5.32 gross  0.0 el p95  16.9
+  vol_stack_8        | az-el elevated: p95  1.30 gross  0.0 el p95   1.6 | az-el stress: p95  3.94 gross  0.0 el p95   3.7
+  vol_cone_8         | az-el elevated: p95  1.64 gross  1.0 el p95   1.8 | az-el stress: p95  5.10 gross  0.0 el p95   3.7
+  vol_helix_8        | az-el elevated: p95  1.31 gross  0.0 el p95   2.3 | az-el stress: p95  3.95 gross  0.0 el p95   5.7
+  vol_opt_8          | az-el elevated: p95  1.49 gross  0.0 el p95   1.8 | az-el stress: p95  4.06 gross  0.0 el p95   4.2
+  planar_ring_8 shared 4 channels, groups elevated: p95  1.50 gross  0.0 median 0.27
+  planar_ring_8 shared 4 channels, groups stress: p95  4.27 gross  0.0 median 0.63
+  planar_ring_8 shared 4 channels, ref    elevated: p95  1.26 gross  0.0 median 0.20
+  planar_ring_8 shared 4 channels, ref    stress: p95  4.74 gross  0.0 median 0.72
+  planar_ring_8 MUSIC success by source count: 0.40 GHz 5; 1.00 GHz 5; 1.42 GHz 5; 2.30 GHz 5
+  vol_stack_8 shared 4 channels, groups elevated: p95  1.50 gross  0.0 median 0.27
+  vol_stack_8 shared 4 channels, groups stress: p95  3.99 gross  0.0 median 0.50
+  vol_stack_8 shared 4 channels, ref    elevated: p95  1.25 gross  0.0 median 0.20
+  vol_stack_8 shared 4 channels, ref    stress: p95  4.74 gross  0.0 median 0.75
+N=8 done in 2 s
+  N=16 2-D search: 84 evaluations, 0 s; start 1.05 -> 0.86 (climbed kept: False)
+  N=16 3-D search: 84 evaluations, 0 s; start 1.20 -> 1.14 (climbed kept: True)
+  planar_ring_16     | az-only elevated: p95  1.03 gross  0.0 | az-el elevated: p95  1.06 gross  0.0 el p95   6.0 | az-only stress: p95  2.65 gross  0.0 | az-el stress: p95  2.78 gross  0.0 el p95   9.9
+  planar_rings_16    | az-only elevated: p95  1.30 gross  0.0 | az-el elevated: p95  1.30 gross  0.0 el p95   7.2 | az-only stress: p95  3.75 gross  0.0 | az-el stress: p95  3.82 gross  0.0 el p95  12.0
+  planar_opt_16      | az-only elevated: p95  1.38 gross  0.0 | az-el elevated: p95  1.28 gross  0.0 el p95   8.5 | az-only stress: p95  3.45 gross  0.0 | az-el stress: p95  3.43 gross  0.0 el p95  10.5
+  vol_stack_16       | az-el elevated: p95  1.06 gross  0.0 el p95   1.1 | az-el stress: p95  2.95 gross  0.0 el p95   2.8
+  vol_cone_16        | az-el elevated: p95  1.32 gross  0.0 el p95   1.1 | az-el stress: p95  3.94 gross  0.0 el p95   2.7
+  vol_helix_16       | az-el elevated: p95  1.14 gross  0.0 el p95   1.7 | az-el stress: p95  2.68 gross  0.0 el p95   4.4
+  vol_opt_16         | az-el elevated: p95  0.93 gross  0.0 el p95   1.2 | az-el stress: p95  2.40 gross  0.0 el p95   2.9
+  planar_ring_16 shared 4 channels, groups elevated: p95  1.11 gross  0.0 median 0.16
+  planar_ring_16 shared 4 channels, groups stress: p95  3.20 gross  0.0 median 0.42
+  planar_ring_16 shared 4 channels, ref    elevated: p95  1.10 gross  0.0 median 0.16
+  planar_ring_16 shared 4 channels, ref    stress: p95  4.51 gross  0.0 median 0.56
+  planar_ring_16 MUSIC success by source count: 0.40 GHz 6; 1.00 GHz 13; 1.42 GHz 13; 2.30 GHz 11
+  vol_opt_16 shared 4 channels, groups elevated: p95  0.98 gross  0.0 median 0.15
+  vol_opt_16 shared 4 channels, groups stress: p95  2.65 gross  0.0 median 0.39
+  vol_opt_16 shared 4 channels, ref    elevated: p95  0.92 gross  0.0 median 0.16
+  vol_opt_16 shared 4 channels, ref    stress: p95  4.61 gross  0.0 median 0.60
+N=16 done in 3 s

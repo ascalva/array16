@@ -1,0 +1,5562 @@
+{
+ "note": "simulator RF parts are frequency-flat: off 5.8 GHz this is the architecture with wideband parts",
+ "decode_noise_gain_db": [
+  {
+   "f_GHz": 0.3,
+   "toggle_deg": 9.3,
+   "hackrf_16": 24.53,
+   "quad_4": 23.56
+  },
+  {
+   "f_GHz": 0.35,
+   "toggle_deg": 10.9,
+   "hackrf_16": 23.19,
+   "quad_4": 22.23
+  },
+  {
+   "f_GHz": 0.4,
+   "toggle_deg": 12.4,
+   "hackrf_16": 22.03,
+   "quad_4": 21.07
+  },
+  {
+   "f_GHz": 0.45,
+   "toggle_deg": 14.0,
+   "hackrf_16": 21.0,
+   "quad_4": 20.04
+  },
+  {
+   "f_GHz": 0.5,
+   "toggle_deg": 15.5,
+   "hackrf_16": 20.09,
+   "quad_4": 19.13
+  },
+  {
+   "f_GHz": 0.55,
+   "toggle_deg": 17.1,
+   "hackrf_16": 19.26,
+   "quad_4": 18.3
+  },
+  {
+   "f_GHz": 0.6,
+   "toggle_deg": 18.6,
+   "hackrf_16": 18.5,
+   "quad_4": 17.54
+  },
+  {
+   "f_GHz": 0.65,
+   "toggle_deg": 20.2,
+   "hackrf_16": 17.8,
+   "quad_4": 16.85
+  },
+  {
+   "f_GHz": 0.7,
+   "toggle_deg": 21.7,
+   "hackrf_16": 17.15,
+   "quad_4": 16.21
+  },
+  {
+   "f_GHz": 0.75,
+   "toggle_deg": 23.3,
+   "hackrf_16": 16.55,
+   "quad_4": 15.61
+  },
+  {
+   "f_GHz": 0.8,
+   "toggle_deg": 24.8,
+   "hackrf_16": 15.99,
+   "quad_4": 15.05
+  },
+  {
+   "f_GHz": 0.85,
+   "toggle_deg": 26.4,
+   "hackrf_16": 15.46,
+   "quad_4": 14.52
+  },
+  {
+   "f_GHz": 0.9,
+   "toggle_deg": 27.9,
+   "hackrf_16": 14.96,
+   "quad_4": 14.02
+  },
+  {
+   "f_GHz": 0.95,
+   "toggle_deg": 29.5,
+   "hackrf_16": 14.48,
+   "quad_4": 13.55
+  },
+  {
+   "f_GHz": 1.0,
+   "toggle_deg": 31.0,
+   "hackrf_16": 14.04,
+   "quad_4": 13.11
+  },
+  {
+   "f_GHz": 1.05,
+   "toggle_deg": 32.6,
+   "hackrf_16": 13.61,
+   "quad_4": 12.69
+  },
+  {
+   "f_GHz": 1.1,
+   "toggle_deg": 34.1,
+   "hackrf_16": 13.2,
+   "quad_4": 12.28
+  },
+  {
+   "f_GHz": 1.15,
+   "toggle_deg": 35.7,
+   "hackrf_16": 12.81,
+   "quad_4": 11.9
+  },
+  {
+   "f_GHz": 1.2,
+   "toggle_deg": 37.2,
+   "hackrf_16": 12.43,
+   "quad_4": 11.53
+  },
+  {
+   "f_GHz": 1.25,
+   "toggle_deg": 38.8,
+   "hackrf_16": 12.08,
+   "quad_4": 11.17
+  },
+  {
+   "f_GHz": 1.3,
+   "toggle_deg": 40.3,
+   "hackrf_16": 11.73,
+   "quad_4": 10.83
+  },
+  {
+   "f_GHz": 1.35,
+   "toggle_deg": 41.9,
+   "hackrf_16": 11.4,
+   "quad_4": 10.51
+  },
+  {
+   "f_GHz": 1.4,
+   "toggle_deg": 43.4,
+   "hackrf_16": 11.08,
+   "quad_4": 10.19
+  },
+  {
+   "f_GHz": 1.45,
+   "toggle_deg": 45.0,
+   "hackrf_16": 10.77,
+   "quad_4": 9.89
+  },
+  {
+   "f_GHz": 1.5,
+   "toggle_deg": 46.6,
+   "hackrf_16": 10.47,
+   "quad_4": 9.59
+  },
+  {
+   "f_GHz": 1.55,
+   "toggle_deg": 48.1,
+   "hackrf_16": 10.18,
+   "quad_4": 9.31
+  },
+  {
+   "f_GHz": 1.6,
+   "toggle_deg": 49.7,
+   "hackrf_16": 9.89,
+   "quad_4": 9.04
+  },
+  {
+   "f_GHz": 1.65,
+   "toggle_deg": 51.2,
+   "hackrf_16": 9.62,
+   "quad_4": 8.77
+  },
+  {
+   "f_GHz": 1.7,
+   "toggle_deg": 52.8,
+   "hackrf_16": 9.36,
+   "quad_4": 8.51
+  },
+  {
+   "f_GHz": 1.75,
+   "toggle_deg": 54.3,
+   "hackrf_16": 9.1,
+   "quad_4": 8.26
+  },
+  {
+   "f_GHz": 1.8,
+   "toggle_deg": 55.9,
+   "hackrf_16": 8.85,
+   "quad_4": 8.02
+  },
+  {
+   "f_GHz": 1.85,
+   "toggle_deg": 57.4,
+   "hackrf_16": 8.6,
+   "quad_4": 7.78
+  },
+  {
+   "f_GHz": 1.9,
+   "toggle_deg": 59.0,
+   "hackrf_16": 8.37,
+   "quad_4": 7.55
+  },
+  {
+   "f_GHz": 1.95,
+   "toggle_deg": 60.5,
+   "hackrf_16": 8.14,
+   "quad_4": 7.33
+  },
+  {
+   "f_GHz": 2.0,
+   "toggle_deg": 62.1,
+   "hackrf_16": 7.91,
+   "quad_4": 7.11
+  },
+  {
+   "f_GHz": 2.05,
+   "toggle_deg": 63.6,
+   "hackrf_16": 7.69,
+   "quad_4": 6.9
+  },
+  {
+   "f_GHz": 2.1,
+   "toggle_deg": 65.2,
+   "hackrf_16": 7.47,
+   "quad_4": 6.69
+  },
+  {
+   "f_GHz": 2.15,
+   "toggle_deg": 66.7,
+   "hackrf_16": 7.26,
+   "quad_4": 6.49
+  },
+  {
+   "f_GHz": 2.2,
+   "toggle_deg": 68.3,
+   "hackrf_16": 7.06,
+   "quad_4": 6.3
+  },
+  {
+   "f_GHz": 2.25,
+   "toggle_deg": 69.8,
+   "hackrf_16": 6.86,
+   "quad_4": 6.11
+  },
+  {
+   "f_GHz": 2.3,
+   "toggle_deg": 71.4,
+   "hackrf_16": 6.66,
+   "quad_4": 5.92
+  },
+  {
+   "f_GHz": 2.35,
+   "toggle_deg": 72.9,
+   "hackrf_16": 6.47,
+   "quad_4": 5.74
+  },
+  {
+   "f_GHz": 2.4,
+   "toggle_deg": 74.5,
+   "hackrf_16": 6.28,
+   "quad_4": 5.56
+  },
+  {
+   "f_GHz": 2.45,
+   "toggle_deg": 76.0,
+   "hackrf_16": 6.09,
+   "quad_4": 5.38
+  },
+  {
+   "f_GHz": 2.5,
+   "toggle_deg": 77.6,
+   "hackrf_16": 5.91,
+   "quad_4": 5.21
+  },
+  {
+   "f_GHz": 2.55,
+   "toggle_deg": 79.1,
+   "hackrf_16": 5.74,
+   "quad_4": 5.05
+  },
+  {
+   "f_GHz": 2.6,
+   "toggle_deg": 80.7,
+   "hackrf_16": 5.56,
+   "quad_4": 4.88
+  },
+  {
+   "f_GHz": 2.65,
+   "toggle_deg": 82.2,
+   "hackrf_16": 5.39,
+   "quad_4": 4.72
+  },
+  {
+   "f_GHz": 2.7,
+   "toggle_deg": 83.8,
+   "hackrf_16": 5.22,
+   "quad_4": 4.57
+  },
+  {
+   "f_GHz": 2.75,
+   "toggle_deg": 85.3,
+   "hackrf_16": 5.06,
+   "quad_4": 4.42
+  },
+  {
+   "f_GHz": 2.8,
+   "toggle_deg": 86.9,
+   "hackrf_16": 4.9,
+   "quad_4": 4.27
+  },
+  {
+   "f_GHz": 2.85,
+   "toggle_deg": 88.4,
+   "hackrf_16": 4.74,
+   "quad_4": 4.12
+  },
+  {
+   "f_GHz": 2.9,
+   "toggle_deg": 90.0,
+   "hackrf_16": 4.59,
+   "quad_4": 3.98
+  },
+  {
+   "f_GHz": 2.95,
+   "toggle_deg": 91.6,
+   "hackrf_16": 4.43,
+   "quad_4": 3.84
+  },
+  {
+   "f_GHz": 3.0,
+   "toggle_deg": 93.1,
+   "hackrf_16": 4.29,
+   "quad_4": 3.7
+  },
+  {
+   "f_GHz": 3.05,
+   "toggle_deg": 94.7,
+   "hackrf_16": 4.14,
+   "quad_4": 3.57
+  },
+  {
+   "f_GHz": 3.1,
+   "toggle_deg": 96.2,
+   "hackrf_16": 4.0,
+   "quad_4": 3.44
+  },
+  {
+   "f_GHz": 3.15,
+   "toggle_deg": 97.8,
+   "hackrf_16": 3.85,
+   "quad_4": 3.31
+  },
+  {
+   "f_GHz": 3.2,
+   "toggle_deg": 99.3,
+   "hackrf_16": 3.72,
+   "quad_4": 3.19
+  },
+  {
+   "f_GHz": 3.25,
+   "toggle_deg": 100.9,
+   "hackrf_16": 3.58,
+   "quad_4": 3.06
+  },
+  {
+   "f_GHz": 3.3,
+   "toggle_deg": 102.4,
+   "hackrf_16": 3.45,
+   "quad_4": 2.94
+  },
+  {
+   "f_GHz": 3.35,
+   "toggle_deg": 104.0,
+   "hackrf_16": 3.32,
+   "quad_4": 2.83
+  },
+  {
+   "f_GHz": 3.4,
+   "toggle_deg": 105.5,
+   "hackrf_16": 3.19,
+   "quad_4": 2.71
+  },
+  {
+   "f_GHz": 3.45,
+   "toggle_deg": 107.1,
+   "hackrf_16": 3.06,
+   "quad_4": 2.6
+  },
+  {
+   "f_GHz": 3.5,
+   "toggle_deg": 108.6,
+   "hackrf_16": 2.94,
+   "quad_4": 2.49
+  },
+  {
+   "f_GHz": 3.55,
+   "toggle_deg": 110.2,
+   "hackrf_16": 2.82,
+   "quad_4": 2.38
+  },
+  {
+   "f_GHz": 3.6,
+   "toggle_deg": 111.7,
+   "hackrf_16": 2.7,
+   "quad_4": 2.28
+  },
+  {
+   "f_GHz": 3.65,
+   "toggle_deg": 113.3,
+   "hackrf_16": 2.58,
+   "quad_4": 2.18
+  },
+  {
+   "f_GHz": 3.7,
+   "toggle_deg": 114.8,
+   "hackrf_16": 2.47,
+   "quad_4": 2.08
+  },
+  {
+   "f_GHz": 3.75,
+   "toggle_deg": 116.4,
+   "hackrf_16": 2.36,
+   "quad_4": 1.98
+  },
+  {
+   "f_GHz": 3.8,
+   "toggle_deg": 117.9,
+   "hackrf_16": 2.25,
+   "quad_4": 1.88
+  },
+  {
+   "f_GHz": 3.85,
+   "toggle_deg": 119.5,
+   "hackrf_16": 2.14,
+   "quad_4": 1.79
+  },
+  {
+   "f_GHz": 3.9,
+   "toggle_deg": 121.0,
+   "hackrf_16": 2.04,
+   "quad_4": 1.7
+  },
+  {
+   "f_GHz": 3.95,
+   "toggle_deg": 122.6,
+   "hackrf_16": 1.94,
+   "quad_4": 1.61
+  },
+  {
+   "f_GHz": 4.0,
+   "toggle_deg": 124.1,
+   "hackrf_16": 1.84,
+   "quad_4": 1.53
+  },
+  {
+   "f_GHz": 4.05,
+   "toggle_deg": 125.7,
+   "hackrf_16": 1.74,
+   "quad_4": 1.44
+  },
+  {
+   "f_GHz": 4.1,
+   "toggle_deg": 127.2,
+   "hackrf_16": 1.65,
+   "quad_4": 1.36
+  },
+  {
+   "f_GHz": 4.15,
+   "toggle_deg": 128.8,
+   "hackrf_16": 1.56,
+   "quad_4": 1.29
+  },
+  {
+   "f_GHz": 4.2,
+   "toggle_deg": 130.3,
+   "hackrf_16": 1.47,
+   "quad_4": 1.21
+  },
+  {
+   "f_GHz": 4.25,
+   "toggle_deg": 131.9,
+   "hackrf_16": 1.38,
+   "quad_4": 1.14
+  },
+  {
+   "f_GHz": 4.3,
+   "toggle_deg": 133.4,
+   "hackrf_16": 1.29,
+   "quad_4": 1.06
+  },
+  {
+   "f_GHz": 4.35,
+   "toggle_deg": 135.0,
+   "hackrf_16": 1.21,
+   "quad_4": 0.99
+  },
+  {
+   "f_GHz": 4.4,
+   "toggle_deg": 136.6,
+   "hackrf_16": 1.13,
+   "quad_4": 0.93
+  },
+  {
+   "f_GHz": 4.45,
+   "toggle_deg": 138.1,
+   "hackrf_16": 1.05,
+   "quad_4": 0.86
+  },
+  {
+   "f_GHz": 4.5,
+   "toggle_deg": 139.7,
+   "hackrf_16": 0.98,
+   "quad_4": 0.8
+  },
+  {
+   "f_GHz": 4.55,
+   "toggle_deg": 141.2,
+   "hackrf_16": 0.91,
+   "quad_4": 0.74
+  },
+  {
+   "f_GHz": 4.6,
+   "toggle_deg": 142.8,
+   "hackrf_16": 0.84,
+   "quad_4": 0.68
+  },
+  {
+   "f_GHz": 4.65,
+   "toggle_deg": 144.3,
+   "hackrf_16": 0.77,
+   "quad_4": 0.63
+  },
+  {
+   "f_GHz": 4.7,
+   "toggle_deg": 145.9,
+   "hackrf_16": 0.71,
+   "quad_4": 0.57
+  },
+  {
+   "f_GHz": 4.75,
+   "toggle_deg": 147.4,
+   "hackrf_16": 0.65,
+   "quad_4": 0.52
+  },
+  {
+   "f_GHz": 4.8,
+   "toggle_deg": 149.0,
+   "hackrf_16": 0.59,
+   "quad_4": 0.48
+  },
+  {
+   "f_GHz": 4.85,
+   "toggle_deg": 150.5,
+   "hackrf_16": 0.53,
+   "quad_4": 0.43
+  },
+  {
+   "f_GHz": 4.9,
+   "toggle_deg": 152.1,
+   "hackrf_16": 0.48,
+   "quad_4": 0.39
+  },
+  {
+   "f_GHz": 4.95,
+   "toggle_deg": 153.6,
+   "hackrf_16": 0.43,
+   "quad_4": 0.34
+  },
+  {
+   "f_GHz": 5.0,
+   "toggle_deg": 155.2,
+   "hackrf_16": 0.38,
+   "quad_4": 0.3
+  },
+  {
+   "f_GHz": 5.05,
+   "toggle_deg": 156.7,
+   "hackrf_16": 0.33,
+   "quad_4": 0.27
+  },
+  {
+   "f_GHz": 5.1,
+   "toggle_deg": 158.3,
+   "hackrf_16": 0.29,
+   "quad_4": 0.23
+  },
+  {
+   "f_GHz": 5.15,
+   "toggle_deg": 159.8,
+   "hackrf_16": 0.25,
+   "quad_4": 0.2
+  },
+  {
+   "f_GHz": 5.2,
+   "toggle_deg": 161.4,
+   "hackrf_16": 0.21,
+   "quad_4": 0.17
+  },
+  {
+   "f_GHz": 5.25,
+   "toggle_deg": 162.9,
+   "hackrf_16": 0.18,
+   "quad_4": 0.14
+  },
+  {
+   "f_GHz": 5.3,
+   "toggle_deg": 164.5,
+   "hackrf_16": 0.15,
+   "quad_4": 0.12
+  },
+  {
+   "f_GHz": 5.35,
+   "toggle_deg": 166.0,
+   "hackrf_16": 0.12,
+   "quad_4": 0.1
+  },
+  {
+   "f_GHz": 5.4,
+   "toggle_deg": 167.6,
+   "hackrf_16": 0.1,
+   "quad_4": 0.08
+  },
+  {
+   "f_GHz": 5.45,
+   "toggle_deg": 169.1,
+   "hackrf_16": 0.07,
+   "quad_4": 0.06
+  },
+  {
+   "f_GHz": 5.5,
+   "toggle_deg": 170.7,
+   "hackrf_16": 0.05,
+   "quad_4": 0.04
+  },
+  {
+   "f_GHz": 5.55,
+   "toggle_deg": 172.2,
+   "hackrf_16": 0.04,
+   "quad_4": 0.03
+  },
+  {
+   "f_GHz": 5.6,
+   "toggle_deg": 173.8,
+   "hackrf_16": 0.02,
+   "quad_4": 0.02
+  },
+  {
+   "f_GHz": 5.65,
+   "toggle_deg": 175.3,
+   "hackrf_16": 0.01,
+   "quad_4": 0.01
+  },
+  {
+   "f_GHz": 5.7,
+   "toggle_deg": 176.9,
+   "hackrf_16": 0.01,
+   "quad_4": 0.0
+  },
+  {
+   "f_GHz": 5.75,
+   "toggle_deg": 178.4,
+   "hackrf_16": 0.0,
+   "quad_4": 0.0
+  },
+  {
+   "f_GHz": 5.8,
+   "toggle_deg": 180.0,
+   "hackrf_16": 0.0,
+   "quad_4": 0.0
+  },
+  {
+   "f_GHz": 5.85,
+   "toggle_deg": 181.6,
+   "hackrf_16": 0.0,
+   "quad_4": 0.0
+  },
+  {
+   "f_GHz": 5.9,
+   "toggle_deg": 183.1,
+   "hackrf_16": 0.01,
+   "quad_4": 0.0
+  },
+  {
+   "f_GHz": 5.95,
+   "toggle_deg": 184.7,
+   "hackrf_16": 0.01,
+   "quad_4": 0.01
+  },
+  {
+   "f_GHz": 6.0,
+   "toggle_deg": 186.2,
+   "hackrf_16": 0.02,
+   "quad_4": 0.02
+  },
+  {
+   "f_GHz": 6.05,
+   "toggle_deg": 187.8,
+   "hackrf_16": 0.04,
+   "quad_4": 0.03
+  },
+  {
+   "f_GHz": 6.1,
+   "toggle_deg": 189.3,
+   "hackrf_16": 0.05,
+   "quad_4": 0.04
+  },
+  {
+   "f_GHz": 6.15,
+   "toggle_deg": 190.9,
+   "hackrf_16": 0.07,
+   "quad_4": 0.06
+  },
+  {
+   "f_GHz": 6.2,
+   "toggle_deg": 192.4,
+   "hackrf_16": 0.1,
+   "quad_4": 0.08
+  },
+  {
+   "f_GHz": 6.25,
+   "toggle_deg": 194.0,
+   "hackrf_16": 0.12,
+   "quad_4": 0.1
+  },
+  {
+   "f_GHz": 6.3,
+   "toggle_deg": 195.5,
+   "hackrf_16": 0.15,
+   "quad_4": 0.12
+  },
+  {
+   "f_GHz": 6.35,
+   "toggle_deg": 197.1,
+   "hackrf_16": 0.18,
+   "quad_4": 0.14
+  },
+  {
+   "f_GHz": 6.4,
+   "toggle_deg": 198.6,
+   "hackrf_16": 0.21,
+   "quad_4": 0.17
+  },
+  {
+   "f_GHz": 6.45,
+   "toggle_deg": 200.2,
+   "hackrf_16": 0.25,
+   "quad_4": 0.2
+  },
+  {
+   "f_GHz": 6.5,
+   "toggle_deg": 201.7,
+   "hackrf_16": 0.29,
+   "quad_4": 0.23
+  },
+  {
+   "f_GHz": 6.55,
+   "toggle_deg": 203.3,
+   "hackrf_16": 0.33,
+   "quad_4": 0.27
+  },
+  {
+   "f_GHz": 6.6,
+   "toggle_deg": 204.8,
+   "hackrf_16": 0.38,
+   "quad_4": 0.3
+  },
+  {
+   "f_GHz": 6.65,
+   "toggle_deg": 206.4,
+   "hackrf_16": 0.43,
+   "quad_4": 0.34
+  },
+  {
+   "f_GHz": 6.7,
+   "toggle_deg": 207.9,
+   "hackrf_16": 0.48,
+   "quad_4": 0.39
+  },
+  {
+   "f_GHz": 6.75,
+   "toggle_deg": 209.5,
+   "hackrf_16": 0.53,
+   "quad_4": 0.43
+  },
+  {
+   "f_GHz": 6.8,
+   "toggle_deg": 211.0,
+   "hackrf_16": 0.59,
+   "quad_4": 0.48
+  },
+  {
+   "f_GHz": 6.85,
+   "toggle_deg": 212.6,
+   "hackrf_16": 0.65,
+   "quad_4": 0.52
+  },
+  {
+   "f_GHz": 6.9,
+   "toggle_deg": 214.1,
+   "hackrf_16": 0.71,
+   "quad_4": 0.57
+  },
+  {
+   "f_GHz": 6.95,
+   "toggle_deg": 215.7,
+   "hackrf_16": 0.77,
+   "quad_4": 0.63
+  },
+  {
+   "f_GHz": 7.0,
+   "toggle_deg": 217.2,
+   "hackrf_16": 0.84,
+   "quad_4": 0.68
+  },
+  {
+   "f_GHz": 7.05,
+   "toggle_deg": 218.8,
+   "hackrf_16": 0.91,
+   "quad_4": 0.74
+  },
+  {
+   "f_GHz": 7.1,
+   "toggle_deg": 220.3,
+   "hackrf_16": 0.98,
+   "quad_4": 0.8
+  },
+  {
+   "f_GHz": 7.15,
+   "toggle_deg": 221.9,
+   "hackrf_16": 1.05,
+   "quad_4": 0.86
+  },
+  {
+   "f_GHz": 7.2,
+   "toggle_deg": 223.4,
+   "hackrf_16": 1.13,
+   "quad_4": 0.93
+  },
+  {
+   "f_GHz": 7.25,
+   "toggle_deg": 225.0,
+   "hackrf_16": 1.21,
+   "quad_4": 0.99
+  },
+  {
+   "f_GHz": 7.3,
+   "toggle_deg": 226.6,
+   "hackrf_16": 1.29,
+   "quad_4": 1.06
+  },
+  {
+   "f_GHz": 7.35,
+   "toggle_deg": 228.1,
+   "hackrf_16": 1.38,
+   "quad_4": 1.14
+  },
+  {
+   "f_GHz": 7.4,
+   "toggle_deg": 229.7,
+   "hackrf_16": 1.47,
+   "quad_4": 1.21
+  },
+  {
+   "f_GHz": 7.45,
+   "toggle_deg": 231.2,
+   "hackrf_16": 1.56,
+   "quad_4": 1.29
+  },
+  {
+   "f_GHz": 7.5,
+   "toggle_deg": 232.8,
+   "hackrf_16": 1.65,
+   "quad_4": 1.36
+  },
+  {
+   "f_GHz": 7.55,
+   "toggle_deg": 234.3,
+   "hackrf_16": 1.74,
+   "quad_4": 1.44
+  },
+  {
+   "f_GHz": 7.6,
+   "toggle_deg": 235.9,
+   "hackrf_16": 1.84,
+   "quad_4": 1.53
+  },
+  {
+   "f_GHz": 7.65,
+   "toggle_deg": 237.4,
+   "hackrf_16": 1.94,
+   "quad_4": 1.61
+  },
+  {
+   "f_GHz": 7.7,
+   "toggle_deg": 239.0,
+   "hackrf_16": 2.04,
+   "quad_4": 1.7
+  },
+  {
+   "f_GHz": 7.75,
+   "toggle_deg": 240.5,
+   "hackrf_16": 2.14,
+   "quad_4": 1.79
+  },
+  {
+   "f_GHz": 7.8,
+   "toggle_deg": 242.1,
+   "hackrf_16": 2.25,
+   "quad_4": 1.88
+  },
+  {
+   "f_GHz": 7.85,
+   "toggle_deg": 243.6,
+   "hackrf_16": 2.36,
+   "quad_4": 1.98
+  },
+  {
+   "f_GHz": 7.9,
+   "toggle_deg": 245.2,
+   "hackrf_16": 2.47,
+   "quad_4": 2.08
+  },
+  {
+   "f_GHz": 7.95,
+   "toggle_deg": 246.7,
+   "hackrf_16": 2.58,
+   "quad_4": 2.18
+  },
+  {
+   "f_GHz": 8.0,
+   "toggle_deg": 248.3,
+   "hackrf_16": 2.7,
+   "quad_4": 2.28
+  },
+  {
+   "f_GHz": 8.05,
+   "toggle_deg": 249.8,
+   "hackrf_16": 2.82,
+   "quad_4": 2.38
+  },
+  {
+   "f_GHz": 8.1,
+   "toggle_deg": 251.4,
+   "hackrf_16": 2.94,
+   "quad_4": 2.49
+  },
+  {
+   "f_GHz": 8.15,
+   "toggle_deg": 252.9,
+   "hackrf_16": 3.06,
+   "quad_4": 2.6
+  },
+  {
+   "f_GHz": 8.2,
+   "toggle_deg": 254.5,
+   "hackrf_16": 3.19,
+   "quad_4": 2.71
+  },
+  {
+   "f_GHz": 8.25,
+   "toggle_deg": 256.0,
+   "hackrf_16": 3.32,
+   "quad_4": 2.83
+  },
+  {
+   "f_GHz": 8.3,
+   "toggle_deg": 257.6,
+   "hackrf_16": 3.45,
+   "quad_4": 2.94
+  },
+  {
+   "f_GHz": 8.35,
+   "toggle_deg": 259.1,
+   "hackrf_16": 3.58,
+   "quad_4": 3.06
+  },
+  {
+   "f_GHz": 8.4,
+   "toggle_deg": 260.7,
+   "hackrf_16": 3.72,
+   "quad_4": 3.19
+  },
+  {
+   "f_GHz": 8.45,
+   "toggle_deg": 262.2,
+   "hackrf_16": 3.85,
+   "quad_4": 3.31
+  },
+  {
+   "f_GHz": 8.5,
+   "toggle_deg": 263.8,
+   "hackrf_16": 4.0,
+   "quad_4": 3.44
+  },
+  {
+   "f_GHz": 8.55,
+   "toggle_deg": 265.3,
+   "hackrf_16": 4.14,
+   "quad_4": 3.57
+  },
+  {
+   "f_GHz": 8.6,
+   "toggle_deg": 266.9,
+   "hackrf_16": 4.29,
+   "quad_4": 3.7
+  },
+  {
+   "f_GHz": 8.65,
+   "toggle_deg": 268.4,
+   "hackrf_16": 4.43,
+   "quad_4": 3.84
+  },
+  {
+   "f_GHz": 8.7,
+   "toggle_deg": 270.0,
+   "hackrf_16": 4.59,
+   "quad_4": 3.98
+  },
+  {
+   "f_GHz": 8.75,
+   "toggle_deg": 271.6,
+   "hackrf_16": 4.74,
+   "quad_4": 4.12
+  },
+  {
+   "f_GHz": 8.8,
+   "toggle_deg": 273.1,
+   "hackrf_16": 4.9,
+   "quad_4": 4.27
+  },
+  {
+   "f_GHz": 8.85,
+   "toggle_deg": 274.7,
+   "hackrf_16": 5.06,
+   "quad_4": 4.42
+  },
+  {
+   "f_GHz": 8.9,
+   "toggle_deg": 276.2,
+   "hackrf_16": 5.22,
+   "quad_4": 4.57
+  },
+  {
+   "f_GHz": 8.95,
+   "toggle_deg": 277.8,
+   "hackrf_16": 5.39,
+   "quad_4": 4.72
+  },
+  {
+   "f_GHz": 9.0,
+   "toggle_deg": 279.3,
+   "hackrf_16": 5.56,
+   "quad_4": 4.88
+  },
+  {
+   "f_GHz": 9.05,
+   "toggle_deg": 280.9,
+   "hackrf_16": 5.74,
+   "quad_4": 5.05
+  },
+  {
+   "f_GHz": 9.1,
+   "toggle_deg": 282.4,
+   "hackrf_16": 5.91,
+   "quad_4": 5.21
+  },
+  {
+   "f_GHz": 9.15,
+   "toggle_deg": 284.0,
+   "hackrf_16": 6.09,
+   "quad_4": 5.38
+  },
+  {
+   "f_GHz": 9.2,
+   "toggle_deg": 285.5,
+   "hackrf_16": 6.28,
+   "quad_4": 5.56
+  },
+  {
+   "f_GHz": 9.25,
+   "toggle_deg": 287.1,
+   "hackrf_16": 6.47,
+   "quad_4": 5.74
+  },
+  {
+   "f_GHz": 9.3,
+   "toggle_deg": 288.6,
+   "hackrf_16": 6.66,
+   "quad_4": 5.92
+  },
+  {
+   "f_GHz": 9.35,
+   "toggle_deg": 290.2,
+   "hackrf_16": 6.86,
+   "quad_4": 6.11
+  },
+  {
+   "f_GHz": 9.4,
+   "toggle_deg": 291.7,
+   "hackrf_16": 7.06,
+   "quad_4": 6.3
+  },
+  {
+   "f_GHz": 9.45,
+   "toggle_deg": 293.3,
+   "hackrf_16": 7.26,
+   "quad_4": 6.49
+  },
+  {
+   "f_GHz": 9.5,
+   "toggle_deg": 294.8,
+   "hackrf_16": 7.47,
+   "quad_4": 6.69
+  },
+  {
+   "f_GHz": 9.55,
+   "toggle_deg": 296.4,
+   "hackrf_16": 7.69,
+   "quad_4": 6.9
+  },
+  {
+   "f_GHz": 9.6,
+   "toggle_deg": 297.9,
+   "hackrf_16": 7.91,
+   "quad_4": 7.11
+  },
+  {
+   "f_GHz": 9.65,
+   "toggle_deg": 299.5,
+   "hackrf_16": 8.14,
+   "quad_4": 7.33
+  },
+  {
+   "f_GHz": 9.7,
+   "toggle_deg": 301.0,
+   "hackrf_16": 8.37,
+   "quad_4": 7.55
+  },
+  {
+   "f_GHz": 9.75,
+   "toggle_deg": 302.6,
+   "hackrf_16": 8.6,
+   "quad_4": 7.78
+  },
+  {
+   "f_GHz": 9.8,
+   "toggle_deg": 304.1,
+   "hackrf_16": 8.85,
+   "quad_4": 8.02
+  },
+  {
+   "f_GHz": 9.85,
+   "toggle_deg": 305.7,
+   "hackrf_16": 9.1,
+   "quad_4": 8.26
+  },
+  {
+   "f_GHz": 9.9,
+   "toggle_deg": 307.2,
+   "hackrf_16": 9.36,
+   "quad_4": 8.51
+  },
+  {
+   "f_GHz": 9.95,
+   "toggle_deg": 308.8,
+   "hackrf_16": 9.62,
+   "quad_4": 8.77
+  },
+  {
+   "f_GHz": 10.0,
+   "toggle_deg": 310.3,
+   "hackrf_16": 9.89,
+   "quad_4": 9.04
+  },
+  {
+   "f_GHz": 10.05,
+   "toggle_deg": 311.9,
+   "hackrf_16": 10.18,
+   "quad_4": 9.31
+  },
+  {
+   "f_GHz": 10.1,
+   "toggle_deg": 313.4,
+   "hackrf_16": 10.47,
+   "quad_4": 9.59
+  },
+  {
+   "f_GHz": 10.15,
+   "toggle_deg": 315.0,
+   "hackrf_16": 10.77,
+   "quad_4": 9.89
+  },
+  {
+   "f_GHz": 10.2,
+   "toggle_deg": 316.6,
+   "hackrf_16": 11.08,
+   "quad_4": 10.19
+  },
+  {
+   "f_GHz": 10.25,
+   "toggle_deg": 318.1,
+   "hackrf_16": 11.4,
+   "quad_4": 10.51
+  },
+  {
+   "f_GHz": 10.3,
+   "toggle_deg": 319.7,
+   "hackrf_16": 11.73,
+   "quad_4": 10.83
+  },
+  {
+   "f_GHz": 10.35,
+   "toggle_deg": 321.2,
+   "hackrf_16": 12.08,
+   "quad_4": 11.17
+  },
+  {
+   "f_GHz": 10.4,
+   "toggle_deg": 322.8,
+   "hackrf_16": 12.43,
+   "quad_4": 11.53
+  },
+  {
+   "f_GHz": 10.45,
+   "toggle_deg": 324.3,
+   "hackrf_16": 12.81,
+   "quad_4": 11.9
+  },
+  {
+   "f_GHz": 10.5,
+   "toggle_deg": 325.9,
+   "hackrf_16": 13.2,
+   "quad_4": 12.28
+  },
+  {
+   "f_GHz": 10.55,
+   "toggle_deg": 327.4,
+   "hackrf_16": 13.61,
+   "quad_4": 12.69
+  },
+  {
+   "f_GHz": 10.6,
+   "toggle_deg": 329.0,
+   "hackrf_16": 14.04,
+   "quad_4": 13.11
+  },
+  {
+   "f_GHz": 10.65,
+   "toggle_deg": 330.5,
+   "hackrf_16": 14.48,
+   "quad_4": 13.55
+  },
+  {
+   "f_GHz": 10.7,
+   "toggle_deg": 332.1,
+   "hackrf_16": 14.96,
+   "quad_4": 14.02
+  },
+  {
+   "f_GHz": 10.75,
+   "toggle_deg": 333.6,
+   "hackrf_16": 15.46,
+   "quad_4": 14.52
+  },
+  {
+   "f_GHz": 10.8,
+   "toggle_deg": 335.2,
+   "hackrf_16": 15.99,
+   "quad_4": 15.05
+  },
+  {
+   "f_GHz": 10.85,
+   "toggle_deg": 336.7,
+   "hackrf_16": 16.55,
+   "quad_4": 15.61
+  },
+  {
+   "f_GHz": 10.9,
+   "toggle_deg": 338.3,
+   "hackrf_16": 17.15,
+   "quad_4": 16.21
+  },
+  {
+   "f_GHz": 10.95,
+   "toggle_deg": 339.8,
+   "hackrf_16": 17.8,
+   "quad_4": 16.85
+  },
+  {
+   "f_GHz": 11.0,
+   "toggle_deg": 341.4,
+   "hackrf_16": 18.5,
+   "quad_4": 17.54
+  },
+  {
+   "f_GHz": 11.05,
+   "toggle_deg": 342.9,
+   "hackrf_16": 19.26,
+   "quad_4": 18.3
+  },
+  {
+   "f_GHz": 11.1,
+   "toggle_deg": 344.5,
+   "hackrf_16": 20.09,
+   "quad_4": 19.13
+  },
+  {
+   "f_GHz": 11.15,
+   "toggle_deg": 346.0,
+   "hackrf_16": 21.0,
+   "quad_4": 20.04
+  },
+  {
+   "f_GHz": 11.2,
+   "toggle_deg": 347.6,
+   "hackrf_16": 22.03,
+   "quad_4": 21.07
+  },
+  {
+   "f_GHz": 11.25,
+   "toggle_deg": 349.1,
+   "hackrf_16": 23.19,
+   "quad_4": 22.23
+  },
+  {
+   "f_GHz": 11.3,
+   "toggle_deg": 350.7,
+   "hackrf_16": 24.53,
+   "quad_4": 23.56
+  }
+ ],
+ "df_vs_frequency": {
+  "quad": [
+   {
+    "f_GHz": 0.9,
+    "frequency_aware": {
+     "median": 0.47,
+     "p95": 1.55
+    }
+   },
+   {
+    "f_GHz": 1.3,
+    "frequency_aware": {
+     "median": 0.31,
+     "p95": 1.09
+    }
+   },
+   {
+    "f_GHz": 1.8,
+    "frequency_aware": {
+     "median": 0.24,
+     "p95": 0.89
+    },
+    "decode_assuming_180": {
+     "median": 0.96,
+     "p95": 4.11
+    }
+   },
+   {
+    "f_GHz": 2.4,
+    "frequency_aware": {
+     "median": 0.22,
+     "p95": 0.73
+    },
+    "decode_assuming_180": {
+     "median": 0.96,
+     "p95": 3.91
+    }
+   },
+   {
+    "f_GHz": 3.0,
+    "frequency_aware": {
+     "median": 0.19,
+     "p95": 0.58
+    }
+   },
+   {
+    "f_GHz": 3.5,
+    "frequency_aware": {
+     "median": 0.15,
+     "p95": 0.52
+    },
+    "decode_assuming_180": {
+     "median": 0.88,
+     "p95": 3.3
+    }
+   },
+   {
+    "f_GHz": 4.5,
+    "frequency_aware": {
+     "median": 0.13,
+     "p95": 0.47
+    },
+    "decode_assuming_180": {
+     "median": 0.71,
+     "p95": 2.44
+    }
+   },
+   {
+    "f_GHz": 5.2,
+    "frequency_aware": {
+     "median": 0.11,
+     "p95": 0.43
+    }
+   },
+   {
+    "f_GHz": 5.8,
+    "frequency_aware": {
+     "median": 0.1,
+     "p95": 0.43
+    }
+   }
+  ],
+  "hackrf": [
+   {
+    "f_GHz": 0.9,
+    "frequency_aware": {
+     "median": 2.86,
+     "p95": 8.95
+    }
+   },
+   {
+    "f_GHz": 1.3,
+    "frequency_aware": {
+     "median": 2.01,
+     "p95": 4.97
+    }
+   },
+   {
+    "f_GHz": 1.8,
+    "frequency_aware": {
+     "median": 1.03,
+     "p95": 4.43
+    },
+    "decode_assuming_180": {
+     "median": 2.36,
+     "p95": 7.14
+    }
+   },
+   {
+    "f_GHz": 2.4,
+    "frequency_aware": {
+     "median": 0.76,
+     "p95": 3.05
+    },
+    "decode_assuming_180": {
+     "median": 2.06,
+     "p95": 5.08
+    }
+   },
+   {
+    "f_GHz": 3.0,
+    "frequency_aware": {
+     "median": 0.61,
+     "p95": 2.36
+    }
+   },
+   {
+    "f_GHz": 3.5,
+    "frequency_aware": {
+     "median": 0.56,
+     "p95": 2.0
+    },
+    "decode_assuming_180": {
+     "median": 1.44,
+     "p95": 3.13
+    }
+   },
+   {
+    "f_GHz": 4.5,
+    "frequency_aware": {
+     "median": 0.38,
+     "p95": 1.24
+    },
+    "decode_assuming_180": {
+     "median": 0.82,
+     "p95": 1.92
+    }
+   },
+   {
+    "f_GHz": 5.2,
+    "frequency_aware": {
+     "median": 0.28,
+     "p95": 0.76
+    }
+   },
+   {
+    "f_GHz": 5.8,
+    "frequency_aware": {
+     "median": 0.28,
+     "p95": 0.65
+    }
+   }
+  ]
+ },
+ "analog_beam": {
+  "0": [
+   {
+    "f_GHz": 1.0,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 1.125,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 1.25,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 1.375,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 1.5,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 1.625,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 1.75,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 1.875,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 2.0,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 2.125,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 2.25,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 2.375,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 2.5,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 2.625,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 2.75,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 2.875,
+    "loss_db": 0.0,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.0,
+    "loss_db": 0.0,
+    "sidelobe_db": -39.864410831564214,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.125,
+    "loss_db": 0.0,
+    "sidelobe_db": -32.04994695261383,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.25,
+    "loss_db": 0.0,
+    "sidelobe_db": -27.740040428153904,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.375,
+    "loss_db": 0.0,
+    "sidelobe_db": -24.83334975619399,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.5,
+    "loss_db": 0.0,
+    "sidelobe_db": -22.691666063711633,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.625,
+    "loss_db": 0.0,
+    "sidelobe_db": -21.035490903120614,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.75,
+    "loss_db": 0.0,
+    "sidelobe_db": -19.715654174320065,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.875,
+    "loss_db": 0.0,
+    "sidelobe_db": -18.64302643697303,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 4.0,
+    "loss_db": 0.0,
+    "sidelobe_db": -17.75901969862319,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 4.125,
+    "loss_db": 0.0,
+    "sidelobe_db": -17.02372446106315,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 4.25,
+    "loss_db": 0.0,
+    "sidelobe_db": -16.406658143746657,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 4.375,
+    "loss_db": 0.0,
+    "sidelobe_db": -15.885950555248105,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 4.5,
+    "loss_db": 0.0,
+    "sidelobe_db": -15.443083698296585,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 4.625,
+    "loss_db": 0.0,
+    "sidelobe_db": -15.064719971246127,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 4.75,
+    "loss_db": 0.0,
+    "sidelobe_db": -14.738682192062885,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 4.875,
+    "loss_db": 0.0,
+    "sidelobe_db": -14.456352625145898,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 5.0,
+    "loss_db": 0.0,
+    "sidelobe_db": -14.21025709464947,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 5.125,
+    "loss_db": 0.0,
+    "sidelobe_db": -13.994550964844363,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 5.25,
+    "loss_db": 0.0,
+    "sidelobe_db": -13.803698488857101,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 5.375,
+    "loss_db": 0.0,
+    "sidelobe_db": -13.634602357823148,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 5.5,
+    "loss_db": 0.0,
+    "sidelobe_db": -13.483603983701364,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 5.625,
+    "loss_db": 0.0,
+    "sidelobe_db": -13.348022756266344,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 5.75,
+    "loss_db": 0.0,
+    "sidelobe_db": -13.226159149499923,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 5.875,
+    "loss_db": 0.0,
+    "sidelobe_db": -13.115417454282426,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 6.0,
+    "loss_db": 0.0,
+    "sidelobe_db": -13.015031150241649,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 6.125,
+    "loss_db": 0.0,
+    "sidelobe_db": -12.923406074488035,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 6.25,
+    "loss_db": 0.0,
+    "sidelobe_db": -12.839540001581122,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 6.375,
+    "loss_db": 0.0,
+    "sidelobe_db": -12.763035240601962,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 6.5,
+    "loss_db": 0.0,
+    "sidelobe_db": -12.691609976784813,
+    "pointing_error_deg": 0.0
+   }
+  ],
+  "15": [
+   {
+    "f_GHz": 1.0,
+    "loss_db": 0.018440216441963673,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -8.5
+   },
+   {
+    "f_GHz": 1.125,
+    "loss_db": 0.023342726070616833,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -7.5
+   },
+   {
+    "f_GHz": 1.25,
+    "loss_db": 0.028824154745519037,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -6.75
+   },
+   {
+    "f_GHz": 1.375,
+    "loss_db": 0.034885222855245715,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -5.75
+   },
+   {
+    "f_GHz": 1.5,
+    "loss_db": 0.04152672802057494,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -5.0
+   },
+   {
+    "f_GHz": 1.625,
+    "loss_db": 0.04874954551902549,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -4.5
+   },
+   {
+    "f_GHz": 1.75,
+    "loss_db": 0.05655462875172933,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -4.0
+   },
+   {
+    "f_GHz": 1.875,
+    "loss_db": 0.06494300975318884,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -3.25
+   },
+   {
+    "f_GHz": 2.0,
+    "loss_db": 0.0739157997444845,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -3.0
+   },
+   {
+    "f_GHz": 2.125,
+    "loss_db": 0.08347418973058501,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -2.5
+   },
+   {
+    "f_GHz": 2.25,
+    "loss_db": 0.09361945114242529,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -2.0
+   },
+   {
+    "f_GHz": 2.375,
+    "loss_db": 0.10435293652451563,
+    "sidelobe_db": -44.594057060991574,
+    "pointing_error_deg": -1.75
+   },
+   {
+    "f_GHz": 2.5,
+    "loss_db": 0.11567608026887359,
+    "sidelobe_db": -33.29465893681911,
+    "pointing_error_deg": -1.5
+   },
+   {
+    "f_GHz": 2.625,
+    "loss_db": 0.12759039939611191,
+    "sidelobe_db": -28.34296459311922,
+    "pointing_error_deg": -1.25
+   },
+   {
+    "f_GHz": 2.75,
+    "loss_db": 0.14009749438463834,
+    "sidelobe_db": -25.35921087398769,
+    "pointing_error_deg": -1.0
+   },
+   {
+    "f_GHz": 2.875,
+    "loss_db": 0.15319905004891007,
+    "sidelobe_db": -23.367971807849145,
+    "pointing_error_deg": -0.75
+   },
+   {
+    "f_GHz": 3.0,
+    "loss_db": 0.16689683646778525,
+    "sidelobe_db": -21.984056584543616,
+    "pointing_error_deg": -0.5
+   },
+   {
+    "f_GHz": 3.125,
+    "loss_db": 0.18119270996408765,
+    "sidelobe_db": -21.012163746797828,
+    "pointing_error_deg": -0.25
+   },
+   {
+    "f_GHz": 3.25,
+    "loss_db": 0.19608861413656778,
+    "sidelobe_db": -20.333586032167833,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.375,
+    "loss_db": 0.21158658094544464,
+    "sidelobe_db": -19.868979927869553,
+    "pointing_error_deg": 0.0
+   },
+   {
+    "f_GHz": 3.5,
+    "loss_db": 0.22768873185292263,
+    "sidelobe_db": -19.56177086693726,
+    "pointing_error_deg": 0.25
+   },
+   {
+    "f_GHz": 3.625,
+    "loss_db": 0.24439727902000313,
+    "sidelobe_db": -19.370970874576305,
+    "pointing_error_deg": 0.25
+   },
+   {
+    "f_GHz": 3.75,
+    "loss_db": 0.26171452656111427,
+    "sidelobe_db": -19.268184042457946,
+    "pointing_error_deg": 0.5
+   },
+   {
+    "f_GHz": 3.875,
+    "loss_db": 0.2796428718580496,
+    "sidelobe_db": -19.23244082744366,
+    "pointing_error_deg": 0.5
+   },
+   {
+    "f_GHz": 4.0,
+    "loss_db": 0.29818480693491195,
+    "sidelobe_db": -19.249361749803555,
+    "pointing_error_deg": 0.75
+   },
+   {
+    "f_GHz": 4.125,
+    "loss_db": 0.31734291989573615,
+    "sidelobe_db": -19.30805039608134,
+    "pointing_error_deg": 0.75
+   },
+   {
+    "f_GHz": 4.25,
+    "loss_db": 0.3371198964266425,
+    "sidelobe_db": -19.401261398255237,
+    "pointing_error_deg": 0.75
+   },
+   {
+    "f_GHz": 4.375,
+    "loss_db": 0.35751852136438633,
+    "sidelobe_db": -19.52272771904427,
+    "pointing_error_deg": 1.0
+   },
+   {
+    "f_GHz": 4.5,
+    "loss_db": 0.37854168033336794,
+    "sidelobe_db": -19.583101732813727,
+    "pointing_error_deg": 1.0
+   },
+   {
+    "f_GHz": 4.625,
+    "loss_db": 0.4001923614531869,
+    "sidelobe_db": -17.591753230901013,
+    "pointing_error_deg": 1.0
+   },
+   {
+    "f_GHz": 4.75,
+    "loss_db": 0.42247365711896623,
+    "sidelobe_db": -15.93466372706433,
+    "pointing_error_deg": 1.25
+   },
+   {
+    "f_GHz": 4.875,
+    "loss_db": 0.44538876585681114,
+    "sidelobe_db": -14.532292029479258,
+    "pointing_error_deg": 1.25
+   },
+   {
+    "f_GHz": 5.0,
+    "loss_db": 0.46894099425683794,
+    "sidelobe_db": -13.330861180713264,
+    "pointing_error_deg": 1.25
+   },
+   {
+    "f_GHz": 5.125,
+    "loss_db": 0.4931337589863876,
+    "sidelobe_db": -12.293191143953713,
+    "pointing_error_deg": 1.25
+   },
+   {
+    "f_GHz": 5.25,
+    "loss_db": 0.5179705888861137,
+    "sidelobe_db": -11.390960045357934,
+    "pointing_error_deg": 1.25
+   },
+   {
+    "f_GHz": 5.375,
+    "loss_db": 0.543455127151848,
+    "sidelobe_db": -10.602295052970835,
+    "pointing_error_deg": 1.5
+   },
+   {
+    "f_GHz": 5.5,
+    "loss_db": 0.5695911336051996,
+    "sidelobe_db": -9.90935281468259,
+    "pointing_error_deg": 1.5
+   },
+   {
+    "f_GHz": 5.625,
+    "loss_db": 0.5963824870560971,
+    "sidelobe_db": -9.297328588833704,
+    "pointing_error_deg": 1.5
+   },
+   {
+    "f_GHz": 5.75,
+    "loss_db": 0.6238331877605529,
+    "sidelobe_db": -8.753640319129074,
+    "pointing_error_deg": 1.5
+   },
+   {
+    "f_GHz": 5.875,
+    "loss_db": 0.5927055457160287,
+    "sidelobe_db": -8.542203201715676,
+    "pointing_error_deg": 1.25
+   },
+   {
+    "f_GHz": 6.0,
+    "loss_db": 0.5437499581165333,
+    "sidelobe_db": -8.52925901089728,
+    "pointing_error_deg": 0.5
+   },
+   {
+    "f_GHz": 6.125,
+    "loss_db": 0.5216605703010715,
+    "sidelobe_db": -8.520011735913101,
+    "pointing_error_deg": -0.25
+   },
+   {
+    "f_GHz": 6.25,
+    "loss_db": 0.5264351102276998,
+    "sidelobe_db": -8.512946034950865,
+    "pointing_error_deg": -0.75
+   },
+   {
+    "f_GHz": 6.375,
+    "loss_db": 0.5581403878210499,
+    "sidelobe_db": -8.505340731750685,
+    "pointing_error_deg": -1.5
+   },
+   {
+    "f_GHz": 6.5,
+    "loss_db": 0.6169175976157679,
+    "sidelobe_db": -8.495774956213605,
+    "pointing_error_deg": -2.0
+   }
+  ],
+  "30": [
+   {
+    "f_GHz": 1.0,
+    "loss_db": 1.4474835741501405e-05,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -19.25
+   },
+   {
+    "f_GHz": 1.125,
+    "loss_db": 1.8319715823190973e-05,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -17.75
+   },
+   {
+    "f_GHz": 1.25,
+    "loss_db": 2.261693565091278e-05,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -16.25
+   },
+   {
+    "f_GHz": 1.375,
+    "loss_db": 2.736649553092248e-05,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -15.0
+   },
+   {
+    "f_GHz": 1.5,
+    "loss_db": 3.256839579592292e-05,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -13.75
+   },
+   {
+    "f_GHz": 1.625,
+    "loss_db": 3.822263681759901e-05,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -12.75
+   },
+   {
+    "f_GHz": 1.75,
+    "loss_db": 4.432921899408011e-05,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -11.75
+   },
+   {
+    "f_GHz": 1.875,
+    "loss_db": 5.088814276054605e-05,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -10.75
+   },
+   {
+    "f_GHz": 2.0,
+    "loss_db": 5.789940857861788e-05,
+    "sidelobe_db": -38.9132657920132,
+    "pointing_error_deg": -10.0
+   },
+   {
+    "f_GHz": 2.125,
+    "loss_db": 6.536301694599935e-05,
+    "sidelobe_db": -28.33464457120478,
+    "pointing_error_deg": -9.25
+   },
+   {
+    "f_GHz": 2.25,
+    "loss_db": 7.327896839261764e-05,
+    "sidelobe_db": -23.42432765090566,
+    "pointing_error_deg": -8.75
+   },
+   {
+    "f_GHz": 2.375,
+    "loss_db": 8.16472634767641e-05,
+    "sidelobe_db": -20.360537078621462,
+    "pointing_error_deg": -8.0
+   },
+   {
+    "f_GHz": 2.5,
+    "loss_db": 9.046790279280662e-05,
+    "sidelobe_db": -18.2349927465265,
+    "pointing_error_deg": -7.5
+   },
+   {
+    "f_GHz": 2.625,
+    "loss_db": 9.974088696540137e-05,
+    "sidelobe_db": -16.682509686940598,
+    "pointing_error_deg": -7.0
+   },
+   {
+    "f_GHz": 2.75,
+    "loss_db": 0.00010946621665045483,
+    "sidelobe_db": -15.515606333320097,
+    "pointing_error_deg": -6.5
+   },
+   {
+    "f_GHz": 2.875,
+    "loss_db": 0.0001196438925380141,
+    "sidelobe_db": -14.62268335148275,
+    "pointing_error_deg": -6.25
+   },
+   {
+    "f_GHz": 3.0,
+    "loss_db": 0.00013027391534647841,
+    "sidelobe_db": -13.929902174199976,
+    "pointing_error_deg": -5.75
+   },
+   {
+    "f_GHz": 3.125,
+    "loss_db": 0.00014135628583320374,
+    "sidelobe_db": -13.385770646804033,
+    "pointing_error_deg": -5.5
+   },
+   {
+    "f_GHz": 3.25,
+    "loss_db": 0.00015289100477810665,
+    "sidelobe_db": -12.95275711083939,
+    "pointing_error_deg": -5.25
+   },
+   {
+    "f_GHz": 3.375,
+    "loss_db": 0.0001648780730010188,
+    "sidelobe_db": -12.603759107681045,
+    "pointing_error_deg": -5.0
+   },
+   {
+    "f_GHz": 3.5,
+    "loss_db": 0.00017731749135107644,
+    "sidelobe_db": -12.31871433022694,
+    "pointing_error_deg": -4.75
+   },
+   {
+    "f_GHz": 3.625,
+    "loss_db": 0.00019020926070768143,
+    "sidelobe_db": -12.083378014456652,
+    "pointing_error_deg": -4.5
+   },
+   {
+    "f_GHz": 3.75,
+    "loss_db": 0.00020355338198435504,
+    "sidelobe_db": -11.886840804302608,
+    "pointing_error_deg": -4.25
+   },
+   {
+    "f_GHz": 3.875,
+    "loss_db": 0.00021734985612873438,
+    "sidelobe_db": -11.721143074703939,
+    "pointing_error_deg": -4.0
+   },
+   {
+    "f_GHz": 4.0,
+    "loss_db": 0.00023159868411581875,
+    "sidelobe_db": -11.580142041834598,
+    "pointing_error_deg": -3.75
+   },
+   {
+    "f_GHz": 4.125,
+    "loss_db": 0.0002462998669537517,
+    "sidelobe_db": -11.459464949413649,
+    "pointing_error_deg": -3.5
+   },
+   {
+    "f_GHz": 4.25,
+    "loss_db": 0.00026145340568478116,
+    "sidelobe_db": -11.35519051532829,
+    "pointing_error_deg": -3.5
+   },
+   {
+    "f_GHz": 4.375,
+    "loss_db": 0.0002770593013833271,
+    "sidelobe_db": -11.265058393705063,
+    "pointing_error_deg": -3.25
+   },
+   {
+    "f_GHz": 4.5,
+    "loss_db": 0.0002931175551540488,
+    "sidelobe_db": -11.185837514276564,
+    "pointing_error_deg": -3.25
+   },
+   {
+    "f_GHz": 4.625,
+    "loss_db": 0.00030962816813280466,
+    "sidelobe_db": -11.116937328579958,
+    "pointing_error_deg": -3.0
+   },
+   {
+    "f_GHz": 4.75,
+    "loss_db": 0.00032659114149436206,
+    "sidelobe_db": -11.056199896149955,
+    "pointing_error_deg": -3.0
+   },
+   {
+    "f_GHz": 4.875,
+    "loss_db": 0.00034400647643117945,
+    "sidelobe_db": -11.002746033921746,
+    "pointing_error_deg": -2.75
+   },
+   {
+    "f_GHz": 5.0,
+    "loss_db": 0.00036187417418425717,
+    "sidelobe_db": -10.955211056611443,
+    "pointing_error_deg": -2.75
+   },
+   {
+    "f_GHz": 5.125,
+    "loss_db": 0.0003801942360170985,
+    "sidelobe_db": -10.9135719143016,
+    "pointing_error_deg": -2.5
+   },
+   {
+    "f_GHz": 5.25,
+    "loss_db": 0.00039896666322631144,
+    "sidelobe_db": -10.875687892949529,
+    "pointing_error_deg": -2.5
+   },
+   {
+    "f_GHz": 5.375,
+    "loss_db": 0.00041819145714256745,
+    "sidelobe_db": -10.842543614578965,
+    "pointing_error_deg": -2.25
+   },
+   {
+    "f_GHz": 5.5,
+    "loss_db": 0.00043786861912673995,
+    "sidelobe_db": -10.813200284445646,
+    "pointing_error_deg": -2.25
+   },
+   {
+    "f_GHz": 5.625,
+    "loss_db": 0.00045799815057279164,
+    "sidelobe_db": -10.786490012176426,
+    "pointing_error_deg": -2.25
+   },
+   {
+    "f_GHz": 5.75,
+    "loss_db": 0.00047858005290584023,
+    "sidelobe_db": -10.762415990444822,
+    "pointing_error_deg": -2.0
+   },
+   {
+    "f_GHz": 5.875,
+    "loss_db": 0.0004996143275869748,
+    "sidelobe_db": -10.741806499338377,
+    "pointing_error_deg": -2.0
+   },
+   {
+    "f_GHz": 6.0,
+    "loss_db": 0.0005211009761026429,
+    "sidelobe_db": -10.72243515094299,
+    "pointing_error_deg": -2.0
+   },
+   {
+    "f_GHz": 6.125,
+    "loss_db": 0.0005430399999752517,
+    "sidelobe_db": -10.705687892047113,
+    "pointing_error_deg": -2.0
+   },
+   {
+    "f_GHz": 6.25,
+    "loss_db": 0.0005654314007612339,
+    "sidelobe_db": -10.690947160611115,
+    "pointing_error_deg": -1.75
+   },
+   {
+    "f_GHz": 6.375,
+    "loss_db": 0.0005882751800433276,
+    "sidelobe_db": -10.677594582999802,
+    "pointing_error_deg": -1.75
+   },
+   {
+    "f_GHz": 6.5,
+    "loss_db": 0.0006115713394411762,
+    "sidelobe_db": -10.665200963838002,
+    "pointing_error_deg": -1.75
+   }
+  ],
+  "45": [
+   {
+    "f_GHz": 1.0,
+    "loss_db": 0.0712908508710989,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -34.25
+   },
+   {
+    "f_GHz": 1.125,
+    "loss_db": 0.0902722436785585,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -32.75
+   },
+   {
+    "f_GHz": 1.25,
+    "loss_db": 0.1115090924698264,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -31.25
+   },
+   {
+    "f_GHz": 1.375,
+    "loss_db": 0.13500893004126452,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -30.0
+   },
+   {
+    "f_GHz": 1.5,
+    "loss_db": 0.16078012607207484,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -28.75
+   },
+   {
+    "f_GHz": 1.625,
+    "loss_db": 0.1888319006991772,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -27.75
+   },
+   {
+    "f_GHz": 1.75,
+    "loss_db": 0.2191743395743638,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -26.75
+   },
+   {
+    "f_GHz": 1.875,
+    "loss_db": 0.25181841045855236,
+    "sidelobe_db": -99.0,
+    "pointing_error_deg": -25.75
+   },
+   {
+    "f_GHz": 2.0,
+    "loss_db": 0.28677598141410227,
+    "sidelobe_db": -38.9132657920132,
+    "pointing_error_deg": -25.0
+   },
+   {
+    "f_GHz": 2.125,
+    "loss_db": 0.3240598406627688,
+    "sidelobe_db": -28.33464457120478,
+    "pointing_error_deg": -24.25
+   },
+   {
+    "f_GHz": 2.25,
+    "loss_db": 0.3636837181838769,
+    "sidelobe_db": -23.42432765090566,
+    "pointing_error_deg": -23.75
+   },
+   {
+    "f_GHz": 2.375,
+    "loss_db": 0.40566230913480306,
+    "sidelobe_db": -20.360537078621462,
+    "pointing_error_deg": -23.0
+   },
+   {
+    "f_GHz": 2.5,
+    "loss_db": 0.45001129918397786,
+    "sidelobe_db": -18.2349927465265,
+    "pointing_error_deg": -22.5
+   },
+   {
+    "f_GHz": 2.625,
+    "loss_db": 0.4967473918552249,
+    "sidelobe_db": -16.682509686940598,
+    "pointing_error_deg": -22.0
+   },
+   {
+    "f_GHz": 2.75,
+    "loss_db": 0.5458883379917051,
+    "sidelobe_db": -15.515606333320097,
+    "pointing_error_deg": -21.5
+   },
+   {
+    "f_GHz": 2.875,
+    "loss_db": 0.5974529674578389,
+    "sidelobe_db": -14.62268335148275,
+    "pointing_error_deg": -21.25
+   },
+   {
+    "f_GHz": 3.0,
+    "loss_db": 0.6514612232085358,
+    "sidelobe_db": -13.929902174199976,
+    "pointing_error_deg": -20.75
+   },
+   {
+    "f_GHz": 3.125,
+    "loss_db": 0.7079341978670745,
+    "sidelobe_db": -13.385770646804033,
+    "pointing_error_deg": -20.5
+   },
+   {
+    "f_GHz": 3.25,
+    "loss_db": 0.7668941729658636,
+    "sidelobe_db": -12.95275711083939,
+    "pointing_error_deg": -20.25
+   },
+   {
+    "f_GHz": 3.375,
+    "loss_db": 0.8283646610185648,
+    "sidelobe_db": -12.603759107681045,
+    "pointing_error_deg": -20.0
+   },
+   {
+    "f_GHz": 3.5,
+    "loss_db": 0.8923704506074659,
+    "sidelobe_db": -12.31871433022694,
+    "pointing_error_deg": -19.75
+   },
+   {
+    "f_GHz": 3.625,
+    "loss_db": 0.9589376546869045,
+    "sidelobe_db": -12.083378014456652,
+    "pointing_error_deg": -19.5
+   },
+   {
+    "f_GHz": 3.75,
+    "loss_db": 1.0280937623221154,
+    "sidelobe_db": -11.886840804302608,
+    "pointing_error_deg": -19.25
+   },
+   {
+    "f_GHz": 3.875,
+    "loss_db": 1.0998676941032297,
+    "sidelobe_db": -11.721143074703939,
+    "pointing_error_deg": -19.0
+   },
+   {
+    "f_GHz": 4.0,
+    "loss_db": 1.1742898614964292,
+    "sidelobe_db": -11.580142041834598,
+    "pointing_error_deg": -18.75
+   },
+   {
+    "f_GHz": 4.125,
+    "loss_db": 1.093548897812489,
+    "sidelobe_db": -2.1916010074488317,
+    "pointing_error_deg": -0.5
+   },
+   {
+    "f_GHz": 4.25,
+    "loss_db": 0.8123798449860473,
+    "sidelobe_db": -2.846966001051457,
+    "pointing_error_deg": -2.0
+   },
+   {
+    "f_GHz": 4.375,
+    "loss_db": 0.5981478939431669,
+    "sidelobe_db": -3.4861618462646655,
+    "pointing_error_deg": -3.5
+   },
+   {
+    "f_GHz": 4.5,
+    "loss_db": 0.44741544609190104,
+    "sidelobe_db": -4.113621146829938,
+    "pointing_error_deg": -5.0
+   },
+   {
+    "f_GHz": 4.625,
+    "loss_db": 0.35780024546766165,
+    "sidelobe_db": -4.733371475532711,
+    "pointing_error_deg": -6.25
+   },
+   {
+    "f_GHz": 4.75,
+    "loss_db": 0.3278338213158092,
+    "sidelobe_db": -5.34865767535169,
+    "pointing_error_deg": -7.75
+   },
+   {
+    "f_GHz": 4.875,
+    "loss_db": 0.356878234304121,
+    "sidelobe_db": -5.962827247538144,
+    "pointing_error_deg": -9.0
+   },
+   {
+    "f_GHz": 5.0,
+    "loss_db": 0.38401307827344583,
+    "sidelobe_db": -6.33983691591699,
+    "pointing_error_deg": -3.25
+   },
+   {
+    "f_GHz": 5.125,
+    "loss_db": 0.3767335830383687,
+    "sidelobe_db": -6.47158308369296,
+    "pointing_error_deg": -4.0
+   },
+   {
+    "f_GHz": 5.25,
+    "loss_db": 0.4088820379237556,
+    "sidelobe_db": -6.574433723278447,
+    "pointing_error_deg": -4.75
+   },
+   {
+    "f_GHz": 5.375,
+    "loss_db": 0.4465111650454063,
+    "sidelobe_db": -4.370969050411431,
+    "pointing_error_deg": -2.5
+   },
+   {
+    "f_GHz": 5.5,
+    "loss_db": 0.43629669012655925,
+    "sidelobe_db": -4.123526514260883,
+    "pointing_error_deg": -3.25
+   },
+   {
+    "f_GHz": 5.625,
+    "loss_db": 0.4603457731418306,
+    "sidelobe_db": -3.860133213913776,
+    "pointing_error_deg": -4.0
+   },
+   {
+    "f_GHz": 5.75,
+    "loss_db": 0.5188353980200898,
+    "sidelobe_db": -3.5860134931606598,
+    "pointing_error_deg": -4.5
+   },
+   {
+    "f_GHz": 5.875,
+    "loss_db": 0.5302161242399838,
+    "sidelobe_db": -3.7376218615294436,
+    "pointing_error_deg": -5.5
+   },
+   {
+    "f_GHz": 6.0,
+    "loss_db": 0.5240286112441945,
+    "sidelobe_db": -4.175141180357574,
+    "pointing_error_deg": -6.25
+   },
+   {
+    "f_GHz": 6.125,
+    "loss_db": 0.41424592560207896,
+    "sidelobe_db": -4.654296886796401,
+    "pointing_error_deg": -2.25
+   },
+   {
+    "f_GHz": 6.25,
+    "loss_db": 0.3184672353239565,
+    "sidelobe_db": -5.162556071336879,
+    "pointing_error_deg": -3.5
+   },
+   {
+    "f_GHz": 6.375,
+    "loss_db": 0.29098524865089537,
+    "sidelobe_db": -5.664392435151067,
+    "pointing_error_deg": -4.75
+   },
+   {
+    "f_GHz": 6.5,
+    "loss_db": 0.33174119208086084,
+    "sidelobe_db": -6.14665446872301,
+    "pointing_error_deg": -6.0
+   }
+  ]
+ },
+ "accuracy_crlb_deg": [
+  {
+   "f_GHz": 0.1,
+   "array16_4x4": 1.769189311385212,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 1.0203534143253499,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.107,
+   "array16_4x4": 1.6505783719587839,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.9519463330473524,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.115,
+   "array16_4x4": 1.5399194107978158,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.8881254360299017,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.123,
+   "array16_4x4": 1.4366793071072104,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.8285832538461678,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.132,
+   "array16_4x4": 1.3403606818623661,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.7730329305996684,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.141,
+   "array16_4x4": 1.2504995015902185,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.7212068419409022,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.152,
+   "array16_4x4": 1.1666628427988741,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.6728553057356554,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.163,
+   "array16_4x4": 1.0884468062855583,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.6277453791733751,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.174,
+   "array16_4x4": 1.0154745712746294,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.5856597365204385,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.187,
+   "array16_4x4": 0.9473945800111575,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.5463956221117128,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.2,
+   "array16_4x4": 0.8838788440639135,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.5097638735361942,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.215,
+   "array16_4x4": 0.8246213641781222,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.4755880103107702,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.23,
+   "array16_4x4": 0.7693366560652924,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.44370338365160344,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.246,
+   "array16_4x4": 0.7177583750278356,
+   "uca5_resized_spacing_0p5": 0.10203534143253495,
+   "uca5_fixed_for_1GHz": 0.41395638324699685,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.264,
+   "array16_4x4": 0.6696380327923395,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.3862036972102213,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.283,
+   "array16_4x4": 0.6247438003695941,
+   "uca5_resized_spacing_0p5": 0.10203534143253495,
+   "uca5_fixed_for_1GHz": 0.3603116216469804,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.304,
+   "array16_4x4": 0.5828593911739183,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.3361554165112245,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.325,
+   "array16_4x4": 0.5437830190209997,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.3136187046460253,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.349,
+   "array16_4x4": 0.5073264259842057,
+   "uca5_resized_spacing_0p5": 0.10203534143253495,
+   "uca5_fixed_for_1GHz": 0.2925929111142765,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.374,
+   "array16_4x4": 0.47331397542586245,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.2729767401180787,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.401,
+   "array16_4x4": 0.44158180583403794,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.25467568698678983,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.429,
+   "array16_4x4": 0.4119770413882338,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.23760158288262087,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.46,
+   "array16_4x4": 0.38435705545076543,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.22167217003033074,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.493,
+   "array16_4x4": 0.3585887834355471,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.20681070542459776,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.529,
+   "array16_4x4": 0.33454808174389555,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.1929455911058549,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.567,
+   "array16_4x4": 0.31211912967890476,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.18001002922337078,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.608,
+   "array16_4x4": 0.2911938714569975,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.16794170022377633,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.651,
+   "array16_4x4": 0.2716714956284377,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.1566824626146494,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.698,
+   "array16_4x4": 0.2534579493988134,
+   "uca5_resized_spacing_0p5": 0.10203534143253495,
+   "uca5_fixed_for_1GHz": 0.14617807285671056,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.748,
+   "array16_4x4": 0.23646548551163835,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.13637792403515567,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.802,
+   "array16_4x4": 0.22061223950909398,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.12723480205112636,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.86,
+   "array16_4x4": 0.20582183533428441,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.11870465815872241,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.921,
+   "array16_4x4": 0.1920230173749125,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.11074639675170814,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 0.988,
+   "array16_4x4": 0.17914930717568978,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.10332167737754054,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.059,
+   "array16_4x4": 0.16713868316560856,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.09639473002487477,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.135,
+   "array16_4x4": 0.1559332818571148,
+   "uca5_resized_spacing_0p5": 0.10203534143253495,
+   "uca5_fixed_for_1GHz": 0.08993218279466607,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.216,
+   "array16_4x4": 0.1454791190776454,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.08390290112463791,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.304,
+   "array16_4x4": 0.13572582989051019,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.07827783779254936,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.397,
+   "array16_4x4": 0.12662642595213774,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.07302989297562394,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.498,
+   "array16_4x4": 0.11813706913670767,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.06813378369194978,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.605,
+   "array16_4x4": 0.11021686033756078,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.06356592199485885,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.721,
+   "array16_4x4": 0.10282764242789919,
+   "uca5_resized_spacing_0p5": 0.10203534143253495,
+   "uca5_fixed_for_1GHz": 0.059304301333464496,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.844,
+   "array16_4x4": 0.09593381643150094,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.055328390531876895,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 1.977,
+   "array16_4x4": 0.08950217001781464,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.05161903487631962,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 2.119,
+   "array16_4x4": 0.08350171749518157,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.048158363833619246,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 2.271,
+   "array16_4x4": 0.07790355053131437,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.044929704956479126,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 2.434,
+   "array16_4x4": 0.0726806988818554,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.041917503560763195,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 2.609,
+   "array16_4x4": 0.06780800045604561,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.03910724778781826,
+   "array16_beamwidth_deg": 180.0
+  },
+  {
+   "f_GHz": 2.797,
+   "array16_4x4": 0.06326198009352035,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.03648539869080816,
+   "array16_beamwidth_deg": 52.32535604932427
+  },
+  {
+   "f_GHz": 2.998,
+   "array16_4x4": 0.05902073646821638,
+   "uca5_resized_spacing_0p5": 0.10203534143253495,
+   "uca5_fixed_for_1GHz": 0.0340393250082376,
+   "array16_beamwidth_deg": 48.81733144342535
+  },
+  {
+   "f_GHz": 3.213,
+   "array16_4x4": 0.05506383657452799,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.031757242310424205,
+   "array16_beamwidth_deg": 45.54449370608767
+  },
+  {
+   "f_GHz": 3.444,
+   "array16_4x4": 0.05137221728737868,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.029628156225745748,
+   "array16_beamwidth_deg": 42.49107531303256
+  },
+  {
+   "f_GHz": 3.691,
+   "array16_4x4": 0.04792809352195544,
+   "uca5_resized_spacing_0p5": 0.10203534143253497,
+   "uca5_fixed_for_1GHz": 0.027641809473143476,
+   "array16_beamwidth_deg": 39.64236583480729
+  },
+  {
+   "f_GHz": 3.957,
+   "array16_4x4": 0.044714872550647676,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.025788632445701086,
+   "array16_beamwidth_deg": 36.98464106646645
+  },
+  {
+   "f_GHz": 4.241,
+   "array16_4x4": 0.041717074064394656,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.02405969710722524,
+   "array16_beamwidth_deg": 34.50509690857846
+  },
+  {
+   "f_GHz": 4.546,
+   "array16_4x4": 0.03892025559332597,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.022446673979717897,
+   "array16_beamwidth_deg": 32.19178768101944
+  },
+  {
+   "f_GHz": 4.872,
+   "array16_4x4": 0.03631094292738711,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.020941792014515136,
+   "array16_beamwidth_deg": 30.033568572363265
+  },
+  {
+   "f_GHz": 5.222,
+   "array16_4x4": 0.03387656520174696,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.019537801153769043,
+   "array16_beamwidth_deg": 28.020041947613933
+  },
+  {
+   "f_GHz": 5.598,
+   "array16_4x4": 0.031605394334241664,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.018227937401901328,
+   "array16_beamwidth_deg": 26.141507255601667
+  },
+  {
+   "f_GHz": 6.0,
+   "array16_4x4": 0.02948648852308686,
+   "uca5_resized_spacing_0p5": 0.102035341432535,
+   "uca5_fixed_for_1GHz": 0.01700589023875583,
+   "array16_beamwidth_deg": 24.38891429471499
+  }
+ ],
+ "unambiguous_up_to_GHz": {
+  "array16_4x4": 5.77,
+  "uca5_fixed_for_1GHz": 1.0
+ },
+ "limits": [
+  {
+   "f_GHz": 0.3,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 0.10777961260728333,
+   "chu_bw_percent_whole_array": 5.758852385247638,
+   "wilkinson_combining_efficiency": 0.6430395406750464,
+   "wilkinson_input_match_db": -4.47379888224053,
+   "wilkinson_output_isolation_db": -7.207210321167646
+  },
+  {
+   "f_GHz": 0.35,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 0.17033894558820198,
+   "chu_bw_percent_whole_array": 8.597968286030001,
+   "wilkinson_combining_efficiency": 0.6441359873287985,
+   "wilkinson_input_match_db": -4.48715928513569,
+   "wilkinson_output_isolation_db": -7.02109876465377
+  },
+  {
+   "f_GHz": 0.4,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 0.25288407868691803,
+   "chu_bw_percent_whole_array": 12.00585905176405,
+   "wilkinson_combining_efficiency": 0.6454003266215194,
+   "wilkinson_input_match_db": -4.502616687632702,
+   "wilkinson_output_isolation_db": -6.843336074175839
+  },
+  {
+   "f_GHz": 0.45,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 0.3578578043531644,
+   "chu_bw_percent_whole_array": 15.929005030242093,
+   "wilkinson_combining_efficiency": 0.646832198286172,
+   "wilkinson_input_match_db": -4.520188978901397,
+   "wilkinson_output_isolation_db": -6.679293330623242
+  },
+  {
+   "f_GHz": 0.5,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 0.48755064017103594,
+   "chu_bw_percent_whole_array": 20.303611037719044,
+   "wilkinson_combining_efficiency": 0.6484311800026311,
+   "wilkinson_input_match_db": -4.539896486823025,
+   "wilkinson_output_isolation_db": -6.532351653284488
+  },
+  {
+   "f_GHz": 0.55,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 0.6440891539012846,
+   "chu_bw_percent_whole_array": 25.063033555610225,
+   "wilkinson_combining_efficiency": 0.6501967821692296,
+   "wilkinson_input_match_db": -4.561761997752398,
+   "wilkinson_output_isolation_db": -6.404300160300277
+  },
+  {
+   "f_GHz": 0.6,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 0.8294264657683185,
+   "chu_bw_percent_whole_array": 30.14291368836196,
+   "wilkinson_combining_efficiency": 0.6521284420789513,
+   "wilkinson_input_match_db": -4.585810778430687,
+   "wilkinson_output_isolation_db": -6.295740158899469
+  },
+  {
+   "f_GHz": 0.65,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 1.0453349661770044,
+   "chu_bw_percent_whole_array": 35.48428130440536,
+   "wilkinson_combining_efficiency": 0.6542255175093317,
+   "wilkinson_input_match_db": -4.612070599990662,
+   "wilkinson_output_isolation_db": -6.206439769712557
+  },
+  {
+   "f_GHz": 0.7,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 1.2934012420042102,
+   "chu_bw_percent_whole_array": 41.0350910319695,
+   "wilkinson_combining_efficiency": 0.6564872797374338,
+   "wilkinson_input_match_db": -4.6405717639902635,
+   "wilkinson_output_isolation_db": -6.135619310354798
+  },
+  {
+   "f_GHz": 0.75,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 1.5750231626550533,
+   "chu_bw_percent_whole_array": 46.750667909496,
+   "wilkinson_combining_efficiency": 0.6589129059938923,
+   "wilkinson_input_match_db": -4.671347130404773,
+   "wilkinson_output_isolation_db": -6.082167769128054
+  },
+  {
+   "f_GHz": 0.8,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 1.8914090392538618,
+   "chu_bw_percent_whole_array": 52.59346820187575,
+   "wilkinson_combining_efficiency": 0.6615014713731089,
+   "wilkinson_input_match_db": -4.7044321475021285,
+   "wilkinson_output_isolation_db": -6.044799694981795
+  },
+  {
+   "f_GHz": 0.85,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 2.243578737463244,
+   "chu_bw_percent_whole_array": 58.53246033171119,
+   "wilkinson_combining_efficiency": 0.6642519402202145,
+   "wilkinson_input_match_db": -4.739864883520763,
+   "wilkinson_output_isolation_db": -6.02216446894332
+  },
+  {
+   "f_GHz": 0.9,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 2.6323665970459342,
+   "chu_bw_percent_whole_array": 64.54233534995447,
+   "wilkinson_combining_efficiency": 0.6671631570194028,
+   "wilkinson_input_match_db": -4.7776860600647,
+   "wilkinson_output_isolation_db": -6.012919412151691
+  },
+  {
+   "f_GHz": 0.95,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 3.0584259897058366,
+   "chu_bw_percent_whole_array": 70.6026794583798,
+   "wilkinson_combining_efficiency": 0.6702338368127722,
+   "wilkinson_input_match_db": -4.817939087126325,
+   "wilkinson_output_isolation_db": -6.015776417746661
+  },
+  {
+   "f_GHz": 1.0,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 3.5222353310322823,
+   "chu_bw_percent_whole_array": 76.69718515177173,
+   "wilkinson_combining_efficiency": 0.6734625551838135,
+   "wilkinson_input_match_db": -4.860670099643903,
+   "wilkinson_output_isolation_db": -6.029529753068811
+  },
+  {
+   "f_GHz": 1.05,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 4.024105352377153,
+   "chu_bw_percent_whole_array": 82.81293982255488,
+   "wilkinson_combining_efficiency": 0.6768477378452696,
+   "wilkinson_input_match_db": -4.905927995498251,
+   "wilkinson_output_isolation_db": -6.053070809495685
+  },
+  {
+   "f_GHz": 1.1,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 4.56418743388966,
+   "chu_bw_percent_whole_array": 88.93980687392475,
+   "wilkinson_combining_efficiency": 0.6803876498771633,
+   "wilkinson_input_match_db": -4.953764474851722,
+   "wilkinson_output_isolation_db": -6.085394034794719
+  },
+  {
+   "f_GHz": 1.15,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 5.142482800244632,
+   "chu_bw_percent_whole_array": 95.0699004003314,
+   "wilkinson_combining_efficiency": 0.6840803846674198,
+   "wilkinson_input_match_db": -5.004234080732328,
+   "wilkinson_output_isolation_db": -6.125597082747244
+  },
+  {
+   "f_GHz": 1.2,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 5.758852385247637,
+   "chu_bw_percent_whole_array": 101.19714699992748,
+   "wilkinson_combining_efficiency": 0.6879238526146848,
+   "wilkinson_input_match_db": -5.057394240767643,
+   "wilkinson_output_isolation_db": -6.172877315127737
+  },
+  {
+   "f_GHz": 1.25,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 6.413027179835155,
+   "chu_bw_percent_whole_array": 107.31692485890234,
+   "wilkinson_combining_efficiency": 0.6919157696605145,
+   "wilkinson_input_match_db": -5.113305309976286,
+   "wilkinson_output_isolation_db": -6.226526133539557
+  },
+  {
+   "f_GHz": 1.3,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 7.104618889328633,
+   "chu_bw_percent_whole_array": 113.42576923330314,
+   "wilkinson_combining_efficiency": 0.6960536457262584,
+   "wilkinson_input_match_db": -5.172030614530626,
+   "wilkinson_output_isolation_db": -6.2859221466552775
+  },
+  {
+   "f_GHz": 1.35,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 7.833130739462697,
+   "chu_bw_percent_whole_array": 119.52113376988362,
+   "wilkinson_combining_efficiency": 0.7003347731383928,
+   "wilkinson_input_match_db": -5.233636496412535,
+   "wilkinson_output_isolation_db": -6.350523844378694
+  },
+  {
+   "f_GHz": 1.4,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 8.597968286029998,
+   "chu_bw_percent_whole_array": 125.60119808135184,
+   "wilkinson_combining_efficiency": 0.7047562151348775,
+   "wilkinson_input_match_db": -5.2981923588952515,
+   "wilkinson_output_isolation_db": -6.419862216734979
+  },
+  {
+   "f_GHz": 1.45,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 9.398450099352132,
+   "chu_bw_percent_whole_array": 131.66471322343028,
+   "wilkinson_combining_efficiency": 0.709314794554151,
+   "wilkinson_input_match_db": -5.365770712799121,
+   "wilkinson_output_isolation_db": -6.493533593472886
+  },
+  {
+   "f_GHz": 1.5,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 10.23381821164313,
+   "chu_bw_percent_whole_array": 137.71087798676587,
+   "wilkinson_combining_efficiency": 0.7140070828175088,
+   "wilkinson_input_match_db": -5.43644722348755,
+   "wilkinson_output_isolation_db": -6.571192869496151
+  },
+  {
+   "f_GHz": 1.55,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 11.103248232193906,
+   "chu_bw_percent_whole_array": 143.73924009961453,
+   "wilkinson_combining_efficiency": 0.7188293893247837,
+   "wilkinson_input_match_db": -5.510300758592386,
+   "wilkinson_output_isolation_db": -6.652547206191751
+  },
+  {
+   "f_GHz": 1.6,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 12.005859051764043,
+   "chu_bw_percent_whole_array": 149.7496174855628,
+   "wilkinson_combining_efficiency": 0.7237777513921991,
+   "wilkinson_input_match_db": -5.587413436485837,
+   "wilkinson_output_isolation_db": -6.737350248679106
+  },
+  {
+   "f_GHz": 1.65,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 12.940722073290212,
+   "chu_bw_percent_whole_array": 155.74203561922297,
+   "wilkinson_combining_efficiency": 0.7288479248699337,
+   "wilkinson_input_match_db": -5.667870675549558,
+   "wilkinson_output_isolation_db": -6.825396866310259
+  },
+  {
+   "f_GHz": 1.7,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 13.906869920750248,
+   "chu_bw_percent_whole_array": 161.71667777632274,
+   "wilkinson_combining_efficiency": 0.734035375585025,
+   "wilkinson_input_match_db": -5.751761244330632,
+   "wilkinson_output_isolation_db": -6.916518403019748
+  },
+  {
+   "f_GHz": 1.75,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 14.903304591573995,
+   "chu_bw_percent_whole_array": 167.67384559675642,
+   "wilkinson_combining_efficiency": 0.7393352717625947,
+   "wilkinson_input_match_db": -5.839177312720727,
+   "wilkinson_output_isolation_db": -7.010578411581081
+  },
+  {
+   "f_GHz": 1.8,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 15.929005030242088,
+   "chu_bw_percent_whole_array": 173.61392788734202,
+   "wilkinson_combining_efficiency": 0.7447424775847407,
+   "wilkinson_input_match_db": -5.930214504347876,
+   "wilkinson_output_isolation_db": -7.107468838841463
+  },
+  {
+   "f_GHz": 1.85,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 16.982934111596826,
+   "chu_bw_percent_whole_array": 179.5373760029325,
+   "wilkinson_combining_efficiency": 0.7502515480515288,
+   "wilkinson_input_match_db": -6.024971950432035,
+   "wilkinson_output_isolation_db": -7.207106625746373
+  },
+  {
+   "f_GHz": 1.9,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 18.064045031886153,
+   "chu_bw_percent_whole_array": 185.44468447657712,
+   "wilkinson_combining_efficiency": 0.7558567253121298,
+   "wilkinson_input_match_db": -6.123552345425663,
+   "wilkinson_output_isolation_db": -7.309430685160412
+  },
+  {
+   "f_GHz": 1.95,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 19.17128711369275,
+   "chu_bw_percent_whole_array": 191.3363758360709,
+   "wilkinson_combining_efficiency": 0.7615519366358781,
+   "wilkinson_input_match_db": -6.226062004840075,
+   "wilkinson_output_isolation_db": -7.414399221264897
+  },
+  {
+   "f_GHz": 2.0,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 20.303611037719033,
+   "chu_bw_percent_whole_array": 197.21298875779098,
+   "wilkinson_combining_efficiency": 0.7673307941927825,
+   "wilkinson_input_match_db": -6.332610925748127,
+   "wilkinson_output_isolation_db": -7.521987356062675
+  },
+  {
+   "f_GHz": 2.05,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 21.459973519979318,
+   "chu_bw_percent_whole_array": 203.07506887946616,
+   "wilkinson_combining_efficiency": 0.773186596810273,
+   "wilkinson_input_match_db": -6.443312850553849,
+   "wilkinson_output_isolation_db": -7.632185030836551
+  },
+  {
+   "f_GHz": 2.1,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 22.639341457387,
+   "chu_bw_percent_whole_array": 208.92316172990658,
+   "wilkinson_combining_efficiency": 0.7791123338676945,
+   "wilkinson_input_match_db": -6.558285334731807,
+   "wilkinson_output_isolation_db": -7.744995153012174
+  },
+  {
+   "f_GHz": 2.15,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 23.840695568119855,
+   "chu_bw_percent_whole_array": 214.75780734259482,
+   "wilkinson_combining_efficiency": 0.7851006914817983,
+   "wilkinson_input_match_db": -6.677649819362546,
+   "wilkinson_output_isolation_db": -7.860431961584817
+  },
+  {
+   "f_GHz": 2.2,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 25.06303355561022,
+   "chu_bw_percent_whole_array": 220.57953620694656,
+   "wilkinson_combining_efficiency": 0.79114406112516,
+   "wilkinson_input_match_db": -6.801531709427861,
+   "wilkinson_output_isolation_db": -7.978519586962442
+  },
+  {
+   "f_GHz": 2.25,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 26.30537282664982,
+   "chu_bw_percent_whole_array": 226.38886628043645,
+   "wilkinson_combining_efficiency": 0.7972345508047644,
+   "wilkinson_input_match_db": -6.930060458979282,
+   "wilkinson_output_isolation_db": -8.099290783679102
+  },
+  {
+   "f_GHz": 2.3,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 27.566752795030485,
+   "chu_bw_percent_whole_array": 232.1863008402064,
+   "wilkinson_combining_efficiency": 0.8033639989099111,
+   "wilkinson_input_match_db": -7.0633696644586035,
+   "wilkinson_output_isolation_db": -8.222785816899071
+  },
+  {
+   "f_GHz": 2.35,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 28.846236802466613,
+   "chu_bw_percent_whole_array": 237.97232699706595,
+   "wilkinson_combining_efficiency": 0.8095239908169473,
+   "wilkinson_input_match_db": -7.201597167628525,
+   "wilkinson_output_isolation_db": -8.349051485938372
+  },
+  {
+   "f_GHz": 2.4,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 30.142913688361954,
+   "chu_bw_percent_whole_array": 243.74741473021578,
+   "wilkinson_combining_efficiency": 0.8157058783131707,
+   "wilkinson_input_match_db": -7.3448851697673145,
+   "wilkinson_output_isolation_db": -8.47814027016711
+  },
+  {
+   "f_GHz": 2.45,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 31.45589903938261,
+   "chu_bw_percent_whole_array": 249.51201632937665,
+   "wilkinson_combining_efficiency": 0.8219008018736443,
+   "wilkinson_input_match_db": -7.493380358993781,
+   "wilkinson_output_isolation_db": -8.610109584623018
+  },
+  {
+   "f_GHz": 2.5,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 32.7843361488629,
+   "chu_bw_percent_whole_array": 255.2665661537107,
+   "wilkinson_combining_efficiency": 0.8280997157927537,
+   "wilkinson_input_match_db": -7.647234052819009,
+   "wilkinson_output_isolation_db": -8.745021134468043
+  },
+  {
+   "f_GHz": 2.55,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 34.127396714875374,
+   "chu_bw_percent_whole_array": 261.011480635121,
+   "wilkinson_combining_efficiency": 0.8342934161374483,
+   "wilkinson_input_match_db": -7.806602358270637,
+   "wilkinson_output_isolation_db": -8.882940359065621
+  },
+  {
+   "f_GHz": 2.6,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 35.48428130440534,
+   "chu_bw_percent_whole_array": 266.7471584681125,
+   "wilkinson_combining_efficiency": 0.8404725714515641,
+   "wilkinson_input_match_db": -7.97164635220496,
+   "wilkinson_output_isolation_db": -9.023935957956933
+  },
+  {
+   "f_GHz": 2.65,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 36.85421960954137,
+   "chu_bw_percent_whole_array": 272.47398094011476,
+   "wilkinson_combining_efficiency": 0.8466277561008969,
+   "wilkinson_input_match_db": -8.142532284713988,
+   "wilkinson_output_isolation_db": -9.168079492381707
+  },
+  {
+   "f_GHz": 2.7,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 38.23647051997391,
+   "chu_bw_percent_whole_array": 278.1923123655693,
+   "wilkinson_combining_efficiency": 0.8527494861074404,
+   "wilkinson_input_match_db": -8.319431808850803,
+   "wilkinson_output_isolation_db": -9.315445057235674
+  },
+  {
+   "f_GHz": 2.75,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 39.630322034427465,
+   "chu_bw_percent_whole_array": 283.9025005946475,
+   "wilkinson_combining_efficiency": 0.8588282572789786,
+   "wilkinson_input_match_db": -8.50252224023923,
+   "wilkinson_output_isolation_db": -9.466109019494596
+  },
+  {
+   "f_GHz": 2.8,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 41.035091031969486,
+   "chu_bw_percent_whole_array": 289.60487757353,
+   "wilkinson_combining_efficiency": 0.8648545853979379,
+   "wilkinson_input_match_db": -8.69198685050755,
+   "wilkinson_output_isolation_db": -9.620149820175566
+  },
+  {
+   "f_GHz": 2.85,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 42.45012292247166,
+   "chu_bw_percent_whole_array": 295.29975993806283,
+   "wilkinson_combining_efficiency": 0.8708190481917621,
+   "wilkinson_input_match_db": -8.888015198893026,
+   "wilkinson_output_isolation_db": -9.777647837862023
+  },
+  {
+   "f_GHz": 2.9,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 43.87479119386681,
+   "chu_bw_percent_whole_array": 300.9874496265215,
+   "wilkinson_combining_efficiency": 0.8767123287671236,
+   "wilkinson_input_match_db": -9.09080350681131,
+   "wilkinson_output_isolation_db": -9.938685312700212
+  },
+  {
+   "f_GHz": 2.95,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 45.30849687226704,
+   "chu_bw_percent_whole_array": 306.66823450036236,
+   "wilkinson_combining_efficiency": 0.8825252601528484,
+   "wilkinson_input_match_db": -9.300555080676968,
+   "wilkinson_output_isolation_db": -10.103346330592833
+  },
+  {
+   "f_GHz": 3.0,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 46.75066790949599,
+   "chu_bw_percent_whole_array": 312.34238896436705,
+   "wilkinson_combining_efficiency": 0.888248870562534,
+   "wilkinson_input_match_db": -9.51748078880766,
+   "wilkinson_output_isolation_db": -10.27171686808132
+  },
+  {
+   "f_GHz": 3.05,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 48.20075851115375,
+   "chu_bw_percent_whole_array": 318.0101745796076,
+   "wilkinson_combining_efficiency": 0.893874428958386,
+   "wilkinson_input_match_db": -9.74179959885284,
+   "wilkinson_output_isolation_db": -10.443884899132039
+  },
+  {
+   "f_GHz": 3.1,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 49.65824841697983,
+   "chu_bw_percent_whole_array": 323.6718406642825,
+   "wilkinson_combining_efficiency": 0.8993934904737073,
+   "wilkinson_input_match_db": -9.973739182871714,
+   "wilkinson_output_isolation_db": -10.6199405657355
+  },
+  {
+   "f_GHz": 3.15,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 51.12264214401384,
+   "chu_bw_percent_whole_array": 329.327624878766,
+   "wilkinson_combining_efficiency": 0.9047979412335302,
+   "wilkinson_input_match_db": -10.213536597956763,
+   "wilkinson_output_isolation_db": -10.799976414903139
+  },
+  {
+   "f_GHz": 3.2,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 52.59346820187574,
+   "chu_bw_percent_whole_array": 334.97775379224436,
+   "wilkinson_combining_efficiency": 0.9100800421017888,
+   "wilkinson_input_match_db": -10.461439051177507,
+   "wilkinson_output_isolation_db": -10.984087705316735
+  },
+  {
+   "f_GHz": 3.25,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 54.0702782883983,
+   "chu_bw_percent_whole_array": 340.6224434291299,
+   "wilkinson_combining_efficiency": 0.9152324708798066,
+   "wilkinson_input_match_db": -10.717704758624496,
+   "wilkinson_output_isolation_db": -11.172372787565369
+  },
+  {
+   "f_GHz": 3.3,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 55.55264647284234,
+   "chu_bw_percent_whole_array": 346.26189979409196,
+   "wilkinson_combining_efficiency": 0.9202483624850503,
+   "wilkinson_input_match_db": -10.982603909490807,
+   "wilkinson_output_isolation_db": -11.364933562610682
+  },
+  {
+   "f_GHz": 3.35,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 57.04016837300696,
+   "chu_bw_percent_whole_array": 351.8963193750521,
+   "wilkinson_combining_efficiency": 0.9251213466513831,
+   "wilkinson_input_match_db": -11.256419747470312,
+   "wilkinson_output_isolation_db": -11.561876023872685
+  },
+  {
+   "f_GHz": 3.4,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 58.532460331711164,
+   "chu_bw_percent_whole_array": 357.5258896238864,
+   "wilkinson_combining_efficiency": 0.9298455827123703,
+   "wilkinson_input_match_db": -11.539449783313442,
+   "wilkinson_output_isolation_db": -11.763310889146458
+  },
+  {
+   "f_GHz": 3.45,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 60.029158597362944,
+   "chu_bw_percent_whole_array": 363.15078941488684,
+   "wilkinson_combining_efficiency": 0.9344157910574562,
+   "wilkinson_input_match_db": -11.832007154210649,
+   "wilkinson_output_isolation_db": -11.969354329472806
+  },
+  {
+   "f_GHz": 3.5,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 61.52991851264753,
+   "chu_bw_percent_whole_array": 368.7711894812674,
+   "wilkinson_combining_efficiency": 0.938827280886576,
+   "wilkinson_input_match_db": -12.134422147823987,
+   "wilkinson_output_isolation_db": -12.180128803123228
+  },
+  {
+   "f_GHz": 3.55,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 63.03441371474743,
+   "chu_bw_percent_whole_array": 374.38725283018005,
+   "wilkinson_combining_efficiency": 0.9430759739314074,
+   "wilkinson_input_match_db": -12.447043911327482,
+   "wilkinson_output_isolation_db": -12.395764004059668
+  },
+  {
+   "f_GHz": 3.6,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 64.54233534995446,
+   "chu_bw_percent_whole_array": 379.99913513683146,
+   "wilkinson_combining_efficiency": 0.947158423860249,
+   "wilkinson_input_match_db": -12.770242368828725,
+   "wilkinson_output_isolation_db": -12.616397935637114
+  },
+  {
+   "f_GHz": 3.65,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 66.05339130503985,
+   "chu_bw_percent_whole_array": 385.6069851183923,
+   "wilkinson_combining_efficiency": 0.9510718311373902,
+   "wilkinson_input_match_db": -13.104410374128614,
+   "wilkinson_output_isolation_db": -12.84217812198769
+  },
+  {
+   "f_GHz": 3.7,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 67.56730545730932,
+   "chu_bw_percent_whole_array": 391.21094488844614,
+   "wilkinson_combining_efficiency": 0.9548140531658139,
+   "wilkinson_input_match_db": -13.449966130058769,
+   "wilkinson_output_isolation_db": -13.073262971524215
+  },
+  {
+   "f_GHz": 3.75,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 69.08381694488078,
+   "chu_bw_percent_whole_array": 396.8111502927747,
+   "wilkinson_combining_efficiency": 0.9583836096028141,
+   "wilkinson_input_match_db": -13.807355910769717,
+   "wilkinson_output_isolation_db": -13.309823309411804
+  },
+  {
+   "f_GHz": 3.8,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 70.60267945837975,
+   "chu_bw_percent_whole_array": 402.407731227291,
+   "wilkinson_combining_efficiency": 0.9617796828004234,
+   "wilkinson_input_match_db": -14.177057129520145,
+   "wilkinson_output_isolation_db": -13.552044098778355
+  },
+  {
+   "f_GHz": 3.85,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 72.12366055494681,
+   "chu_bw_percent_whole_array": 408.0008119389439,
+   "wilkinson_combining_efficiency": 0.9650021133850603,
+   "wilkinson_input_match_db": -14.559581801977625,
+   "wilkinson_output_isolation_db": -13.800126373993862
+  },
+  {
+   "f_GHz": 3.9,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 73.64654099518802,
+   "chu_bw_percent_whole_array": 413.5905113104152,
+   "wilkinson_combining_efficiency": 0.9680513910522055,
+   "wilkinson_input_match_db": -14.955480464085158,
+   "wilkinson_output_isolation_db": -14.054289413699859
+  },
+  {
+   "f_GHz": 3.95,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 75.17111410347101,
+   "chu_bw_percent_whole_array": 419.17694312941285,
+   "wilkinson_combining_efficiency": 0.9709286407109855,
+   "wilkinson_input_match_db": -15.365346614556774,
+   "wilkinson_output_isolation_db": -14.314773186610449
+  },
+  {
+   "f_GHz": 4.0,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 76.6971851517717,
+   "chu_bw_percent_whole_array": 424.7602163433532,
+   "wilkinson_combining_efficiency": 0.9736356041690146,
+   "wilkinson_input_match_db": -15.789821765523381,
+   "wilkinson_output_isolation_db": -14.581841109682223
+  },
+  {
+   "f_GHz": 4.05,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 78.22457076710684,
+   "chu_bw_percent_whole_array": 430.340435300198,
+   "wilkinson_combining_efficiency": 0.9761746175987982,
+   "wilkinson_input_match_db": -16.229601201377353,
+   "wilkinson_output_isolation_db": -14.855783166378096
+  },
+  {
+   "f_GHz": 4.1,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 79.75309836244284,
+   "chu_bw_percent_whole_array": 435.9176999761843,
+   "wilkinson_combining_efficiency": 0.9785485850723585,
+   "wilkinson_input_match_db": -16.685440566260823,
+   "wilkinson_output_isolation_db": -15.136919442833758
+  },
+  {
+   "f_GHz": 4.15,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 81.28260559084829,
+   "chu_bw_percent_whole_array": 441.49210619116167,
+   "wilkinson_combining_efficiency": 0.9807609484899394,
+   "wilkinson_input_match_db": -17.15816342594501,
+   "wilkinson_output_isolation_db": -15.425604152299716
+  },
+  {
+   "f_GHz": 4.2,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 82.81293982255485,
+   "chu_bw_percent_whole_array": 447.06374581221564,
+   "wilkinson_combining_efficiency": 0.982815654261001,
+   "wilkinson_input_match_db": -17.648669981413256,
+   "wilkinson_output_isolation_db": -15.72223023395846
+  },
+  {
+   "f_GHz": 4.25,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 84.34395764450582,
+   "chu_bw_percent_whole_array": 452.63270694623066,
+   "wilkinson_combining_efficiency": 0.9847171171209377,
+   "wilkinson_input_match_db": -18.157947151075568,
+   "wilkinson_output_isolation_db": -16.02723463200298
+  },
+  {
+   "f_GHz": 4.3,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 85.8755243819008,
+   "chu_bw_percent_whole_array": 458.1990741220106,
+   "wilkinson_combining_efficiency": 0.9864701814848895,
+   "wilkinson_input_match_db": -18.687080288580237,
+   "wilkinson_output_isolation_db": -16.341104385899413
+  },
+  {
+   "f_GHz": 4.35,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 87.40751364119,
+   "chu_bw_percent_whole_array": 463.7629284625464,
+   "wilkinson_combining_efficiency": 0.9880800807506357,
+   "wilkinson_input_match_db": -19.237266866825514,
+   "wilkinson_output_isolation_db": -16.664383694633585
+  },
+  {
+   "f_GHz": 4.4,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 88.93980687392474,
+   "chu_bw_percent_whole_array": 469.3243478479895,
+   "wilkinson_combining_efficiency": 0.9895523949661552,
+   "wilkinson_input_match_db": -19.809832540307013,
+   "wilkinson_output_isolation_db": -16.99768215860744
+  },
+  {
+   "f_GHz": 4.45,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 90.4722929608395,
+   "chu_bw_percent_whole_array": 474.88340706986094,
+   "wilkinson_combining_efficiency": 0.9908930072743158,
+   "wilkinson_input_match_db": -20.406250103217904,
+   "wilkinson_output_isolation_db": -17.341684455635423
+  },
+  {
+   "f_GHz": 4.5,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 92.00486781551275,
+   "chu_bw_percent_whole_array": 480.440177976995,
+   "wilkinson_combining_efficiency": 0.9921080595378368,
+   "wilkinson_input_match_db": -21.02816199782172,
+   "wilkinson_output_isolation_db": -17.697161776226185
+  },
+  {
+   "f_GHz": 4.55,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 93.53743400693885,
+   "chu_bw_percent_whole_array": 485.99472961369156,
+   "wilkinson_combining_efficiency": 0.9932039075327659,
+   "wilkinson_input_match_db": -21.677407207776223,
+   "wilkinson_output_isolation_db": -18.06498543363889
+  },
+  {
+   "f_GHz": 4.6,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 95.06990040033138,
+   "chu_bw_percent_whole_array": 491.5471283505225,
+   "wilkinson_combining_efficiency": 0.9941870760790231,
+   "wilkinson_input_match_db": -22.356053610134047,
+   "wilkinson_output_isolation_db": -18.44614318398862
+  },
+  {
+   "f_GHz": 4.65,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 96.6021818154741,
+   "chu_bw_percent_whole_array": 497.0974380082133,
+   "wilkinson_combining_efficiency": 0.9950642144526709,
+   "wilkinson_input_match_db": -23.066437180256642,
+   "wilkinson_output_isolation_db": -18.841758952225142
+  },
+  {
+   "f_GHz": 4.7,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 98.13419870193592,
+   "chu_bw_percent_whole_array": 502.64571997499684,
+   "wilkinson_combining_efficiency": 0.9958420523974887,
+   "wilkinson_input_match_db": -23.811209878481336,
+   "wilkinson_output_isolation_db": -19.25311687743325
+  },
+  {
+   "f_GHz": 4.75,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 99.66587683047025,
+   "chu_bw_percent_whole_array": 508.19203331781137,
+   "wilkinson_combining_efficiency": 0.9965273570238654,
+   "wilkinson_input_match_db": -24.593398643900795,
+   "wilkinson_output_isolation_db": -19.681690889507934
+  },
+  {
+   "f_GHz": 4.8,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 101.19714699992748,
+   "chu_bw_percent_whole_array": 513.7364348876963,
+   "wilkinson_combining_efficiency": 0.9971268908517614,
+   "wilkinson_input_match_db": -25.416478750252836,
+   "wilkinson_output_isolation_db": -20.129181444436846
+  },
+  {
+   "f_GHz": 4.85,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 102.72794475901968,
+   "chu_bw_percent_whole_array": 519.2789794197151,
+   "wilkinson_combining_efficiency": 0.9976473712223872,
+   "wilkinson_input_match_db": -26.284465949460106,
+   "wilkinson_output_isolation_db": -20.597561631061986
+  },
+  {
+   "f_GHz": 4.9,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 104.25821014229022,
+   "chu_bw_percent_whole_array": 524.8197196277189,
+   "wilkinson_combining_efficiency": 0.9980954312709767,
+   "wilkinson_input_match_db": -27.202033505970896,
+   "wilkinson_output_isolation_db": -21.089135701368882
+  },
+  {
+   "f_GHz": 4.95,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 105.78788741965523,
+   "chu_bw_percent_whole_array": 530.3587062942391,
+   "wilkinson_combining_efficiency": 0.9984775826212146,
+   "wilkinson_input_match_db": -28.174662671097373,
+   "wilkinson_output_isolation_db": -21.606614299736332
+  },
+  {
+   "f_GHz": 5.0,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 107.3169248589023,
+   "chu_bw_percent_whole_array": 535.8959883557915,
+   "wilkinson_combining_efficiency": 0.9988001799312294,
+   "wilkinson_input_match_db": -29.20883878118349,
+   "wilkinson_output_isolation_db": -22.153212484247135
+  },
+  {
+   "f_GHz": 5.05,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 108.84527450054702,
+   "chu_bw_percent_whole_array": 541.4316129838436,
+   "wilkinson_combining_efficiency": 0.9990693873919119,
+   "wilkinson_input_match_db": -30.312310678719708,
+   "wilkinson_output_isolation_db": -22.73277939112821
+  },
+  {
+   "f_GHz": 5.1,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 110.3728919444694,
+   "chu_bw_percent_whole_array": 546.9656256616945,
+   "wilkinson_combining_efficiency": 0.9992911472512781,
+   "wilkinson_input_match_db": -31.494439722350233,
+   "wilkinson_output_isolation_db": -23.34997267710396
+  },
+  {
+   "f_GHz": 5.15,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 111.89973614776953,
+   "chu_bw_percent_whole_array": 552.4980702574921,
+   "wilkinson_combining_efficiency": 0.9994711504138468,
+   "wilkinson_input_match_db": -32.76667831164091,
+   "wilkinson_output_isolation_db": -24.010497704668317
+  },
+  {
+   "f_GHz": 5.2,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 113.4257692333031,
+   "chu_bw_percent_whole_array": 558.0289890936067,
+   "wilkinson_combining_efficiency": 0.9996148091419057,
+   "wilkinson_input_match_db": -34.143240287291555,
+   "wilkinson_output_isolation_db": -24.721442652914263
+  },
+  {
+   "f_GHz": 5.25,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 114.95095630837595,
+   "chu_bw_percent_whole_array": 563.5584230125589,
+   "wilkinson_combining_efficiency": 0.9997272318662397,
+   "wilkinson_input_match_db": -35.64206367667554,
+   "wilkinson_output_isolation_db": -25.49175979133689
+  },
+  {
+   "f_GHz": 5.3,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 116.47526529309864,
+   "chu_bw_percent_whole_array": 569.0864114396985,
+   "wilkinson_combining_efficiency": 0.9998132000974712,
+   "wilkinson_input_match_db": -37.286233547176586,
+   "wilkinson_output_isolation_db": -26.332976800449288
+  },
+  {
+   "f_GHz": 5.35,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 117.99866675792062,
+   "chu_bw_percent_whole_array": 574.6129924428071,
+   "wilkinson_combining_efficiency": 0.999877147415716,
+   "wilkinson_input_match_db": -39.106157034230925,
+   "wilkinson_output_isolation_db": -27.260284175352176
+  },
+  {
+   "f_GHz": 5.4,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 119.52113376988358,
+   "chu_bw_percent_whole_array": 580.1382027887967,
+   "wilkinson_combining_efficiency": 0.9999231405056833,
+   "wilkinson_input_match_db": -41.14302477227141,
+   "wilkinson_output_isolation_db": -28.29426582906492
+  },
+  {
+   "f_GHz": 5.45,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 121.04264174715442,
+   "chu_bw_percent_whole_array": 585.6620779976614,
+   "wilkinson_combining_efficiency": 0.9999548621966263,
+   "wilkinson_input_match_db": -43.45459579639639,
+   "wilkinson_output_isolation_db": -29.463791432218812
+  },
+  {
+   "f_GHz": 5.5,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 122.56316832141512,
+   "chu_bw_percent_whole_array": 591.1846523938323,
+   "wilkinson_combining_efficiency": 0.999975596461561,
+   "wilkinson_input_match_db": -46.12547197707744,
+   "wilkinson_output_isolation_db": -30.81115352288269
+  },
+  {
+   "f_GHz": 5.55,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 124.08269320770813,
+   "chu_bw_percent_whole_array": 596.705959155075,
+   "wilkinson_combining_efficiency": 0.9999882153276616,
+   "wilkinson_input_match_db": -49.286824881194384,
+   "wilkinson_output_isolation_db": -32.401930835649146
+  },
+  {
+   "f_GHz": 5.6,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 125.6011980813518,
+   "chu_bw_percent_whole_array": 602.226030359061,
+   "wilkinson_combining_efficiency": 0.99999516764965,
+   "wilkinson_input_match_db": -53.158415864724304,
+   "wilkinson_output_isolation_db": -34.345998254963035
+  },
+  {
+   "f_GHz": 5.65,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 127.11866646156007,
+   "chu_bw_percent_whole_array": 607.7448970277402,
+   "wilkinson_combining_efficiency": 0.9999984696999534,
+   "wilkinson_input_match_db": -58.15223408527535,
+   "wilkinson_output_isolation_db": -36.8493457388801
+  },
+  {
+   "f_GHz": 5.7,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 128.63508360141614,
+   "chu_bw_percent_whole_array": 613.2625891696272,
+   "wilkinson_combining_efficiency": 0.9999996975333041,
+   "wilkinson_input_match_db": -65.193224379055,
+   "wilkinson_output_isolation_db": -40.374442187413266
+  },
+  {
+   "f_GHz": 5.75,
+   "max_scan_deg": 90.0,
+   "chu_bw_percent_26mm_cell": 130.15043638386837,
+   "chu_bw_percent_whole_array": 618.7791358201165,
+   "wilkinson_combining_efficiency": 0.9999999810888921,
+   "wilkinson_input_match_db": -77.2328302104328,
+   "wilkinson_output_isolation_db": -46.397006861067176
+  },
+  {
+   "f_GHz": 5.8,
+   "max_scan_deg": 81.11993969404286,
+   "chu_bw_percent_26mm_cell": 131.66471322343028,
+   "chu_bw_percent_whole_array": 624.2945650799273,
+   "wilkinson_combining_efficiency": 1.0,
+   "wilkinson_input_match_db": -315.57825053817095,
+   "wilkinson_output_isolation_db": -329.2587614355073
+  },
+  {
+   "f_GHz": 5.85,
+   "max_scan_deg": 76.17307473645032,
+   "chu_bw_percent_26mm_cell": 133.17790397328463,
+   "chu_bw_percent_whole_array": 629.8089041517753,
+   "wilkinson_combining_efficiency": 0.9999999810888921,
+   "wilkinson_input_match_db": -77.23283021044162,
+   "wilkinson_output_isolation_db": -46.3970068610671
+  },
+  {
+   "f_GHz": 5.9,
+   "max_scan_deg": 72.61498391940059,
+   "chu_bw_percent_26mm_cell": 134.68999983750456,
+   "chu_bw_percent_whole_array": 635.3221793753669,
+   "wilkinson_combining_efficiency": 0.9999996975333039,
+   "wilkinson_input_match_db": -65.19322437905603,
+   "wilkinson_output_isolation_db": -40.37444218741363
+  },
+  {
+   "f_GHz": 5.95,
+   "max_scan_deg": 69.7011100717864,
+   "chu_bw_percent_26mm_cell": 136.20099328811915,
+   "chu_bw_percent_whole_array": 640.8344162607992,
+   "wilkinson_combining_efficiency": 0.9999984696999539,
+   "wilkinson_input_match_db": -58.15223408527486,
+   "wilkinson_output_isolation_db": -36.84934573888032
+  },
+  {
+   "f_GHz": 6.0,
+   "max_scan_deg": 67.18276254023682,
+   "chu_bw_percent_26mm_cell": 137.7108779867658,
+   "chu_bw_percent_whole_array": 646.3456395204511,
+   "wilkinson_combining_efficiency": 0.9999951676496496,
+   "wilkinson_input_match_db": -53.15841586472564,
+   "wilkinson_output_isolation_db": -34.345998254962836
+  },
+  {
+   "f_GHz": 6.05,
+   "max_scan_deg": 64.93994556481582,
+   "chu_bw_percent_26mm_cell": 139.21964871068383,
+   "chu_bw_percent_whole_array": 651.8558730994395,
+   "wilkinson_combining_efficiency": 0.999988215327662,
+   "wilkinson_input_match_db": -49.28682488119356,
+   "wilkinson_output_isolation_db": -32.40193083564918
+  },
+  {
+   "f_GHz": 6.1,
+   "max_scan_deg": 62.9037331677856,
+   "chu_bw_percent_26mm_cell": 140.72730128281555,
+   "chu_bw_percent_whole_array": 657.3651402047158,
+   "wilkinson_combining_efficiency": 0.9999755964615603,
+   "wilkinson_input_match_db": -46.125471977077325,
+   "wilkinson_output_isolation_db": -30.811153522882666
+  },
+  {
+   "f_GHz": 6.15,
+   "max_scan_deg": 61.03014505234705,
+   "chu_bw_percent_26mm_cell": 142.23383250579496,
+   "chu_bw_percent_whole_array": 662.8734633328728,
+   "wilkinson_combining_efficiency": 0.9999548621966265,
+   "wilkinson_input_match_db": -43.45459579639652,
+   "wilkinson_output_isolation_db": -29.463791432218855
+  },
+  {
+   "f_GHz": 6.2,
+   "max_scan_deg": 59.28905202048312,
+   "chu_bw_percent_26mm_cell": 143.7392400996145,
+   "chu_bw_percent_whole_array": 668.3808642967217,
+   "wilkinson_combining_efficiency": 0.9999231405056835,
+   "wilkinson_input_match_db": -41.143024772271495,
+   "wilkinson_output_isolation_db": -28.29426582906491
+  },
+  {
+   "f_GHz": 6.25,
+   "max_scan_deg": 57.65872391995252,
+   "chu_bw_percent_26mm_cell": 145.24352264277033,
+   "chu_bw_percent_whole_array": 673.8873642507081,
+   "wilkinson_combining_efficiency": 0.9998771474157166,
+   "wilkinson_input_match_db": -39.10615703423093,
+   "wilkinson_output_isolation_db": -27.260284175352226
+  },
+  {
+   "f_GHz": 6.3,
+   "max_scan_deg": 56.122863791958004,
+   "chu_bw_percent_26mm_cell": 146.74667951669903,
+   "chu_bw_percent_whole_array": 679.3929837152178,
+   "wilkinson_combining_efficiency": 0.9998132000974712,
+   "wilkinson_input_match_db": -37.28623354717688,
+   "wilkinson_output_isolation_db": -26.332976800449295
+  },
+  {
+   "f_GHz": 6.35,
+   "max_scan_deg": 54.668868151254884,
+   "chu_bw_percent_26mm_cell": 148.24871085332688,
+   "chu_bw_percent_whole_array": 684.8977425998328,
+   "wilkinson_combining_efficiency": 0.9997272318662399,
+   "wilkinson_input_match_db": -35.64206367667579,
+   "wilkinson_output_isolation_db": -25.491759791336904
+  },
+  {
+   "f_GHz": 6.4,
+   "max_scan_deg": 53.28674515600818,
+   "chu_bw_percent_26mm_cell": 149.74961748556277,
+   "chu_bw_percent_whole_array": 690.4016602255851,
+   "wilkinson_combining_efficiency": 0.9996148091419059,
+   "wilkinson_input_match_db": -34.14324028729165,
+   "wilkinson_output_isolation_db": -24.721442652914284
+  },
+  {
+   "f_GHz": 6.45,
+   "max_scan_deg": 51.96840976232484,
+   "chu_bw_percent_26mm_cell": 151.24940090057498,
+   "chu_bw_percent_whole_array": 695.9047553462608,
+   "wilkinson_combining_efficiency": 0.9994711504138468,
+   "wilkinson_input_match_db": -32.766678311640916,
+   "wilkinson_output_isolation_db": -24.010497704668317
+  },
+  {
+   "f_GHz": 6.5,
+   "max_scan_deg": 50.707206624364645,
+   "chu_bw_percent_26mm_cell": 152.7480631957004,
+   "chu_bw_percent_whole_array": 701.4070461687973,
+   "wilkinson_combining_efficiency": 0.9992911472512779,
+   "wilkinson_input_match_db": -31.494439722350258,
+   "wilkinson_output_isolation_db": -23.34997267710395
+  },
+  {
+   "f_GHz": 6.55,
+   "max_scan_deg": 49.49757669756306,
+   "chu_bw_percent_26mm_cell": 154.24560703684256,
+   "chu_bw_percent_whole_array": 706.9085503728206,
+   "wilkinson_combining_efficiency": 0.9990693873919116,
+   "wilkinson_input_match_db": -30.31231067871978,
+   "wilkinson_output_isolation_db": -22.732779391128215
+  },
+  {
+   "f_GHz": 6.6,
+   "max_scan_deg": 48.33481788302643,
+   "chu_bw_percent_26mm_cell": 155.74203561922295,
+   "chu_bw_percent_whole_array": 712.4092851293633,
+   "wilkinson_combining_efficiency": 0.9988001799312289,
+   "wilkinson_input_match_db": -29.208838781183537,
+   "wilkinson_output_isolation_db": -22.153212484247163
+  },
+  {
+   "f_GHz": 6.65,
+   "max_scan_deg": 47.2149091535609,
+   "chu_bw_percent_26mm_cell": 157.23735263035698,
+   "chu_bw_percent_whole_array": 717.9092671187985,
+   "wilkinson_combining_efficiency": 0.998477582621215,
+   "wilkinson_input_match_db": -28.174662671097398,
+   "wilkinson_output_isolation_db": -21.606614299736357
+  },
+  {
+   "f_GHz": 6.7,
+   "max_scan_deg": 46.13437869423474,
+   "chu_bw_percent_26mm_cell": 158.7315622151336,
+   "chu_bw_percent_whole_array": 723.4085125480347,
+   "wilkinson_combining_efficiency": 0.9980954312709764,
+   "wilkinson_input_match_db": -27.202033505970952,
+   "wilkinson_output_isolation_db": -21.08913570136888
+  },
+  {
+   "f_GHz": 6.75,
+   "max_scan_deg": 45.090203279759905,
+   "chu_bw_percent_26mm_cell": 160.22466894288277,
+   "chu_bw_percent_whole_array": 728.9070371669991,
+   "wilkinson_combining_efficiency": 0.997647371222387,
+   "wilkinson_input_match_db": -26.284465949460166,
+   "wilkinson_output_isolation_db": -20.597561631061993
+  },
+  {
+   "f_GHz": 6.8,
+   "max_scan_deg": 44.07973027951687,
+   "chu_bw_percent_26mm_cell": 161.71667777632268,
+   "chu_bw_percent_whole_array": 734.4048562844478,
+   "wilkinson_combining_efficiency": 0.9971268908517612,
+   "wilkinson_input_match_db": -25.416478750252807,
+   "wilkinson_output_isolation_db": -20.129181444436842
+  },
+  {
+   "f_GHz": 6.85,
+   "max_scan_deg": 43.10061635438519,
+   "chu_bw_percent_26mm_cell": 163.20759404228343,
+   "chu_bw_percent_whole_array": 739.9019847831302,
+   "wilkinson_combining_efficiency": 0.9965273570238654,
+   "wilkinson_input_match_db": -24.593398643900763,
+   "wilkinson_output_isolation_db": -19.68169088950792
+  },
+  {
+   "f_GHz": 6.9,
+   "max_scan_deg": 42.15077866805393,
+   "chu_bw_percent_26mm_cell": 164.69742340410988,
+   "chu_bw_percent_whole_array": 745.398437134342,
+   "wilkinson_combining_efficiency": 0.9958420523974889,
+   "wilkinson_input_match_db": -23.811209878481353,
+   "wilkinson_output_isolation_db": -19.253116877433257
+  },
+  {
+   "f_GHz": 6.95,
+   "max_scan_deg": 41.22835561866221,
+   "chu_bw_percent_26mm_cell": 166.18617183565237,
+   "chu_bw_percent_whole_array": 750.8942274118931,
+   "wilkinson_combining_efficiency": 0.9950642144526711,
+   "wilkinson_input_match_db": -23.06643718025665,
+   "wilkinson_output_isolation_db": -18.841758952225135
+  },
+  {
+   "f_GHz": 7.0,
+   "max_scan_deg": 40.33167490898271,
+   "chu_bw_percent_26mm_cell": 167.6738455967564,
+   "chu_bw_percent_whole_array": 756.3893693055146,
+   "wilkinson_combining_efficiency": 0.9941870760790233,
+   "wilkinson_input_match_db": -22.356053610134033,
+   "wilkinson_output_isolation_db": -18.446143183988635
+  },
+  {
+   "f_GHz": 7.05,
+   "max_scan_deg": 39.45922734140498,
+   "chu_bw_percent_26mm_cell": 169.16045121017154,
+   "chu_bw_percent_whole_array": 761.8838761337362,
+   "wilkinson_combining_efficiency": 0.9932039075327661,
+   "wilkinson_input_match_db": -21.677407207776213,
+   "wilkinson_output_isolation_db": -18.064985433638892
+  },
+  {
+   "f_GHz": 7.1,
+   "max_scan_deg": 38.609645127808385,
+   "chu_bw_percent_26mm_cell": 170.64599543979918,
+   "chu_bw_percent_whole_array": 767.3777608562518,
+   "wilkinson_combining_efficiency": 0.9921080595378368,
+   "wilkinson_input_match_db": -21.028161997821737,
+   "wilkinson_output_isolation_db": -17.697161776226192
+  },
+  {
+   "f_GHz": 7.15,
+   "max_scan_deg": 37.781683795870265,
+   "chu_bw_percent_26mm_cell": 172.13048527020726,
+   "chu_bw_percent_whole_array": 772.8710360858029,
+   "wilkinson_combining_efficiency": 0.990893007274317,
+   "wilkinson_input_match_db": -20.406250103217918,
+   "wilkinson_output_isolation_db": -17.34168445563543
+  },
+  {
+   "f_GHz": 7.2,
+   "max_scan_deg": 36.97420698662551,
+   "chu_bw_percent_26mm_cell": 173.613927887342,
+   "chu_bw_percent_whole_array": 778.363714099596,
+   "wilkinson_combining_efficiency": 0.989552394966155,
+   "wilkinson_input_match_db": -19.80983254030701,
+   "wilkinson_output_isolation_db": -16.997682158607432
+  },
+  {
+   "f_GHz": 7.25,
+   "max_scan_deg": 36.1861735961417,
+   "chu_bw_percent_26mm_cell": 175.09633066036966,
+   "chu_bw_percent_whole_array": 783.8558068502763,
+   "wilkinson_combining_efficiency": 0.9880800807506357,
+   "wilkinson_input_match_db": -19.237266866825507,
+   "wilkinson_output_isolation_db": -16.664383694633585
+  },
+  {
+   "f_GHz": 7.3,
+   "max_scan_deg": 35.416626832675846,
+   "chu_bw_percent_26mm_cell": 176.57770112458863,
+   "chu_bw_percent_whole_array": 789.3473259764803,
+   "wilkinson_combining_efficiency": 0.9864701814848897,
+   "wilkinson_input_match_db": -18.687080288580248,
+   "wilkinson_output_isolation_db": -16.34110438589942
+  },
+  {
+   "f_GHz": 7.35,
+   "max_scan_deg": 34.664684850489785,
+   "chu_bw_percent_26mm_cell": 178.05804696534972,
+   "chu_bw_percent_whole_array": 794.8382828129828,
+   "wilkinson_combining_efficiency": 0.9847171171209379,
+   "wilkinson_input_match_db": -18.15794715107559,
+   "wilkinson_output_isolation_db": -16.027234632002987
+  },
+  {
+   "f_GHz": 7.4,
+   "max_scan_deg": 33.92953269025756,
+   "chu_bw_percent_26mm_cell": 179.5373760029324,
+   "chu_bw_percent_whole_array": 800.3286884004558,
+   "wilkinson_combining_efficiency": 0.982815654261001,
+   "wilkinson_input_match_db": -17.648669981413274,
+   "wilkinson_output_isolation_db": -15.722230233958467
+  },
+  {
+   "f_GHz": 7.45,
+   "max_scan_deg": 33.210415309123235,
+   "chu_bw_percent_26mm_cell": 181.0156961783219,
+   "chu_bw_percent_whole_array": 805.8185534948583,
+   "wilkinson_combining_efficiency": 0.9807609484899397,
+   "wilkinson_input_match_db": -17.158163425945038,
+   "wilkinson_output_isolation_db": -15.425604152299728
+  },
+  {
+   "f_GHz": 7.5,
+   "max_scan_deg": 32.50663152487729,
+   "chu_bw_percent_26mm_cell": 182.49301553983838,
+   "chu_bw_percent_whole_array": 811.3078885764746,
+   "wilkinson_combining_efficiency": 0.9785485850723585,
+   "wilkinson_input_match_db": -16.685440566260823,
+   "wilkinson_output_isolation_db": -15.136919442833761
+  },
+  {
+   "f_GHz": 7.55,
+   "max_scan_deg": 31.817528731257205,
+   "chu_bw_percent_26mm_cell": 183.96934223057184,
+   "chu_bw_percent_whole_array": 816.7967038586081,
+   "wilkinson_combining_efficiency": 0.9761746175987984,
+   "wilkinson_input_match_db": -16.229601201377363,
+   "wilkinson_output_isolation_db": -14.855783166378107
+  },
+  {
+   "f_GHz": 7.6,
+   "max_scan_deg": 31.1424982671414,
+   "chu_bw_percent_26mm_cell": 185.44468447657707,
+   "chu_bw_percent_whole_array": 822.2850092959577,
+   "wilkinson_combining_efficiency": 0.9736356041690144,
+   "wilkinson_input_match_db": -15.789821765523387,
+   "wilkinson_output_isolation_db": -14.581841109682225
+  },
+  {
+   "f_GHz": 7.65,
+   "max_scan_deg": 30.48097134295071,
+   "chu_bw_percent_26mm_cell": 186.91905057578754,
+   "chu_bw_percent_whole_array": 827.7728145926789,
+   "wilkinson_combining_efficiency": 0.9709286407109857,
+   "wilkinson_input_match_db": -15.365346614556772,
+   "wilkinson_output_isolation_db": -14.314773186610449
+  },
+  {
+   "f_GHz": 7.7,
+   "max_scan_deg": 29.832415444065365,
+   "chu_bw_percent_26mm_cell": 188.3924488876084,
+   "chu_bw_percent_whole_array": 833.2601292101517,
+   "wilkinson_combining_efficiency": 0.968051391052206,
+   "wilkinson_input_match_db": -14.95548046408516,
+   "wilkinson_output_isolation_db": -14.05428941369986
+  },
+  {
+   "f_GHz": 7.75,
+   "max_scan_deg": 29.19633114439162,
+   "chu_bw_percent_26mm_cell": 189.86488782315055,
+   "chu_bw_percent_whole_array": 838.7469623744605,
+   "wilkinson_combining_efficiency": 0.9650021133850603,
+   "wilkinson_input_match_db": -14.559581801977625,
+   "wilkinson_output_isolation_db": -13.800126373993862
+  },
+  {
+   "f_GHz": 7.8,
+   "max_scan_deg": 28.572249274043088,
+   "chu_bw_percent_26mm_cell": 191.33637583607086,
+   "chu_bw_percent_whole_array": 844.2333230836047,
+   "wilkinson_combining_efficiency": 0.9617796828004236,
+   "wilkinson_input_match_db": -14.177057129520165,
+   "wilkinson_output_isolation_db": -13.552044098778364
+  },
+  {
+   "f_GHz": 7.85,
+   "max_scan_deg": 27.959728393953846,
+   "chu_bw_percent_26mm_cell": 192.80692141398507,
+   "chu_bw_percent_whole_array": 849.7192201144454,
+   "wilkinson_combining_efficiency": 0.9583836096028139,
+   "wilkinson_input_match_db": -13.807355910769726,
+   "wilkinson_output_isolation_db": -13.30982330941181
+  },
+  {
+   "f_GHz": 7.9,
+   "max_scan_deg": 27.358352537516417,
+   "chu_bw_percent_26mm_cell": 194.27653307042056,
+   "chu_bw_percent_whole_array": 855.2046620294047,
+   "wilkinson_combining_efficiency": 0.9548140531658139,
+   "wilkinson_input_match_db": -13.449966130058765,
+   "wilkinson_output_isolation_db": -13.073262971524217
+  },
+  {
+   "f_GHz": 7.95,
+   "max_scan_deg": 26.767729185344812,
+   "chu_bw_percent_26mm_cell": 195.74521933728067,
+   "chu_bw_percent_whole_array": 860.6896571829225,
+   "wilkinson_combining_efficiency": 0.9510718311373902,
+   "wilkinson_input_match_db": -13.104410374128616,
+   "wilkinson_output_isolation_db": -12.842178121987695
+  },
+  {
+   "f_GHz": 8.0,
+   "max_scan_deg": 26.18748744425033,
+   "chu_bw_percent_26mm_cell": 197.21298875779095,
+   "chu_bw_percent_whole_array": 866.1742137276841,
+   "wilkinson_combining_efficiency": 0.947158423860249,
+   "wilkinson_input_match_db": -12.770242368828725,
+   "wilkinson_output_isolation_db": -12.616397935637114
+  }
+ ],
+ "phase_control_options": {
+  "delay lines, 90/180 deg at 5.8 GHz (today)": [
+   {
+    "f_GHz": 0.4,
+    "decode_penalty_db": 17.54,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 7.45,
+    "external_worst_sidelobe_db": -10.6
+   },
+   {
+    "f_GHz": 0.6,
+    "decode_penalty_db": 14.02,
+    "panel_mean_loss_db": 0.01,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 6.35,
+    "external_worst_sidelobe_db": -9.6
+   },
+   {
+    "f_GHz": 0.9,
+    "decode_penalty_db": 10.51,
+    "panel_mean_loss_db": 0.02,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 5.13,
+    "external_worst_sidelobe_db": -8.3
+   },
+   {
+    "f_GHz": 1.2,
+    "decode_penalty_db": 8.02,
+    "panel_mean_loss_db": 0.03,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 4.2,
+    "external_worst_sidelobe_db": -7.0
+   },
+   {
+    "f_GHz": 1.5,
+    "decode_penalty_db": 6.11,
+    "panel_mean_loss_db": 0.05,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 3.45,
+    "external_worst_sidelobe_db": -5.7
+   },
+   {
+    "f_GHz": 2.0,
+    "decode_penalty_db": 3.7,
+    "panel_mean_loss_db": 0.09,
+    "panel_worst_sidelobe_db": -38.9,
+    "external_mean_loss_db": 2.49,
+    "external_worst_sidelobe_db": -3.6
+   },
+   {
+    "f_GHz": 2.4,
+    "decode_penalty_db": 2.28,
+    "panel_mean_loss_db": 0.14,
+    "panel_worst_sidelobe_db": -19.9,
+    "external_mean_loss_db": 1.92,
+    "external_worst_sidelobe_db": -1.9
+   },
+   {
+    "f_GHz": 3.0,
+    "decode_penalty_db": 0.8,
+    "panel_mean_loss_db": 0.21,
+    "panel_worst_sidelobe_db": -13.9,
+    "external_mean_loss_db": 1.22,
+    "external_worst_sidelobe_db": -0.1
+   },
+   {
+    "f_GHz": 3.5,
+    "decode_penalty_db": 0.14,
+    "panel_mean_loss_db": 0.29,
+    "panel_worst_sidelobe_db": -12.3,
+    "external_mean_loss_db": 0.81,
+    "external_worst_sidelobe_db": -2.8
+   },
+   {
+    "f_GHz": 4.0,
+    "decode_penalty_db": 0.02,
+    "panel_mean_loss_db": 0.38,
+    "panel_worst_sidelobe_db": -9.8,
+    "external_mean_loss_db": 0.5,
+    "external_worst_sidelobe_db": -4.9
+   },
+   {
+    "f_GHz": 4.5,
+    "decode_penalty_db": 0.43,
+    "panel_mean_loss_db": 0.31,
+    "panel_worst_sidelobe_db": -4.1,
+    "external_mean_loss_db": 0.33,
+    "external_worst_sidelobe_db": -5.7
+   },
+   {
+    "f_GHz": 5.2,
+    "decode_penalty_db": 0.17,
+    "panel_mean_loss_db": 0.27,
+    "panel_worst_sidelobe_db": -6.5,
+    "external_mean_loss_db": 0.33,
+    "external_worst_sidelobe_db": -5.1
+   },
+   {
+    "f_GHz": 5.8,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.41,
+    "panel_worst_sidelobe_db": -3.5,
+    "external_mean_loss_db": 0.41,
+    "external_worst_sidelobe_db": -3.5
+   }
+  ],
+  "exact 0/180 switch (wideband balun)": [
+   {
+    "f_GHz": 0.4,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.06,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 0.6,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.13,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 0.9,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.29,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 1.2,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.52,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 1.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.82,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 2.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 1.51,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 2.4,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 1.69,
+    "panel_worst_sidelobe_db": 0.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 3.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 1.75,
+    "panel_worst_sidelobe_db": 0.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 3.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 1.75,
+    "panel_worst_sidelobe_db": 0.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 4.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 1.97,
+    "panel_worst_sidelobe_db": -0.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 4.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 2.02,
+    "panel_worst_sidelobe_db": 0.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 5.2,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 1.87,
+    "panel_worst_sidelobe_db": 0.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   },
+   {
+    "f_GHz": 5.8,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 2.08,
+    "panel_worst_sidelobe_db": 0.0,
+    "external_mean_loss_db": 2.07,
+    "external_worst_sidelobe_db": 0.0
+   }
+  ],
+  "exact 0/180 switch + 90-deg-at-5.8-GHz delay line": [
+   {
+    "f_GHz": 0.4,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.03,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 1.81,
+    "external_worst_sidelobe_db": -0.2
+   },
+   {
+    "f_GHz": 0.6,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.06,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 1.68,
+    "external_worst_sidelobe_db": -0.3
+   },
+   {
+    "f_GHz": 0.9,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.13,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 1.52,
+    "external_worst_sidelobe_db": -0.5
+   },
+   {
+    "f_GHz": 1.2,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.24,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 1.36,
+    "external_worst_sidelobe_db": -0.7
+   },
+   {
+    "f_GHz": 1.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.38,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 1.22,
+    "external_worst_sidelobe_db": -0.8
+   },
+   {
+    "f_GHz": 2.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.68,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 1.02,
+    "external_worst_sidelobe_db": -1.1
+   },
+   {
+    "f_GHz": 2.4,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.71,
+    "panel_worst_sidelobe_db": -4.7,
+    "external_mean_loss_db": 0.88,
+    "external_worst_sidelobe_db": -1.3
+   },
+   {
+    "f_GHz": 3.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.64,
+    "panel_worst_sidelobe_db": -4.1,
+    "external_mean_loss_db": 0.72,
+    "external_worst_sidelobe_db": -3.0
+   },
+   {
+    "f_GHz": 3.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.47,
+    "panel_worst_sidelobe_db": -5.2,
+    "external_mean_loss_db": 0.6,
+    "external_worst_sidelobe_db": -3.2
+   },
+   {
+    "f_GHz": 4.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.4,
+    "panel_worst_sidelobe_db": -5.2,
+    "external_mean_loss_db": 0.51,
+    "external_worst_sidelobe_db": -3.3
+   },
+   {
+    "f_GHz": 4.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.32,
+    "panel_worst_sidelobe_db": -7.5,
+    "external_mean_loss_db": 0.45,
+    "external_worst_sidelobe_db": -3.4
+   },
+   {
+    "f_GHz": 5.2,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.37,
+    "panel_worst_sidelobe_db": -6.1,
+    "external_mean_loss_db": 0.41,
+    "external_worst_sidelobe_db": -3.4
+   },
+   {
+    "f_GHz": 5.8,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.41,
+    "panel_worst_sidelobe_db": -3.5,
+    "external_mean_loss_db": 0.41,
+    "external_worst_sidelobe_db": -3.5
+   }
+  ],
+  "3-bit phase shifter (45 deg steps at every f)": [
+   {
+    "f_GHz": 0.4,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.06,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 0.6,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.1,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 0.9,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.1,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 1.2,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.11,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 1.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.13,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 2.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.09,
+    "panel_worst_sidelobe_db": -21.2,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 2.4,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.09,
+    "panel_worst_sidelobe_db": -16.9,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 3.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.1,
+    "panel_worst_sidelobe_db": -8.6,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 3.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.12,
+    "panel_worst_sidelobe_db": -13.1,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 4.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.08,
+    "panel_worst_sidelobe_db": -8.2,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 4.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.07,
+    "panel_worst_sidelobe_db": -10.4,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 5.2,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.12,
+    "panel_worst_sidelobe_db": -6.6,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   },
+   {
+    "f_GHz": 5.8,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.09,
+    "panel_worst_sidelobe_db": -7.7,
+    "external_mean_loss_db": 0.09,
+    "external_worst_sidelobe_db": -7.7
+   }
+  ],
+  "vector modulator (6 bits)": [
+   {
+    "f_GHz": 0.4,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 0.6,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 0.9,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 1.2,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 1.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -99.0,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 2.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -21.2,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 2.4,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -14.3,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 3.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -11.4,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 3.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -10.4,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 4.0,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -9.9,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 4.5,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -10.4,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 5.2,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -9.3,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   },
+   {
+    "f_GHz": 5.8,
+    "decode_penalty_db": 0.0,
+    "panel_mean_loss_db": 0.0,
+    "panel_worst_sidelobe_db": -9.5,
+    "external_mean_loss_db": 0.0,
+    "external_worst_sidelobe_db": -10.2
+   }
+  ]
+ },
+ "patch_s11_db": [
+  {
+   "f_GHz": 0.3,
+   "s11_db": -0.06265990382354478
+  },
+  {
+   "f_GHz": 0.35,
+   "s11_db": -0.06878147185809343
+  },
+  {
+   "f_GHz": 0.4,
+   "s11_db": -0.07311913503880683
+  },
+  {
+   "f_GHz": 0.45,
+   "s11_db": -0.07597374354724627
+  },
+  {
+   "f_GHz": 0.5,
+   "s11_db": -0.0776256553852126
+  },
+  {
+   "f_GHz": 0.55,
+   "s11_db": -0.07832457647921556
+  },
+  {
+   "f_GHz": 0.6,
+   "s11_db": -0.07828516406375462
+  },
+  {
+   "f_GHz": 0.65,
+   "s11_db": -0.07768673078145909
+  },
+  {
+   "f_GHz": 0.7,
+   "s11_db": -0.07667561177697063
+  },
+  {
+   "f_GHz": 0.75,
+   "s11_db": -0.07536896796110025
+  },
+  {
+   "f_GHz": 0.8,
+   "s11_db": -0.07385911709200844
+  },
+  {
+   "f_GHz": 0.85,
+   "s11_db": -0.07221780789861457
+  },
+  {
+   "f_GHz": 0.9,
+   "s11_db": -0.0705001138081027
+  },
+  {
+   "f_GHz": 0.95,
+   "s11_db": -0.06874780496433533
+  },
+  {
+   "f_GHz": 1.0,
+   "s11_db": -0.06699217012116265
+  },
+  {
+   "f_GHz": 1.05,
+   "s11_db": -0.0652563220215251
+  },
+  {
+   "f_GHz": 1.1,
+   "s11_db": -0.06355704848856686
+  },
+  {
+   "f_GHz": 1.15,
+   "s11_db": -0.061906280065125545
+  },
+  {
+   "f_GHz": 1.2,
+   "s11_db": -0.06031224278889721
+  },
+  {
+   "f_GHz": 1.25,
+   "s11_db": -0.05878035731994721
+  },
+  {
+   "f_GHz": 1.3,
+   "s11_db": -0.05731393648744553
+  },
+  {
+   "f_GHz": 1.35,
+   "s11_db": -0.05591472418760784
+  },
+  {
+   "f_GHz": 1.4,
+   "s11_db": -0.05458331029900844
+  },
+  {
+   "f_GHz": 1.45,
+   "s11_db": -0.05331944920457598
+  },
+  {
+   "f_GHz": 1.5,
+   "s11_db": -0.052122303655338875
+  },
+  {
+   "f_GHz": 1.55,
+   "s11_db": -0.05099063097729082
+  },
+  {
+   "f_GHz": 1.6,
+   "s11_db": -0.0499229248544579
+  },
+  {
+   "f_GHz": 1.65,
+   "s11_db": -0.04891752295364
+  },
+  {
+   "f_GHz": 1.7,
+   "s11_db": -0.04797268833695239
+  },
+  {
+   "f_GHz": 1.75,
+   "s11_db": -0.04708667080533705
+  },
+  {
+   "f_GHz": 1.8,
+   "s11_db": -0.04625775291951392
+  },
+  {
+   "f_GHz": 1.85,
+   "s11_db": -0.04548428436599937
+  },
+  {
+   "f_GHz": 1.9,
+   "s11_db": -0.04476470750334419
+  },
+  {
+   "f_GHz": 1.95,
+   "s11_db": -0.04409757628285291
+  },
+  {
+   "f_GHz": 2.0,
+   "s11_db": -0.04348157024433675
+  },
+  {
+   "f_GHz": 2.05,
+   "s11_db": -0.04291550490818425
+  },
+  {
+   "f_GHz": 2.1,
+   "s11_db": -0.042398339593561755
+  },
+  {
+   "f_GHz": 2.15,
+   "s11_db": -0.0419291834692037
+  },
+  {
+   "f_GHz": 2.2,
+   "s11_db": -0.04150730047254872
+  },
+  {
+   "f_GHz": 2.25,
+   "s11_db": -0.04113211360324761
+  },
+  {
+   "f_GHz": 2.3,
+   "s11_db": -0.04080320899904867
+  },
+  {
+   "f_GHz": 2.35,
+   "s11_db": -0.04052034012919864
+  },
+  {
+   "f_GHz": 2.4,
+   "s11_db": -0.04028343238731133
+  },
+  {
+   "f_GHz": 2.45,
+   "s11_db": -0.04009258832820607
+  },
+  {
+   "f_GHz": 2.5,
+   "s11_db": -0.039948093768743885
+  },
+  {
+   "f_GHz": 2.55,
+   "s11_db": -0.03985042495861817
+  },
+  {
+   "f_GHz": 2.6,
+   "s11_db": -0.03980025702230848
+  },
+  {
+   "f_GHz": 2.65,
+   "s11_db": -0.03979847387638977
+  },
+  {
+   "f_GHz": 2.7,
+   "s11_db": -0.039846179836939076
+  },
+  {
+   "f_GHz": 2.75,
+   "s11_db": -0.03994471314922139
+  },
+  {
+   "f_GHz": 2.8,
+   "s11_db": -0.04009566169648329
+  },
+  {
+   "f_GHz": 2.85,
+   "s11_db": -0.04030088117663372
+  },
+  {
+   "f_GHz": 2.9,
+   "s11_db": -0.04056251607569117
+  },
+  {
+   "f_GHz": 2.95,
+   "s11_db": -0.04088302381590982
+  },
+  {
+   "f_GHz": 3.0,
+   "s11_db": -0.04126520251591921
+  },
+  {
+   "f_GHz": 3.05,
+   "s11_db": -0.04171222287149416
+  },
+  {
+   "f_GHz": 3.1,
+   "s11_db": -0.04222766475121143
+  },
+  {
+   "f_GHz": 3.15,
+   "s11_db": -0.04281555920365284
+  },
+  {
+   "f_GHz": 3.2,
+   "s11_db": -0.04348043669546403
+  },
+  {
+   "f_GHz": 3.25,
+   "s11_db": -0.04422738254709398
+  },
+  {
+   "f_GHz": 3.3,
+   "s11_db": -0.04506210070991418
+  },
+  {
+   "f_GHz": 3.35,
+   "s11_db": -0.045990987242419255
+  },
+  {
+   "f_GHz": 3.4,
+   "s11_db": -0.04702121510143267
+  },
+  {
+   "f_GHz": 3.45,
+   "s11_db": -0.04816083217823432
+  },
+  {
+   "f_GHz": 3.5,
+   "s11_db": -0.04941887489165534
+  },
+  {
+   "f_GHz": 3.55,
+   "s11_db": -0.05080550011762366
+  },
+  {
+   "f_GHz": 3.6,
+   "s11_db": -0.05233213880840095
+  },
+  {
+   "f_GHz": 3.65,
+   "s11_db": -0.05401167536202073
+  },
+  {
+   "f_GHz": 3.7,
+   "s11_db": -0.05585865767799812
+  },
+  {
+   "f_GHz": 3.75,
+   "s11_db": -0.05788954392417333
+  },
+  {
+   "f_GHz": 3.8,
+   "s11_db": -0.060122993399837024
+  },
+  {
+   "f_GHz": 3.85,
+   "s11_db": -0.06258021058802853
+  },
+  {
+   "f_GHz": 3.9,
+   "s11_db": -0.0652853536447405
+  },
+  {
+   "f_GHz": 3.95,
+   "s11_db": -0.06826602130632202
+  },
+  {
+   "f_GHz": 4.0,
+   "s11_db": -0.07155383568325302
+  },
+  {
+   "f_GHz": 4.05,
+   "s11_db": -0.07518514288195383
+  },
+  {
+   "f_GHz": 4.1,
+   "s11_db": -0.07920185917111237
+  },
+  {
+   "f_GHz": 4.15,
+   "s11_db": -0.0836524979102066
+  },
+  {
+   "f_GHz": 4.2,
+   "s11_db": -0.08859342226814552
+  },
+  {
+   "f_GHz": 4.25,
+   "s11_db": -0.0940903816790155
+  },
+  {
+   "f_GHz": 4.3,
+   "s11_db": -0.10022040712176397
+  },
+  {
+   "f_GHz": 4.35,
+   "s11_db": -0.1070741632267082
+  },
+  {
+   "f_GHz": 4.4,
+   "s11_db": -0.11475888610228469
+  },
+  {
+   "f_GHz": 4.45,
+   "s11_db": -0.12340207777579236
+  },
+  {
+   "f_GHz": 4.5,
+   "s11_db": -0.13315618576941224
+  },
+  {
+   "f_GHz": 4.55,
+   "s11_db": -0.1442045761663842
+  },
+  {
+   "f_GHz": 4.6,
+   "s11_db": -0.1567692202489089
+  },
+  {
+   "f_GHz": 4.65,
+   "s11_db": -0.17112067284449178
+  },
+  {
+   "f_GHz": 4.7,
+   "s11_db": -0.18759114667886212
+  },
+  {
+   "f_GHz": 4.75,
+   "s11_db": -0.20659181459331558
+  },
+  {
+   "f_GHz": 4.8,
+   "s11_db": -0.2286359520436239
+  },
+  {
+   "f_GHz": 4.85,
+   "s11_db": -0.2543702470182486
+  },
+  {
+   "f_GHz": 4.9,
+   "s11_db": -0.2846176830324989
+  },
+  {
+   "f_GHz": 4.95,
+   "s11_db": -0.3204370536329413
+  },
+  {
+   "f_GHz": 5.0,
+   "s11_db": -0.36320674144192433
+  },
+  {
+   "f_GHz": 5.05,
+   "s11_db": -0.4147444755340447
+  },
+  {
+   "f_GHz": 5.1,
+   "s11_db": -0.47748136890338444
+  },
+  {
+   "f_GHz": 5.15,
+   "s11_db": -0.5547193815988463
+  },
+  {
+   "f_GHz": 5.2,
+   "s11_db": -0.6510195718213208
+  },
+  {
+   "f_GHz": 5.25,
+   "s11_db": -0.7727997610678334
+  },
+  {
+   "f_GHz": 5.3,
+   "s11_db": -0.9292751094327332
+  },
+  {
+   "f_GHz": 5.35,
+   "s11_db": -1.133973702372598
+  },
+  {
+   "f_GHz": 5.4,
+   "s11_db": -1.4072411015207245
+  },
+  {
+   "f_GHz": 5.45,
+   "s11_db": -1.7804938385458495
+  },
+  {
+   "f_GHz": 5.5,
+   "s11_db": -2.30367065811999
+  },
+  {
+   "f_GHz": 5.55,
+   "s11_db": -3.0588151452958225
+  },
+  {
+   "f_GHz": 5.6,
+   "s11_db": -4.186447451984004
+  },
+  {
+   "f_GHz": 5.65,
+   "s11_db": -5.9434428166010935
+  },
+  {
+   "f_GHz": 5.7,
+   "s11_db": -8.866283253711336
+  },
+  {
+   "f_GHz": 5.75,
+   "s11_db": -14.522558970601727
+  },
+  {
+   "f_GHz": 5.8,
+   "s11_db": -55.419925950420755
+  },
+  {
+   "f_GHz": 5.85,
+   "s11_db": -14.602788379109475
+  },
+  {
+   "f_GHz": 5.9,
+   "s11_db": -9.088568585095464
+  },
+  {
+   "f_GHz": 5.95,
+   "s11_db": -6.249642779557547
+  },
+  {
+   "f_GHz": 6.0,
+   "s11_db": -4.536208673713532
+  },
+  {
+   "f_GHz": 6.05,
+   "s11_db": -3.4245135356229603
+  },
+  {
+   "f_GHz": 6.1,
+   "s11_db": -2.6683756551471296
+  },
+  {
+   "f_GHz": 6.15,
+   "s11_db": -2.1348322011948726
+  },
+  {
+   "f_GHz": 6.2,
+   "s11_db": -1.7465966944809532
+  },
+  {
+   "f_GHz": 6.25,
+   "s11_db": -1.4565171336413734
+  },
+  {
+   "f_GHz": 6.3,
+   "s11_db": -1.2347256363994012
+  },
+  {
+   "f_GHz": 6.35,
+   "s11_db": -1.0616915887637681
+  },
+  {
+   "f_GHz": 6.4,
+   "s11_db": -0.9242815035361787
+  },
+  {
+   "f_GHz": 6.45,
+   "s11_db": -0.8134398876470861
+  },
+  {
+   "f_GHz": 6.5,
+   "s11_db": -0.7227807506140531
+  },
+  {
+   "f_GHz": 6.55,
+   "s11_db": -0.647708064950152
+  },
+  {
+   "f_GHz": 6.6,
+   "s11_db": -0.5848525312018694
+  },
+  {
+   "f_GHz": 6.65,
+   "s11_db": -0.5317025022602294
+  },
+  {
+   "f_GHz": 6.7,
+   "s11_db": -0.486356976196016
+  },
+  {
+   "f_GHz": 6.75,
+   "s11_db": -0.4473570441228284
+  },
+  {
+   "f_GHz": 6.8,
+   "s11_db": -0.41356879937786717
+  },
+  {
+   "f_GHz": 6.85,
+   "s11_db": -0.3841006440518413
+  },
+  {
+   "f_GHz": 6.9,
+   "s11_db": -0.3582439920971426
+  },
+  {
+   "f_GHz": 6.95,
+   "s11_db": -0.33543014632880924
+  },
+  {
+   "f_GHz": 7.0,
+   "s11_db": -0.31519852581543895
+  },
+  {
+   "f_GHz": 7.05,
+   "s11_db": -0.2971729708983622
+  },
+  {
+   "f_GHz": 7.1,
+   "s11_db": -0.2810438721475548
+  },
+  {
+   "f_GHz": 7.15,
+   "s11_db": -0.2665545497048181
+  },
+  {
+   "f_GHz": 7.2,
+   "s11_db": -0.2534907700415876
+  },
+  {
+   "f_GHz": 7.25,
+   "s11_db": -0.2416726033294951
+  },
+  {
+   "f_GHz": 7.3,
+   "s11_db": -0.23094804445657421
+  },
+  {
+   "f_GHz": 7.35,
+   "s11_db": -0.221187975423245
+  },
+  {
+   "f_GHz": 7.4,
+   "s11_db": -0.2122821569572564
+  },
+  {
+   "f_GHz": 7.45,
+   "s11_db": -0.20413601639153625
+  },
+  {
+   "f_GHz": 7.5,
+   "s11_db": -0.1966680564018603
+  },
+  {
+   "f_GHz": 7.55,
+   "s11_db": -0.1898077514201338
+  },
+  {
+   "f_GHz": 7.6,
+   "s11_db": -0.1834938297897486
+  },
+  {
+   "f_GHz": 7.65,
+   "s11_db": -0.17767286305853958
+  },
+  {
+   "f_GHz": 7.7,
+   "s11_db": -0.17229810136189072
+  },
+  {
+   "f_GHz": 7.75,
+   "s11_db": -0.16732850716319667
+  },
+  {
+   "f_GHz": 7.8,
+   "s11_db": -0.1627279497900613
+  },
+  {
+   "f_GHz": 7.85,
+   "s11_db": -0.15846453102865676
+  },
+  {
+   "f_GHz": 7.9,
+   "s11_db": -0.15451001809710974
+  },
+  {
+   "f_GHz": 7.95,
+   "s11_db": -0.15083936503992504
+  },
+  {
+   "f_GHz": 8.0,
+   "s11_db": -0.14743030728674608
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "complete": true,
+ "x0": [
+  40.0,
+  0.1,
+  1.5,
+  8.0,
+  22.0,
+  0.4,
+  12.0
+ ],
+ "winner": [
+  38.3,
+  0.12,
+  1.0,
+  12.8,
+  22.8,
+  0.31,
+  4.9
+ ],
+ "keys": {
+  "row_fine_start": "616b3ba2f68b61b1",
+  "row_fine_winner": "96d87b431938da8d",
+  "tile_start_4.2": "e3cf325f38e2388d",
+  "tile_winner_4.2": "fb716696959943f2",
+  "tile_start_4.6": "3d5abb7f923ece15",
+  "tile_winner_4.6": "d5d4509b0c434ab0",
+  "tile_start_4.4": "284ac613851bb71e",
+  "tile_winner_4.4": "aaa0e594e69f9f87"
+ }
+}
