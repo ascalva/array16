@@ -481,6 +481,12 @@ class GuideOptics:
         after: CArr = cmath.exp(1j * self.alpha) * (z + self.step(rho))
         return after
 
+    def unlap(self, rho: Arr, z: CArr) -> CArr:
+        """The offsets one lap earlier: the inverse of lap. It is also one lap later for an electron going round
+        against the field, at its (negative) rho."""
+        before: CArr = cmath.exp(-1j * self.alpha) * z - self.step(rho)
+        return before
+
     def closed_orbit(self, rho: Arr) -> CArr:
         """Offset at the first point of the orbit that closes on itself after one lap, for each rho; nan if the
         plane does not turn. GDE-1: it is a fixed point of the lap map. GDE-2: it is the only one."""
@@ -502,6 +508,35 @@ class GuideOptics:
             reach = np.maximum(reach, np.abs(along).max(axis=1))
             z = self.lap(rho, z)
         return reach
+
+    def crossings(self, rho: float, z0: complex, laps: int) -> CArr:
+        """Where a guiding centre launched at z0 crosses the start after each of `laps` laps, on the start's axes:
+        what GuideTrack.section measures. The sign of rho gives the direction of travel."""
+        r, z, out = np.array([rho]), np.array([z0], dtype=np.complex128), []
+        for _ in range(laps):
+            z = self.lap(r, z) if rho >= 0 else self.unlap(r, z)
+            out.append(complex(z[0]))
+        return np.array(out, dtype=np.complex128)
+
+    def distances(self, rho: float, z0: complex, laps: int) -> Arr:
+        """The guiding centre's distance from the curve (m) along its path, in the order travelled: (laps, n + 1),
+        from the start of each lap to its end. The sign of rho gives the direction of travel.
+
+        Along the field a lap that starts at offset z passes station i at z + rho g_i + h_i. Against it, a lap
+        that will end at offset w passes the stations in falling order at w + rho g_i + h_i."""
+        starts = np.concatenate([[z0], self.crossings(rho, z0, laps)])
+        if rho >= 0:
+            return np.abs(starts[:-1, None] + rho * self.g[None, :] + self.h[None, :])
+        return np.abs(starts[1:, None] + rho * self.g[None, ::-1] + self.h[None, ::-1])
+
+    def exit_lap(self, rho: float, z0: complex, wall: float, laps: int) -> float | None:
+        """The lap, with its fraction, at which a guiding centre launched at z0 first comes `wall` metres from the
+        curve, or None if it has not in `laps` laps."""
+        far = self.distances(rho, z0, laps) >= wall
+        if not far.any():
+            return None
+        lap, station = np.unravel_index(int(np.argmax(far)), far.shape)
+        return float(lap) + float(station) / (len(self.g) - 1)
 
     def matched_excursion(self, rho: Arr) -> Arr:
         """Largest distance from the curve (m) of the closed orbit itself; inf if there is none."""

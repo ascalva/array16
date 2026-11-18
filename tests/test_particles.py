@@ -361,6 +361,50 @@ def test_orbit_circle_recovers_the_closed_orbit_and_the_turn(
     assert fit.residual <= 1e-6 * scale
 
 
+@settings(max_examples=100, deadline=None)
+@given(st.floats(0.0, 2 * math.pi), offsets, offsets, rhos, offsets)
+def test_unlap_undoes_lap(alpha: float, g_end: complex, h_end: complex, rho: float, z0: complex) -> None:
+    opt, r, z = _optics(alpha, g_end, h_end), np.array([rho]), np.array([z0])
+    assert abs(opt.unlap(r, opt.lap(r, z))[0] - z0) <= 10 * _tol(z0, opt.step(r)[0])
+    assert abs(opt.lap(r, opt.unlap(r, z))[0] - z0) <= 10 * _tol(z0, opt.step(r)[0])
+
+
+@settings(max_examples=100, deadline=None)
+@given(turning, offsets, offsets, st.floats(0.01, 3.0), offsets)
+def test_distances_along_the_field_are_the_excursion_and_join_lap_to_lap(
+    alpha: float, g_end: complex, h_end: complex, rho: float, z0: complex
+) -> None:
+    opt = _optics(alpha, g_end, h_end)
+    for signed in (rho, -rho):
+        far = opt.distances(signed, z0, laps=7)
+        assert far.shape == (7, len(opt.g))
+        assert far[0, 0] == pytest.approx(abs(z0), abs=1e-9)  # it starts where it was launched
+        assert np.allclose(far[:-1, -1], far[1:, 0], atol=1e-8 * (1 + far.max()))  # a lap ends where the next starts
+        assert np.allclose(far[:, -1], np.abs(opt.crossings(signed, z0, laps=7)), atol=1e-8 * (1 + far.max()))
+    # along the field it is the reach the laws are about
+    assert opt.distances(rho, z0, laps=7).max() == pytest.approx(opt.excursion(np.array([rho]), z0, laps=7)[0])
+
+
+def test_both_directions_share_a_closed_orbit_and_turn_opposite_ways() -> None:
+    opt = _optics(2.0, 1.5 + 0.5j, 0.1j)
+    for signed in (0.8, -0.8):
+        star = complex(opt.closed_orbit(np.array([signed]))[0])
+        assert np.allclose(opt.crossings(signed, star, laps=5), star)  # launched on it, it stays on it
+        matched = opt.matched_excursion(np.array([signed]))[0]
+        assert opt.distances(signed, star, laps=3).max() == pytest.approx(matched)
+        fit = pt.orbit_circle(np.concatenate([[0j], opt.crossings(signed, 0j, laps=12)]))
+        assert abs(fit.centre - star) < 1e-9
+        assert fit.turn == pytest.approx(math.copysign(2.0, signed))
+
+
+def test_exit_lap_on_a_ring_is_the_wall_over_the_drift_per_lap() -> None:
+    opt, rho, wall = GuideOptics.of(ClosedCurve.circle(0.1, 600)), 1e-3, 9.9e-3
+    for signed in (rho, -rho):  # the drift does not depend on the direction of travel
+        assert opt.exit_lap(signed, 0j, wall, laps=5) == pytest.approx(wall / (2 * math.pi * rho), abs=2e-3)
+        assert complex(opt.crossings(signed, 0j, laps=1)[0]) == pytest.approx(2j * math.pi * rho, rel=1e-3)
+    assert opt.exit_lap(rho, 0j, wall, laps=1) is None  # not yet, after one lap
+
+
 def test_window_is_the_range_of_rho_inside_the_wall() -> None:
     rho = np.linspace(-2.0, 2.0, 401)
     assert pt.window(rho, np.abs(rho - 0.5), 1.0) == pytest.approx((-0.49, 1.49))
