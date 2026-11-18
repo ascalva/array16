@@ -124,11 +124,28 @@ class ClosedCurve:
         return float(np.sum(trip / dist**3) / (4 * math.pi))
 
     @cached_property
+    def curvature(self) -> Arr:
+        """The curvature at every point (1/m), by second differences."""
+        c, ds = self.points, self.length / len(self)
+        k: Arr = np.linalg.norm(np.roll(c, -1, 0) - 2 * c + np.roll(c, 1, 0), axis=1) / ds**2
+        return k
+
+    @property
     def bend_radius(self) -> float:
         """Smallest radius of curvature (m)."""
-        c, ds = self.points, self.length / len(self)
-        k = np.linalg.norm(np.roll(c, -1, 0) - 2 * c + np.roll(c, 1, 0), axis=1) / ds**2
-        return float(1 / k.max())
+        return float(1 / self.curvature.max())
+
+    @cached_property
+    def total_curvature(self) -> float:
+        """The curvature summed round the curve (rad). CUR-3: at least 2 pi for any closed curve (Fenchel), and
+        more than 4 pi for a knotted one (Fary, Milnor)."""
+        return float(self.curvature.sum() * self.length / len(self))
+
+    @cached_property
+    def bending(self) -> float:
+        """The squared curvature summed round the curve (1/m): its bending energy. CUR-2: at least
+        total_curvature^2 / length, so a knot of length L has more than 16 pi^2 / L, four times a circle's."""
+        return float(np.sum(self.curvature**2) * self.length / len(self))
 
     def frame(self, close_mod: float) -> Frame:
         """Twist-free normals with a uniform extra twist, so that after one lap they return turned by a multiple

@@ -194,6 +194,35 @@ def test_planar_curve_has_no_holonomy_and_no_writhe() -> None:
     assert ring.bend_radius == pytest.approx(0.1, rel=1e-3)
 
 
+CURVES = {
+    "ring": ClosedCurve.circle(0.1484, 600),
+    "trefoil": ClosedCurve.torus_knot(0.060, 0.028, 600),
+    "shallow trefoil": ClosedCurve.torus_knot(0.060, 0.016, 600),
+    "helix": ClosedCurve.torus_knot(0.110, 0.030, 600, 1, 3),
+    "figure-eight": ClosedCurve.figure_eight(0.14, 0.07, 0.04, 600),
+}
+
+
+def test_cur_2_bending_is_at_least_the_total_curvature_squared_over_the_length() -> None:
+    for name, curve in CURVES.items():
+        floor = curve.total_curvature**2 / curve.length
+        assert curve.bending >= floor * (1 - 1e-12), name
+    ring = CURVES["ring"]  # constant curvature: the floor is reached
+    assert ring.bending == pytest.approx(ring.total_curvature**2 / ring.length, rel=1e-9)
+    assert ring.bending == pytest.approx(2 * math.pi / 0.1484, rel=1e-3)
+
+
+def test_cur_3_total_curvature_is_two_pi_on_a_ring_and_past_four_pi_on_a_knot() -> None:
+    assert CURVES["ring"].total_curvature == pytest.approx(2 * math.pi, rel=1e-4)
+    for name, curve in CURVES.items():
+        assert curve.total_curvature >= 2 * math.pi * (1 - 1e-4), name  # Fenchel
+    for name in ("trefoil", "shallow trefoil"):  # Fary and Milnor: so its bending is past 16 pi^2 / length
+        knot = CURVES[name]
+        assert knot.total_curvature > 4 * math.pi
+        assert knot.bending > 16 * math.pi**2 / knot.length
+    assert CURVES["figure-eight"].total_curvature < 4 * math.pi  # an unknot may stay under the knots' floor
+
+
 def test_trefoil_has_writhe_of_magnitude_between_three_and_four() -> None:
     assert 3.0 < abs(ClosedCurve.torus_knot(0.060, 0.028, 600).writhe) < 4.0
 
