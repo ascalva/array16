@@ -178,6 +178,8 @@ Leads to derive properly, prove where they are mathematics, and test. Each is ma
   or will be there; more figures, 3-D included; heavy emphasis on theory; never dismiss the question; RF fields
   first, with coils and electrodes only as part of the PCB design, integrated into the array; no safety
   section.
+- 2026-11-18: only the HackRF Pro runs from USB power. The board and its drivers may have their own supply; the
+  power budget follows the design and is not capped at what USB gives.
 
 ## 7. Notes for whoever continues
 

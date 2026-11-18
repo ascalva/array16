@@ -37,7 +37,8 @@ These were given as corrections, so they bind.
    hardware alike: a HackRF Pro, antennas, PCBs, microcontrollers, motors, the network (`benches/`).
 7. **Open source only.** The tools used, and the tools made here. The repository is public, AGPL-3.0.
 8. **Hardware must be buildable at home.** Cheap, reliable parts for an amateur setup in a Brooklyn apartment.
-   No industrial equipment.
+   No industrial equipment. The radio is a HackRF Pro, and it alone runs from USB power; the board and whatever
+   drives its electrodes may have their own supply, sized to the design.
 9. **Show it.** Graphs, diagrams and 3-D figures that carry the experiments, the theory and the intuition.
 10. **Spend tokens on purpose.** Few sub-agents; no speculative fan-out.
 11. **No absolute local paths** in any tracked file.
