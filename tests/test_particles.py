@@ -284,7 +284,9 @@ def test_field_takes_points_a_block_at_a_time(monkeypatch: pytest.MonkeyPatch) -
     x = ring.points[::5] + 0.003
     whole = coil.field(x)
     monkeypatch.setattr(coils, "_BLOCK", 5 * len(coil.mid))  # five points at a time
-    assert np.array_equal(coil.field(x), whole)
+    # The same to rounding, and not to the bit: a matrix product may sum in another order for another shape
+    # (it does under OpenBLAS on Linux, and does not under Accelerate on a Mac).
+    assert float(np.abs(coil.field(x) - whole).max()) < 1e-13 * float(np.abs(whole).max())
 
 
 def test_a_winding_wider_than_the_bend_is_refused() -> None:
