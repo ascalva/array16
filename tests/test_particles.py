@@ -29,6 +29,19 @@ def test_fields_scale_and_add() -> None:
     assert np.allclose(pt.superpose(bz, bx, bx)(x), [2.0, 0.0, 2.0])
 
 
+def test_fields_together_add_and_skip_what_is_absent() -> None:
+    x = np.zeros((2, 3))
+    bz = pt.magnetic(pt.uniform(np.array([0.0, 0.0, 2.0])))
+    ex: pt.Fields = lambda x, t: (np.full_like(x, t), None)  # noqa: E731
+    e, b = pt.together(bz, ex, bz)(x, 3.0)
+    assert e is not None
+    assert b is not None
+    assert np.allclose(e, 3.0)
+    assert np.allclose(b, [0.0, 0.0, 4.0])
+    assert pt.together(bz)(x, 0.0)[0] is None  # no electric field: nothing made up for it
+    assert pt.together()(x, 0.0) == (None, None)
+
+
 # ---- the integrator -------------------------------------------------------------------------------------------
 def test_boris_gyration_radius_phase_and_energy() -> None:
     v, b = pt.v_of(100.0), 0.01
@@ -78,6 +91,48 @@ def test_mathieu_stability_boundary_and_secular_frequency() -> None:
     up = [i + h[i, 0] / (h[i, 0] - h[i + 1, 0]) for i in range(len(h) - 1) if h[i, 0] < 0 <= h[i + 1, 0]]
     beta = 2 * (len(up) - 1) / (up[-1] - up[0])
     assert beta == pytest.approx(0.2 / math.sqrt(2), rel=0.02)
+
+
+# ---- the general loop -----------------------------------------------------------------------------------------
+def test_integrate_in_a_uniform_electric_field_gains_qe_per_second() -> None:
+    e0, dt, steps = 50.0, 1e-9, 200
+    field: pt.Fields = lambda x, t: (np.broadcast_to([e0, 0.0, 0.0], x.shape), None)  # noqa: E731
+    flight = pt.integrate(np.zeros((3, 3)), np.zeros((3, 3)), np.full(3, pt.QM_E), dt, steps, field)
+    assert flight.steps == steps
+    assert bool(flight.alive.all())
+    assert np.allclose(flight.u[:, 0], pt.QM_E * e0 * steps * dt, rtol=1e-12)
+    assert np.allclose(flight.x[:, 0], 0.5 * pt.QM_E * e0 * (steps * dt) ** 2, rtol=0.01)  # non-relativistic here
+
+
+def test_integrate_stops_what_an_observer_returns_and_ends_when_none_is_left() -> None:
+    seen: list[tuple[int, int]] = []
+
+    def far(step: int, t: float, x: pt.Arr, u: pt.Arr, alive: pt.BoolArr) -> pt.BoolArr:
+        seen.append((step, int(alive.sum())))
+        stop: pt.BoolArr = x[:, 0] > np.array([2.5e-3, 5.5e-3])
+        return stop
+
+    def count(step: int, t: float, x: pt.Arr, u: pt.Arr, alive: pt.BoolArr) -> None:
+        assert t == pytest.approx((step + 1) * 1e-3)
+        seen.append((-1, int(alive.sum())))  # called after `far`, it sees what `far` stopped
+
+    still: pt.Fields = lambda x, t: (None, None)  # noqa: E731
+    x0, u0 = np.zeros((2, 3)), np.tile([1.0, 0.0, 0.0], (2, 1))  # 1 m/s along x, one step a millimetre
+    flight = pt.integrate(x0, u0, np.ones(2), 1e-3, 100, still, [far, count])
+    assert flight.steps == 6  # the second particle passes 5.5 mm on its sixth step, and the run ends
+    assert not flight.alive.any()
+    assert np.allclose(flight.x[:, 0], [3e-3, 6e-3])  # each stays where it was stopped
+    assert seen[:2] == [(0, 2), (-1, 2)]
+    assert (2, 2) in seen
+    assert (-1, 1) in seen
+
+
+def test_integrate_refuses_arrays_of_the_wrong_shape() -> None:
+    still: pt.Fields = lambda x, t: (None, None)  # noqa: E731
+    with pytest.raises(ValueError, match="shape"):
+        pt.integrate(np.zeros(3), np.zeros(3), np.ones(1), 1e-3, 1, still)
+    with pytest.raises(ValueError, match="shape"):
+        pt.integrate(np.zeros((2, 3)), np.zeros((2, 3)), np.ones(3), 1e-3, 1, still)
 
 
 # ---- closed curves --------------------------------------------------------------------------------------------
@@ -174,6 +229,42 @@ def test_return_winding_leaves_a_small_dipole_from_its_two_radii() -> None:
     a, gap = 0.015, 1e-3
     coil = Coil.wound(ClosedCurve.circle(0.08, 240), a, 60, "return", per_turn=18, layer_gap=gap)
     assert abs(float(np.mean(coil.slope[:, 2]))) == pytest.approx(math.log(1 + gap / a) / (2 * coil.turns), rel=0.05)
+
+
+def test_fast_field_sum_is_the_plain_sum() -> None:
+    # COI-3. Points all over the bore of a knotted winding, out to 1 mm from the wire, one block and several.
+    knot = ClosedCurve.torus_knot(0.060, 0.028, 300)
+    coil = Coil.wound(knot, 0.011, 60, "return", per_turn=18)
+    rng, fr = np.random.default_rng(7), knot.frame(2 * math.pi)
+    at = rng.integers(0, len(knot), 50)
+    r, phi = 0.010 * np.sqrt(rng.uniform(0, 1, 50)), rng.uniform(0, 2 * math.pi, 50)
+    x = knot.points[at] + (r * np.cos(phi))[:, None] * fr.a[at] + (r * np.sin(phi))[:, None] * fr.b[at]
+    plain = coil.field_plain(x)
+    scale = float(np.abs(plain).max())
+    assert float(np.abs(coil.field(x) - plain).max()) < 1e-11 * scale
+    several = np.vstack([coil.field(x[i : i + 7]) for i in range(0, 50, 7)])
+    assert float(np.abs(several - plain).max()) < 1e-11 * scale
+    assert coil.field(x[:1]).shape == (1, 3)
+
+
+def test_field_takes_points_a_block_at_a_time(monkeypatch: pytest.MonkeyPatch) -> None:
+    from array16.particles import coils
+
+    ring = ClosedCurve.circle(0.1, 120)
+    coil = Coil.wound(ring, 0.011, 30, "single", per_turn=12)
+    x = ring.points[::5] + 0.003
+    whole = coil.field(x)
+    monkeypatch.setattr(coils, "_BLOCK", 5 * len(coil.mid))  # five points at a time
+    assert np.array_equal(coil.field(x), whole)
+
+
+def test_a_winding_wider_than_the_bend_is_refused() -> None:
+    knot = ClosedCurve.torus_knot(0.060, 0.028, 600)  # tightest bend 43.8 mm
+    with pytest.raises(ValueError, match="cannot go round a bend"):
+        Coil.wound(knot, 0.044, 10, "single")
+    with pytest.raises(ValueError, match="cannot go round a bend"):
+        Coil.wound(knot, 0.0432, 10, "return")  # the second layer, 1 mm further out, is the one that crosses
+    assert Coil.wound(knot, 0.0432, 10, "single").turns == 10
 
 
 # ---- first-order guide optics ---------------------------------------------------------------------------------

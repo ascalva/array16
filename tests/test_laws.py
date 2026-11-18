@@ -70,7 +70,7 @@ def declarations() -> dict[str, str | None]:
 
 def test_the_ledger_has_rows_with_distinct_ids_and_known_labels() -> None:
     laws = [row.law for row in rows()]
-    assert len(laws) >= 13
+    assert len(laws) >= 15
     assert len(set(laws)) == len(laws)
     assert {row.label for row in rows()} <= LABELS
     assert all(("-H" in row.law) == (row.label == "Hypothesis") for row in rows())
@@ -127,9 +127,10 @@ def test_every_test_named_for_a_law_is_one_of_its_falsifiers() -> None:
 
 def test_the_checks_have_teeth() -> None:
     # A reference to something that is not there is seen to be missing, by the same functions the checks use.
-    assert defines(ROOT / "array16" / "particles.py", "GuideOptics.closed_orbit")
-    assert not defines(ROOT / "array16" / "particles.py", "GuideOptics.no_such_method")
-    assert not defines(ROOT / "array16" / "particles.py", "closed_orbit")  # a method is not a module function
+    optics = ROOT / "array16" / "particles" / "optics.py"
+    assert defines(optics, "GuideOptics.closed_orbit")
+    assert not defines(optics, "GuideOptics.no_such_method")
+    assert not defines(optics, "closed_orbit")  # a method is not a module function
     assert declarations()["Guide.lean::lap_closedOrbit"] == "GDE-1"
     assert declarations()["Guide.lean::lap_sub_closedOrbit"] is None  # documented, and marked for no law
     assert "Guide.lean::no_such_theorem" not in declarations()
