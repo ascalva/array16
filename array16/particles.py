@@ -6,10 +6,12 @@ Objects (all immutable):
   Coil           a filament winding round a curve, and its Biot-Savart field
   GuideOptics    first-order theory of a guide field that follows a curve: lap map, closed orbit, excursion
   Launch, GuideTrack    what goes into track_guide and what comes out
+  OrbitFit       the circle through an orbit's offsets at the start of successive laps
 
 Functions (pure):
   push                         one relativistic Boris step
   track_guide                  electrons round a closed guide in any static magnetic field
+  orbit_circle                 the closed orbit and the turn per lap, measured from a tracked orbit
   uniform, scaled, superpose   fields built from fields
   v_of, rigidity, energy_of    kinematics
 
@@ -165,6 +167,13 @@ class ClosedCurve:
         return cls.from_polygon(pts, n)
 
     @classmethod
+    def figure_eight(cls, a: float, b: float, lift: float, n: int) -> ClosedCurve:
+        """A figure of eight, 2a long and 2b wide, whose two strands pass `2 lift` apart where they cross: an
+        unknotted curve that is not planar. With lift = 0 the strands meet."""
+        t = np.linspace(0, 2 * np.pi, 40 * n, endpoint=False)
+        return cls.from_polygon(np.stack([a * np.sin(t), b * np.sin(2 * t), lift * np.cos(t)], 1), n)
+
+    @classmethod
     def circle(cls, R: float, n: int) -> ClosedCurve:
         """A circle of radius R in the xy plane, anticlockwise seen from +z."""
         t = np.linspace(0, 2 * np.pi, n, endpoint=False)
@@ -199,6 +208,13 @@ class ClosedCurve:
             n1[i] = _carry(n1[i - 1], T[i - 1], T[i])
         v = _carry(n1[-1], T[-1], T[0])
         return n1, math.atan2(np.dot(v, np.cross(T[0], n1[0])), np.dot(v, n1[0]))
+
+    @cached_property
+    def axes(self) -> tuple[Arr, Arr]:
+        """Unit normals (e1, e2 = T x e1) at every point, each (n, 3), carried along the curve without twisting.
+        They do not close: after a lap they have turned by the holonomy."""
+        e1 = self._carried[0]
+        return e1, np.cross(self.tangents, e1)
 
     @property
     def holonomy(self) -> float:
@@ -238,9 +254,8 @@ class ClosedCurve:
 
     def transverse(self, z: CArr) -> Arr:
         """Offsets z = a + ib at the first point, on the twist-free axes (e1, e2 = T x e1), as vectors (K, 3)."""
-        e1 = self._carried[0][0]
-        e2 = np.cross(self.tangents[0], e1)
-        vectors: Arr = np.outer(z.real, e1) + np.outer(z.imag, e2)
+        e1, e2 = self.axes
+        vectors: Arr = np.outer(z.real, e1[0]) + np.outer(z.imag, e2[0])
         return vectors
 
     def advance(self, x: Arr, st: IntArr, adv: Arr, iters: int = 1) -> tuple[IntArr, Arr]:
@@ -436,8 +451,7 @@ class GuideOptics:
         """Optics of a field along `curve` that is circularly symmetric about it, so that offsets are carried
         without twisting. The curvature drift of an electron is d(xi)/ds = -rho T x dT/ds. slope (n, 3), if given,
         is the field across the curve over the field along it: Coil.slope."""
-        T, e1 = curve.tangents, curve._carried[0]
-        e2 = np.cross(T, e1)
+        T, (e1, e2) = curve.tangents, curve.axes
         kick = np.cross(T, np.roll(T, -1, 0) - T)  # curvature x binormal x ds
         zero = np.zeros(1, dtype=np.complex128)
         g: CArr = np.concatenate([zero, np.cumsum(-(np.sum(kick * e1, 1) + 1j * np.sum(kick * e2, 1)))])
@@ -527,6 +541,7 @@ class GuideTrack(NamedTuple):
     laps: Arr  # laps completed (negative: against T)
     reach: Arr  # largest distance from the curve while held (m)
     path: Arr  # (m, 3) positions of the recorded electron; empty if none was recorded
+    section: tuple[CArr, ...]  # per electron, its offset on the curve's axes each time it completes a lap
 
 
 class _State(NamedTuple):
@@ -574,10 +589,42 @@ def track_guide(
 
     s = _State(x0, u0, np.zeros(N, dtype=np.intp), np.zeros(N), np.ones(N, dtype=np.bool_), np.zeros(N))
     path: list[Arr] = []
+    (e1, e2), crossings = curve.axes, [list[complex]() for _ in range(N)]
+    done = np.zeros(N, dtype=np.intp)
     for it in range(int(laps * curve.length / v.min() / dt)):
         s = step(s)
+        now = (np.abs(s.adv) // len(curve)).astype(np.intp)
+        for i in np.flatnonzero((now > done) & s.alive):
+            d = curve.offset(s.x[i : i + 1], s.st[i : i + 1])[0][0]
+            crossings[i].append(complex(float(d @ e1[s.st[i]]), float(d @ e2[s.st[i]])))
+        done = np.maximum(done, now)
         if record is not None and it % record_every == 0 and s.alive[record]:
             path.append(s.x[record].copy())
         if not s.alive.any():
             break
-    return GuideTrack(s.alive, s.adv / len(curve), s.reach, np.array(path).reshape(-1, 3))
+    section = tuple(np.array(c, dtype=np.complex128) for c in crossings)
+    return GuideTrack(s.alive, s.adv / len(curve), s.reach, np.array(path).reshape(-1, 3), section)
+
+
+class OrbitFit(NamedTuple):
+    """The circle through an orbit's offsets at the start of successive laps."""
+
+    centre: complex  # the closed orbit the offsets turn about (m)
+    radius: float  # their distance from it (m)
+    turn: float  # the angle between successive offsets, seen from the centre (rad, in (-pi, pi])
+    residual: float  # rms distance of the offsets from the circle (m)
+
+
+def orbit_circle(z: CArr) -> OrbitFit:
+    """Fit a circle to the offsets z at the start of successive laps, and measure the turn per lap about its centre.
+
+    GDE-3 and GDE-4 say the offsets of a first-order orbit lie on a circle about the closed orbit and advance by
+    the plane's turn each lap, so this measures both from a tracked orbit (GuideTrack.section). It needs at least
+    three offsets that are not in line; an orbit launched on the closed orbit gives a point, and no turn."""
+    design = np.column_stack([2 * z.real, 2 * z.imag, np.ones(len(z))])
+    (a, b, k), *_ = np.linalg.lstsq(design, np.abs(z) ** 2, rcond=None)
+    centre = complex(float(a), float(b))
+    radius = math.sqrt(max(float(k) + abs(centre) ** 2, 0.0))
+    w = z - centre
+    turn = cmath.phase(complex(np.sum(w[1:] * np.conj(w[:-1]))))
+    return OrbitFit(centre, radius, turn, float(np.sqrt(np.mean((np.abs(w) - radius) ** 2))))

@@ -112,6 +112,26 @@ def test_holonomy_is_the_writhe_modulo_one_turn(p: int, q: int, r: float) -> Non
     assert gap(1200) < 0.4 * gap(600)  # second order in the spacing of the points
 
 
+def test_figure_eight_is_closed_unknotted_and_turns_the_plane_only_when_lifted() -> None:
+    flat, lifted = ClosedCurve.figure_eight(0.14, 0.07, 0.0, 600), ClosedCurve.figure_eight(0.14, 0.07, 0.04, 600)
+    assert abs(flat.points[:, 2]).max() == 0.0
+    assert flat.holonomy == pytest.approx(0.0, abs=1e-9)
+    assert abs(lifted.holonomy) > 1.0
+    assert abs(lifted.writhe) < 1.0  # under one crossing's worth: a knot would need three
+    gap = lifted.holonomy / (2 * math.pi) - lifted.writhe
+    assert abs(gap - round(gap)) < 1.5e-3
+
+
+def test_axes_are_orthonormal_and_come_back_turned_by_the_holonomy() -> None:
+    knot = ClosedCurve.torus_knot(0.060, 0.028, 600)
+    (e1, e2), T = knot.axes, knot.tangents
+    assert float(np.abs(np.sum(e1 * T, 1)).max()) < 1e-9
+    assert float(np.abs(np.sum(e1 * e2, 1)).max()) < 1e-9
+    # the last point's axes, against the first's: all but one step of the lap's turn
+    seen = math.atan2(float(e1[-1] @ e2[0]), float(e1[-1] @ e1[0]))
+    assert seen == pytest.approx(knot.holonomy, abs=0.05)
+
+
 def test_planar_curve_has_no_holonomy_and_no_writhe() -> None:
     ring = ClosedCurve.circle(0.1, 400)
     assert ring.holonomy == pytest.approx(0.0, abs=1e-9)
@@ -319,6 +339,28 @@ def test_gde_7_control_reach_is_not_concave(g_end: complex, rho_a: float, rho_b:
     assert reach[2] < (1 - t) * reach[0] + t * reach[1]
 
 
+@settings(max_examples=100, deadline=None)
+@given(st.floats(0.3, 2 * math.pi - 0.3), offsets, offsets, rhos, offsets)
+def test_orbit_circle_recovers_the_closed_orbit_and_the_turn(
+    alpha: float, g_end: complex, h_end: complex, rho: float, z0: complex
+) -> None:
+    # GDE-3 and GDE-4 run backwards: from the offsets at the start of 15 laps, find the centre and the turn.
+    opt, r = _optics(alpha, g_end, h_end), np.array([rho])
+    star = opt.closed_orbit(r)[0]
+    if abs(z0 - star) < 1e-3:
+        return
+    z, laps = np.array([z0]), [z0]
+    for _ in range(15):
+        z = opt.lap(r, z)
+        laps.append(complex(z[0]))
+    fit = pt.orbit_circle(np.array(laps))
+    scale = 1 + abs(star) + abs(z0)
+    assert abs(fit.centre - star) <= 1e-6 * scale
+    assert fit.radius == pytest.approx(abs(z0 - star), abs=1e-6 * scale)
+    assert abs(cmath.exp(1j * fit.turn) - cmath.exp(1j * alpha)) <= 1e-6
+    assert fit.residual <= 1e-6 * scale
+
+
 def test_window_is_the_range_of_rho_inside_the_wall() -> None:
     rho = np.linspace(-2.0, 2.0, 401)
     assert pt.window(rho, np.abs(rho - 0.5), 1.0) == pytest.approx((-0.49, 1.49))
@@ -339,12 +381,17 @@ def test_tracked_electron_in_a_ring_coil_drifts_as_the_theory_says() -> None:
     coil = Coil.wound(ring, 0.015, 60, "return", per_turn=18)
     launch = Launch.of(np.array([pt.energy_of(bt * rho)]), np.zeros(3))
     run = pt.track_guide(
-        ring, pt.scaled(coil.field, bt / coil.per_amp), bt, launch, 0.9 * coil.radius, 1.0, record=0, record_every=1
+        ring, pt.scaled(coil.field, bt / coil.per_amp), bt, launch, 0.9 * coil.radius, 2.02, record=0, record_every=1
     )
     assert bool(run.held[0])
-    assert run.laps[0] == pytest.approx(1.0, abs=0.02)
+    assert run.laps[0] == pytest.approx(2.02, abs=0.02)
     # the prediction: curvature drift, 2 pi rho per lap towards -z, less the rise of the winding's residual dipole
-    predicted = ring.transverse(coil.optics.step(np.array([rho])) * run.laps[0])[0]
+    step = coil.optics.step(np.array([rho]))
+    predicted = ring.transverse(step * run.laps[0])[0]
     assert predicted[2] == pytest.approx(-2 * math.pi * rho * run.laps[0], rel=0.08)
     assert run.path[-1, 2] == pytest.approx(predicted[2], rel=0.03)
     assert run.reach[0] == pytest.approx(abs(predicted[2]), rel=0.03)
+    # and where it crossed the start after each lap: one step, then two, on the curve's axes
+    assert len(run.section[0]) == 2
+    assert abs(run.section[0][0] - step[0]) < 0.03 * abs(step[0])
+    assert abs(run.section[0][1] - 2 * step[0]) < 0.03 * abs(2 * step[0])
