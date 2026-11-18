@@ -22,8 +22,8 @@ only sub-grid in the solver is for cylindrical coordinates (`MultiGrid`, "a cyli
 
 That gives 1.71 million cells for one row of six elements and 15.2 million for the 6×6 tile. 74 % of each slab
 of the row model, and 63 % of the tile's, is at the finest step, because the card is meshed evenly from edge to
-edge. The check on the finer mesh moved the score by 0.09 dB (`summary.md`), so the mesh is fine enough for the
-search that used it.
+edge. The study measured its mesh error: 0.09 dB on the search mesh, and 0.11 dB between its two finer meshes
+(`summary.md`). The mesh is fine enough for the search that used it.
 
 **Where it can be coarser.**
 
