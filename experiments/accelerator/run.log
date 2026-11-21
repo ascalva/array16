@@ -2,8 +2,12 @@
 == scales: the field a pseudo-potential of a given depth takes (electron) ==
   0.433 GHz: 25 meV takes   2.1 kV/m, 1 eV  13.0, 100 eV    130. At +15.9 dBm EIRP the field 0.3 m away is 5.1 V/m (1.5e-07 eV); 1 eV is 13 V across a millimetre
   2.440 GHz: 25 meV takes  11.6 kV/m, 1 eV  73.1, 100 eV    731. At +8.1 dBm EIRP the field 0.3 m away is 2.1 V/m (8.1e-10 eV); 1 eV is 73 V across a millimetre
+             through the panel with the HackRF alone, +1.5 dBm EIRP: 0.97 V/m 0.3 m away (1.8e-10 eV)
   5.800 GHz: 25 meV takes  27.5 kV/m, 1 eV 173.8, 100 eV   1738. At +6.2 dBm EIRP the field 0.3 m away is 1.7 V/m (9.2e-11 eV); 1 eV is 174 V across a millimetre
-  a resonant gap of shunt resistance 0.25-1 Mohm (an estimate) makes 40-80 V from 3.2 mW; 707-1414 V from 1000 mW
+             through the panel with the HackRF alone, -17.8 dBm EIRP: 0.11 V/m 0.3 m away (3.7e-13 eV)
+  a resonant gap makes sqrt(2 P R) volts (RFG-3) from its shunt resistance R, estimated:
+     metal cavity, 0.25-1 Mohm: 40-80 V from 3.2 mW; 707-1414 V from 1000 mW
+     board resonator, 10-100 kohm: 8-25 V from 3.2 mW; 141-447 V from 1000 mW
   an electron's mean free path (cross-section 1e-19 m^2, an estimate): 4e-07 m at 1013 mbar, 0.4 m at 0.001 mbar, 40 m at 1e-05 mbar, 4e+03 m at 1e-07 mbar
 
 == damping: a 10 um glass grain in air, ideal quadrupole at 60 Hz, r0 6 mm ==
@@ -41,7 +45,7 @@
        8.0 eV: held after  19.9 laps, reach   167 um
       16.0 eV: LOST after   0.1 laps, reach   409 um
       32.0 eV: LOST after   0.0 laps, reach   424 um
-  (31 s)
+  (30 s)
 
 == ring: four gaps on a closed path, one chirp, fixed phase steps ==
   a continuous 50 eV beam, 4 gaps of 0.5 V, harmonic 13, 90 deg between gaps: chirp 58.5 -> 112.6 MHz in 21 us (135 laps)
@@ -55,4 +59,4 @@
   1e+07 electrons circulating at 185 eV: 13.87 uA, about -58 dBm on a 50 ohm pickup coupling 30 % (an estimate)
   grains closer than 0.65 mm along the 60 Hz guide buckle from a line into a zigzag
 
-done in 73 s
+done in 71 s

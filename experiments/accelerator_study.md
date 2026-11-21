@@ -1,13 +1,15 @@
-<!-- 2026-11-18. The first particle run (2026-11-16), redone on array16.particles. Code:
+<!-- 2026-11-18, updated 2026-11-20. The first particle run (2026-11-16), redone on array16.particles. Code:
 experiments/accelerator_study.py; outputs in experiments/accelerator/. Its fast parts are held to their numbers by
 tests/test_accelerator_study.py. A study, not a registered experiment: experiment 2 takes its questions further
-with predictions committed first. Not reviewed by anyone but its author. -->
+with predictions committed first. Reviewed on 2026-11-20: the review's three findings (one voltage along 0.92 of a
+wavelength, free-standing rods, the resonator's shunt resistance) are in sections 2, 7 and 8, and section 2 carries
+the owner's decision of that day that the HackRF Pro is the one radio. -->
 
 # The first run: what radio-frequency fields take to hold a charge and speed it up
 
 The owner's idea: a field that acts as a small particle accelerator, its shape holding the particle's path, with
 the particles' own fields refining it. This study puts numbers on the radio-frequency parts of that idea. It runs
-in 73 seconds (`uv run python experiments/accelerator_study.py`).
+in about 70 seconds (`uv run python experiments/accelerator_study.py`).
 
 ## 1. Short answers
 
@@ -23,6 +25,7 @@ in 73 seconds (`uv run python experiments/accelerator_study.py`).
   volts, and the depth with them.
 - **A 1 GHz quadrupole on a trefoil knot guides electrons.** With 25 V between rods 0.5 mm from the axis, a well
   1.26 eV deep held electrons of 0.5 to 8 eV for every lap tracked, 5 to 20 of them, within 0.17 mm of the axis.
+  The rods stand free and carry one voltage along the whole knot (section 7).
 - **The same shape at 60 Hz carries charged dust in air.** With ±500 V on rods 6 mm from the axis, 10 µm glass
   grains follow the knot, and a travelling wave of 34 V per 30 mm carries them round at 5 cm/s: a lap in 16.6 s.
 - **Four phase-stepped gaps on one chirp accelerate.** Four 0.5 V gaps, 90° apart in phase, on a chirp from 58.5
@@ -41,9 +44,12 @@ weak, as if by a potential
 
 The lines are wells of equal depth for an electron. Halving the frequency deepens a well fourfold at the same
 field, so the low end of the band is the cheap end. The dashed line is a radio channel's own 0.56 V across a
-millimetre; the triangles are the array's radiated field 0.3 m away at full drive (5.1, 2.1 and 1.7 V/m at 0.433,
-2.44 and 5.8 GHz). One channel's 0.56 V across a millimetre is a hundred times the field the whole array
-radiates to 0.3 m, and ten thousand times the depth: the elements belong beside the path.
+millimetre. The filled triangles are the array's radiated field 0.3 m away at full drive in `REDESIGN.md` section
+7's four-radio mode (5.1, 2.1 and 1.7 V/m at 0.433, 2.44 and 5.8 GHz); the open ones are the panel's with the
+HackRF Pro alone, the radio since the owner's decision of 2026-11-20 (+1.5 and −17.8 dBm EIRP, computed there for a
+HackRF One's output: 0.97 and 0.11 V/m at 2.44 and 5.8 GHz). One channel's 0.56 V across a millimetre is more than
+a hundred times the field the array radiates to 0.3 m, and more than ten thousand times the depth: the elements
+belong beside the path.
 
 Along a line where the field vanishes, a quadrupole E = g·cos ωt·(−x, +y) holds the charge. Its motion is
 Mathieu's equation with q = 2(e/m)g/ω²: stable below q = 0.908, and for small q a slow oscillation at
@@ -56,8 +62,13 @@ Mathieu's equation with q = 2(e/m)g/ω²: stable below q = 0.908, and for small 
 | 10 eV | 267 V | 2.8 GHz·mm | 2.8 GHz | 66 MHz·mm |
 | 100 eV | 2.7 kV | 8.9 GHz·mm | 8.9 GHz | 208 MHz·mm |
 
-A resonant gap turns power into volts: with a shunt resistance of 0.25 to 1 MΩ (an estimate), 3.2 mW makes 40 to
-80 V and 1 W makes 0.7 to 1.4 kV.
+A resonant gap turns power into volts, `V = √(2PR)` (ledger RFG-3), R being its shunt resistance, `Q/(ωC)` for
+electrodes of capacitance C. Two estimates bracket it. A metal cavity of 0.25 to 1 MΩ makes 40 to 80 V from 3.2 mW
+and 0.7 to 1.4 kV from 1 W. A resonator printed on the board, Q of 50 to 200 with sub-picofarad electrodes, is about
+10 to 100 kΩ: 8 to 25 V from 3.2 mW and 140 to 450 V from 1 W. Longer electrodes hold more capacitance and so less
+resistance, and the nearest measured board resonator, the half-wave coplanar line of an electron trap at 1.6 GHz,
+reached about 1 kΩ at a Q near 35 (Matthiesen et al.); `docs/VIRTUAL_ANTENNA.md` (section 7.3) budgets from 1 to
+10 kΩ until the board's own volts are measured against watts.
 
 ## 3. A guide on a knot
 
@@ -87,8 +98,9 @@ pseudo-potential precedes this run: at 1 kV the tracked sag is 0.27 mm where the
 
 ![energy against lap for forty of four thousand electrons](accelerator/ring.png)
 
-Four gaps a quarter of a lap apart, each 0.5 V, driven by one chirp with a fixed 90° from gap to gap: what four
-coherent radio channels supply. A particle that crosses each gap at the same phase gains the same energy at each
+Four gaps a quarter of a lap apart, each 0.5 V, driven by one chirp with a fixed 90° from gap to gap. One channel
+supplies it: its chirp split four ways by a 180° hybrid and two quadrature hybrids on the board, which hold their 90°
+steps across 58.5 to 112.6 MHz. A particle that crosses each gap at the same phase gains the same energy at each
 and stays in step as the chirp rises; particles near it in phase oscillate about it and are carried along. From a
 continuous 50 eV beam, 45 % is captured and reaches 185 eV in 21 µs with an rms spread of 1.6 eV. The rest
 stays near its starting energy. This is a model of the motion along the path alone.
@@ -97,7 +109,8 @@ stays near its starting energy. This is a model of the motion along the path alo
 
 - **How many a guide holds.** A beam's own field pushes outward; where it equals the well's inward push the
   guide is full: n = 2ε₀mω_sec²/e². For the 1 GHz guide that is 2.8 × 10¹⁴ m⁻³ at q = 0.3 and 1.1 × 10¹⁵ m⁻³ at
-  q = 0.6: in a beam 50 µm in radius, 9 million electrons per metre and 2.4 µA at 8 eV.
+  q = 0.6: in a beam 50 µm in radius, 9 million electrons per metre and 2.4 µA at 8 eV. There the beam's plasma
+  frequency is √2 times the secular frequency, q·f/2: 150 and 300 MHz (ledger RFG-4).
 - **What a beam announces.** 10⁵, 10⁶ and 10⁷ electrons circulating at 185 eV are 0.14, 1.4 and 14 µA, about
   −98, −78 and −58 dBm on a 50 Ω pickup coupling 30 % (an estimate): within a receiver's reach, at harmonics of
   the revolution frequency.
@@ -116,7 +129,7 @@ by rotation where the first run projected it, which moves the rods by micrometre
 | Electrons, q = 0.6: held / lost | 0.5-8 eV / 16, 32 eV | the same |
 | Electrons, q = 0.6: reach at 0.5, 1, 2, 4, 8 eV | 63, 60, 59, 61, 153 µm | 66, 66, 66, 67, 167 µm |
 | Ring: harmonic, chirp, final energy, captured | 13, 58.5-112.6 MHz, 185 eV, 45 % | the same |
-| Run time of the two tracked guides | 113 s | 70 s |
+| Run time of the two tracked guides | 113 s | about 70 s |
 
 Two things changed on purpose. The array's field is derived from `REDESIGN.md` section 7 (the first run assumed
 17 V/m at 0.3 m). And the magnetic guide left this script: experiment 1 (`guide_study.md`) redid it with
@@ -128,9 +141,24 @@ predictions committed first. Cyclotron resonance, which adds a static field, is 
 Point charges and thin rods carrying line charges, in vacuum for electrons and in still air for grains. One
 particle at a time, except where section 5 computes what many do.
 
+The rods stand free, and each carries one voltage along its whole length. At 60 Hz that is exact, the wavelength
+being 5000 km. At 1 GHz the 277 mm knot is 0.92 of a wavelength, and a rod that long fed at one point carries a
+standing wave instead, with a node every half guided wavelength and no well at the nodes; a closed guide that long
+runs as a travelling-wave ring (section 8), whose well has one depth all the way round, as this model's does.
+Electrodes printed on boards keep less of the depth at the same volts and distance: two facing boards, each split
+into halves at ±V/2, a quarter (ledger ELE-2); one board with two rails, at most 0.0091 (ELE-3). The four gaps of
+section 4 are kicks at four points, and their model follows the motion along the path alone.
+
 ## 8. Next
 
-Experiment 2 puts the electrodes on the board and registers its predictions first (`docs/PROGRESS.md`).
+Experiment 2 takes the guide onto the board, with its predictions registered first (`docs/PROGRESS.md`). Its
+electrodes are the board geometries of the ledger's section VII: two rails on one board put the null at the
+geometric mean of their edges (ELE-1) and keep at most 0.0091 of a four-rod well's depth (ELE-3), and two facing
+boards, each split into halves at ±V/2, keep a quarter (ELE-2). It is driven as a travelling-wave ring. A closed
+guide m guided wavelengths long carries cos mφ and sin mφ at one frequency, and two feeds a quarter guided
+wavelength apart, driven 90° apart from one channel through a hybrid, sum them to `e^(i(mφ − ωt))`, one amplitude
+all the way round; at m = 1 a ring of this guide's 277 mm resonates at 1.08 GHz in air (n_eff = 1; on laminate it
+falls as 1/n_eff; `docs/VIRTUAL_ANTENNA.md` sections 7.2 and 7.3). There the closed guide is one case of field synthesis, and as a radiator an antenna with a dial.
 
 ## Sources
 
@@ -139,3 +167,5 @@ Experiment 2 puts the electrodes on the board and registers its predictions firs
    follows theirs.
 2. E. A. Vinitsky, E. D. Black, K. G. Libbrecht, "Particle dynamics in damped nonlinear quadrupole ion traps,"
    American Journal of Physics 83, 313-319 (2015), doi:10.1119/1.4902185. The grain's mass, charge and drag.
+3. C. Matthiesen, Q. Yu, J. Guo, A. M. Alonso, H. Häffner, "Trapping electrons in a room-temperature microwave Paul
+   trap," Physical Review X 11, 011019 (2021), doi:10.1103/PhysRevX.11.011019. The measured board resonator.

@@ -19,7 +19,10 @@
     "radiated_at_0.3m_Vm": 2.074695526311681,
     "depth_at_0.3m_eV": 8.052500460612933e-10,
     "volts_across_1mm_for_1eV": 73.11205504710365,
-    "distance_for_1eV_by_far_field_mm": 0.008513078417676909
+    "distance_for_1eV_by_far_field_mm": 0.008513078417676909,
+    "hackrf_eirp_dBm": 1.5,
+    "hackrf_radiated_at_0.3m_Vm": 0.9704080051273122,
+    "hackrf_depth_at_0.3m_eV": 1.7616951484565074e-10
    },
    "5.8 GHz": {
     "eirp_dBm": 6.2,
@@ -29,18 +32,33 @@
     "radiated_at_0.3m_Vm": 1.6670720509730734,
     "depth_at_0.3m_eV": 9.201410874812933e-11,
     "volts_across_1mm_for_1eV": 173.79095052180378,
-    "distance_for_1eV_by_far_field_mm": 0.0028777195463303303
+    "distance_for_1eV_by_far_field_mm": 0.0028777195463303303,
+    "hackrf_eirp_dBm": -17.8,
+    "hackrf_radiated_at_0.3m_Vm": 0.10518513543391196,
+    "hackrf_depth_at_0.3m_eV": 3.6631476484719557e-13
    }
   },
   "gap_volts": {
-   "3.2 mW": [
-    40.0,
-    80.0
-   ],
-   "1000 mW": [
-    707.1067811865476,
-    1414.213562373095
-   ]
+   "metal cavity, 0.25-1 Mohm": {
+    "3.2 mW": [
+     40.0,
+     80.0
+    ],
+    "1000 mW": [
+     707.1067811865476,
+     1414.213562373095
+    ]
+   },
+   "board resonator, 10-100 kohm": {
+    "3.2 mW": [
+     8.0,
+     25.298221281347036
+    ],
+    "1000 mW": [
+     141.4213562373095,
+     447.21359549995793
+    ]
+   }
   },
   "mean_free_path_m": {
    "1013 mbar": 3.9933875320829223e-07,

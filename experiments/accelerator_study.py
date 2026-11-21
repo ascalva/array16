@@ -12,7 +12,7 @@ path, with the particles' own fields refining it. This script puts numbers on th
   own        the particles' own fields: how many a guide holds, what a beam induces, when a line of grains buckles
   resonance  cyclotron resonance, which adds a static field (not in the default run)
 
-    uv run python experiments/accelerator_study.py              # about two minutes: accelerator/
+    uv run python experiments/accelerator_study.py              # about 70 s: accelerator/
     uv run python experiments/accelerator_study.py resonance    # chosen sections only
 
 Models: point charges and thin rods (line charges), no image charges, no gas collisions; one particle at a time
@@ -39,8 +39,15 @@ OUT = Path(__file__).resolve().parent / "accelerator"
 LOG: list[str] = []
 G = 9.81
 
-# The array's radiated power at full drive, as effective isotropic radiated power (REDESIGN.md, section 7).
+# The array's radiated power at full drive, as effective isotropic radiated power (REDESIGN.md, section 7): in its
+# four-radio mode, and through the panel with the HackRF alone, the radio of the owner's decision of 2026-11-20
+# (computed there for a HackRF One's output).
 EIRP_DBM = {0.433e9: 15.9, 2.44e9: 8.1, 5.8e9: 6.2}
+HACKRF_EIRP_DBM = {2.44e9: 1.5, 5.8e9: -17.8}
+
+# A resonant gap's shunt resistance (ohm), two estimates: a metal cavity, and a resonator printed on the board with Q
+# of 50 to 200 and sub-picofarad electrodes, R = Q / (w C).
+SHUNT_OHM = {"metal cavity, 0.25-1 Mohm": (0.25e6, 1e6), "board resonator, 10-100 kohm": (10e3, 100e3)}
 
 # A 10 um borosilicate sphere in air (the first run's grain, after Vinitsky et al. 2014).
 GRAIN_MASS, GRAIN_QM, GRAIN_DRAG = 1.17e-12, 0.0176, 1450.0  # kg, C/kg, Stokes rate 1/s
@@ -80,11 +87,23 @@ def scales() -> dict[str, Any]:
             f"100 eV {row['field_for_100eV_kVm']:6.0f}. At {eirp:+.1f} dBm EIRP the field 0.3 m away is {far:.1f} V/m "
             f"({row['depth_at_0.3m_eV']:.1e} eV); 1 eV is {row['volts_across_1mm_for_1eV']:.0f} V across a millimetre"
         )
-    gap = {f"{p * 1e3:g} mW": [math.sqrt(2 * p * r) for r in (0.25e6, 1e6)] for p in (3.2e-3, 1.0)}
-    say(
-        "  a resonant gap of shunt resistance 0.25-1 Mohm (an estimate) makes "
-        + "; ".join(f"{v[0]:.0f}-{v[1]:.0f} V from {k}" for k, v in gap.items())
-    )
+        if f in HACKRF_EIRP_DBM:
+            alone = HACKRF_EIRP_DBM[f]
+            row["hackrf_eirp_dBm"] = alone
+            row["hackrf_radiated_at_0.3m_Vm"] = radiated_field(alone, 0.3)
+            row["hackrf_depth_at_0.3m_eV"] = pt.ponderomotive_ev(row["hackrf_radiated_at_0.3m_Vm"], f)
+            say(
+                f"             through the panel with the HackRF alone, {alone:+.1f} dBm EIRP: "
+                f"{row['hackrf_radiated_at_0.3m_Vm']:.2f} V/m 0.3 m away ({row['hackrf_depth_at_0.3m_eV']:.1e} eV)"
+            )
+    powers = (3.2e-3, 1.0)
+    gap = {
+        name: {f"{p * 1e3:g} mW": [pt.resonator_volts(p, r) for r in ohms] for p in powers}
+        for name, ohms in SHUNT_OHM.items()
+    }
+    say("  a resonant gap makes sqrt(2 P R) volts (RFG-3) from its shunt resistance R, estimated:")
+    for name, volts in gap.items():
+        say(f"     {name}: " + "; ".join(f"{v[0]:.0f}-{v[1]:.0f} V from {k}" for k, v in volts.items()))
     path = {p: pt.KB * 293 / (p * 100 * 1e-19) for p in (1013.0, 1e-3, 1e-5, 1e-7)}  # pressure in mbar
     say(
         "  an electron's mean free path (cross-section 1e-19 m^2, an estimate): "
@@ -484,7 +503,7 @@ def figures(results: dict[str, Any]) -> None:
     import matplotlib.pyplot as plt
 
     if "scales" in results:
-        fig, ax = plt.subplots(figsize=(7.5, 5))
+        fig, ax = plt.subplots(figsize=(10, 5))
         f = np.logspace(math.log10(0.05e9), math.log10(10e9), 200)
         for depth, label in ((0.025, "25 meV (room temperature)"), (1.0, "1 eV"), (100.0, "100 eV"), (1e4, "10 keV")):
             ax.loglog(f / 1e9, [pt.field_for_depth(depth, float(fi)) for fi in f], label=label)
@@ -493,7 +512,10 @@ def figures(results: dict[str, Any]) -> None:
             ax.text(0.052, volts / 1e-3 * 1.12, f"{volts} V across 1 mm", fontsize=7, color="0.35")
         for band, eirp in EIRP_DBM.items():
             ax.plot(band / 1e9, radiated_field(eirp, 0.3), "kv", ms=6)
-        ax.plot([], [], "kv", label="the array's radiated field 0.3 m away")
+        ax.plot([], [], "kv", label="the array's radiated field 0.3 m away, four radios")
+        for band, eirp in HACKRF_EIRP_DBM.items():
+            ax.plot(band / 1e9, radiated_field(eirp, 0.3), "v", color="k", mfc="none", ms=6)
+        ax.plot([], [], "v", color="k", mfc="none", label="the same through the panel, the HackRF alone")
         drive = math.sqrt(2 * 50 * 1e-3 * 10**0.5)  # volts, peak: +5 dBm on 50 ohm
         ax.axhline(
             drive / 1e-3,
@@ -506,7 +528,7 @@ def figures(results: dict[str, Any]) -> None:
         ax.set_xlabel("frequency (GHz); shaded, the array's band")
         ax.set_ylabel("peak field (V/m)")
         ax.set_title("The field a pseudo-potential of a given depth takes, for an electron", fontsize=10)
-        ax.legend(fontsize=7, loc="lower left")
+        ax.legend(fontsize=7, loc="upper left", bbox_to_anchor=(1.01, 1.0), borderaxespad=0.0)
         ax.grid(alpha=0.3, which="both")
         fig.tight_layout()
         fig.savefig(OUT / "scales.png", dpi=130)
