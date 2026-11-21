@@ -2,6 +2,8 @@
 
 Each test mirrors a bench check from the design doc's build order.
 """
+import struct
+
 import numpy as np
 import pytest
 
@@ -78,6 +80,32 @@ def test_status_reports_reference_and_usb_power():
     a._cmd(p.CLOCK_SRC, b"\x01")
     st = a.status()
     assert (st.version, st.running, st.clock_src, st.ref_ok, st.usb_ma) == (p.FW_VERSION, False, 1, False, 1500)
+
+
+class Version1Controller:
+    """A controller still on protocol version 1: PING says 1, and STATUS has 9 bytes, its count u8."""
+
+    kind, fs = "hackrf", 2e6
+
+    def controller(self, frame: bytes) -> bytes:
+        cmd = frame[1]
+        if cmd == p.PING:
+            return p.reply(cmd, p.OK, bytes([1]))
+        if cmd == p.STATUS:
+            return p.reply(cmd, p.OK, struct.pack("<BBBHBBH", 1, 0, 3, 50, 0, 1, 1500))
+        return p.reply(cmd, p.ERR_ARG)
+
+
+def test_host_refuses_a_controller_of_another_protocol_version():
+    assert Array(SimBackend("hackrf")).check_version() == p.FW_VERSION == 2
+    a = Array(Version1Controller())
+    assert a.ping() == 1
+    with pytest.raises(RuntimeError, match="protocol version 1, this host version 2"):
+        a.check_version()
+    with pytest.raises(ValueError, match="9-byte STATUS from protocol version 1: this host reads version 2's 10 bytes"):
+        a.status()
+    with pytest.raises(ValueError, match="0-byte STATUS from a controller"):
+        p.Status.from_payload(b"")
 
 
 # ---- step 2 of the build order: the board with only the HackRF -----------------------

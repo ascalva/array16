@@ -11,12 +11,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define CTRL_FW_VERSION 1
+#define CTRL_FW_VERSION 2 /* 2: LOAD_SEQ and STATUS carry the word count as u16 */
 #define CTRL_WORD_BYTES 7
-#define CTRL_MAX_SEQ 64
-#define CTRL_MAX_PAYLOAD (5 + CTRL_MAX_SEQ * CTRL_WORD_BYTES) /* a full LOAD_SEQ */
+#define CTRL_MAX_SEQ 256  /* words after the marker */
+#define CTRL_SEQ_HEAD 6   /* LOAD_SEQ: slot_us u16, repeat u16, count u16, then the words */
+#define CTRL_MAX_PAYLOAD (CTRL_SEQ_HEAD + CTRL_MAX_SEQ * CTRL_WORD_BYTES) /* a full LOAD_SEQ: 1798 */
 #define CTRL_MAX_FRAME (6 + CTRL_MAX_PAYLOAD)
-#define CTRL_STATUS_BYTES 9
+#define CTRL_STATUS_BYTES 10
 #define CTRL_MAX_REPLY (7 + CTRL_STATUS_BYTES)
 #define CTRL_FRAME_TIMEOUT_MS 50
 #define CTRL_MIN_SLOT_US 10
@@ -40,7 +41,7 @@ typedef struct {
     void (*latch)(void *ctx, const uint8_t *word);
     /* Latch the blank marker word (all zeros) at once, then words[0..n-1] one slot each, and
      * repeat. After `repeat` periods (0 = until stopped) latch `after` and stop. */
-    void (*run)(void *ctx, const uint8_t *words, uint8_t n, uint16_t slot_us, uint16_t repeat,
+    void (*run)(void *ctx, const uint8_t *words, uint16_t n, uint16_t slot_us, uint16_t repeat,
                 const uint8_t *after);
     /* True while the sequence started by run() is still playing. */
     bool (*playing)(void *ctx);
@@ -56,13 +57,13 @@ typedef struct {
     ctrl_hw_t hw;
     uint8_t word[CTRL_WORD_BYTES]; /* static word: latched whenever no sequence plays */
     uint8_t seq[CTRL_MAX_SEQ * CTRL_WORD_BYTES];
-    uint8_t seq_n; /* 0 = nothing loaded */
+    uint16_t seq_n; /* words loaded, 1 to CTRL_MAX_SEQ; 0 = nothing loaded */
     uint16_t slot_us, repeat;
     bool running;
     uint8_t clock_src;
     bool ref_ok;
     uint8_t buf[CTRL_MAX_FRAME]; /* request being assembled from the stream */
-    uint16_t have;
+    uint16_t have;               /* at most CTRL_MAX_FRAME */
     uint32_t last_ms;
 } ctrl_t;
 

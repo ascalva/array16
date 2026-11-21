@@ -17,8 +17,9 @@ an emulator and checks replies, latched words and slot timing against the model 
 rp2040js or the image is missing).
 
 The RP2040 layer compiles cleanly (no warnings with `-Wall -Wextra`; Arm GNU Toolchain 14.3.rel1,
-pico-sdk 2.3.1, 2026-11-15): 34.0 KB of code, 4.8 KB of RAM. It has not run on an RP2040 yet,
-only in rp2040js (`emu/`).
+pico-sdk 2.3.1, 2026-11-21): 34.0 KB of code, 9.0 KB of RAM. A full sequence takes 5.7 KB of
+that: the 256-word store, its copy packed for the DMA and the buffer a 1804-byte LOAD_SEQ frame
+is assembled in. It has not run on an RP2040 yet, only in rp2040js (`emu/`).
 
 ## Build
 
@@ -54,28 +55,36 @@ RPI-RP2 drive.
   0 until CLOCK_SRC selects it again. A count gives up after 2.5 ms: FC0 may wait for ever for the
   first edge of a clock that is not there (FC0_STATUS.WAITING), which `frequency_count_khz()`
   would hang on.
-- **Sequences.** DMA feeds the table (marker word, then the sequence, two FIFO words each)
-  into the shifter's joined 8-word FIFO, four slots of slack. The completion interrupt
-  re-arms it once per period; after the last period of a finite sequence it queues the
-  static word, which latches at the next slot edge.
-- **RUN.** The marker latches 12 us after the command (one shift plus margin), then one word
-  per slot. TRIG (GPIO6) rises at RUN and falls as the marker latches.
-- **SET_WORD, STOP, LOAD_SEQ while running.** Everything stops, the static word is shifted
-  in and latched at once, about 7 us after the command.
+- **Sequences.** DMA feeds the table (marker word, then the sequence, two FIFO words each:
+  at most 514 transfers a period) into the shifter's joined 8-word FIFO, four slots of slack.
+  The completion interrupt re-arms it once per period; after the last period of a finite
+  sequence it queues the static word, which latches at the next slot edge.
+- **RUN.** Whatever plays stops, the marker and the sequence are packed into the table, the DMA
+  starts and TRIG (GPIO6) rises. The marker latches 11-12 us after TRIG rises (one shift plus
+  margin), as TRIG falls, then one word per slot. In the emulator TRIG rises about 73 us after
+  a RUN frame arrives with a few words loaded and 190 us with 256: packing takes 0.46 us a word.
+- **SET_WORD, STOP, LOAD_SEQ while running.** Everything stops, and the static word is shifted
+  in and latched at once, about 7 us after the firmware handles the frame. It handles a frame
+  once it has read it and checked its CRC: in the emulator a STOP latches about 78 us after it
+  arrives, a SET_WORD about 141 us, and a full LOAD_SEQ about 0.93 ms after its last packet,
+  most of that the CRC over its 1802 bytes. Until then the previous sequence plays on.
 - **Boot.** SR_OE_N is held high, zeros are shifted in and latched, then SR_OE_N goes low.
 - **USB-C current.** ADC0/ADC1 read CC1/CC2 across the 5.1 kohm pull-downs. The Type-C sink
   thresholds (0.2, 0.66, 1.23 V) give 0, 500, 1500 or 3000 mA in STATUS.
-- **Serial stream** (`protocol.py`): hunt for 0xA5; a length field above 453 is noise (resume
-  one byte later, no reply); a partial frame is dropped after 50 ms without a byte; a CRC
-  failure is answered with command 0 and ERR_CRC.
+- **Serial stream** (`protocol.py`): hunt for 0xA5; a length field above 1798 (a full LOAD_SEQ,
+  6 + 256 x 7) is noise (resume one byte later, no reply); a partial frame is dropped after
+  50 ms without a byte; a CRC failure is answered with command 0 and ERR_CRC.
 - **USB.** `pico_stdio_usb`, binary safe (no newline translation, replies via `putchar_raw`).
   Opening the port at 1200 baud reboots the RP2040 into BOOTSEL (the SDK's reset hook), so
   the host must use any other rate. The host must also assert DTR (pyserial does): while DTR is
   low stdio_usb neither reads requests nor sends replies. Requests are read a byte at a time,
-  about 9 us a byte in the emulator: a full LOAD_SEQ takes about 4 ms to arrive.
+  about 9 us a byte in the emulator: a full LOAD_SEQ (1804 bytes, 29 USB packets) takes about
+  16 ms to arrive, with at most 0.6 ms between packets, and the stream drops a partial frame
+  only after 50 ms without a byte.
 
-Limits: slots of at least 10 us (the protocol's minimum; a shift takes 7.2 us). Changing
-CLOCK_SRC while a sequence runs can stretch or shorten one slot.
+Limits: 1 to 256 words after the marker (protocol version 2, which PING reports); slots of at
+least 10 us (the protocol's minimum; a shift takes 7.2 us). Changing CLOCK_SRC while a
+sequence runs can stretch or shorten one slot.
 
 ## Bring-up on a bare Pico
 

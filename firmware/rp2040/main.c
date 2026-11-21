@@ -35,13 +35,13 @@
 #define PIN_CC2 27     /* ADC1 */
 
 #define SEQ_PIO pio0
-#define FIRST_TICK_US 12 /* RUN latches the marker this long after the command: more than one shift */
+#define FIRST_TICK_US 12 /* the marker latches this long after TRIG rises in hw_run: more than one shift */
 
 static uint sm_shift, sm_tick, off_shift, off_tick;
 static uint dma_ch;
 
 static uint32_t table[2 * (CTRL_MAX_SEQ + 1)]; /* marker, then the sequence, packed for the shifter */
-static uint32_t table_words;
+static uint32_t table_words;                    /* one period: the DMA transfer count, 2 (n + 1) <= 514 */
 static uint32_t after_packed[2];
 static volatile bool forever, finishing;
 static volatile uint32_t periods_left;
@@ -93,7 +93,7 @@ static void hw_latch(void *ctx, const uint8_t *word) {
     SEQ_PIO->irq_force = 1u << 0; /* latch as soon as it is shifted in */
 }
 
-static void hw_run(void *ctx, const uint8_t *words, uint8_t n, uint16_t slot_us, uint16_t repeat,
+static void hw_run(void *ctx, const uint8_t *words, uint16_t n, uint16_t slot_us, uint16_t repeat,
                    const uint8_t *after) {
     (void)ctx;
     static const uint8_t blank[CTRL_WORD_BYTES];

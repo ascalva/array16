@@ -9,15 +9,17 @@ slot boundaries, counted from the firmware's marker latch.
 
 Known, documented differences, which the checks allow for:
   - RUN: the marker latches 11-12 us after the firmware starts the sequence (12 edges of the 1 MHz
-    slot clock; firmware/README.md), not at once. TRIG rises at RUN and falls within about 1 us of
+    slot clock; firmware/README.md), not at once. TRIG rises as it starts the sequence, once the
+    table is packed (about 0.2 ms after the frame with 256 words), and falls within about 1 us of
     the marker.
   - SET_WORD, STOP and LOAD_SEQ while running latch about 7 us after the frame is handled (one shift).
   - CLOCK_SRC while a sequence runs may move later slot edges by up to one slot-clock period.
   - If the reference timing the slots goes away, no slot edges come until the firmware notices
     (a few ms at most); then the sequence goes on from the crystal where it stopped.
   - The model gets each frame when the device has it; the firmware may handle it up to 1 ms later
-    (stdio_usb puts off USB work while it is busy sending a reply). The checks refuse a script in
-    which that could change an answer, such as a STATUS at the end of a finite sequence.
+    (stdio_usb puts off USB work while it is busy sending a reply, and a full LOAD_SEQ is handled
+    about 0.92 ms after it arrives, most of that its CRC). The checks refuse a script in which that
+    could change an answer, such as a STATUS at the end of a finite sequence.
 
 The emulator's slot clock is exact, so slot edges must land within SLOT_TOL_NS of the model's.
 What the emulator does not show is in firmware/emu/README.md.
@@ -170,12 +172,15 @@ def scripts() -> list[Script]:
     out.append(s)
 
     s = Script("seq_max")
-    static, w64, v64 = words(rng, 1)[0], words(rng, 64), words(rng, 64)
-    s.req(p.SET_WORD, static.to_bytes()).req(p.LOAD_SEQ, seq(w64, 10, 1)).req(p.RUN).wait(1000).req(p.STATUS)
-    s.req(p.LOAD_SEQ, seq(v64, 10, 0)).req(p.RUN)
+    # The whole store, 256 words, in 10 us slots (a period of 2.57 ms): once through, then the static word again;
+    # then another 256 until STOP, over two periods and through USB traffic, a full LOAD_SEQ among it (1804 bytes in
+    # 29 packets while the DMA re-arms every period), and RUN again. Every slot is checked against the model.
+    static, w256, v256 = words(rng, 1)[0], words(rng, 256), words(rng, 256)
+    s.req(p.SET_WORD, static.to_bytes()).req(p.LOAD_SEQ, seq(w256, 10, 1)).req(p.RUN).wait(3000).req(p.STATUS)
+    s.req(p.LOAD_SEQ, seq(v256, 10, 0)).req(p.RUN)
     for _ in range(4):                                                               # USB traffic while 10 us slots play
         s.req(p.STATUS).req(p.PING)
-    s.wait(500).req(p.STOP)
+    s.wait(6000).req(p.LOAD_SEQ, seq(w256, 10, 0)).req(p.RUN).wait(3000).req(p.STOP)
     out.append(s)
 
     s = Script("run_stop_while_running")
@@ -239,15 +244,15 @@ def scripts() -> list[Script]:
     s = Script("oversized_length")
     ping, status = p.request(p.PING), p.request(p.STATUS)
     noise = bytes(x for x in rng.bytes(40) if x != p.SOF_REQ)
-    huge = p.request(p.LOAD_SEQ, bytes([50, 0, 0, 0, 65]) + bytes(7 * 65))          # 460-byte payload
-    over = p.request(p.LOAD_SEQ, bytes([50, 0, 0, 0, 64]) + bytes(7 * 64 + 1))      # one byte over the limit
+    huge = p.request(p.LOAD_SEQ, struct.pack("<HHH", 50, 0, 257) + bytes(7 * 257))      # 257 words: a 1805-byte payload
+    over = p.request(p.LOAD_SEQ, struct.pack("<HHH", 50, 0, 256) + bytes(7 * 256 + 1))  # one byte over the limit
     for f in (huge, over):
         assert len(f) - 6 > p.MAX_PAYLOAD and p.SOF_REQ not in f[1:]                 # its remains are plain noise
     s.send(bytes([p.SOF_REQ, p.SET_WORD, 0xFF, 0xFF]) + ping, frames=[ping])
     s.send(noise + status, frames=[status])
     s.send(huge + ping, frames=[ping])
     s.send(over, frames=[]).wait(2000).req(p.PING)
-    s.req(p.LOAD_SEQ, seq(words(rng, 64), 50, 0))                                    # the longest legal frame
+    s.req(p.LOAD_SEQ, seq(words(rng, 256), 50, 0))                                   # the longest legal frame
     out.append(s)
 
     s = Script("split_frame")
@@ -274,9 +279,10 @@ def scripts() -> list[Script]:
     body = b"".join(x.to_bytes() for x in w2)
     s.req(p.RUN)                                                 # nothing loaded
     s.req(0x55, b"\x00").req(0x00)                               # unknown commands
-    s.req(p.LOAD_SEQ, struct.pack("<HHB", 9, 0, 2) + body)       # slot below 10 us
-    s.req(p.LOAD_SEQ, struct.pack("<HHB", 50, 0, 0))             # no words
-    s.req(p.LOAD_SEQ, struct.pack("<HHB", 50, 0, 3) + body)      # count and length disagree
+    s.req(p.LOAD_SEQ, struct.pack("<HHH", 9, 0, 2) + body)       # slot below 10 us
+    s.req(p.LOAD_SEQ, struct.pack("<HHH", 50, 0, 0))             # no words
+    s.req(p.LOAD_SEQ, struct.pack("<HHH", 50, 0, 3) + body)      # count and length disagree
+    s.req(p.LOAD_SEQ, struct.pack("<HHB", 50, 0, 2) + body)      # a version 1 LOAD_SEQ, one-byte count
     s.req(p.LOAD_SEQ, b"\x32\x00").req(p.STATUS).req(p.STOP)
     out.append(s)
     return out
@@ -504,6 +510,18 @@ def test_firmware_behaves_like_the_model(runs, name):
         for i, (a, b) in enumerate(zip(r.replies + [None] * 9, r.want_replies + [None] * 9)) if a != b)
     if r.slot_errors_ns:
         assert max(abs(e) for e in r.slot_errors_ns) <= SLOT_TOL_NS
+
+
+def test_status_reports_version_2_and_the_whole_store(runs):
+    """STATUS from the firmware decodes as protocol version 2, its u16 count holding all 256 words; PING says 2."""
+    _, tr = runs["seq_max"]
+    replies = [p.parse_reply(bytes.fromhex(e["hex"])) for e in tr.all("reply")]
+    assert all(len(data) == 10 for cmd, _, data in replies if cmd == p.STATUS)
+    status = [p.Status.from_payload(data) for cmd, _, data in replies if cmd == p.STATUS]
+    # once after the finite run has ended, then four times while the second plays
+    want = [(2, 256, 10, False)] + [(2, 256, 10, True)] * 4
+    assert [(st.version, st.count, st.slot_us, st.running) for st in status] == want
+    assert [data for cmd, _, data in replies if cmd == p.PING] == [bytes([2])] * 4
 
 
 def test_frames_are_protocol_frames(runs):

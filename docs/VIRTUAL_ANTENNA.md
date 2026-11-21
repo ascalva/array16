@@ -112,7 +112,7 @@ HackRF's one channel the board plays:
 
 | Board | Per element | Shared | Sequencer |
 | --- | --- | --- | --- |
-| rev A panel | 2-bit delay line, 0/90/180/270° at 5.8 GHz (77.6° steps at 5.0 GHz, 93.1° at 6.0 GHz); LNA enable | | slots ≥ 10 µs on a 1 MHz clock (the 56-bit shift takes 7.2 µs); ≤ 64 words after one blank marker |
+| rev A panel | 2-bit delay line, 0/90/180/270° at 5.8 GHz (77.6° steps at 5.0 GHz, 93.1° at 6.0 GHz); LNA enable | | slots ≥ 10 µs on a 1 MHz clock (the 56-bit shift takes 7.2 µs); ≤ 256 words after one blank marker |
 | rev B tile | 4-bit true-time delay, 38.5/52.5/117.5/139 ps (0 to 347.5 ps); LNA enable | 0/180° polarity per channel of four elements | slots ≥ 15 µs (the shift takes 13.4 µs); a host-defined marker |
 | rev B whips | one port per group of four per slot | polarity per channel; X0 to X3 also transmit | as the tile |
 
@@ -187,7 +187,7 @@ reverberant cavity (Lerosey et al.).
 **Figure 1.** The field compiler of section 3.4. Each box holds its step's formula and, beneath the rule, what stands
 for it on the board: switched-state frames decoded with H16 measure the operator; the price list says beforehand what is
 cheap (for the tile at 5.8 GHz in a ball of radius 52 mm 150 mm out, 0, 4.8, 5.7 and 11.5 dB); rev A's four phases or
-rev B's sixteen delays, played by a sequencer of at most 64 words, carry the drive (rev B's line-1 ceiling 0.980 to
+rev B's sixteen delays, played by a sequencer of at most 256 words, carry the drive (rev B's line-1 ceiling 0.980 to
 0.992); a held-out grid judges it. The loop returns to step 3 while the held-out residual fails its registered
 criterion, and step 9 repeats steps 2 to 6 on a frequency grid. `experiments/virtual_antenna_study.py` draws this figure
 and every other one here from the Hertzian model of `experiments/local_fields.py`, ported typed; its `run.log` and
@@ -661,10 +661,11 @@ With the HackRF alone the drive is one carrier split sixteen ways, each element 
 2. **The time average, line 0.** **Proposition (time-averaged weights).** Dwell fractions give the carrier the
    dwell-weighted mean state; the reachable carrier weights are the product of the per-element hulls (for rev A at
    5.8 GHz the square `|Re z| + |Im z| ≤ 1`, which contains the disc of radius 1/√2), and any needs at most 2N + 1 = 33
-   states, the time-modulated array of Kummer et al. Rev A plays equal slots of at least 10 µs and at most 64 words, so
-   dwell fractions are multiples of 1/64: focus weights come out with −28 to −35 dB of relative error in a 650 µs cycle
-   (sidebands 1.54 kHz apart), the carrier holding 0.37 (optimum weights) or 0.51 (conjugate) of the radiated power and
-   the blank marker scaling it by K/(K + 1). Rev B's hull moves with frequency because its states are delays.
+   states, the time-modulated array of Kummer et al. Rev A plays equal slots of at least 10 µs and at most 256 words,
+   so dwell fractions are multiples of 1/256 at the finest. With 64 words, multiples of 1/64, focus weights come out
+   with −28 to −35 dB of relative error in a 650 µs cycle (sidebands 1.54 kHz apart), the carrier holding 0.37 (optimum
+   weights) or 0.51 (conjugate) of the radiated power and the blank marker scaling it by K/(K + 1). Rev B's hull moves
+   with frequency because its states are delays.
 3. **A comb line, h ≠ 0** (sections 6.2 and 6.3): continuous weights from discrete states.
 4. **On receive, in software:** a signal recorded through N independent states gives h, and any weight applies after
    the capture, `y(w) = wᵀh`, to the floor the state calibration sets (−24 dB at 3° and 0.26 dB, section 4.6) and, for
@@ -816,11 +817,11 @@ decoded by slot means.
 | 16 | 6.25 | 7.8 | 4.2 | 62.5 |
 | 16 + marker | 5.88 | 7.35 | 3.92 | 58.8 |
 
-Today's firmware plays slots of at least 10 µs on rev A and 15 µs on rev B, and at most 64 words after the marker
-(`MAX_SEQ` in `array16/protocol.py`); the 8 µs column takes a firmware change to the slot floor, and the 1 µs column
-direct drive from the RP2040's pins. The budget is L·B ≤ 1/τ: 100 kHz on rev A as it stands, 67 kHz on rev B, 1 MHz
-with direct drive. Sixteen lines 7.8 kHz apart occupy 125 kHz of the HackRF's 20 MHz, and with the slots on the
-HackRF's 10 MHz each line falls on one FFT bin.
+Today's firmware plays slots of at least 10 µs on rev A and 15 µs on rev B, and at most 256 words after the marker
+(`MAX_SEQ` in `array16/protocol.py`, protocol version 2); the 8 µs column takes a firmware change to the slot floor,
+and the 1 µs column direct drive from the RP2040's pins. The budget is L·B ≤ 1/τ: 100 kHz on rev A as it stands,
+67 kHz on rev B, 1 MHz with direct drive. Sixteen lines 7.8 kHz apart occupy 125 kHz of the HackRF's 20 MHz, and
+with the slots on the HackRF's 10 MHz each line falls on one FFT bin.
 
 **Claim (lines against slot means).** Sixteen elements, the Hadamard words and the marker, 8 µs slots (f_p = 7.35 kHz),
 40 dB SNR; error of the recovered array vector, the median of three seeded captures of 1024 periods in the study's run:
@@ -852,8 +853,8 @@ Hadamard words behind a blank marker, 8 µs slots (17 slots, f_p = 7.35 kHz), 40
 
 - **The marker.** **Claim (the marker).** One blank slot in L + 1 puts comb lines 1/((L + 1)τ) from the wanted one at
   about −24 dB (L = 16). With R periods behind one marker they stay near −24 dB and move in to 1/((16R + 1)τ), while the
-  wanted weights' error falls from −43 dB (R = 1) to −54 dB (R = 4, all 64 words). Putting the marker into C removes
-  its effect on the weights.
+  wanted weights' error falls from −43 dB (R = 1) to −54 dB (R = 4, 64 words); the 256-word store holds up to R = 16.
+  Putting the marker into C removes its effect on the weights.
 - **Transitions.** A dropout t_r per slot scales the wanted line by (1 − t_r/τ) and puts lines at multiples of the slot
   rate, which measure t_r.
 - **Timing.** Jitter σ_t is a phase error 2π h f_p σ_t on line h; the time origin is needed to a fraction of a slot
@@ -861,10 +862,10 @@ Hadamard words behind a blank marker, 8 µs slots (17 slots, f_p = 7.35 kHz), 40
 - **State errors.** **Hypothesis (null floor).** Line-1 nulls from 2-bit states deepen with L and with the synthesis:
   in the study's seeded run, medians over 40 beam-and-null pairs, error feedback reaches −39.6 and −53.8 dB for L = 16
   and 64, a search with restarts −47.5 and −58.3 dB (the beam keeps −2.0 dB of 16 ideal elements), where static 2-bit
-  states give −27.8 dB. Those are what today's firmware plays, at most 64 words after the marker; L = 255 or 256 (at
-  L = 256, −65.4 dB by error feedback and −68.3 dB by search) takes a larger word store in the firmware and the
-  protocol. On hardware the floor is of order σ²/N for a state phase error σ (−47 dB at 1°, −38 dB at 3°, −26 dB at
-  11.4°), so with L ≥ 16 the measured state table sets the null, and the 64 words already reach below the 3° floor.
+  states give −27.8 dB. The firmware plays up to 256 words after the marker (protocol version 2), so L = 255 and
+  L = 256 are playable: at L = 256, −65.4 dB by error feedback and −68.3 dB by search. On hardware the floor is of
+  order σ²/N for a state phase error σ (−47 dB at 1°, −38 dB at 3°, −26 dB at 11.4°), so with L ≥ 16 the measured
+  state table sets the null, and L = 64 already reaches below the 3° floor.
 - **Neighbouring signals.** A signal m·f_p away lands on the wanted line through the line −m response: for the 2-bit
   staircase the h = −3 image, 4 f_p away, 9.6 dB below the wanted line; for 4-bit states h = −15, 16 f_p away, 23.5 dB
   below. Clean reception takes a band clear at those offsets, or more phase states.
@@ -1170,7 +1171,7 @@ electrode (resonant near-field microscopes: Anlage et al.). The microscope and t
   give one QPSK point at a chosen place (equal magnitude, phases 90° apart) make a link that is right only there, at up
   to one symbol per slot, 66.7 kBd on rev B; elsewhere each symbol lands where its drawn vector puts it. It is
   directional modulation (Daly and Bernhard) with a focus in place of a direction. A state search on the tile model
-  settles it: the error-vector magnitude at the place and 0.1 m from it, over the vectors the sequencer holds (64 words
+  settles it: the error-vector magnitude at the place and 0.1 m from it, over the vectors the sequencer holds (256 words
   in today's protocol).
 - **Quiet zones, null rings and lines,** knotted null lines from a surround, and painted intensities.
 - **The price of software antennas.** Every weight applied after one capture through N states has 1/N of the static
@@ -1275,11 +1276,11 @@ compile.Problem(elements | operator, region, freqs, target, budget, alphabet, mo
 `line_weights` will be the harmonic weight law with the marker included, the oracle every sequence is checked against;
 `compile_line` will shift per-element staircases to arg wₙ, set |wₙ| by error feedback over the slots, then search on
 the true line weights; `to_protocol` will write rev A control words or rev B's `LOAD_SEQ2` and refuse slots below a
-board's floor or more than 64 words; `fit_gains` will find one complex gain per element between a model and a measured
-G, so the model's R carries into the measured basis as `Dᴴ(R + rI)D`, which leaves the generalised spectrum of section
-4.1 as it was; `detector_solve` will turn a log detector's slot readings under a reference at 0°, at 90° and off into
-complex entries of h; `route` will pick the mode by the table of section 6.1; and `compile` will be steps 1 to 9 of
-section 3.4 as one pure pipeline.
+board's floor or more words than its controller stores (256 on each board); `fit_gains` will find one complex gain per
+element between a model and a measured G, so the model's R carries into the measured basis as `Dᴴ(R + rI)D`, which
+leaves the generalised spectrum of section 4.1 as it was; `detector_solve` will turn a log detector's slot readings
+under a reference at 0°, at 90° and off into complex entries of h; `route` will pick the mode by the table of section
+6.1; and `compile` will be steps 1 to 9 of section 3.4 as one pure pipeline.
 
 ### 9.3 Devices, benches and the harness
 

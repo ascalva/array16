@@ -69,7 +69,9 @@ clock is exact and the PIO reacts in a fixed number of cycles); the register pin
 setup and pulse widths at 125 MHz.
 
 Not shown: real CPU timing (rp2040js counts about one cycle per instruction, no flash or bus
-waits), so latencies such as "frame received to latch" (75-140 us here) are estimates; DMA is
+waits), so latencies such as "frame received to latch" are estimates: here 76-260 us for frames
+of 6 to 26 bytes (the firmware reads about 9 us a byte), 0.2 ms for a RUN that packs 256 words,
+and 0.93 ms for a full LOAD_SEQ while a sequence plays (its CRC over 1802 bytes); DMA is
 instantaneous and paced by a simplified DREQ; no GPIO input synchronisers (real edges are seen
 2-3 cycles later); glitches when GPOUT0 changes source; what FC0 really does with a dead clock;
 erratum RP2040-E13 (rp2040js's DMA abort never raises an interrupt); real USB hosts (packet

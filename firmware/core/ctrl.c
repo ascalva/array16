@@ -2,6 +2,9 @@
 
 #include <string.h>
 
+_Static_assert(CTRL_MAX_FRAME <= UINT16_MAX, "frame lengths and ctrl_t.have are u16");
+_Static_assert(CTRL_MAX_SEQ <= UINT16_MAX, "the word count is u16");
+
 uint16_t ctrl_crc16(const uint8_t *d, size_t n) {
     uint16_t crc = 0xFFFF;
     while (n--) {
@@ -57,17 +60,17 @@ size_t ctrl_handle(ctrl_t *c, const uint8_t *f, size_t len, uint8_t *out) {
         c->hw.latch(c->hw.ctx, c->word);
         return reply(out, cmd, ST_OK, NULL, 0);
     case CMD_LOAD_SEQ: {
-        if (n < 5)
+        if (n < CTRL_SEQ_HEAD)
             break;
-        const uint16_t slot = rd16(p), rep = rd16(p + 2);
-        const uint8_t count = p[4];
-        if (n != 5u + count * CTRL_WORD_BYTES || count < 1 || count > CTRL_MAX_SEQ || slot < CTRL_MIN_SLOT_US)
+        const uint16_t slot = rd16(p), rep = rd16(p + 2), count = rd16(p + 4);
+        if (n != CTRL_SEQ_HEAD + count * CTRL_WORD_BYTES || count < 1 || count > CTRL_MAX_SEQ ||
+            slot < CTRL_MIN_SLOT_US)
             break;
         if (c->running) {
             c->running = false;
             c->hw.latch(c->hw.ctx, c->word);
         }
-        memcpy(c->seq, p + 5, (size_t)count * CTRL_WORD_BYTES);
+        memcpy(c->seq, p + CTRL_SEQ_HEAD, (size_t)count * CTRL_WORD_BYTES);
         c->seq_n = count;
         c->slot_us = slot;
         c->repeat = rep;
@@ -85,9 +88,11 @@ size_t ctrl_handle(ctrl_t *c, const uint8_t *f, size_t len, uint8_t *out) {
         return reply(out, cmd, ST_OK, NULL, 0);
     case CMD_STATUS: {
         const uint16_t ma = c->hw.usb_ma(c->hw.ctx);
-        const uint8_t s[CTRL_STATUS_BYTES] = {CTRL_FW_VERSION, c->running, c->seq_n,
+        const uint8_t s[CTRL_STATUS_BYTES] = {CTRL_FW_VERSION,     c->running,
+                                              (uint8_t)c->seq_n,   (uint8_t)(c->seq_n >> 8),
                                               (uint8_t)c->slot_us, (uint8_t)(c->slot_us >> 8),
-                                              c->clock_src, c->ref_ok, (uint8_t)ma, (uint8_t)(ma >> 8)};
+                                              c->clock_src,        c->ref_ok,
+                                              (uint8_t)ma,         (uint8_t)(ma >> 8)};
         return reply(out, cmd, ST_OK, s, sizeof s);
     }
     case CMD_CLOCK_SRC:

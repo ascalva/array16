@@ -689,7 +689,7 @@ function word(v) {
 function demoScript() {
   const PING = 0x01, SET_WORD = 0x10, LOAD_SEQ = 0x11, RUN = 0x12, STOP = 0x13, STATUS = 0x20;
   const seq = [0x0000000000ffffn, 0x00ffff0000ffffn, 0xff00000000ffffn].map(word);
-  const load = [50, 0, 2, 0, seq.length, ...seq.flat()]; // slot 50 us, repeat 2
+  const load = [50, 0, 2, 0, seq.length & 0xff, seq.length >> 8, ...seq.flat()]; // slot 50 us, repeat 2, count u16
   return {
     scenarios: [
       {

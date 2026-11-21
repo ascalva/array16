@@ -29,7 +29,7 @@ test; ideas may stay theoretical but must be physically and experimentally plaus
 ## 2. What exists
 
 **Repository.** Public at github.com/ascalva/array16, AGPL-3.0, CI on every push (ruff, strict mypy, pytest;
-`formal/check.sh` for the proofs). 207 tests (`uv run pytest -q`, about 16 s). History starts from the tree as it
+`formal/check.sh` for the proofs). 211 tests (`uv run pytest -q`, about 17 s). History starts from the tree as it
 stood on 2026-11-16.
 
 **Radio side** (as imported; see `README.md`, `ARCHITECTURE.md`, `REDESIGN.md`).
@@ -340,6 +340,8 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
   and built once those are understood well enough to finalise the design (`AGENTS.md` rule 12).
 - 2026-11-21: the array may span several boards arranged in three dimensions; one board would hold a guide to a
   planar ring, and a knot takes a path out of the plane (`AGENTS.md` rule 1).
+- 2026-11-21: the controller's sequence store grows from 64 to 256 words (protocol version 2); rev B's draft
+  LOAD_SEQ2 takes 256 words too (`REDESIGN.md` section 8).
 
 Open for the owner at the build stage, from `docs/VIRTUAL_ANTENNA.md`:
 - V1's beacon: a synthesiser module locked to the HackRF's 10 MHz, a second RF source beside the HackRF; or sessions
@@ -347,8 +349,6 @@ Open for the owner at the build stage, from `docs/VIRTUAL_ANTENNA.md`:
   LMX2572.
 - V1's bench (a plate, four whips, an external switch, a 3-D printer) as a calibration rung beside the board, or the
   first experiment on the board itself (rule 1).
-- The word store: the protocol plays at most 64 words after the marker, and L = 64 reaches −54 to −58 dB line nulls in
-  the study's model; L = 255 or 256 (−65 to −68 dB at L = 256) takes a larger store in firmware and protocol.
 - Transmit at 5.8 GHz: the HackRF's −17.8 dBm EIRP (computed for a HackRF One) lies 16.5 dB under the 15.249 level,
   and the board's driver amplifier would close the gap.
 - `REDESIGN.md` section 13's nine decisions, once rev B is revised around one channel.

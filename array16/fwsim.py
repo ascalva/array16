@@ -11,6 +11,11 @@ loaded words one slot each, and repeats. With repeat = 0 that goes on until
 STOP, SET_WORD or LOAD_SEQ. With repeat = n it ends after n periods, and the
 controller then behaves as after STOP: the static word (the last SET_WORD)
 is latched again and STATUS reports that nothing runs.
+
+Frames are protocol version 2 (p.FW_VERSION): LOAD_SEQ is slot_us u16, repeat u16,
+count u16, then count words of 7 bytes, and is refused with ERR_ARG unless the count
+is 1 to p.MAX_SEQ = 256, the slot at least 10 us and the payload exactly 6 + 7 * count
+bytes; STATUS answers with the 10 bytes of p.Status, its count u16.
 """
 from __future__ import annotations
 

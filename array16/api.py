@@ -62,7 +62,20 @@ class Array:
         return data
 
     def ping(self) -> int:
+        """The controller's protocol version."""
         return self._cmd(p.PING)[0]
+
+    def check_version(self) -> int:
+        """The controller's protocol version, if it is this library's (p.FW_VERSION); otherwise RuntimeError.
+
+        Versions 1 and 2 frame LOAD_SEQ and STATUS differently (protocol.py). A session on hardware calls this once
+        the port is open. Not __init__: SimBackend draws a USB latency for every frame, so an extra PING there would
+        move every seeded simulation.
+        """
+        v = self.ping()
+        if v != p.FW_VERSION:
+            raise RuntimeError("the controller speaks protocol version %d, this host version %d" % (v, p.FW_VERSION))
+        return v
 
     def status(self) -> p.Status:
         """Controller state, reference clock and the current the USB-C source offers."""

@@ -1,4 +1,8 @@
-"""What api.Array needs from a backend. sim.SimBackend implements it; the hardware backend will too."""
+"""What api.Array needs from a backend. sim.SimBackend implements it; the hardware backend will too.
+
+On hardware a session will open the port, then call api.Array.check_version: the controller must speak
+protocol.FW_VERSION.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass

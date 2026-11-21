@@ -40,42 +40,54 @@ Quadrants: 0 top-left, 1 top-right, 2 bottom-left, 3 bottom-right.
 ## Controller protocol
 
 USB CDC, little endian, CRC-16/CCITT-FALSE. Request `A5 cmd len16 payload crc16`,
-reply `5A cmd status len16 payload crc16`.
+reply `5A cmd status len16 payload crc16`. Protocol version 2 (`protocol.FW_VERSION`,
+`CTRL_FW_VERSION`), which PING and STATUS report.
 
 | Cmd | Name | Payload |
 | --- | --- | --- |
-| 01 | PING | none; reply carries the firmware version |
+| 01 | PING | none; reply carries the firmware version (u8, 2) |
 | 10 | SET_WORD | 7 bytes; latched at once, stops any sequence |
-| 11 | LOAD_SEQ | slot_us u16, repeat u16 (0 = until STOP), count u8, then count x 7 bytes |
+| 11 | LOAD_SEQ | slot_us u16 (at least 10), repeat u16 (0 = until STOP), count u16 (1 to 256), then count x 7 bytes; a full payload is 1798 bytes |
 | 12 | RUN | start the loaded sequence |
 | 13 | STOP | |
-| 20 | STATUS | reply (9 bytes, `protocol.Status`): version u8, running u8, count u8, slot_us u16, clock_src u8, ref_ok u8, usb_ma u16 |
+| 20 | STATUS | reply (10 bytes, `protocol.Status`): version u8, running u8, count u16, slot_us u16, clock_src u8, ref_ok u8, usb_ma u16 |
 | 30 | CLOCK_SRC | 0 = on-board 40 MHz, 1 = HackRF 10 MHz |
 
 A running sequence plays one blank marker slot (word 0) and then its words, and repeats.
 The marker is a power dip in the samples; the host finds it to learn where the slots are.
 A sequence with `repeat = n` ends after n periods exactly as if STOP had come: the static
-word (the last SET_WORD) is latched again and STATUS reports `running = 0`.
+word (the last SET_WORD) is latched again and STATUS reports `running = 0`. The controller
+stores up to 256 words after the marker (`MAX_SEQ`, `CTRL_MAX_SEQ`).
+
+Version 2 (2026-11-21) carries the word count of LOAD_SEQ and STATUS as u16; in version 1
+it was u8, and STATUS had 9 bytes. PING is the same in both and tells the host which version
+it talks to. A version 2 controller answers any version 1 LOAD_SEQ with ERR_ARG: a payload of
+5 + 7m bytes never has the 6 + 7n bytes its count asks for. A version 1 controller answers a
+version 2 LOAD_SEQ of 1 to 63 words with ERR_ARG the same way, but one of 64 words or more is
+over version 1's 453-byte limit: it drops that as noise, without a reply, and may then take a
+0xA5 among the words for the start of a frame, which ends in a stray ERR_CRC reply or swallows
+the next request. So the host reads PING first (`api.Array.check_version`).
 
 STATUS also says whether the selected reference clock is present (`ref_ok`; if not, slots are
 timed from the controller's own crystal and drift against the radios) and how much current
 the USB-C source offers (`usb_ma`; both radio boards need 1500).
 
-On the serial stream the controller hunts for 0xA5, treats a length above 453 bytes (a full
-LOAD_SEQ) as noise and resumes one byte later without replying, drops a partial frame after
-50 ms of silence, and answers a CRC failure with command 0 and ERR_CRC.
+On the serial stream the controller hunts for 0xA5, treats a length above 1798 bytes (a full
+LOAD_SEQ, 6 + 256 x 7) as noise and resumes one byte later without replying, drops a partial
+frame after 50 ms of silence, and answers a CRC failure with command 0 and ERR_CRC.
 
 ### Firmware (RP2040)
 
-Compiles without warnings and runs in the rp2040js emulator, where 20 scenarios match `fwsim.py` byte for byte and latch for latch (`tests/test_firmware_emulated.py`, harness in `firmware/emu/`); not yet run on a real RP2040. See `firmware/README.md`.
+Compiles without warnings and runs in the rp2040js emulator, where 16 scenarios match `fwsim.py` byte for byte and latch for latch (`tests/test_firmware_emulated.py`, harness in `firmware/emu/`); not yet run on a real RP2040. See `firmware/README.md`.
 
 - `firmware/core/ctrl.c` holds everything `fwsim.py` specifies and is tested against it.
 - PIO state machine `shifter` shifts 56 bits into the registers (7.2 us) and pulses the latch
   when the `ticker` state machine signals a slot edge.
 - The ticker counts a 1 MHz slot clock made by dividing the 40 MHz reference on GPIO20 (or the
   HackRF's 10 MHz on GPIO22) onto GPOUT0, GPIO21, and reading it back. GPIO21 must stay unconnected.
-- GPIO6 pulses the HackRF trigger at the start of a sequence, 11-12 us before the marker slot; the marker latches that long after
-  RUN (the model latches it at once).
+- GPIO6 pulses the HackRF trigger at the start of a sequence: it rises once the firmware has packed the sequence for the DMA
+  and falls as the marker latches, 11-12 us later. The model latches the marker at once on RUN; in the emulator the firmware
+  latches it about 85 us after the RUN frame arrives, and 0.2 ms after it with 256 words to pack (`firmware/README.md`).
 - The selected reference is measured continuously with FC0 (2.5 ms deadline, so a missing clock cannot hang the firmware). If it
   disappears, the slot clock falls back to the 12 MHz crystal within a few milliseconds and STATUS reports ref_ok = 0; sequences keep
   playing. It does not re-lock by itself: the host sends CLOCK_SRC again.

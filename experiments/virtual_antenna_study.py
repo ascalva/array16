@@ -2076,7 +2076,7 @@ def figure_compiler(results: dict[str, Any], out: Path) -> None:
         (
             "6  map to the board",
             "nearest static state;\ndwell fractions (line 0);\nstaircase on line h",
-            f"rev A 4 phases, rev B 16 delays,\nline-1 ceiling {line1};\nsequencer ≤ 64 words",
+            f"rev A 4 phases, rev B 16 delays,\nline-1 ceiling {line1};\nsequencer ≤ 256 words",
         ),
         (
             "7  verify",
@@ -2787,8 +2787,8 @@ def figure_nulls(res: dict[str, Any], out: Path) -> None:
     for key, value in res["floors"].items():
         left.axhspan(value - 0.7, value + 0.7, color=GRID, lw=0)
         left.text(lengths[-1], value + 1.0, f"σ²/N at {key}", fontsize=7.6, color=INK2, ha="right")
-    left.axvline(64, color=INK, lw=1.0)
-    left.text(70, -82, "64 words:\nwhat plays today", fontsize=7.6)
+    left.axvline(256, color=INK, lw=1.0)
+    left.text(256 / 1.06, -85, "256 words: what plays today", fontsize=7.6, ha="right", va="bottom")
     left.set_xscale("log", base=2)
     _log_ticks(left.xaxis, [float(v) for v in lengths], [str(int(v)) for v in lengths])
     left.set_xlabel("slots per period L")
