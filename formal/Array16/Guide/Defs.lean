@@ -6,7 +6,8 @@ public import Mathlib.Analysis.Complex.Basic
 # The lap map of a guide field: GDE-1 to GDE-7, the definitions
 
 The definitions the laws of `Array16/Guide.lean` are stated over. They mirror `GuideOptics` in
-`array16/particles.py`, and a reader checks them against that class and against `docs/LAWS.md`.
+`array16/particles/optics.py`, and a reader checks them against that class and against
+`docs/LAWS.md`.
 
 A magnetic guide field follows a closed curve. To first order in gyroradius over bend radius, a
 guiding centre's offset from the curve is a complex number `z` on axes carried along the curve

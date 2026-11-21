@@ -10,16 +10,17 @@ public import Mathlib.Tactic.Ring
 /-!
 # The lap map of a guide field: GDE-1 to GDE-7
 
-`GuideOptics` in `array16/particles.py` predicts where an electron goes in a magnetic guide field
-that follows a closed curve, a ring or a knot, from three numbers per curve: the turn `α` of the
-transverse plane per lap, the drift `G` per unit gyroradius and the wander `H` of the field line.
+`GuideOptics` in `array16/particles/optics.py` predicts where an electron goes in a magnetic guide
+field that follows a closed curve, a ring or a knot, from three numbers per curve: the turn `α` of
+the transverse plane per lap, the drift `G` per unit gyroradius and the wander `H` of the field
+line.
 One lap is `z ↦ exp (i α) * (z + ρ G + H)`.
 
 With a turn (`r ≠ 1`, `‖r‖ = 1`) there is exactly one closed orbit, the offsets at the start of
 each lap lie on a circle about it, and the orbit is bounded for every number of laps. Without a
 turn (`r = 1`, a planar ring) every lap adds the same step and the orbit leaves every bounded
 region. The reach is convex in `ρ`, so the values of `ρ` that stay inside a wall form one unbroken
-range, which `particles.window` reports by its two ends.
+range, which `optics.window` reports by its two ends.
 
 The proofs are algebra. The map is conjugate to a turn about its fixed point, the offset at the
 start of each lap is affine in `ρ`, and the length of an affine function is convex.
@@ -208,7 +209,7 @@ theorem matchedReach_convexOn {ι : Type*} (s : Finset ι) (hs : s.Nonempty) (r 
   exact convexOn_sup'_norm_affine _ _ _ _
 
 /-- **GDE-7** Hence the values of `ρ` whose reach stays inside a wall form one unbroken range: what
-`particles.window` reports by its two ends. -/
+`optics.window` reports by its two ends. -/
 theorem reach_lt_ordConnected {ι : Type*} (s : Finset ι) (hs : s.Nonempty) (laps : ℕ)
     (r G H z : ℂ) (g h : ι → ℂ) (wall : ℝ) :
     Set.OrdConnected {ρ : ℝ | reach s hs laps r G H z g h ρ < wall} := by
