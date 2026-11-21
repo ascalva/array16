@@ -19,10 +19,12 @@ stay theoretical.
 
 These were given as corrections, so they bind.
 
-1. **Radio-frequency fields first, and everything on the board.** The plan is the array's own fields. Coils and
-   electrodes are welcome only where they are part of the PCB design, integrated into the array itself: traces,
-   planar windings, electrode patterns on the board. No external or additional hardware that has to be set up
-   beside the array. An external coil or magnet needs it first fully shown that RF fields alone do not suffice
+1. **Radio-frequency fields first, and everything on the array's boards.** The plan is the array's own fields. Coils
+   and electrodes are welcome only where they are part of the PCB design, integrated into the array itself: traces,
+   planar windings, electrode patterns on its boards. No external or additional hardware that has to be set up
+   beside the array. The array may span several boards arranged in three dimensions (stacked, tiled, at angles,
+   flexible): one board would hold a guide to a planar ring, and a knot takes a path out of the plane (owner,
+   2026-11-21). An external coil or magnet needs it first fully shown that RF fields alone do not suffice
    at any energy, and then counts only as a budget-friendly option. Experiment 1 (a magnetic guide wound on a
    former) was a detour from this and is finished; do not extend it unasked.
 2. **Never dismiss the question.** Write what a thing takes and how to get there ("1 eV takes 12 kV/m at
@@ -48,6 +50,9 @@ These were given as corrections, so they bind.
 9. **Show it.** Graphs, diagrams and 3-D figures that carry the experiments, the theory and the intuition.
 10. **Spend tokens on purpose.** Few sub-agents; no speculative fan-out.
 11. **No absolute local paths** in any tracked file.
+12. **Simulate first, build last.** The work is theory, designs and simulation experiments. Custom boards are
+    designed for fabrication and built once those are understood well enough to finalise the design (owner,
+    2026-11-21). Until then experiments run on simulated benches, and hardware choices wait for that stage.
 
 ## How work lands
 

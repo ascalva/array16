@@ -297,25 +297,25 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
 2. **V1, the first registered virtual-antenna experiment** (section 10.1). A virtual monopole made from four switched
    quarter-wave monopoles at 2.44 GHz on a λ/4 square, fitted on 210 positions and checked against a real monopole on
    120 others, with criteria V1-0 to V1-10 committed with the predictions before the run and a case that must fail
-   (a target a wavelength across, predicted −2.4 dB). It will run on `benches/v1_sim.toml`, whose simulated array will
-   carry departures the prediction does not. Its hardware run waits on the owner's answers in section 6: on
-   `benches/v1_rung1.toml`, the cheapest hardware round the HackRF Pro (the controller's 74HC595 lane driving one
-   absorptive switch, brass rods on a plate, a 3-D printer as positioner, a synthesiser beacon), if the owner takes
-   that calibration rung and its beacon, or on the board itself. Its sessions T repeat it with the HackRF transmitting
-   as the only source and a log detector on the probe, which measures the transmit operator (V1-9) and the Pro's own
-   transmit power. Then V2 (comb lines through 2-bit elements
-   on a Wilkinson tree), V3 (the rev B tile and whips) and V4 (the ring guide as an antenna).
-3. **The closed RF guide, as one case of synthesis** (experiment 2). Theory first: the travelling-wave ring (section
-   4, N3), its pickups (N4), the flat ring against the knot (N6) and the bend rule (item 6), each on the ledger and
-   proved in Lean where it is mathematics. Then the ring's modes, Q and R/Q from an eigenmode run; electrodes on two
-   facing boards (ELE-2) driven from one channel through a 90° hybrid, on an ISM band (915, 2450 or 5800 MHz,
-   `docs/VIRTUAL_ANTENNA.md` section 7.3); particles tracked in the computed field on the core; a protocol with
-   predictions and criteria committed before any tracking, on `array16.lab`; and a report carrying 3-D views of the
-   electrodes, fields and orbits. V4 measures the same ring as an antenna.
-4. **The radio side.** Rev B revised around one coherent channel (`REDESIGN.md`, the decision at its head), then its
-   section 13 decisions; the Vivaldi findings folded in; the datasheet corrections applied to the schematic; the
-   HackRF Pro (through open-source libhackrf bindings) and the controller as devices of a bench, as the theory's
-   section 9.3 lays out.
+   (a target a wavelength across, predicted −2.4 dB). It runs on `benches/v1_sim.toml`, whose simulated array will
+   carry departures the prediction does not: the coupling, gains and phases of real whips, measurement noise, gantry
+   error and a moving lead. Its hardware rungs (`benches/v1_rung1.toml` and sessions T, `docs/VIRTUAL_ANTENNA.md`
+   section 10.1) come at the build stage of rule 12. Then V2 (comb lines through 2-bit elements on a Wilkinson
+   tree), V3 (the rev B tile and whips) and V4 (the ring guide as an antenna), each first on a simulated bench.
+3. **The closed RF guide, as one case of synthesis** (experiment 2), in simulation. Theory first: the travelling-wave
+   ring (section 4, N3), its pickups (N4), the flat ring against the knot (N6) and the bend rule (item 6), each on
+   the ledger and proved in Lean where it is mathematics. The guide's electrodes may span several boards in three
+   dimensions (owner, 2026-11-21), so its path is free to leave the plane: rings, racetracks and torus knots, built
+   from facing-board segments, stacks or flexible boards, with the joints between boards in the model. Then the
+   guide's modes, Q and R/Q from an eigenmode run; electrodes on facing boards (ELE-2) driven from one channel
+   through a 90° hybrid, on an ISM band (915, 2450 or 5800 MHz, `docs/VIRTUAL_ANTENNA.md` section 7.3); particles
+   tracked in the computed field on the core; a protocol with predictions and criteria committed before any
+   tracking, on `array16.lab`; and a report carrying 3-D views of the electrodes, fields and orbits. V4 measures
+   the same ring as an antenna.
+4. **The radio side, as design.** Rev B revised on paper around one coherent channel (`REDESIGN.md`, the decision at
+   its head), then its section 13 decisions; the Vivaldi findings folded in; the datasheet corrections applied to the
+   schematic. The HackRF Pro (through open-source libhackrf bindings) and the controller become devices of a bench,
+   as the theory's section 9.3 lays out, at the build stage.
 
 ## 6. Decisions and corrections from the owner
 
@@ -336,8 +336,12 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
   its direct consequences head `REDESIGN.md`.
 - 2026-11-20: the owner is not sure a microparticle ring driven at kHz counts as RF first ("I'm not sure it does"); it
   stays a check on the theory and not the next build until the owner decides.
+- 2026-11-21: theory, designs and simulation experiments come first; custom boards are designed for fabrication
+  and built once those are understood well enough to finalise the design (`AGENTS.md` rule 12).
+- 2026-11-21: the array may span several boards arranged in three dimensions; one board would hold a guide to a
+  planar ring, and a knot takes a path out of the plane (`AGENTS.md` rule 1).
 
-Open for the owner, from `docs/VIRTUAL_ANTENNA.md`:
+Open for the owner at the build stage, from `docs/VIRTUAL_ANTENNA.md`:
 - V1's beacon: a synthesiser module locked to the HackRF's 10 MHz, a second RF source beside the HackRF; or sessions
   T first, where the HackRF is the only source and a log detector reads the field, with receive left to rev B's own
   LMX2572.
