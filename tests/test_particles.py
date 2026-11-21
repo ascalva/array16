@@ -1,10 +1,14 @@
 """Calibration of the particle kernel against results known in closed form, and attacks on the laws of the guide
-optics. Each test named test_gde_N attacks the float implementation of the law proved as GDE-N in formal/."""
+optics. Each test named test_<law>_N is a falsifier of law <LAW>-N in docs/LAWS.md; a test named test_gde_N attacks
+the float implementation of the law proved as GDE-N in formal/."""
 
 from __future__ import annotations
 
 import cmath
+import heapq
+import itertools
 import math
+from collections.abc import Callable
 
 import numpy as np
 import pytest
@@ -675,3 +679,504 @@ def test_tracked_electron_in_a_ring_coil_drifts_as_the_theory_says() -> None:
     assert len(run.section[0]) == 2
     assert abs(run.section[0][0] - step[0]) < 0.03 * abs(step[0])
     assert abs(run.section[0][1] - 2 * step[0]) < 0.03 * abs(2 * step[0])
+
+
+# ---- the depth a watt buys (rf.py) ----------------------------------------------------------------------------
+masses = st.sampled_from([1.0, 1836.15, 1e9])  # in electron masses: an electron, a proton, a charged grain
+frequencies = st.floats(1e7, 1e11)  # Hz
+# (depth_share, gradient_share): four rods, two facing boards, one board at its best, a rail pair off it
+shares = st.sampled_from([(1.0, 1.0), (0.25, math.pi / 4), (0.009136, 0.3093), (0.0031, 0.2104)])
+
+
+def test_rfg_2_the_ceiling_is_78_micro_ev_per_watt_for_an_electron() -> None:
+    assert pt.free_space_depth_ceiling_ev(1.0) == pytest.approx(78.2e-6, rel=1e-3)
+    assert 1.0 / pt.free_space_depth_ceiling_ev(1.0) == pytest.approx(12.78e3, rel=1e-3)  # watts for 1 eV
+    assert pt.free_space_depth_ceiling_ev(1.0, pt.QM_E / 1836.15) == pytest.approx(78.2e-6 / 1836.15, rel=1e-3)
+    assert pt.dipole_wave_peak_field(1.0, 1e9) == pytest.approx(265.0, rel=1e-3)  # V/m, a watt at 1 GHz
+
+
+@settings(max_examples=200, deadline=None)
+@given(st.floats(1e-6, 1e6), st.floats(1e6, 1e12), masses)
+def test_rfg_2_the_dipole_waves_depth_is_the_ceiling_at_every_frequency(power: float, f: float, mass: float) -> None:
+    qm = pt.QM_E / mass
+    field = pt.dipole_wave_peak_field(power, f)
+    assert pt.ponderomotive_ev(field, f, qm) == pytest.approx(pt.free_space_depth_ceiling_ev(power, qm), rel=1e-12)
+
+
+def _dipole_shapes(p: pt.CArr, x: pt.Arr) -> tuple[pt.Arr, pt.Arr, pt.CArr, pt.CArr, pt.CArr]:
+    """At points x (N, 3) round a dipole p (C m) at the origin: the distance r, the direction n, and the shapes
+    of the dipole's fields, (n x p) x n = p - n (n . p), 3 n (n . p) - p, and n x p."""
+    r = np.linalg.norm(x, axis=1)
+    n = x / r[:, None]
+    along = (n @ p)[:, None]
+    return r, n, p[None, :] - n * along, 3 * n * along - p[None, :], np.cross(n, p)
+
+
+def _outgoing_power(p: pt.CArr, k: float, radius: float) -> float:
+    """The power (W, time-averaged) the outgoing wave of a dipole p (C m) carries through a sphere of the given
+    radius: (1/2) Re(E x H*) . n over the sphere, with the dipole's whole fields, near ones included (Jackson
+    9.18-9.19). Gauss-Legendre in cos(theta) and the trapezoid rule in phi are exact for their angular terms."""
+    cos_t, weights = np.polynomial.legendre.leggauss(12)
+    phi = 2 * np.pi * np.arange(24) / 24
+    c, ph = np.meshgrid(cos_t, phi, indexing="ij")
+    s = np.sqrt(1 - c**2)
+    unit = np.stack([s * np.cos(ph), s * np.sin(ph), c], -1).reshape(-1, 3)
+    area = np.repeat(weights * 2 * np.pi / len(phi), len(phi)) * radius**2
+    r, n, radiation, near, turning = _dipole_shapes(p, radius * unit)
+    wave = (np.exp(1j * k * r) / r)[:, None]
+    e = (k**2 * radiation + near * (1 / r**2 - 1j * k / r)[:, None]) * wave / (4 * math.pi * pt.EPS0)
+    h = pt.C0 * k**2 / (4 * math.pi) * turning * wave * (1 - 1 / (1j * k * r))[:, None]
+    flux = 0.5 * np.real(np.sum(np.cross(e, np.conj(h)) * n, axis=1))
+    return float(np.sum(area * flux))
+
+
+def test_rfg_2_the_dipole_wave_built_from_the_dipoles_own_fields_agrees() -> None:
+    # Independently of the code's formula. The standing wave regular at the centre is the dipole's field with
+    # exp(ikr) replaced by exp(ikr) - exp(-ikr): its converging half carries in what the outgoing half carries out.
+    f = 1e9
+    k = 2 * math.pi * f / pt.C0
+    rng = np.random.default_rng(11)
+    dipoles: list[pt.CArr] = [  # C m: along z, turning in the x-y plane, and elliptical in no particular plane
+        np.array([0, 0, 1e-12], dtype=np.complex128),
+        np.array([1e-12, 1e-12j, 0], dtype=np.complex128),
+        np.array([0.3e-12 + 0.1e-12j, -0.2e-12j, 1e-12], dtype=np.complex128),
+    ]
+    for p in dipoles:
+        # near the centre, at kr = 1e-3 in eight directions: i k^3 p / (3 pi eps0)
+        n = rng.normal(size=(8, 3))
+        r, _, radiation, near, _ = _dipole_shapes(p, 1e-3 / k * n / np.linalg.norm(n, axis=1)[:, None])
+        kr = k * r
+        e = (
+            k**2 * radiation * (2j * np.sin(kr) / r)[:, None]
+            + near * (2j * (np.sin(kr) / r**3 - k * np.cos(kr) / r**2))[:, None]
+        ) / (4 * math.pi * pt.EPS0)
+        centre = 1j * k**3 * p / (3 * math.pi * pt.EPS0)
+        assert float(np.abs(e - centre).max()) < 1e-6 * float(np.linalg.norm(centre))
+        # the power the outgoing half carries, the same through every sphere: w^4 |p|^2 / (12 pi eps0 c^3)
+        power = (2 * math.pi * f) ** 4 * float(np.vdot(p, p).real) / (12 * math.pi * pt.EPS0 * pt.C0**3)
+        for kr_sphere in (0.5, 3.0, 300.0):
+            assert _outgoing_power(p, k, kr_sphere / k) == pytest.approx(power, rel=1e-12)
+        # their ratio is 4 Z0 k^2 / (3 pi), and the code's field for that power is the field at the centre
+        squared = np.sum(np.abs(e) ** 2, axis=1) / _outgoing_power(p, k, 3.0 / k)
+        assert squared == pytest.approx(np.full(8, 4 * pt.Z0 * k**2 / (3 * math.pi)), rel=1e-6)
+        assert pt.dipole_wave_peak_field(power, f) == pytest.approx(float(np.linalg.norm(centre)), rel=1e-6)
+
+
+def test_rfg_2_control_a_half_wave_spot_falls_short_by_two_pi_over_three() -> None:
+    # The estimate that spreads the power over a spot (lambda / 2)^2, E^2 = 2 Z0 P / area, is not the ceiling: the
+    # dipole wave's field squared is 2 pi / 3 times it, at every frequency.
+    for f in (0.4e9, 2.45e9, 5.8e9):
+        spot = 2 * pt.Z0 * 1.0 / (pt.C0 / f / 2) ** 2
+        assert pt.dipole_wave_peak_field(1.0, f) ** 2 / spot == pytest.approx(2 * math.pi / 3, rel=1e-12)
+
+
+@settings(max_examples=200, deadline=None)
+@given(st.floats(1.0, 1e7), st.floats(1e-5, 1e-1), st.floats(1e6, 1e10), st.floats(1e-3, 1.0), masses)
+def test_rfg_3_electrodes_through_a_resonator_gain_over_the_ceiling(
+    resistance: float, distance: float, f: float, share: float, mass: float
+) -> None:
+    qm = pt.QM_E / mass
+    per_watt = pt.electrode_depth_per_watt_ev(resistance, distance, f, share, qm)
+    gain = pt.electrode_gain(resistance, distance, f, share)
+    assert per_watt / pt.free_space_depth_ceiling_ev(1.0, qm) == pytest.approx(gain, rel=1e-12)
+    # the resonator's volts, as RFG-1's drive of four rods at r0 = distance: share of that well, per watt
+    power = 0.37
+    volts = pt.resonator_volts(power, resistance)
+    assert volts**2 / (2 * resistance) == pytest.approx(power, rel=1e-12)
+    four_rods = pt.quadrupole_depth_ev(pt.mathieu_q(volts / distance**2, f, qm), f, distance, qm)
+    assert per_watt * power == pytest.approx(share * four_rods, rel=1e-12)
+
+
+def test_rfg_3_numbers_at_1_ghz_half_a_millimetre_and_10_kilohm() -> None:
+    f, h, r = 1e9, 0.5e-3, 1e4
+    assert pt.electrode_gain(r, h, f) == pytest.approx(1.139e6, rel=1e-3)
+    assert pt.electrode_gain(r, h, f, 0.25) == pytest.approx(2.848e5, rel=1e-3)
+    assert pt.electrode_depth_per_watt_ev(r, h, f) == pytest.approx(89.10, rel=1e-3)  # eV per watt
+    assert pt.electrode_depth_per_watt_ev(r, h, f, 0.25) == pytest.approx(22.28, rel=1e-3)
+    assert pt.resonator_volts(3.2e-3, 0.25e6) == pytest.approx(40.0)
+    assert pt.resonator_volts(1.0, 1e6) == pytest.approx(1414.2, rel=1e-4)
+
+
+@settings(max_examples=200, deadline=None)
+@given(st.sampled_from(["four rods", "facing", "rails"]), st.floats(1e-4, 1e-2), st.floats(0.1, 20.0), frequencies)
+def test_rfg_3_the_depth_at_volts_v_is_share_v_q_over_8_gamma(kind: str, gap: float, ratio: float, f: float) -> None:
+    # At volts V a geometry's well is share V q / (8 gamma), q the Mathieu q of its null's own gradient and gamma
+    # that gradient over V / h^2; for four rods (share and gamma 1) RFG-1's V0 = 8 D / q.
+    volts = 37.0
+    if kind == "four rods":
+        h, share, gradient = gap, 1.0, volts / gap**2
+    else:
+        board = pt.FacingBoards(gap) if kind == "facing" else pt.RailPair(gap, ratio * gap)
+        h, share, gradient = board.distance, board.depth_share, board.gradient(volts)
+    gamma = gradient * h**2 / volts
+    q = pt.mathieu_q(gradient, f)
+    depth = share * pt.ponderomotive_ev(volts / h, f)
+    assert depth == pytest.approx(share * volts * q / (8 * gamma), rel=1e-12)
+    if kind == "four rods":
+        assert pt.volts_for_depth(depth, q) == pytest.approx(volts, rel=1e-12)
+
+
+@settings(max_examples=200, deadline=None)
+@given(st.floats(1e-3, 1e3), st.floats(0.05, 0.9), st.floats(1e2, 1e7), st.floats(1e-5, 1e-2), shares, masses)
+def test_rfg_3_a_depth_at_a_q_takes_volts_power_and_a_frequency(
+    depth: float, q: float, resistance: float, distance: float, share_gamma: tuple[float, float], mass: float
+) -> None:
+    # What a depth takes at a q, and what it takes at the frequency that gives: the same operating point. For four
+    # rods it is RFG-1's drive and frequency times distance.
+    share, gamma = share_gamma
+    qm = pt.QM_E / mass
+    at_q = pt.electrode_drive_at_q(depth, q, resistance, distance, share, gamma, qm)
+    at_f = pt.electrode_drive(depth, resistance, distance, at_q.f, share, gamma, qm)
+    assert at_f == pytest.approx(at_q, rel=1e-9)
+    assert pt.resonator_volts(at_q.power, resistance) == pytest.approx(at_q.volts, rel=1e-12)
+    per_watt = pt.electrode_depth_per_watt_ev(resistance, distance, at_q.f, share, qm)
+    assert per_watt * at_q.power == pytest.approx(depth, rel=1e-9)
+    assert pt.mathieu_q(gamma * at_q.volts / distance**2, at_q.f, qm) == pytest.approx(q, rel=1e-12)
+    if (share, gamma) == (1.0, 1.0):
+        assert at_q.volts == pytest.approx(pt.volts_for_depth(depth, q), rel=1e-12)
+        assert at_q.f * distance == pytest.approx(pt.frequency_times_distance(at_q.volts, q, qm), rel=1e-12)
+
+
+def test_rfg_3_what_1_ev_takes_and_where_the_slope_stops() -> None:
+    # 0.5 mm from the null through 10 kOhm. At 1 GHz 1 eV puts four rods at q = 0.53 and two facing boards at
+    # 0.84, under Mathieu's 0.908, and one board at its best at 1.73, past it: there it takes a higher frequency.
+    # At q = 0.5, where the pseudo-potential holds, 1 eV takes 16 V and 13 mW on four rods at 1.07 GHz, 50 V and
+    # 126 mW on facing boards at 1.68 GHz, 542 V and 14.7 W on one board at 3.46 GHz. The depth per watt holds up
+    # to q = 0.908: 2.9 eV at 32 mW on four rods, 1.2 eV at 53 mW on facing boards, 0.28 eV at 0.34 W on one board.
+    h, r, f = 0.5e-3, 1e4, 1e9
+    boards = pt.FacingBoards(2 * h)
+    s = (1 + math.sqrt(5) + math.sqrt((1 + math.sqrt(5)) ** 2 - 4)) / 2  # sqrt(1 + 2 rail / gap) at the best
+    rails = pt.RailPair(2 * h / s, (s**2 - 1) / s * h)
+    assert rails.null_height == pytest.approx(h, rel=1e-12)
+    assert rails.gradient_share == pytest.approx(0.3093, abs=1e-4)
+    assert boards.gradient_share == pytest.approx(math.pi / 4, rel=1e-15)
+    geometries = {"four rods": (1.0, 1.0), "facing": (boards.depth_share, boards.gradient_share)}
+    geometries["rails"] = (rails.depth_share, rails.gradient_share)
+    at_1ghz = {name: pt.electrode_drive(1.0, r, h, f, *sg) for name, sg in geometries.items()}
+    assert [at_1ghz[n].q for n in geometries] == pytest.approx([0.534, 0.839, 1.728], abs=1e-3)
+    assert [at_1ghz[n].volts for n in geometries] == pytest.approx([14.98, 29.96, 156.7], rel=1e-3)
+    assert at_1ghz["four rods"].power == pytest.approx(11.22e-3, rel=1e-3)
+    assert at_1ghz["four rods"].q < 0.908
+    assert at_1ghz["facing"].q < 0.908 < at_1ghz["rails"].q
+    at_half = {name: pt.electrode_drive_at_q(1.0, 0.5, r, h, *sg) for name, sg in geometries.items()}
+    assert [at_half[n].volts for n in geometries] == pytest.approx([16.0, 50.27, 541.7], rel=1e-3)
+    assert [at_half[n].power for n in geometries] == pytest.approx([12.8e-3, 126.3e-3, 14.67], rel=1e-3)
+    assert [at_half[n].f for n in geometries] == pytest.approx([1.068e9, 1.678e9, 3.456e9], rel=1e-3)
+    tops = {"four rods": (2.892, 32.45e-3), "facing": (1.172, 52.61e-3), "rails": (0.2761, 0.3392)}  # eV, W
+    for name, (share, gamma) in geometries.items():
+        edge = 0.908 / at_1ghz[name].q * at_1ghz[name].volts  # at one frequency q grows as the volts
+        assert pt.mathieu_q(gamma * edge / h**2, f) == pytest.approx(0.908, rel=1e-12)
+        power = edge**2 / (2 * r)
+        assert (pt.electrode_depth_per_watt_ev(r, h, f, share) * power, power) == pytest.approx(tops[name], rel=1e-3)
+
+
+@pytest.mark.parametrize("ratio", [0.5, 3.68, 8.0, None], ids=["rails 0.5", "rails 3.68", "rails 8", "facing"])
+def test_rfg_3_a_boards_share_turns_its_resonators_power_into_its_depth(ratio: float | None) -> None:
+    # The depth of a board's well, read from a flood over its field rather than from its own barrier, is the share
+    # it states of RFG-3's four-rod well at the resonator's volts, at the frequency that puts its null's Mathieu q
+    # at 0.5, where the pseudo-potential holds.
+    board: pt.RailPair | pt.FacingBoards
+    if ratio is None:
+        board = pt.FacingBoards(1e-3)
+        h = board.distance
+        xs, ys = np.linspace(-6, 6, 241) * h, np.linspace(-1, 1, 81)[1:-1] * h
+        start = (120, 39)
+    else:
+        board = pt.RailPair(1e-3, ratio * 1e-3)
+        h = board.distance
+        xs, ys = np.linspace(-12, 12, 481) * h, np.linspace(1e-3, 12.0, 240) * h
+        start = (240, int(np.argmin(np.abs(ys - h))))
+    barrier = _lowest_way_out(np.linalg.norm(board.field(xs[:, None], ys[None, :], 1.0), axis=-1), start)
+    for power, resistance in ((1e-3, 1e4), (0.37, 2e3), (2.0, 1e5)):
+        volts = pt.resonator_volts(power, resistance)
+        f = math.sqrt(2 * abs(pt.QM_E) * board.gradient(volts) / 0.5) / (2 * math.pi)
+        assert pt.mathieu_q(board.gradient(volts), f) == pytest.approx(0.5, rel=1e-12)
+        per_watt = pt.electrode_depth_per_watt_ev(resistance, h, f, board.depth_share)
+        assert pt.ponderomotive_ev(barrier * volts, f) == pytest.approx(per_watt * power, rel=0.02)
+        drive = pt.electrode_drive(per_watt * power, resistance, h, f, board.depth_share, board.gradient_share)
+        assert (drive.power, drive.volts, drive.q) == pytest.approx((power, volts, 0.5), rel=1e-9)
+
+
+@settings(max_examples=200, deadline=None)
+@given(st.floats(0.01, 0.9), st.floats(1e3, 1e11), masses)
+def test_rfg_4_at_the_space_charge_limit_the_plasma_frequency_is_root_two_secular(
+    q: float, f: float, mass: float
+) -> None:
+    qm = pt.QM_E / mass
+    plasma = pt.plasma_frequency(pt.space_charge_limit(q, f, qm), qm)
+    assert plasma == pytest.approx(math.sqrt(2) * pt.secular_frequency(q, f), rel=1e-12)
+    assert plasma == pytest.approx(q * f / 2, rel=1e-12)
+
+
+def test_rfg_4_numbers_for_an_electron() -> None:
+    # the first run's guide: q = 0.6 at 1 GHz holds 1.12e15 electrons per cubic metre, at a plasma frequency of
+    # 300 MHz; and 8.98 sqrt(n) Hz in general
+    assert pt.plasma_frequency(pt.space_charge_limit(0.6, 1e9)) == pytest.approx(300e6, rel=1e-12)
+    assert pt.plasma_frequency(1e15) == pytest.approx(8.98 * math.sqrt(1e15), rel=1e-3)
+
+
+# ---- board electrodes (electrodes.py) -------------------------------------------------------------------------
+gaps = st.floats(1e-5, 1e-2)  # m
+rail_ratios = st.floats(0.1, 20.0)  # rail / gap
+drives = st.floats(0.1, 1e3)  # V
+
+
+def _complex_field(board: pt.RailPair | pt.FacingBoards, z: complex, volts: float) -> complex:
+    """E_x - i E_y at z = x + iy: the analytic function a field across long electrodes is."""
+    ex, ey = board.field(z.real, z.imag, volts)
+    return complex(ex, -ey)
+
+
+def _circle_mean(potential: Callable[[pt.Arr, pt.Arr], pt.Arr], x0: float, y0: float, radius: float) -> float:
+    """A potential's mean over a circle, by the trapezoid rule on 64 points. For a harmonic function it is the value
+    at the centre, and the rule converges geometrically when the circle stays clear of the boundary."""
+    t = 2 * np.pi * np.arange(64) / 64
+    return float(np.mean(potential(x0 + radius * np.cos(t), y0 + radius * np.sin(t))))
+
+
+def _lowest_way_out(magnitude: pt.Arr, start: tuple[int, int]) -> float:
+    """Over the paths on a grid from `start` to the grid's edge, the least of the largest value along a path: the
+    barrier a particle starting there crosses to leave. A flood in order of value (a minimax Dijkstra)."""
+    best = np.full(magnitude.shape, np.inf)
+    best[start] = magnitude[start]
+    queue = [(float(magnitude[start]), start)]
+    last = (magnitude.shape[0] - 1, magnitude.shape[1] - 1)
+    while queue:
+        level, (i, j) = heapq.heappop(queue)
+        if level > best[i, j]:
+            continue
+        if i in (0, last[0]) or j in (0, last[1]):
+            return level
+        for k, m in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+            higher = max(level, float(magnitude[k, m]))
+            if higher < best[k, m]:
+                best[k, m] = higher
+                heapq.heappush(queue, (higher, (k, m)))
+    raise AssertionError("the flood did not reach the edge")
+
+
+def _golden_max(fn: Callable[[float], float], lo: float, hi: float) -> tuple[float, float]:
+    """Where a function with one maximum in [lo, hi] is largest, and its value there, by golden-section search
+    run until the bracket stops narrowing."""
+    g = (math.sqrt(5) - 1) / 2
+    a, b = lo, hi
+    c, d = b - g * (b - a), a + g * (b - a)
+    fc, fd = fn(c), fn(d)
+    for _ in range(200):
+        if fc > fd:
+            b, d, fd = d, c, fc
+            c = b - g * (b - a)
+            fc = fn(c)
+        else:
+            a, c, fc = c, d, fd
+            d = a + g * (b - a)
+            fd = fn(d)
+    middle = (a + b) / 2
+    return middle, fn(middle)
+
+
+@settings(max_examples=200, deadline=None)
+@given(gaps, rail_ratios, drives)
+def test_ele_1_the_rails_null_stands_at_the_geometric_mean_of_their_edges(
+    gap: float, ratio: float, volts: float
+) -> None:
+    rails = pt.RailPair(gap, ratio * gap)
+    h, (c1, c2) = rails.null_height, rails.edges
+    assert h == pytest.approx(math.sqrt(c1 * c2), rel=1e-12)
+    assert float(np.hypot(*rails.field(0.0, h, volts))) < 1e-9 * volts / h
+    # the gradient there is the derivative of the complex field, the same whichever way it is taken
+    d, null = 1e-4 * h, 1j * h
+    along_x = (_complex_field(rails, null + d, volts) - _complex_field(rails, null - d, volts)) / (2 * d)
+    along_y = (_complex_field(rails, null + 1j * d, volts) - _complex_field(rails, null - 1j * d, volts)) / (2j * d)
+    assert abs(along_x) == pytest.approx(rails.gradient(volts), rel=1e-6)
+    assert abs(along_y - along_x) < 1e-6 * abs(along_x)
+    # as a share of four rods' V / h^2: 4 b h / (pi (a + b)^2)
+    assert rails.gradient_share == pytest.approx(4 * rails.rail * h / (math.pi * (gap + rails.rail) ** 2), rel=1e-12)
+
+
+@settings(max_examples=200, deadline=None)
+@given(gaps, rail_ratios, drives)
+def test_ele_1_control_a_tenth_off_the_null_the_field_is_not_null(gap: float, ratio: float, volts: float) -> None:
+    # The test above would catch a misplaced null: a tenth of its height above or below it the field is over a
+    # thousandth of V / h, a million times the bound at the null.
+    rails = pt.RailPair(gap, ratio * gap)
+    h = rails.null_height
+    for off in (0.9, 1.1):
+        assert float(np.hypot(*rails.field(0.0, off * h, volts))) > 1e-3 * volts / h
+
+
+@settings(max_examples=200, deadline=None)
+@given(rail_ratios, st.floats(-4.0, 4.0), st.floats(0.05, 3.0), drives)
+def test_ele_1_the_rails_potential_is_harmonic_holds_their_volts_and_gives_the_field(
+    ratio: float, x: float, y: float, volts: float
+) -> None:
+    rails = pt.RailPair(1e-3, ratio * 1e-3)
+    h, (c1, c2) = rails.null_height, rails.edges
+    x0, y0 = x * h, y * h
+
+    def phi(xs: pt.Arr | float, ys: pt.Arr | float) -> pt.Arr:
+        return rails.potential(xs, ys, volts)
+
+    assert abs(_circle_mean(phi, x0, y0, y0 / 2) - float(phi(x0, y0))) < 1e-12 * volts
+    # on the board: the rails' volts on the rails, and ground on the centre strip and beyond the rails
+    for at, held in ((0.0, 0.0), ((c1 + c2) / 2, volts), (-(c1 + c2) / 2, volts), (c2 + h, 0.0), (-c2 - h, 0.0)):
+        assert float(phi(at, 1e-9 * h)) == pytest.approx(held, abs=1e-6 * volts)
+    # the field is minus the potential's gradient, by central differences
+    d = 1e-6 * h
+    ex, ey = rails.field(x0, y0, volts)
+    assert abs(ex + (float(phi(x0 + d, y0)) - float(phi(x0 - d, y0))) / (2 * d)) < 1e-6 * volts / h
+    assert abs(ey + (float(phi(x0, y0 + d)) - float(phi(x0, y0 - d))) / (2 * d)) < 1e-6 * volts / h
+
+
+@settings(max_examples=200, deadline=None)
+@given(gaps, st.floats(-3.0, 3.0), st.floats(-0.9, 0.9), st.floats(0.1, 1.0), drives)
+def test_ele_2_the_facing_boards_potential_is_harmonic(
+    gap: float, x: float, y: float, size: float, volts: float
+) -> None:
+    boards = pt.FacingBoards(gap)
+    h = boards.distance
+
+    def phi(xs: pt.Arr | float, ys: pt.Arr | float) -> pt.Arr:
+        return boards.potential(xs, ys, volts)
+
+    # circles reaching at most half way to the nearer board
+    x0, y0, radius = x * h, y * h, size * (1 - abs(y)) * h / 2
+    assert abs(_circle_mean(phi, x0, y0, radius) - float(phi(x0, y0))) < 1e-12 * volts
+
+
+@settings(max_examples=200, deadline=None)
+@given(st.floats(0.2, 2.0), st.floats(0.2, 0.6))
+def test_ele_2_control_a_nearby_potential_is_not_harmonic(x: float, y: float) -> None:
+    # Without the tangent, -(V / pi) atan((pi y / 2h) tanh(pi x / 2h)) has the same null and nearly the same values
+    # near the centre, and its circle means miss its centre values by more than 1e-6 of V (4e-3 at least here).
+    h, volts = 1e-3, 1.0
+    k = math.pi / (2 * h)
+
+    def nearby(xs: pt.Arr | float, ys: pt.Arr | float) -> pt.Arr:
+        out: pt.Arr = -volts / math.pi * np.arctan(k * np.asarray(ys) * np.tanh(k * np.asarray(xs)))
+        return out
+
+    x0, y0, radius = x * h, y * h, (1 - y) * h / 2
+    assert abs(_circle_mean(nearby, x0, y0, radius) - float(nearby(x0, y0))) > 1e-6 * volts
+
+
+@settings(max_examples=200, deadline=None)
+@given(st.floats(1e-4, 1e-1), st.floats(0.05, 20.0), drives)
+def test_ele_2_the_boards_hold_their_volts(gap: float, x: float, volts: float) -> None:
+    boards = pt.FacingBoards(gap)
+    h = boards.distance
+    near = (1 - 1e-9) * h  # a billionth of h from the boards
+    for side in (1.0, -1.0):
+        assert float(boards.potential(side * x * h, near, volts)) == pytest.approx(-side * volts / 2, abs=1e-6 * volts)
+        assert float(boards.potential(side * x * h, -near, volts)) == pytest.approx(side * volts / 2, abs=1e-6 * volts)
+
+
+def _fourier_midplane(x: float, h: float) -> float:
+    """(1 / pi) times the integral over k from 0 to infinity of sin(k x) / sinh(k h): the facing boards' midplane
+    field per volt, from the Fourier integral of the boards' volts. Composite Gauss-Legendre in k h from 0 to 40,
+    past which the integrand is below 1e-17 of its start."""
+    nodes, weights = np.polynomial.legendre.leggauss(20)
+    u = (np.arange(40.0)[:, None] + (nodes[None, :] + 1) / 2).ravel()
+    return float(np.sum(np.tile(weights / 2, 40) * np.sin(u * x / h) / np.sinh(u))) / (math.pi * h)
+
+
+@settings(max_examples=100, deadline=None)
+@given(st.floats(1e-4, 1e-1), st.floats(-4.0, 4.0), drives)
+def test_ele_2_the_midplane_field_is_v_over_2h_tanh_and_the_fourier_integral(
+    gap: float, x: float, volts: float
+) -> None:
+    boards = pt.FacingBoards(gap)
+    h = boards.distance
+    ex, ey = boards.field(x * h, 0.0, volts)
+    assert abs(ex) < 1e-15 * volts / h  # straight across the gap
+    assert ey == pytest.approx(volts / (2 * h) * math.tanh(math.pi * x / 2), rel=1e-12, abs=1e-15 * volts / h)
+    assert ey == pytest.approx(volts * _fourier_midplane(x * h, h), rel=1e-8, abs=1e-8 * volts / h)
+
+
+@settings(max_examples=200, deadline=None)
+@given(st.floats(1e-4, 1e-1), st.floats(-3.0, 3.0), st.floats(-0.8, 0.8), drives)
+def test_ele_2_the_field_is_minus_the_gradient_of_the_potential(gap: float, x: float, y: float, volts: float) -> None:
+    boards = pt.FacingBoards(gap)
+    h = boards.distance
+    x0, y0, d = x * h, y * h, 1e-6 * h
+    ex, ey = boards.field(x0, y0, volts)
+    gx = (float(boards.potential(x0 + d, y0, volts)) - float(boards.potential(x0 - d, y0, volts))) / (2 * d)
+    gy = (float(boards.potential(x0, y0 + d, volts)) - float(boards.potential(x0, y0 - d, volts))) / (2 * d)
+    assert abs(ex + gx) < 1e-7 * volts / h
+    assert abs(ey + gy) < 1e-7 * volts / h
+
+
+def test_ele_2_a_null_of_gradient_pi_v_over_4h2_and_a_quarter_of_four_rods() -> None:
+    boards, volts = pt.FacingBoards(2e-3), 10.0
+    h = boards.distance
+    assert boards.gradient(volts) == pytest.approx(math.pi * volts / (4 * h**2), rel=1e-15)
+    assert boards.gradient_share == pytest.approx(math.pi / 4, rel=1e-15)
+    d = 1e-5 * h  # near the centre |E| is the gradient times the distance, in every direction
+    for angle in np.linspace(0, 2 * np.pi, 9):
+        e = boards.field(d * math.cos(angle), d * math.sin(angle), volts)
+        assert float(np.hypot(*e)) == pytest.approx(boards.gradient(volts) * d, rel=1e-9)
+    # on the midplane the field rises toward V / 2h and stays below it; off the midplane it is stronger, and next to
+    # the boards stronger than V / 2h
+    barrier = boards.barrier_field(volts)
+    assert barrier == pytest.approx(volts / (2 * h), rel=1e-15)
+    xs = np.linspace(-5 * h, 5 * h, 2001)
+    across = [np.linalg.norm(boards.field(xs, y * h, volts), axis=-1) for y in (0.0, 0.3, 0.6, 0.9, 1 - 1e-9)]
+    assert float(across[0].max()) < barrier
+    assert float(across[0].max()) == pytest.approx(barrier, rel=1e-6)
+    for lower, higher in itertools.pairwise(across):
+        assert bool(np.all(higher > lower))
+    assert float(across[-1].min()) > barrier
+    # the lowest way out, by a flood over the slab from the centre: V / 2h, approached far along the midplane
+    grid = np.linalg.norm(
+        boards.field(np.linspace(-6, 6, 241)[:, None] * h, np.linspace(-1, 1, 81)[None, 1:-1] * h, volts), axis=-1
+    )
+    assert _lowest_way_out(grid, (120, 39)) == pytest.approx(barrier, rel=1e-6)
+    assert boards.depth_share == pytest.approx(0.25, rel=1e-15)
+
+
+@settings(max_examples=100, deadline=None)
+@given(gaps, rail_ratios, drives)
+def test_ele_3_the_escape_is_the_saddle_above_the_null(gap: float, ratio: float, volts: float) -> None:
+    rails = pt.RailPair(gap, ratio * gap)
+    h, saddle = rails.null_height, rails.escape(volts)
+
+    def on_axis(y: float) -> float:
+        return float(np.hypot(*rails.field(0.0, y, volts)))
+
+    # an independent search for the strongest field on the axis above the null
+    height, field = _golden_max(on_axis, h, 20 * h)
+    assert height == pytest.approx(saddle.height, rel=1e-6)
+    assert field == pytest.approx(saddle.field, rel=1e-12)
+    # across the axis the field grows: a saddle of |E|, not a peak
+    for side in (-0.05 * h, 0.05 * h):
+        assert float(np.hypot(*rails.field(side, saddle.height, volts))) > saddle.field * (1 + 1e-5)
+    w = (rails.gap + rails.rail) / h
+    assert rails.depth_share == pytest.approx(4 / math.pi**2 * (w - 2) / ((w + 2) * w**2), rel=1e-12)
+    assert rails.depth_share == pytest.approx((saddle.field * h / volts) ** 2, rel=1e-12)
+
+
+@pytest.mark.parametrize("ratio", [0.25, 1.0, 3.68, 8.0])
+def test_ele_3_the_saddle_is_the_lowest_way_out(ratio: float) -> None:
+    # A flood from the null over a grid 12 null heights to either side and up, down to a thousandth of h above the
+    # board: no path to the board or to the grid's edge crosses a weaker field than the saddle.
+    rails = pt.RailPair(1e-3, ratio * 1e-3)
+    h = rails.null_height
+    ys = np.linspace(1e-3, 12.0, 240) * h
+    grid = np.linalg.norm(rails.field(np.linspace(-12, 12, 481)[:, None] * h, ys[None, :], 1.0), axis=-1)
+    start = (240, int(np.argmin(np.abs(ys - h))))
+    assert _lowest_way_out(grid, start) == pytest.approx(rails.escape(1.0).field, rel=0.01)
+
+
+def test_ele_3_one_board_holds_at_most_a_hundredth_of_four_rods() -> None:
+    ratios = np.linspace(0.25, 8.0, 3101)  # rail / gap
+    boards = [pt.RailPair(1e-3, r * 1e-3) for r in ratios]
+    shares = np.array([rails.depth_share for rails in boards])
+    best = float(shares.max())
+    assert best <= 0.0092
+    assert best == pytest.approx((5 * math.sqrt(5) - 11) / (2 * math.pi**2), rel=1e-6)
+    assert float(ratios[shares.argmax()]) == pytest.approx(3.68, abs=0.01)  # near rail / gap = 4
+    assert pt.RailPair(1e-3, 4e-3).depth_share == pytest.approx(0.0091, abs=5e-5)
+    heights = np.array([rails.escape(1.0).height / rails.null_height for rails in boards])
+    assert bool(np.all(np.diff(heights) > 0))  # the saddle rises with rail / gap, from 1.74 to 2.32 null heights
+    assert (float(heights[0]), float(heights[-1])) == pytest.approx((1.744, 2.316), abs=1e-3)
+    assert pt.FacingBoards(2e-3).depth_share >= 27 * best
