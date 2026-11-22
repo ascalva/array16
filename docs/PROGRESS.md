@@ -436,6 +436,27 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    schematic. The HackRF Pro (through open-source libhackrf bindings) and the controller become devices of a bench,
    as the theory's section 9.3 lays out, at the build stage.
 
+### Backlog
+
+Ideas worth investigating later, kept with what is known of them; none is scheduled.
+
+- **The slice stack** (owner, 2026-11-22): a stack of many boards, each a slice of the three-dimensional guide,
+  carrying the guide's cross-section where the path crosses it. Two forms. Stacked rings, each board a plate with a
+  hole and neighbours at opposite RF phase, as in stacked-ring ion guides and ion funnels (built on PCBs for ions):
+  a flat-bottomed well with steep walls and no null line, its ripple along the axis about 1/I₀(πr₀/d)², 20 % of the
+  wall for 1 mm holes on 1.6 mm boards, 0.9 % at 2 mm and 0.03 % at 3 mm. Or a quadrupole in every slice: four plated
+  holes per board round the path, aligned through the stack, make four rods of board copper. That brings the first
+  run's geometry under rule 1: thin rods kept 0.67 of an ideal four-rod well where facing boards keep 0.25, so a
+  well takes about 2.7 times fewer volts. The price is geometry. A closed path turns round in height at least 2b
+  times, four for the trefoil, the same count as the ramps of section 3 of the knotted guide and the folds of a
+  cavity's knotted null. Sliced along the best of 4,000 directions, T915-S's trefoil crosses the boards at 45° or
+  more for 43 % of its length and runs within 30° of them for 44 %, through 36 boards of 1.6 mm (57 mm), so the
+  stack is a hybrid: holes where the path is steep, a facing pair in the gap between two boards where it is
+  shallow, and compiled ramps between them. To weigh: every board interface is a joint of a periodic structure
+  (stopbands at the energies its harmonics meet), each rod's continuity across about 36 interfaces (or each slice
+  fed on its own, which makes the stack a phased array along the path for the compiler), alignment through the
+  stack, and the laminate's outgassing.
+
 ## 6. Decisions and corrections from the owner
 
 - 2026-11-17: code is linted, typed (`mypy --strict`), tested, run through `uv`; object-oriented and functional
