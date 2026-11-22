@@ -29,8 +29,8 @@ test; ideas may stay theoretical but must be physically and experimentally plaus
 ## 2. What exists
 
 **Repository.** Public at github.com/ascalva/array16, AGPL-3.0, CI on every push (ruff, strict mypy, pytest;
-`formal/check.sh` for the proofs). 256 tests (`uv run pytest -q`, about a minute). History starts from the tree as it
-stood on 2026-11-16.
+`formal/check.sh` for the proofs). 404 tests (`uv run pytest -q`, about two minutes). History starts from the tree as
+it stood on 2026-11-16.
 
 **Radio side** (as imported; see `README.md`, `ARCHITECTURE.md`, `REDESIGN.md`).
 - Host library and simulator for the 4×4 array at 5.8 GHz; RP2040 firmware matching its model in an emulator;
@@ -62,6 +62,7 @@ stood on 2026-11-16.
 | `rods` | `QuadRods`: four thin rods along a curve, as line charges |
 | `rf` | the pseudo-potential; a quadrupole guide's Mathieu q, secular frequency, depth, drive (`volts_for_depth`, `frequency_times_distance`), bend limit and space-charge limit; the depth a watt buys, radiated freely (`dipole_wave_peak_field`, `free_space_depth_ceiling_ev`) or through a resonator on electrodes (`resonator_volts`, `electrode_depth_per_watt_ev`, `electrode_gain`), and the volts, power and Mathieu q a depth takes there (`electrode_drive`, `electrode_drive_at_q`, `ElectrodeDrive`); `plasma_frequency` |
 | `electrodes` | electrodes printed on boards, without gaps: `RailPair` (one board, two rails: the null, its gradient, potential, field, the escape saddle `Saddle`, `depth_share`, `gradient_share`) and `FacingBoards` (two boards split into halves at ±V/2: potential, field, gradient, barrier, `depth_share`, `gradient_share`) |
+| `sections` | a solved cross-section swept along a path: `SectionGrid` (the potential per volt on a tensor grid, its null and the cells a particle cannot enter) and `SectionField` (that grid swept along a `ClosedCurve`, or a straight line standing for a lap, in a frame, driven by `TravellingWave`, `StandingWave` or `InPhase`, with B = T × E/v for a travelling wave), a `Fields` for `integrate` |
 | `coils` | `Coil`: filament windings, the fast Biot-Savart sum (`field`) and its reference (`field_plain`) |
 | `optics` | `GuideOptics`: lap map, closed orbit, reach, either direction of travel; `orbit_circle`; `window` |
 | `tracking` | `integrate`: one loop for any fields, with observers; `GuideWatch`, `PathRecorder`; `track_guide` |
@@ -73,8 +74,26 @@ bench and versions. `report` judges and states the record's integrity. A bench (
 and devices by role; a device's driver is any callable `module:attribute`. `benches/simulated.toml` offers the
 simulated board as the `array`.
 
-**Laws and proofs** (`docs/LAWS.md`, `formal/`). Twenty-seven rows, checked against code, tests and Lean by
-`tests/test_laws.py`: 12 Propositions, 13 Claims, 2 Hypotheses.
+**The guide's instruments and the twin bench** (`array16/guide/`, `array16/twin/`, `designs/`, `benches/twin_r1.toml`;
+stage 0 of experiment 2, 2026-11-22, commit 60e6235 with its CI fixed in 3b878fa; `docs/KNOTTED_GUIDE.md` sections 8.1
+to 8.3). The knotted study's tools, made modules: each has tests that would catch it wrong and is held to the study's
+numbers, and DR-0 runs on them (`tests/test_twin_dr0.py`).
+
+| Module | Holds |
+| --- | --- |
+| `guide/sections` | cross-sections of boards solved by finite volumes (`FacingStrips`, `SlotGuide`, `Rails`): C′ with and without the laminate, n_eff, Z₀, the laminate's share of the field energy, Q by Wheeler's rule on the real copper and its treated faces' roughness, the null, its gradient and escape saddle, the Mathieu q and depth at given volts, and the potential per volt for a swept field |
+| `guide/ring` | the ring resonator in two forms of one line model (nodal admittance; chain matrices with joints and feeds): the ±m pair and its splitting, the backward wave, the depth per watt under a fixed hybrid or re-solved feeds, K feeds compiled for a travelling wave, seeded tolerance draws |
+| `guide/multipactor` | two-surface multipactor: impact energies, the level-1 chart, copper's secondary yield, the statistical threshold calibrated on ECSS, a tracker of the electron population |
+| `twin` | the bench's devices: `Design` (a design file: band and order, section, path and frame, drive, tolerances); `TwinGuide`, one realisation of a design (0 as drawn; k > 0 drawing the laminate, spacers, joints, etch and Earth's field from the design's seed) with `tune`, `drive` and `field()`, its solved sections cached under `.twin_cache/`; `TwinDetector` (the particles held, lost and stopped, their laps, the pickups' currents, the dump's charge); `TwinVacuum` (the gas's mean free path, and an observer that stops the electrons it scatters) |
+
+The design files are `designs/r1_rail_ring.toml`, `t915s.toml`, `flat_ring_318.toml` and `helix_13.toml`, and
+`benches/twin_r1.toml` puts R1 at realisation 1 beside the simulated HackRF Pro. `experiments/twin_openems_line.py` runs
+R1's line and ring in openEMS against their 2-D sections, DR-0's full-wave check, into `experiments/twin_openems_line/`.
+The tests: `tests/test_guide_sections.py`, `test_guide_ring.py`, `test_guide_multipactor.py`,
+`test_particle_sections.py`, `test_twin.py`, `test_twin_dr0.py` and `test_twin_openems_line.py`.
+
+**Laws and proofs** (`docs/LAWS.md`, `formal/`). Thirty-eight rows, checked against code, tests and Lean by
+`tests/test_laws.py`: 17 Propositions, 18 Claims, 3 Hypotheses.
 - GDE-1 to GDE-7 (Propositions, `formal/Array16/Guide.lean`): the lap map `z ↦ exp(iα)(z + ρG + H)` has one
   closed orbit when the plane turns, orbits stay on circles about it, a flat curve drifts without bound, and
   reach is convex in ρ.
@@ -83,14 +102,24 @@ simulated board as the `array`.
   away, electrodes fed through a resonator and the null's Mathieu q, the plasma frequency at the space-charge limit
   (section 3).
 - ELE-1 (Proposition, `formal/Array16/Electrode.lean`): the null of two rails on a board, and its gradient.
+- RNG-1 to RNG-4 (Propositions, `formal/Array16/Ring.lean`; ledger section IX): two waves running opposite ways round a
+  ring have a size between ||a| − |b|| and |a| + |b|, so the ripple is |b/a|; a travelling wave's shunt resistance is
+  Z₀Q/(2πm); K equal feeds launch the backward wave only when K divides 2m; a wave keeps e^(−2πm/Q) of its size squared
+  a lap.
+- LIN-1 (Proposition, `formal/Array16/Line.lean`; ledger section X): the laminate's share of a solved section's field
+  energy is d ln C′/d ln ε_r, the solve's energy being stationary in the potential.
 - Claims: CUR-1 and CUR-3 (holonomy is writhe mod 1; Fenchel and Fáry-Milnor on the test curves), INT-1 to INT-3
   (the integrator's calibrations), COI-1 to COI-3 (the windings' net turns, residual dipole and fast sum), ROD-1 and
   ROD-2 (four thin rods: the quadrupole's gradient, and a bend that moves the null r₀²/4R inward), RFG-1 (volts set
-  the depth, and frequency times distance follows), ELE-2 and ELE-3 (two facing boards; one board's escape saddle).
-- GDE-H1, GDE-H2 (Hypotheses): an electron obeys the lap map; the turn's second-order term.
-- `./formal/check.sh` builds with every warning an error, lints, and audits 147 declarations, all on the standard
-  three axioms. Lean runs on toolchain v4.36.0-rc2 with Mathlib at the same tag. Locally `formal/.lake/packages` is
-  a copy-on-write clone of the mind-palace's packages; elsewhere `lake exe cache get` fetches them.
+  the depth, and frequency times distance follows), ELE-2 and ELE-3 (two facing boards; one board's escape saddle),
+  MPC-1 to MPC-3 (an electron's impact bound, facing boards' point on the chart, a gap's level-1 margin against
+  copper's chart), RNG-5 (the ring model's splitting 2|c₂ₘ| and backward wave |S|Q/(πm)) and LIN-2 (Wheeler's rule
+  within 1 % of stripline's closed form).
+- GDE-H1, GDE-H2 (Hypotheses): an electron obeys the lap map; the turn's second-order term. RNG-H5 (Hypothesis): a
+  built ring's N spacers of rms gap error σ split its ±m pair by |c₂ₘ| ≈ S·σ/√N, as the ring model's draws do.
+- `./formal/check.sh` builds with every warning an error, lints, and audits 233 declarations, all on the standard three
+  axioms. Lean runs on toolchain v4.36.0-rc2 with Mathlib at the same tag. Locally `formal/.lake/packages` is a
+  copy-on-write clone of the mind-palace's packages; elsewhere `lake exe cache get` fetches them.
 
 **The virtual antenna** (`docs/VIRTUAL_ANTENNA.md`, 2026-11-20). The theory of the owner's question, from five theory
 memos (the mathematics of synthesis, equivalence, one radio, near fields and charges, prior art) and their adversarial
@@ -116,7 +145,20 @@ about 5 min, and `tests/test_knotted_guide_study.py` holds its numbers to the do
 sections of the study (`line`, `ring`, `beam`, `numbers`). Computing them there moved every conductor Q onto Wheeler's
 incremental-inductance rule on the real copper (18 µm on flex, 35 µm on rigid boards), which converges and matches
 stripline's closed form to 1 %, where the charge rule on zero-thickness copper drifts with the grid: the flex strips'
-Q is 214, not 381, and a 1 eV well on T915-S takes 0.89 W, not 0.50 W.
+Q is 214, not 381, and a 1 eV well on T915-S takes 0.89 W, not 0.50 W. Brought up to experiment 2's stages 0 and 1 on
+2026-11-22: R1's numbers and the slot guide's index come from their solved sections, R1's ring in full wave is in its
+section 3.6, and stage 1's registered bands and verdicts are in its section 10.
+
+**Experiment 2, stage 1: the calibration rung** (`experiments/twin_rung1.py`, `experiments/twin_rung1/`, 2026-11-22).
+Registered at 3e2149f (`PROTOCOL.md`, `predictions.json`, `predictions.md`, `slot_straight.toml` and the script with the
+constants its criteria read), run once from that commit on `benches/twin_r1.toml`, 14 shots and 6172 electrons in
+2 h 5 min, and recorded at f17352b (`runs.jsonl`, `results.json`, `results.md`), every record clean and made at the
+registered commit. `REPORT.md` reports it: the verdicts, what the misses mean, and in its section 6 what was read from
+the results afterwards, as Hypotheses, each with the stage-2 shot that tests it. Its six figures (`holds`, `wells`,
+`fractions`, `must_fail`, `paths`, `along`) are drawn from the committed records alone by
+`experiments/twin_rung1_figures.py` in a few seconds; `tests/test_twin_rung1.py` holds the experiment's theory and
+gates, and `tests/test_twin_rung1_figures.py` the figures' numbers and the report's links to them. What it found is in
+section 3.
 
 **Cavity knots and the beam's lifecycle** (`docs/CAVITY_KNOTS.md`, `docs/BEAM_LIFECYCLE.md`, 2026-11-21). The owner's
 questions of that day, from two theory memos, their adversarial verification, the two documents with their figures,
@@ -273,12 +315,97 @@ magnetic guide wound on five closed curves, 142 shots, ten criteria fixed before
   3f_rev and an in-plane one at f_rev and 2f_rev, where on a ring it is an in-plane dipole at f_rev alone: the beam's
   harmonics carry the knot's symmetry.
 - **Building.** The twist that closes the strips makes them non-developable, and their two plates differ by 23 mm;
-  the stacked boards' slot guide holds 85 % of its field in the laminate (Q 43 on FR-4, 117 on RO4003C, on 35 µm
-  copper); copper multipacts above wells of 2 to 3 eV
-  (Hypothesis). The flat facing-board ring of the same length holds 2.7 to 3.3 times T915-S: the price of the knot.
+  the stacked boards' slot guide holds four-fifths of its field in the laminate (0.83 on FR-4, 0.79 on RO4003C; Q 44
+  and 118, on 35 µm copper); copper multipacts above wells of 2 to 3 eV (Hypothesis). The flat facing-board ring of the
+  same length holds 2.786 times T915-S by the static balance on the solved section, and held 3.23 times tracked
+  (stage 1, below): the price of the knot.
 - **For the compiler:** topology and geometry become its step 0, and one copper carries three operators at once (DC
   steering, the megahertz chirp, the 915 MHz ring), each with its own price list. The ring's G has two cheap modes, ±m,
   over a floor about 125 times lower.
+
+**Experiment 2, stage 0: the instruments** (`docs/KNOTTED_GUIDE.md` sections 3.6, 5.2 and 8.2, its labels kept; DR-0 in
+`tests/test_twin_dr0.py` and `experiments/twin_openems_line/`).
+- **DR-0 passes everywhere it has run except R1's closed ring under the single-mode model of `array16.guide.ring`,**
+  which full wave misses by −1.71 % and +5.15 % (the two-rail model, whose line matrices live in
+  `experiments/twin_openems_line.py`, meets both modes within 0.15 %): ELE-1 to ELE-3 to 0.5 % through the grid the twin
+  sweeps, the share rule within 2 % on the designs' own sections, drawn rings splitting by twice their impedance
+  harmonic to 1 %, ECSS's twelve blind copper points within −1.7 to +1.5 %, Mathieu's secular frequency to 0.1 % at 120
+  steps an RF period (missed at 30, the case that must fail), Wheeler's rule within 1 % of stripline's closed form, and
+  full wave against the decomposed model on R1's straight line, −0.13 % in f and −0.24 % in Q.
+- **Two rails on one board, closed into a ring, resonate apart.** In full wave, on the backed board the run models, R1's
+  rails ring at 899 and 962 MHz (−1.71 % and +5.15 % of 915 MHz), each mode mostly on one rail: the bend makes their
+  centre lines differ in length, by ±2.8 % on R1 as drawn, more than its linewidth (2.7 %) and than its even and odd
+  modes' indices (2.0 %). The single-mode ring model misses both modes, and a two-rail model meets them within 0.15 %.
+  Hypothesis: the null needs the rails in phase, so the built ring takes bridges across the grounded strip at N ≥ 3
+  stations a lap, N not dividing 2m, or two compiled feeds that drive both ring modes into the in-phase pattern. Stage 1
+  tracked the ideal in-phase drive.
+- **R1 as solved.** The null stands 0.564 mm up, and at 50 V its q is 0.51 and the pseudopotential's well 0.0949 eV
+  deep at the mean volts; n_eff 1.555, Z₀ 26.4 Ω and Q 36 make one guided wave round 210.7 mm at a 33.5 mm radius, and
+  50 V take 8.2 W. The centre strip is held at ground along the line: left floating, it takes 0.85 to 0.92 of the
+  rails' volts and puts the null 0.087 mm up on a backed board and nowhere on R1's.
+- **The usable well.** Proposition: the rails' gradient grows toward the grounded strip, so the null's local Mathieu q
+  passes 0.908 under it, about 0.2h under at q 0.5 and 0.36h at q 0.3, and an electron whose swing reaches there is
+  pumped out, whatever depth the saddle sets. Claim, by the exact motion in the section: sent from the null toward the
+  escape saddle, electrons are lost from 0.0118 eV at q 0.5, 0.13 of the depth, and half of them by 0.034 eV, so an
+  electron keeps 0.01 to 0.03 eV of the 50 V well; at q 0.3 (29.7 V) they are held to 0.98 of its 0.032 eV depth.
+- **Multipactor at 50 V** (MPC-3). R1's copper rails read −5.2 dB at level 1 against copper's chart, the calibrated
+  population growing by more than 0.4 Np an RF period on their 0.70 GHz·mm arcs, and 13.7 V keeps level 1's 6 dB;
+  T915-S at 50 V reads +5.24 dB on the chart and +5.17 dB by the calibrated statistical threshold. The 2-D tracker with
+  secondary emission settles what a built board holds (DR-8, E2-13).
+- **The ring model's backward wave** (RNG-5). A net reflection S splits the ±m pair by |S|/(πm) of f and, the ring
+  driven at the pair's centre, leaves a backward wave |S|·Q/(πm), Q being f over the full linewidth (Kippenberg et al.),
+  as `array16/guide/ring.py` computes it; the guide's earlier |S|Q/(2πm) was a factor of two low with its own Q, and
+  holds only with Q counted on the half linewidth. Impedance varying round the ring splits the pair by 2|c₂ₘ| of f and
+  leaves |b/a| = 2Q|c₂ₘ|, the splitting in linewidths.
+- **What the solved sections changed.** The slot guide's index on its 35 µm copper is 1.677 on FR-4 and 1.535 on
+  RO4003C, so S2-C3's m = 2 takes 427 mm, and the 421 mm drawn would resonate near 927 MHz. The copper's treated
+  faces, at Hammerstad's factor for 1.5 µm rms, raise the power for 50 V from 0.88 to 0.97 W on T915-S and from 8.2 to
+  8.6 W on R1. openEMS keeps its update coefficients in single precision, so a lossy laminate's loss comes out off by
+  up to 2.7 % on FR-4: computed from the step and taken out, it is a limit to register with every lossy openEMS run.
+
+**Experiment 2, stage 1: the calibration rung** (`experiments/twin_rung1/REPORT.md`). The first electrons tracked
+through the computed field of a design: 16 of 19 checks pass (E2-21 8 of 9, E2-22 3 of 5, the slot guide 2 of 2, the
+case that must fail 3 of 3).
+- **Calibrated where the theory is exact.** R1's well first lost an electron at 0.01179 eV, the exact motion's own
+  first loss (0.130 of the 0.0909 eV depth at the start), at 0.01547 eV on the bench (inside the laminate's 0.01081 to
+  0.02268 eV), and at q 0.30 at 0.03138 eV, the exact motion's again (0.979 of the depth). The straight slot guide,
+  tracked in three dimensions, gave back Mathieu's secular exponent to 1.4 × 10⁻⁴ and escaped at 0.904 of its
+  section's 0.2294 eV depth (the exact motion: 0.927). Driven past Mathieu's q of 0.908, at 162.4 and 187.0 V (q 1.66
+  and 1.91 at the bench's band), none of 64 electrons was held, each energy and sense's first loss coming after 1.35
+  to 2.22 RF periods, while the same launch at the design's 50 V held 32 of 32 for the 200 RF periods.
+- **The three planar rings held 0.994 to 1.004 of their static limits.** R1 as drawn held 9.344 eV against its static
+  limit of 9.307 eV (1.004), at q 0.30 3.269 of 3.280 eV (0.997), and the flat facing-board ring of 318 mm 32.25 of
+  32.43 eV (0.994): the static balance on the solved section (JNT-2c) to within the scan's 2.5 % step. R1 at q 0.51 and
+  the flat ring, whose bands carried the 0.61 to 0.95 of it that four rods kept, miss above them; the control at q 0.30
+  lies inside its own, 0.85 to 1.05. On the bench, with FR-4's permittivity and Earth's field drawn, R1 held 8.465 eV
+  (7.860 with the wave, 9.116 against it), inside 4.69 to 9.30 eV, the senses 0.216 √eV apart within the 0.670 allowed.
+- **T915-S and the helix held 0.859 and 0.873 of theirs.** T915-S held 9.996 eV of its 11.64 and the (1, 3) helix 16.10
+  of 18.45 eV, both inside their bands. The helix over T915-S, 1.611 against the static 1.585, passes; the flat ring
+  over T915-S, the price of the knot, came to 3.226 against the static 2.786, above its band's top of 3.204: the third
+  miss.
+- **What the misses mean.** Two read as the protocol registered before the run: the flat ring kept more than four rods'
+  discount, so stage 2 registers E2-9 on the tracked fractions (0.994 for the flat ring, 0.859 for T915-S, 0.873 for the
+  helix), and the knot cost more than its static price, so T915-S is designed on the tracked price, 10.2 eV per eV of
+  its weakest depth, with the flat ring's 33 eV per eV its ceiling. The third, R1's hold, met its static balance, where
+  the reading registered for a high result had the static balance understate the hold, so that reading holds only in
+  sign: R1's rails on a planar ring kept their whole static limit at q 0.51 and at q 0.30, not four rods' 0.61 to 0.95
+  of it, the zone under the null setting no aperture below the fold for an electron launched on its equilibrium. What
+  T915-R, rails on T915-S's trefoil out of the plane, keeps of its static limit waits on stage 2's shots for H1.
+- **Read after the run: Hypotheses, not results** (`REPORT.md` section 6 names the stage-2 shot that tests each). H1,
+  that a path in a plane keeps its whole static limit and a path out of it about 0.86, knotted or not, so that leaving
+  the plane costs about 14 % and the knot's price follows, 2.786/0.86 = 3.24 against 3.226 tracked; its rivals are a
+  bend that changes along the path (every planar path here is a circle) and the boards' stiff side giving a bend nothing
+  once tracked. H2, that T915-S's senses differ only by the protocol's window reading, with two electrons an energy, its
+  band of energies lost late (from 0.79 of its limit, below an edge at 0.94 to 0.96), which put their thresholds six
+  steps apart, and that the band is a resonance of the secular motion with the passing of the knot's three lobes. H3,
+  that out of the plane an electron near its limit is lost in or just past a lobe, downstream, where the bend in the
+  boards' plane is tightest (the records fix each energy and sense's first loss: T915-S's 40 within 0.025 lap past a
+  lobe, the helix's 38 within 0.067). H4, that the bench departs from R1 as drawn by the laminate's shift of the band
+  (0.53 % lower) and Earth's field as drawn alone, 30.0 µT along the ring's axis and 40.0 µT in its plane: the axial
+  part alone would part the senses' √W by 0.299 √eV, so the part in the plane enters their 0.216 √eV split too, and the
+  static balance with the drawn field, computed afterwards and scaled to the bench's band (an estimate), comes within
+  0.1 % of the senses' mean and a sixth of their split; stage 2 registers that balance at the bench's own band as H4's
+  prediction before R1 runs on the bench again.
 
 **Cavity knots** (`docs/CAVITY_KNOTS.md`, its labels kept).
 - **A perfect sphere gives rays.** A real standing TE field is `E = ∇ψ × r` in a sphere and `∇Π × ẑ` in a cylinder, so
@@ -333,15 +460,17 @@ ledger rows RFG-2 to RFG-4 and ELE-1 to ELE-3; the scaling law and the rail null
 ELE-1. The theory of the virtual antenna itself, with the laws it proposes and the ones to prove first, is
 `docs/VIRTUAL_ANTENNA.md`.
 
-1. **N3. A closed guide is a ring resonator: the travelling-wave ring** (derived; in `docs/VIRTUAL_ANTENNA.md`
-   sections 7.2 and 7.3, where the ring selection rule, Bragg splitting and radiate-or-hold are Propositions proposed
-   as NFD-5 to NFD-7 and the stub dial is Hypothesis NFD-H1). A ring whose circumference is m guided wavelengths
-   carries cos mφ and sin mφ at one frequency; driven 90° apart at feeds a quarter guided wavelength apart they sum
-   to `e^(i(mφ − ωt))`, one amplitude all the way round, with the resonator's gain. One channel through a 90° hybrid
-   makes both drives. The 277 mm guide as a ring (R = 44.1 mm) has m = 1 at 1.08 GHz in air (n_eff = 1; on laminate it
-   falls as 1/n_eff), and electrons of a few eV, near
-   10⁶ m/s, are far slower than the wave, so they see a steady well of one depth all round. Next: the ring's modes,
-   Q and R/Q from an eigenmode run (openEMS, or Palace, which refines its mesh by itself), then the ledger.
+1. **N3. A closed guide is a ring resonator: the travelling-wave ring** (derived; in `docs/VIRTUAL_ANTENNA.md` sections
+   7.2 and 7.3, where the ring selection rule, Bragg splitting and radiate-or-hold are Propositions proposed as NFD-5 to
+   NFD-7 and the stub dial is Hypothesis NFD-H1). A ring whose circumference is m guided wavelengths carries cos mφ and
+   sin mφ at one frequency; driven 90° apart at feeds a quarter guided wavelength apart they sum to `e^(i(mφ − ωt))`,
+   one amplitude all the way round, with the resonator's gain. One channel through a 90° hybrid makes both drives. The
+   277 mm guide as a ring (R = 44.1 mm) has m = 1 at 1.08 GHz in air (n_eff = 1; on laminate it falls as 1/n_eff), and
+   electrons of a few eV, near 10⁶ m/s, are far slower than the wave, so they see a steady well of one depth all round.
+   The ring model is `array16/guide/ring.py`, its laws ledger rows RNG-1 to RNG-5 and RNG-H5 (RNG-1 to RNG-4 proved in
+   Lean), and openEMS has run R1's ring on the backed board it models, whose two rails resonate apart there (section 3).
+   Next: T915-S's modes, Q and R/Q from an eigenmode run (Palace, which refines its mesh by itself; E2-6), and the
+   two-rail line matrices for the one-board ring.
 2. **N4. What a ring hears of its own beam: Shockley-Ramo pickups and feedback** (derived; in
    `docs/VIRTUAL_ANTENNA.md` section 7.4 as Claims CHG-4 and CHG-5 and Hypothesis CHG-H2). An electrode that makes a
    field `E_w` per volt hears a charge q moving at v as a current `q v·E_w`, so a guide's electrodes are its pickups;
@@ -359,12 +488,18 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    the drive's coefficients, a statement for algebraic geometry. These are zero lines of one complex component;
    whole-vector nulls of a real standing field are another object, and the cavity study (`docs/CAVITY_KNOTS.md`)
    finds they need three profiles at one frequency for a link or a knot, with none found yet.
-4. **N6. An RF guide needs no twist** (argued; its cost rests on CUR-3). A pseudo-potential pulls back from every
-   side, so an RF guide holds a particle round a flat ring; the twist rule of experiment 1 belongs to magnetic
-   guides. A knot only costs an RF guide: its largest curvature exceeds 4π/L against a ring's 2π/L (CUR-3), so by the
-   bend rule (item 6) it holds less than half the energy of a ring of the same length and electrodes. Knots earn
-   their place in path length per volume. Next: a flat ring of the first run's rods tracked on the core beside the
-   trefoil, and the statement on the ledger.
+4. **N6. An RF guide needs no twist** (argued, and tracked in stage 1; its cost rests on CUR-3). A pseudo-potential
+   pulls back from every side, so an RF guide holds a particle round a flat ring; the twist rule of experiment 1
+   belongs to magnetic guides. A knot only costs an RF guide: its largest curvature exceeds 4π/L against a ring's 2π/L
+   (CUR-3), so by the bend rule (item 6) it holds less than half the energy of a ring of the same length and
+   electrodes. Knots earn their place in path length per volume. Stage 1 tracked it in solved fields (section 3): two
+   flat rings with no twist held their whole static limit (R1's rails 1.004 of it, the flat facing-board ring of
+   318 mm 0.994), and on one section, its volts and its q that ring held 32.25 eV where T915-S held 9.996 eV, 3.23
+   times, where the static balance gives 2.79. Read afterwards, Hypothesis H1: leaving the plane costs about 14 % of
+   the static limit, knotted or not, and the knot's price is its static price over the 0.86 a path out of the plane
+   keeps. Next: stage 2's shots that part the plane from a bend that changes along the path and from the boards' stiff
+   side (an ellipse of 318 mm in the boards' plane, the flat ring bent toward its boards, the (1, 3) helix at r/R = 0.1
+   and 0.3 beside 0.2), and the statement on the ledger.
 5. **N7. Mathieu similarity** (holds; RFG-1 is stated whatever the particle). Mathieu's equation depends on q and the
    damping, not on the particle, so a charged microparticle at 60 Hz to a few kHz runs the electron guide's
    equations: in air a 10 µm grain is overdamped (a Stokes rate of 1450 per second), and near 1 Pa it circulates as
@@ -375,7 +510,9 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    RF guide holds kinetic energy up to about `W = D/(2κ_max r₀)`, so `W ≈ (q/16)·eV·(R/r₀)` for bend radius R. Energy
    held grows with volts times R/r₀, with no ceiling other than the voltage: at q = 0.3 and r₀ = 1 mm, 100 eV takes
    53 V at 1.25 GHz with R/r₀ = 100, and 1 keV takes 530 V near 4 GHz. This is the statement to prove in answer to
-   "are RF fields enough at any energy".
+   "are RF fields enough at any energy". On a solved section the static balance (JNT-2c, `docs/KNOTTED_GUIDE.md`
+   section 6.1) takes the rule's place: across R1's board it holds 3.47 times the rule's D/h, and stage 1's planar
+   rings held their whole static limit (section 3).
 7. **The field of an electrode pattern from its outline** (a lead to verify before use). For an electrode at V in a
    grounded plane the potential is V/2π times the solid angle it subtends, so its field is a line integral round its
    outline of the Biot-Savart form, `E = (V/2π)∮ dl × (x − x′)/|x − x′|³` (Oliveira and Miranda). If a calibration
@@ -386,18 +523,33 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
 
 ## 5. Next, in order
 
-1. **Experiment 2's first simulations: the twin bench and its calibration rung** (stages 0 and 1 of
-   `docs/KNOTTED_GUIDE.md` section 10, before the compiler; owner, 2026-11-22). The instruments of its section 8.1,
-   each with tests that would catch it wrong: 2-D sections by finite volumes (Z₀, n_eff, laminate share, Q by
-   Wheeler's rule on the real copper, gradient, escape), taken from the study's converged solver, with the split as a
-   lever to re-score the lead designs; the three-dimensional field of a board layout, the guide's modes, Q and R/Q
-   from an eigenmode run (openEMS, or Palace), electrons tracked in the solved field rather than an ideal one, and a
-   secondary-emission model for multipactor, on a simulated twin bench of `array16.lab` that runs the design review's
-   DR-0. Then the calibration rung, its predictions and criteria committed before any tracking: R1's rail ring on one
-   board (E2-21), the flat ring and the (1, 3) helix (E2-22), and the straight slot guide in three dimensions against
-   its 2-D section. It is the first run that tracks electrons in the computed field of a design, and its field solver
-   is the operator the compiler needs for board electrodes.
-2. **The field compiler, in the core** (`docs/VIRTUAL_ANTENNA.md` section 9). A package `array16/synthesis/` beside
+1. **Done: experiment 2's first simulations, the twin bench and its calibration rung** (stages 0 and 1 of
+   `docs/KNOTTED_GUIDE.md` section 10, before the compiler; owner, 2026-11-22). The twin bench and the instruments it
+   stands on are modules with tests, DR-0 passes on them everywhere it has run except R1's closed ring under the
+   single-mode model, which full wave misses by −1.71 % and +5.15 % where the two-rail model meets both modes within
+   0.15 %, and openEMS has run R1's line and ring (section 2). The calibration rung was registered, run once and
+   reported: 16 of 19 checks pass, and of its three misses, each above its band, two read as its protocol registered
+   beforehand, while the third, R1's hold, met its static balance where the registered reading had the balance
+   understate it (section 3). Its field solver is the operator the compiler needs for board electrodes.
+2. **Stage 2 of experiment 2: T915-S on the twin bench** (`docs/KNOTTED_GUIDE.md` section 10), its predictions and
+   criteria committed before any tracking, on 59 draws (93 where one failure is allowed), with three-dimensional views
+   of boards, fields and orbits. First the modules its section 8.1 names to join before stage 2 registers: the
+   boundary-element windows with the null tracker (`array16/guide/bem.py`), the axisymmetric bend reference
+   (`axisym.py`), the compiled ramp (`ramp.py`) and the plates, planforms and layouts (`geometry.py`); and the twin's
+   records carrying each lost electron's place along the path, its position in the section and its step. Then
+   T915-S's joints: the kick across a solved joint, the axial field on the null of a piece without its mirror, the
+   butt joint (E2-1, E2-14, E2-20); Earth's field across T915-S and the senses it parts (E2-15); multipactor with
+   secondary emission, Furman and Pivi's model in the 2-D tracker on facing strips (E2-13, DR-8), which also settles
+   MPC-3's reading of R1's copper rails at 50 V; the bend's shift of the null, which the swept section leaves out
+   (7.7 µm on T915-S's tightest bend; E2-2's 0.1405 and 0.318 times h²/R in and out of the boards' plane); and a
+   two-rail model for the one-board ring: the two-rail line matrices with the bridges' admittances in
+   `array16.guide.ring` and `TwinGuide`, the bridges in R1's design file, the unbacked R1 run in full wave, and the
+   residual odd-mode field at the null registered as its own prediction, before any R1 prediction is used for
+   hardware. Beside them, from stage 1: E2-9 registered on its tracked fractions, T915-S designed on the tracked price,
+   and the shots that test what was read from it afterwards (H1 to H4, section 3). Then T915-S's resonance and drive
+   (E2-6 to E2-8), bend thresholds and stopbands (E2-9 to E2-11), ripple (E2-16), straps and radiation (E2-17,
+   E2-18), crossings (E2-19), frames and plates (E2-23), and DR-1 to DR-12.
+3. **The field compiler, in the core** (`docs/VIRTUAL_ANTENNA.md` section 9). A package `array16/synthesis/` beside
    `array16/particles/`, frozen dataclasses and pure functions under `mypy --strict` and `ruff`: elements, region,
    operator, spectrum, targets, solve, states, sequences, measure, verify, and compile, steps 1 to 9 of the process as
    one pipeline, with `route` choosing between receive weights, a static state, a time-averaged schedule and a comb
@@ -412,7 +564,7 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    potential `−(V/π)·arg cosh(πz/2h)` and field `−i(V/2h)·tanh(πz/2h)`, one board's saddle at `h√(1 + w)`, and its
    share `(4/π²)(w − 2)/((w + 2)w²)` with the maximum `(5√5 − 11)/(2π²)` at `w = 1 + √5`; each then becomes a
    Proposition.
-3. **V1, the first registered virtual-antenna experiment** (section 10.1). A virtual monopole made from four switched
+4. **V1, the first registered virtual-antenna experiment** (section 10.1). A virtual monopole made from four switched
    quarter-wave monopoles at 2.44 GHz on a λ/4 square, fitted on 210 positions and checked against a real monopole on
    120 others, with criteria V1-0 to V1-10 committed with the predictions before the run and a case that must fail
    (a target a wavelength across, predicted −2.4 dB). It runs on `benches/v1_sim.toml`, whose simulated array will
@@ -420,18 +572,19 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    error and a moving lead. Its hardware rungs (`benches/v1_rung1.toml` and sessions T, `docs/VIRTUAL_ANTENNA.md`
    section 10.1) come at the build stage of rule 12. Then V2 (comb lines through 2-bit elements on a Wilkinson
    tree), V3 (the rev B tile and whips) and V4 (the ring guide as an antenna), each first on a simulated bench.
-4. **The rest of experiment 2**, the closed RF guide as one case of synthesis, on the same bench and the order of work
-   of `docs/KNOTTED_GUIDE.md` section 10: T915-S, S2-C3, T915-S6 to accelerate, and L26, T915-R and T2450-S, beside the
-   sharp six-stick trefoil that must fail; predictions E2-1 to E2-27 and their criteria committed before any
-   tracking, and a report carrying 3-D views of boards, fields and orbits. Options stay open while the work is early
+5. **The rest of experiment 2** (stages 3 to 5), the closed RF guide as one case of synthesis, on the same bench and
+   the order of work of `docs/KNOTTED_GUIDE.md` section 10: S2-C3, T915-S6 to accelerate, and L26, T915-R and T2450-S,
+   beside the sharp six-stick trefoil that must fail; their predictions and criteria committed before any tracking,
+   and a report carrying 3-D views of boards, fields and orbits. Options stay open while the work is early
    (owner, 2026-11-22): the one-board designs (the surface ring of two rails, the board's own top and bottom copper as
    a facing pair round a routed channel, one board carrying the ring, its resonator and its feed) are weighed beside
    the knots as results come in. Every design takes the prior art's numbers (section 3): resonators designed to the Q
    and resistance built boards reach, a secondary-emission model in the tracker, a drive clean at the secular lines,
-   and the vacuum the path asks. The theory goes to the ledger, and to Lean where it is mathematics: the
-   travelling-wave ring (section 4, N3), its pickups (N4), the flat ring against the knot (N6), the bend rule (item 6)
-   and the knotted study's laws. V4 measures the same ring as an antenna.
-5. **The radio side, as design.** Rev B revised on paper around one coherent channel (`REDESIGN.md`, the decision at
+   and the vacuum the path asks. The theory goes to the ledger, and to Lean where it is mathematics, as the
+   travelling-wave ring's did (section 4, N3; RNG-1 to RNG-4): its pickups (N4), the flat ring against the knot (N6),
+   the bend rule and the static balance (item 6) and the knotted study's other laws. V4 measures the same ring as an
+   antenna.
+6. **The radio side, as design.** Rev B revised on paper around one coherent channel (`REDESIGN.md`, the decision at
    its head), then its section 13 decisions; the Vivaldi findings folded in; the datasheet corrections applied to the
    schematic. The HackRF Pro (through open-source libhackrf bindings) and the controller become devices of a bench,
    as the theory's section 9.3 lays out, at the build stage.
@@ -487,6 +640,9 @@ Ideas worth investigating later, kept with what is known of them; none is schedu
 - 2026-11-22: experiment 2's first simulations, the twin bench's instruments and its calibration rung, come before
   the field compiler. The ring on one board was about keeping options open while the work is early, not a line of
   its own ("i just meant keep options open, be flexible while in the early stages").
+- 2026-11-22: stage 1 registered as it stands at R1's design drive of 50 V, where MPC-3 reads its bare copper rails to
+  multipact: the rung calibrates the tracking chain against the theory, and stage 2's tracking with secondary emission
+  settles what a built board holds (`experiments/twin_rung1/PROTOCOL.md` section 6).
 
 Open for the owner at the build stage, from `docs/VIRTUAL_ANTENNA.md`:
 - V1's beacon: a synthesiser module locked to the HackRF's 10 MHz, a second RF source beside the HackRF; or sessions
@@ -501,8 +657,9 @@ Open for the owner at the build stage, from `docs/VIRTUAL_ANTENNA.md`:
 ## 7. Notes for whoever continues
 
 - The files under the lint and type gates are listed in `pyproject.toml`; the older ones are not yet.
-- `.venv` is uv's environment. `.env` is older and holds the openEMS Python modules; `vivaldi_openems.py` runs
-  there.
+- `.venv` is uv's environment. `.env` is older and holds the openEMS Python modules; `vivaldi_openems.py` and
+  `twin_openems_line.py` run there (the latter's `section` stage also under uv). `.twin_cache/` holds the twin's solved
+  sections, keyed by their content and the solver's source: regenerable, and ignored by git.
 - CI was red on two pushes (6c058df, 85a3ff6) from a test that demanded bit-identical fields across BLAS
   libraries; fixed in 892c1ce. Tracked orbits agree across machines to rounding.
 - The commits before 09d3c6d keep the local paths in their history.
