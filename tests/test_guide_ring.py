@@ -303,7 +303,9 @@ def test_the_t915s_monte_carlo_at_2_percent_is_the_study_s() -> None:
 
 
 def test_the_ring_is_the_buildability_lens_model() -> None:
-    # section 5.3: the ring of 192 segments draws and scores as lens5/ring.py did for ring915.py, to 1e-10
+    # section 5.3: the ring of 192 segments draws and scores as lens5/ring.py did for ring915.py, to 1e-8: the
+    # reference numbers were computed on one machine, and the compiled feeds' linear solve differs from it near 1e-10
+    # under another BLAS (CI's), far below any difference between two models
     length = C0 / (1.031 * ring.F915)
     rng = np.random.default_rng(7)
     perfect = ring.ring_score(length, 1, *ring.perfect_ring(1.031), 381.0, False)
@@ -320,7 +322,7 @@ def test_the_ring_is_the_buildability_lens_model() -> None:
             comp.w_abs,
             comp.w_deg,
         )
-        assert got == pytest.approx(expected, rel=0, abs=1e-10)
+        assert got == pytest.approx(expected, rel=0, abs=1e-8)
 
 
 def test_the_strips_at_2450_mhz_as_the_lens_ran_them() -> None:
