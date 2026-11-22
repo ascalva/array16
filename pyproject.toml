@@ -53,6 +53,8 @@ include = [
     "tests/test_particle_sections.py",
     "tests/test_twin.py",
     "tests/test_twin_dr0.py",
+    "experiments/twin_rung1.py",
+    "tests/test_twin_rung1.py",
     "experiments/twin_openems_line.py",
     "tests/test_twin_openems_line.py",
 ]
@@ -93,6 +95,8 @@ files = [
     "tests/test_particle_sections.py",
     "tests/test_twin.py",
     "tests/test_twin_dr0.py",
+    "experiments/twin_rung1.py",
+    "tests/test_twin_rung1.py",
     "experiments/twin_openems_line.py",
     "tests/test_twin_openems_line.py",
 ]

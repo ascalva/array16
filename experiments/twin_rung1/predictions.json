@@ -1,0 +1,962 @@
+{
+ "apparatus": {
+  "bench": "benches/twin_r1.toml",
+  "criteria": {
+   "beta_tolerance": 0.002,
+   "control_band": [
+    0.85,
+    1.05
+   ],
+   "discount": [
+    0.61,
+    0.95
+   ],
+   "laminate_draws": 13,
+   "laminate_sds": 3.0,
+   "laps": 20.0,
+   "master_seed": 20261122,
+   "model_steps_per_period": 480,
+   "ratio_tolerance": 0.15,
+   "scan_ratio": 1.025,
+   "sense_steps": 2,
+   "steps_per_period": 120,
+   "well_band": [
+    0.8,
+    1.25
+   ],
+   "well_steps": 2,
+   "window": 5
+  },
+  "designs": {
+   "designs/flat_ring_318.toml": {
+    "drive": {
+     "backward": 8.5828e-06,
+     "depth_ratio": 0.983884,
+     "least": 49.7967,
+     "most": 50.2028,
+     "q": 0.487973,
+     "volts": 50.0,
+     "watts": 0.882364,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/flat_ring_318.toml",
+     "name": "flat ring 318",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "35cf8e33d5d46ff845e6c0b94f3f3d32914d5718d73c4e7f1127038dd4cf449b",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "line": {
+     "Q": 213.69,
+     "Qc": 228.05,
+     "Qd": 3393.77,
+     "n_eff": 1.0311,
+     "share": 0.0736644,
+     "z0_ohm": 41.6545
+    },
+    "ring": {
+     "bend_mm": 50.573,
+     "f_MHz": 914.995,
+     "length_mm": 317.759
+    },
+    "static": {
+     "Q": 213.69,
+     "bend_mm": 50.573,
+     "bend_rule_eV": 27.2675,
+     "depth_mean_eV": 0.986683,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "length_mm": 317.759,
+     "n_eff": 1.0311,
+     "null_mm": 0.915,
+     "q_null": 0.487973,
+     "static_at": 0.8045,
+     "static_eV": 32.4332,
+     "strength_across_D_per_h": 1.19919,
+     "strength_down_D_per_h": 5.42229,
+     "strength_up_D_per_h": 5.42229,
+     "volts_at_start": 49.8171,
+     "volts_mean": 50.0
+    },
+    "well": {
+     "escape_per_m": 544.674,
+     "gradient_per_m2": 917004.0,
+     "null_mm": 0.915,
+     "saddle_mm": [
+      2.08755,
+      0.915
+     ]
+    }
+   },
+   "designs/helix_13.toml": {
+    "drive": {
+     "backward": 8.5828e-06,
+     "depth_ratio": 0.983884,
+     "least": 49.7967,
+     "most": 50.2028,
+     "q": 0.487973,
+     "volts": 50.0,
+     "watts": 0.882364,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/helix_13.toml",
+     "name": "helix (1, 3)",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "75ef704a36a7d1cf55b577887c714d164b747a6b04ca472c8d4252ac02e5e58f",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "line": {
+     "Q": 213.69,
+     "Qc": 228.05,
+     "Qd": 3393.77,
+     "n_eff": 1.0311,
+     "share": 0.0736644,
+     "z0_ohm": 41.6545
+    },
+    "ring": {
+     "bend_mm": 25.0461,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 29.141,
+     "length_mm": 317.759
+    },
+    "static": {
+     "Q": 213.69,
+     "bend_mm": 25.0461,
+     "bend_rule_eV": 13.5041,
+     "depth_mean_eV": 0.986683,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 29.141,
+     "length_mm": 317.759,
+     "n_eff": 1.0311,
+     "null_mm": 0.915,
+     "q_null": 0.487973,
+     "static_at": 0.7827,
+     "static_eV": 18.451,
+     "strength_across_D_per_h": 1.19919,
+     "strength_down_D_per_h": 5.42229,
+     "strength_up_D_per_h": 5.42229,
+     "volts_at_start": 49.8171,
+     "volts_mean": 50.0
+    },
+    "well": {
+     "escape_per_m": 544.674,
+     "gradient_per_m2": 917004.0,
+     "null_mm": 0.915,
+     "saddle_mm": [
+      2.08755,
+      0.915
+     ]
+    }
+   },
+   "designs/r1_rail_ring.toml": {
+    "drive": {
+     "backward": 0.000296688,
+     "depth_ratio": 0.908873,
+     "least": 48.7969,
+     "most": 51.1847,
+     "q": 0.505573,
+     "volts": 50.0,
+     "watts": 8.18955,
+     "weakest_eV": 0.0903512
+    },
+    "identity": {
+     "design": "designs/r1_rail_ring.toml",
+     "name": "R1",
+     "realisation": 0,
+     "section": "673cc8028c920ed3",
+     "sha256": "b9baedd0b9527ca28ae61033fbd1e909b3c124ad135d78bdd646891095af9ed3",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "line": {
+     "Q": 36.3532,
+     "Qc": 80.3983,
+     "Qd": 66.3579,
+     "n_eff": 1.55523,
+     "share": 0.75349,
+     "z0_ohm": 26.39
+    },
+    "ring": {
+     "bend_mm": 33.5294,
+     "f_MHz": 914.827,
+     "length_mm": 210.672
+    },
+    "static": {
+     "Q": 36.3532,
+     "bend_mm": 33.5294,
+     "bend_rule_eV": 2.81879,
+     "depth_mean_eV": 0.0948614,
+     "depth_weakest_eV": 0.0903512,
+     "f_MHz": 914.827,
+     "length_mm": 210.672,
+     "n_eff": 1.55523,
+     "null_mm": 0.564188,
+     "q_null": 0.505573,
+     "static_at": 0.8035,
+     "static_eV": 9.307,
+     "strength_across_D_per_h": 3.46663,
+     "strength_down_D_per_h": 9.21187,
+     "strength_up_D_per_h": 1.7314,
+     "volts_at_start": 48.9497,
+     "volts_mean": 50.0
+    },
+    "well": {
+     "escape_per_m": 168.855,
+     "gradient_per_m2": 949731.0,
+     "null_mm": 0.564188,
+     "saddle_mm": [
+      6.62969e-15,
+      1.17329
+     ]
+    }
+   },
+   "designs/t915s.toml": {
+    "drive": {
+     "backward": 8.5828e-06,
+     "depth_ratio": 0.983884,
+     "least": 49.7967,
+     "most": 50.2028,
+     "q": 0.487973,
+     "volts": 50.0,
+     "watts": 0.882364,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/t915s.toml",
+     "name": "T915-S",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "f30531d452865fc2a72bb1d9bf85c3f7308164a10450291e42d561e1b25cf902",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "line": {
+     "Q": 213.69,
+     "Qc": 228.05,
+     "Qd": 3393.77,
+     "n_eff": 1.0311,
+     "share": 0.0736644,
+     "z0_ohm": 41.6545
+    },
+    "ring": {
+     "bend_mm": 15.285,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759
+    },
+    "static": {
+     "Q": 213.69,
+     "bend_mm": 15.285,
+     "bend_rule_eV": 8.24123,
+     "depth_mean_eV": 0.986683,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "n_eff": 1.0311,
+     "null_mm": 0.915,
+     "q_null": 0.487973,
+     "static_at": 0.8033,
+     "static_eV": 11.6427,
+     "strength_across_D_per_h": 1.19919,
+     "strength_down_D_per_h": 5.42229,
+     "strength_up_D_per_h": 5.42229,
+     "volts_at_start": 49.8171,
+     "volts_mean": 50.0
+    },
+    "well": {
+     "escape_per_m": 544.674,
+     "gradient_per_m2": 917004.0,
+     "null_mm": 0.915,
+     "saddle_mm": [
+      2.08755,
+      0.915
+     ]
+    }
+   },
+   "experiments/twin_rung1/slot_straight.toml": {
+    "drive": {
+     "backward": 2.83514e-05,
+     "depth_ratio": 0.970901,
+     "least": 39.704,
+     "most": 40.2946,
+     "q": 0.445028,
+     "volts": 40.0,
+     "watts": 0.663591,
+     "weakest_eV": 0.229019
+    },
+    "identity": {
+     "design": "experiments/twin_rung1/slot_straight.toml",
+     "name": "straight slot guide",
+     "realisation": 0,
+     "section": "0953dac9a66a5d0d",
+     "sha256": "e129a2445a0f3e364b76786c7eaa2b22d1160f16b13aa9d0d8adfde070d72c51",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "line": {
+     "Q": 117.576,
+     "Qc": 157.186,
+     "Qd": 466.578,
+     "n_eff": 1.53472,
+     "share": 0.793801,
+     "z0_ohm": 64.4267
+    },
+    "ring": {
+     "f_MHz": 914.983,
+     "length_mm": 213.486
+    },
+    "well": {
+     "escape_per_m": 330.456,
+     "gradient_per_m2": 1045350.0,
+     "null_mm": 0.5,
+     "saddle_mm": [
+      6.71727e-16,
+      0.932792
+     ]
+    }
+   }
+  }
+ },
+ "shots": [
+  {
+   "ident": "E2-21 well, R1, realisation 0",
+   "prediction": {
+    "basis": {
+     "Q": 36.3532,
+     "depth_mean_eV": 0.0948614,
+     "depth_start_eV": 0.0909178,
+     "depth_weakest_eV": 0.0903512,
+     "f_MHz": 914.827,
+     "length_mm": 210.672,
+     "model_first_D": 0.129657,
+     "model_first_eV": 0.0117881,
+     "model_robust_D": 0.370304,
+     "model_robust_eV": 0.0336672,
+     "n_eff": 1.55523,
+     "null_mm": 0.564188,
+     "pseudo_at_qcap_D": 0.7524,
+     "q_null": 0.505573,
+     "qcap_below_null_h": 0.1995,
+     "saddle_mm": 1.17329,
+     "volts_at_start": 48.9497,
+     "volts_mean": 50.0
+    },
+    "claim": "electrons sent from R1's null up its axis toward the escape saddle at the drive's zero crossings are first lost at 0.01179 eV, 0.13 of the depth D = 0.09092 eV, as the exact motion on the solved axis loses them in 40 RF periods",
+    "high": 0.0125387,
+    "low": 0.0110824,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "eV",
+    "value": 0.0117881
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 0.14,
+    "kind": "well",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 0.0045,
+    "periods": 40,
+    "phases": 2,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261122,
+    "test": "E2-21"
+   }
+  },
+  {
+   "ident": "E2-21 well, R1, on the bench",
+   "prediction": {
+    "basis": {
+     "Q": 36.3532,
+     "depth_mean_eV": 0.0948614,
+     "depth_start_eV": 0.0909178,
+     "depth_weakest_eV": 0.0903512,
+     "f_MHz": 914.827,
+     "laminate_sd": 0.00856238,
+     "length_mm": 210.672,
+     "model_first_D": 0.129657,
+     "model_first_eV": 0.0117881,
+     "model_first_high_eV": 0.0213214,
+     "model_first_low_eV": 0.0115006,
+     "model_robust_D": 0.370304,
+     "model_robust_eV": 0.0336672,
+     "n_eff": 1.55523,
+     "null_mm": 0.564188,
+     "pseudo_at_qcap_D": 0.7524,
+     "q_null": 0.505573,
+     "qcap_below_null_h": 0.1995,
+     "saddle_mm": 1.17329,
+     "volts_at_start": 48.9497,
+     "volts_mean": 50.0
+    },
+    "claim": "electrons sent from R1's null up its axis toward the escape saddle at the drive's zero crossings are first lost at 0.01179 eV, 0.13 of the depth D = 0.09092 eV, as the exact motion on the solved axis loses them in 40 RF periods, 0.0115 to 0.02132 eV over the laminate's draw of the band",
+    "high": 0.0226791,
+    "low": 0.0108121,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "eV",
+    "value": 0.0117881
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 0.14,
+    "kind": "well",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 0.0045,
+    "periods": 40,
+    "phases": 2,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": null,
+    "seed": 20261123,
+    "test": "E2-21"
+   }
+  },
+  {
+   "ident": "E2-21 well, R1, realisation 0 at q 0.3",
+   "prediction": {
+    "basis": {
+     "Q": 36.3532,
+     "depth_mean_eV": 0.0334266,
+     "depth_start_eV": 0.032037,
+     "depth_weakest_eV": 0.0318373,
+     "f_MHz": 914.827,
+     "length_mm": 210.672,
+     "model_first_D": 0.979487,
+     "model_first_eV": 0.0313798,
+     "model_robust_D": 1.01645,
+     "model_robust_eV": 0.0325639,
+     "n_eff": 1.55523,
+     "null_mm": 0.564188,
+     "pseudo_at_qcap_D": 4.31,
+     "q_null": 0.300114,
+     "qcap_below_null_h": 0.3578,
+     "saddle_mm": 1.17329,
+     "volts_at_start": 29.057,
+     "volts_mean": 29.6805
+    },
+    "claim": "electrons sent from R1's null up its axis toward the escape saddle at the drive's zero crossings are first lost at 0.03138 eV, 0.98 of the depth D = 0.03204 eV, as the exact motion on the solved axis loses them in 40 RF periods",
+    "high": 0.033378,
+    "low": 0.0295013,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "eV",
+    "value": 0.0313798
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 0.05,
+    "kind": "well",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 0.006,
+    "periods": 40,
+    "phases": 2,
+    "q": 0.3,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261124,
+    "test": "E2-21"
+   }
+  },
+  {
+   "ident": "E2-21 hold, R1, realisation 0",
+   "prediction": {
+    "basis": {
+     "Q": 36.3532,
+     "bend_mm": 33.5294,
+     "bend_rule_eV": 2.81879,
+     "depth_mean_eV": 0.0948614,
+     "depth_weakest_eV": 0.0903512,
+     "f_MHz": 914.827,
+     "length_mm": 210.672,
+     "n_eff": 1.55523,
+     "null_mm": 0.564188,
+     "q_null": 0.505573,
+     "static_at": 0.8035,
+     "static_eV": 9.307,
+     "strength_across_D_per_h": 3.46663,
+     "strength_down_D_per_h": 9.21187,
+     "strength_up_D_per_h": 1.7314,
+     "volts_at_start": 48.9497,
+     "volts_mean": 50.0
+    },
+    "claim": "Hypothesis: R1 holds electrons for 20 laps up to 0.61 to 0.95 of its static limit, 9.307 eV, the geometric mean of the two senses' limits, four rods' discount carried to rails",
+    "high": 8.84165,
+    "low": 5.67727,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "eV",
+    "value": 9.307
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 13.0,
+    "kind": "hold",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 1.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261125,
+    "test": "E2-21"
+   }
+  },
+  {
+   "ident": "E2-21 hold, R1, on the bench",
+   "prediction": {
+    "basis": {
+     "Q": 36.3532,
+     "bend_mm": 33.5294,
+     "bend_rule_eV": 2.81879,
+     "depth_mean_eV": 0.0948614,
+     "depth_weakest_eV": 0.0903512,
+     "earth_each_high_eV": 11.188,
+     "earth_each_low_eV": 7.36663,
+     "earth_mean_high_eV": 9.30532,
+     "earth_mean_low_eV": 8.08894,
+     "earth_uT": 50.0,
+     "f_MHz": 914.827,
+     "laminate_sd": 0.00856238,
+     "length_mm": 210.672,
+     "n_eff": 1.55523,
+     "null_mm": 0.564188,
+     "q_null": 0.505573,
+     "split_bound_sqrt_eV": 0.66956,
+     "static_at": 0.8035,
+     "static_eV": 9.307,
+     "strength_across_D_per_h": 3.46663,
+     "strength_down_D_per_h": 9.21187,
+     "strength_up_D_per_h": 1.7314,
+     "volts_at_start": 48.9497,
+     "volts_mean": 50.0
+    },
+    "claim": "Hypothesis: R1 holds electrons for 20 laps up to 0.61 to 0.95 of its static limit, 9.307 eV, the geometric mean of the two senses' limits, four rods' discount carried to rails, with Earth's 50 uT in an orientation the prediction does not know",
+    "high": 9.30004,
+    "low": 4.6902,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "eV",
+    "value": 9.307
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 13.0,
+    "kind": "hold",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 1.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": null,
+    "seed": 20261126,
+    "test": "E2-21"
+   }
+  },
+  {
+   "ident": "E2-21 hold, R1, realisation 0 at q 0.3",
+   "prediction": {
+    "basis": {
+     "Q": 36.3532,
+     "bend_mm": 33.5294,
+     "bend_rule_eV": 0.993265,
+     "depth_mean_eV": 0.0334266,
+     "depth_weakest_eV": 0.0318373,
+     "f_MHz": 914.827,
+     "length_mm": 210.672,
+     "n_eff": 1.55523,
+     "null_mm": 0.564188,
+     "q_null": 0.300114,
+     "static_at": 0.8035,
+     "static_eV": 3.27954,
+     "strength_across_D_per_h": 3.46663,
+     "strength_down_D_per_h": 38.9212,
+     "strength_up_D_per_h": 1.7314,
+     "volts_at_start": 29.057,
+     "volts_mean": 29.6805
+    },
+    "claim": "at q 0.3 the static balance holds: R1 holds electrons for 20 laps up to 0.85 to 1.05 of its static limit, 3.28 eV, the geometric mean of the two senses' limits",
+    "high": 3.44351,
+    "low": 2.78761,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "eV",
+    "value": 3.27954
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 5.0,
+    "kind": "hold",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 0.8,
+    "periods": 0,
+    "phases": 8,
+    "q": 0.3,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261127,
+    "test": "E2-21"
+   }
+  },
+  {
+   "ident": "E2-22 hold, T915-S, realisation 0",
+   "prediction": {
+    "basis": {
+     "Q": 213.69,
+     "bend_mm": 15.285,
+     "bend_rule_eV": 8.24123,
+     "depth_mean_eV": 0.986683,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "n_eff": 1.0311,
+     "null_mm": 0.915,
+     "q_null": 0.487973,
+     "static_at": 0.8033,
+     "static_eV": 11.6427,
+     "strength_across_D_per_h": 1.19919,
+     "strength_down_D_per_h": 5.42229,
+     "strength_up_D_per_h": 5.42229,
+     "volts_at_start": 49.8171,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 20 laps up to 0.61 to 0.95 of its static limit, 11.64 eV, the geometric mean of the two senses' limits",
+    "high": 11.0605,
+    "low": 7.10202,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "eV",
+    "value": 11.6427
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/t915s.toml",
+    "high": 16.0,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 20.0,
+    "low": 3.5,
+    "periods": 0,
+    "phases": 2,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261128,
+    "test": "E2-22"
+   }
+  },
+  {
+   "ident": "E2-22 hold, flat ring 318, realisation 0",
+   "prediction": {
+    "basis": {
+     "Q": 213.69,
+     "bend_mm": 50.573,
+     "bend_rule_eV": 27.2675,
+     "depth_mean_eV": 0.986683,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "length_mm": 317.759,
+     "n_eff": 1.0311,
+     "null_mm": 0.915,
+     "q_null": 0.487973,
+     "static_at": 0.8045,
+     "static_eV": 32.4332,
+     "strength_across_D_per_h": 1.19919,
+     "strength_down_D_per_h": 5.42229,
+     "strength_up_D_per_h": 5.42229,
+     "volts_at_start": 49.8171,
+     "volts_mean": 50.0
+    },
+    "claim": "flat ring 318 holds electrons for 20 laps up to 0.61 to 0.95 of its static limit, 32.43 eV, the geometric mean of the two senses' limits; 2.786 times T915-S's limit, the static limits' ratio",
+    "high": 30.8116,
+    "low": 19.7843,
+    "ratio": 2.78572,
+    "ratio_high": 3.20358,
+    "ratio_low": 2.36787,
+    "unit": "eV",
+    "value": 32.4332
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/flat_ring_318.toml",
+    "high": 44.0,
+    "kind": "hold",
+    "label": "flat ring 318",
+    "laps": 20.0,
+    "low": 9.5,
+    "periods": 0,
+    "phases": 2,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261129,
+    "test": "E2-22"
+   }
+  },
+  {
+   "ident": "E2-22 hold, helix (1, 3), realisation 0",
+   "prediction": {
+    "basis": {
+     "Q": 213.69,
+     "bend_mm": 25.0461,
+     "bend_rule_eV": 13.5041,
+     "depth_mean_eV": 0.986683,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 29.141,
+     "length_mm": 317.759,
+     "n_eff": 1.0311,
+     "null_mm": 0.915,
+     "q_null": 0.487973,
+     "static_at": 0.7827,
+     "static_eV": 18.451,
+     "strength_across_D_per_h": 1.19919,
+     "strength_down_D_per_h": 5.42229,
+     "strength_up_D_per_h": 5.42229,
+     "volts_at_start": 49.8171,
+     "volts_mean": 50.0
+    },
+    "claim": "helix (1, 3) holds electrons for 20 laps up to 0.61 to 0.95 of its static limit, 18.45 eV, the geometric mean of the two senses' limits; 1.585 times T915-S's limit, the static limits' ratio",
+    "high": 17.5284,
+    "low": 11.2551,
+    "ratio": 1.58477,
+    "ratio_high": 1.82249,
+    "ratio_low": 1.34706,
+    "unit": "eV",
+    "value": 18.451
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/helix_13.toml",
+    "high": 25.5,
+    "kind": "hold",
+    "label": "helix (1, 3)",
+    "laps": 20.0,
+    "low": 5.5,
+    "periods": 0,
+    "phases": 2,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261130,
+    "test": "E2-22"
+   }
+  },
+  {
+   "ident": "slot beta, straight slot guide, realisation 0",
+   "prediction": {
+    "basis": {
+     "Q": 117.576,
+     "depth_mean_eV": 0.232447,
+     "depth_weakest_eV": 0.229019,
+     "f_MHz": 914.983,
+     "first_order_beta": 0.312598,
+     "length_mm": 213.486,
+     "n_eff": 1.53472,
+     "null_mm": 0.5,
+     "q_null": 0.445028,
+     "q_start": 0.44208,
+     "volts_at_start": 39.735,
+     "volts_mean": 40.0
+    },
+    "claim": "electrons 0.004h off the null, at rest on the path, oscillate at Mathieu's exact exponent for the 2-D section's q there, 0.4421: beta 0.326034",
+    "high": 0.326686,
+    "low": 0.325382,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "beta",
+    "value": 0.326034
+   },
+   "shot": {
+    "depth": null,
+    "design": "experiments/twin_rung1/slot_straight.toml",
+    "high": 0.0,
+    "kind": "beta",
+    "label": "straight slot guide",
+    "laps": 20.0,
+    "low": 0.0,
+    "periods": 60,
+    "phases": 1,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261131,
+    "test": "slot"
+   }
+  },
+  {
+   "ident": "slot well, straight slot guide, realisation 0",
+   "prediction": {
+    "basis": {
+     "Q": 117.576,
+     "depth_mean_eV": 0.232447,
+     "depth_start_eV": 0.229377,
+     "depth_weakest_eV": 0.229019,
+     "f_MHz": 914.983,
+     "length_mm": 213.486,
+     "model_edge_D": 0.926603,
+     "model_first_D": 0.938114,
+     "n_eff": 1.53472,
+     "null_mm": 0.5,
+     "q_null": 0.445028,
+     "saddle_mm": 0.932792,
+     "volts_at_start": 39.735,
+     "volts_mean": 40.0
+    },
+    "claim": "electrons sent from straight slot guide's null toward its escape saddle at the drive's zero crossings, with nothing along the path, escape at its depth there, 0.2294 eV (the section model: 0.93 D)",
+    "high": 0.286722,
+    "low": 0.183502,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "eV",
+    "value": 0.229377
+   },
+   "shot": {
+    "depth": null,
+    "design": "experiments/twin_rung1/slot_straight.toml",
+    "high": 0.33,
+    "kind": "well",
+    "label": "straight slot guide",
+    "laps": 20.0,
+    "low": 0.16,
+    "periods": 40,
+    "phases": 2,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261132,
+    "test": "slot"
+   }
+  },
+  {
+   "ident": "must fail, R1, on the bench at a 1 eV well",
+   "prediction": {
+    "basis": {
+     "depth_eV": 1.0,
+     "q_null": 1.64118,
+     "volts": 162.371
+    },
+    "claim": "driven to 162.4 V the null's q is 1.64, past Mathieu's 0.908: no well forms, and no electron launched near the null is held",
+    "high": 0.0,
+    "low": 0.0,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "held",
+    "value": 0.0
+   },
+   "shot": {
+    "depth": 1.0,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 4.0,
+    "kind": "fail",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 0.5,
+    "periods": 200,
+    "phases": 4,
+    "q": null,
+    "ratio": 2.0,
+    "realisation": null,
+    "seed": 20261133,
+    "test": "must fail"
+   }
+  },
+  {
+   "ident": "must fail, R1, on the bench at q 1.89",
+   "prediction": {
+    "basis": {
+     "depth_eV": 1.3262,
+     "q_null": 1.89,
+     "volts": 186.987
+    },
+    "claim": "driven to 187.0 V the null's q is 1.89, past Mathieu's 0.908: no well forms, and no electron launched near the null is held",
+    "high": 0.0,
+    "low": 0.0,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "held",
+    "value": 0.0
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 4.0,
+    "kind": "fail",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 0.5,
+    "periods": 200,
+    "phases": 4,
+    "q": 1.89,
+    "ratio": 2.0,
+    "realisation": null,
+    "seed": 20261134,
+    "test": "must fail"
+   }
+  },
+  {
+   "ident": "must fail control, R1, on the bench",
+   "prediction": {
+    "basis": {
+     "q_null": 0.505573,
+     "static_eV": 9.307,
+     "top_over_static": 0.429784,
+     "volts": 50.0
+    },
+    "claim": "the must-fail launch at the design's 50 V (q 0.51): every electron is held for 200 RF periods, 4 eV being 0.43 of the static limit, under the 0.61 a hold keeps",
+    "high": 0.0,
+    "low": 0.0,
+    "ratio": null,
+    "ratio_high": null,
+    "ratio_low": null,
+    "unit": "lost",
+    "value": 0.0
+   },
+   "shot": {
+    "depth": null,
+    "design": "designs/r1_rail_ring.toml",
+    "high": 4.0,
+    "kind": "control",
+    "label": "R1",
+    "laps": 20.0,
+    "low": 0.5,
+    "periods": 200,
+    "phases": 4,
+    "q": null,
+    "ratio": 2.0,
+    "realisation": null,
+    "seed": 20261135,
+    "test": "must fail"
+   }
+  }
+ ]
+}

@@ -1,0 +1,38 @@
+# The straight slot guide of stage 1's instrument check (docs/KNOTTED_GUIDE.md sections 3.3 and 10): S2-C3's section,
+# one double-sided RO4003C board 0.813 mm thick with a 1.0 mm routed slot, its four slot-edge strips 0.5 mm wide set
+# back 0.2 mm from the wall and driven as a quadrupole, the other board's copper 1.0 mm off either face; swept along a
+# straight line one guided wave long, a ring of m = 1 unrolled, at S2-C3's 40 V. Read by array16.twin.Design for
+# experiments/twin_rung1.py, which tracks electrons through it in three dimensions against its 2-D section.
+#
+# The solved section (default grid): Q_c 157.2 by Wheeler's rule with the planes ideal, as solved here, the strips'
+# loss alone; 154.4 with the planes as lossy copper (planes_lose = true): they take 1.8 % of the loss, the quadrupole's
+# field held between the strips and in the board. Q 117.6 and 116.0, so 40 V takes 0.66 and 0.67 W. The strips' faces
+# on the RO4003C, their treated side, carry 0.39 of the copper's loss: with Hammerstad's factor for 1.5 um rms on them
+# (rough = 1.37) Q_c is 137.4, Q 106.1 and 40 V takes 0.74 W.
+name = "straight slot guide"
+about = "S2-C3's slot guide on RO4003C, 1.0 mm slot, 0.5 mm strips set back 0.2 mm, swept straight at 40 V"
+seed = 3
+
+[band]
+f = 915e6
+m = 1
+
+[section]               # array16.guide.sections.SlotGuide
+kind = "slot"
+slot = 1.0e-3           # m: h = 0.5 mm from the null to either wall
+strip = 0.5e-3          # m
+pull = 0.2e-3           # m: the copper set back from the routed wall
+planes = 1.0e-3         # m: the other board's copper beyond either face, grounded
+laminate = "RO4003C"
+thickness = 0.813e-3    # m
+copper = 35e-6          # m: 1 oz
+grid = "default"
+aperture = 4.0
+
+[path]
+kind = "straight"       # one guided wave at the band on the solved index, repeating: the ring unrolled
+samples = 256
+
+[drive]
+volts = 40.0            # V, peak, top to bottom copper of one side (S2-C3's)
+feeds = 2
