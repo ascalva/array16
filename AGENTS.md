@@ -24,9 +24,10 @@ These were given as corrections, so they bind.
    planar windings, electrode patterns on its boards. No external or additional hardware that has to be set up
    beside the array. The array may span several boards arranged in three dimensions (stacked, tiled, at angles,
    flexible): one board would hold a guide to a planar ring, and a knot takes a path out of the plane (owner,
-   2026-11-21). Both lines stay open: a ring with everything on a single board, and knots across several boards
-   (owner, 2026-11-21). An external coil or magnet needs it first fully shown that RF fields alone do not suffice
-   at any energy, and then counts only as a budget-friendly option. Experiment 1 (a magnetic guide wound on a
+   2026-11-21). Keep the options open while the work is early: a ring with everything on one board and knots across
+   several boards are designs to weigh, not lines committed to (owner, 2026-11-22: "keep options open, be flexible
+   while in the early stages"). An external coil or magnet needs it first fully shown that RF fields alone do not
+   suffice at any energy, and then counts only as a budget-friendly option. Experiment 1 (a magnetic guide wound on a
    former) was a detour from this and is finished; do not extend it unasked.
 2. **Never dismiss the question.** Write what a thing takes and how to get there ("1 eV takes 12 kV/m at
    0.4 GHz; elements a millimetre from the path reach that with tens of volts"), not that something "does

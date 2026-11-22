@@ -335,7 +335,18 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
 
 ## 5. Next, in order
 
-1. **The field compiler, in the core** (`docs/VIRTUAL_ANTENNA.md` section 9). A package `array16/synthesis/` beside
+1. **Experiment 2's first simulations: the twin bench and its calibration rung** (stages 0 and 1 of
+   `docs/KNOTTED_GUIDE.md` section 10, before the compiler; owner, 2026-11-22). First, the knotted study's revision
+   checks join its script, so its `run.log` carries the numbers the designs rest on (section 2). Then the instruments
+   of its section 8.1, each with tests that would catch it wrong: 2-D sections by finite volumes (Z₀, n_eff, laminate
+   share, Q, gradient, escape), the three-dimensional field of a board layout, the guide's modes, Q and R/Q from an
+   eigenmode run (openEMS, or Palace), electrons tracked in the solved field rather than an ideal one, and a
+   secondary-emission model for multipactor, on a simulated twin bench of `array16.lab` that runs the design review's
+   DR-0. Then the calibration rung, its predictions and criteria committed before any tracking: R1's rail ring on one
+   board (E2-21), the flat ring and the (1, 3) helix (E2-22), and the straight slot guide in three dimensions against
+   its 2-D section. It is the first run that tracks electrons in the computed field of a design, and its field solver
+   is the operator the compiler needs for board electrodes.
+2. **The field compiler, in the core** (`docs/VIRTUAL_ANTENNA.md` section 9). A package `array16/synthesis/` beside
    `array16/particles/`, frozen dataclasses and pure functions under `mypy --strict` and `ruff`: elements, region,
    operator, spectrum, targets, solve, states, sequences, measure, verify, and compile, steps 1 to 9 of the process as
    one pipeline, with `route` choosing between receive weights, a static state, a time-averaged schedule and a comb
@@ -350,7 +361,7 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    potential `−(V/π)·arg cosh(πz/2h)` and field `−i(V/2h)·tanh(πz/2h)`, one board's saddle at `h√(1 + w)`, and its
    share `(4/π²)(w − 2)/((w + 2)w²)` with the maximum `(5√5 − 11)/(2π²)` at `w = 1 + √5`; each then becomes a
    Proposition.
-2. **V1, the first registered virtual-antenna experiment** (section 10.1). A virtual monopole made from four switched
+3. **V1, the first registered virtual-antenna experiment** (section 10.1). A virtual monopole made from four switched
    quarter-wave monopoles at 2.44 GHz on a λ/4 square, fitted on 210 positions and checked against a real monopole on
    120 others, with criteria V1-0 to V1-10 committed with the predictions before the run and a case that must fail
    (a target a wavelength across, predicted −2.4 dB). It runs on `benches/v1_sim.toml`, whose simulated array will
@@ -358,23 +369,18 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    error and a moving lead. Its hardware rungs (`benches/v1_rung1.toml` and sessions T, `docs/VIRTUAL_ANTENNA.md`
    section 10.1) come at the build stage of rule 12. Then V2 (comb lines through 2-bit elements on a Wilkinson
    tree), V3 (the rev B tile and whips) and V4 (the ring guide as an antenna), each first on a simulated bench.
-3. **The closed RF guide, as one case of synthesis** (experiment 2), in simulation. Two lines run side by side
-   (owner, 2026-11-21). Knots across several boards, on the order of work of `docs/KNOTTED_GUIDE.md` section 10:
-   the instruments of its section 8.1 and the design review first, with the guide's modes, Q and R/Q from an
-   eigenmode run; R1's rail ring, the flat ring and the (1, 3) helix as the calibration rung; then T915-S, S2-C3,
-   T915-S6 to accelerate, and L26, T915-R and T2450-S, beside the sharp six-stick trefoil that must fail; predictions
-   E2-1 to E2-27 and their criteria committed before any tracking, on `array16.lab`, and a report carrying 3-D views
-   of boards, fields and orbits. Before that, the revision's scratch checks (the strips' section solve, T915-S as a
-   ring with its Monte Carlo, the slot guide's section) join `experiments/knotted_guide_study.py` and its `run.log`.
-   And a ring with everything on a single board, a study of its own on the knotted study's solver and drive model:
-   the surface ring of two rails (ELE-1, ELE-3), the board's own top and bottom copper as a facing pair around a
-   channel routed through it (with how the channel's island is held), and one board carrying the ring, its resonator
-   and its feed network. Both take the prior art's numbers (section 3): resonators designed to the Q and resistance
-   built boards reach, a secondary-emission model in the tracker, a drive clean at the secular lines, and the vacuum
-   the path asks. The theory goes to the ledger, and to Lean where it is mathematics: the travelling-wave ring
-   (section 4, N3), its pickups (N4), the flat ring against the knot (N6), the bend rule (item 6) and the knotted
-   study's laws. V4 measures the same ring as an antenna.
-4. **The radio side, as design.** Rev B revised on paper around one coherent channel (`REDESIGN.md`, the decision at
+4. **The rest of experiment 2**, the closed RF guide as one case of synthesis, on the same bench and the order of work
+   of `docs/KNOTTED_GUIDE.md` section 10: T915-S, S2-C3, T915-S6 to accelerate, and L26, T915-R and T2450-S, beside the
+   sharp six-stick trefoil that must fail; predictions E2-1 to E2-27 and their criteria committed before any
+   tracking, and a report carrying 3-D views of boards, fields and orbits. Options stay open while the work is early
+   (owner, 2026-11-22): the one-board designs (the surface ring of two rails, the board's own top and bottom copper as
+   a facing pair round a routed channel, one board carrying the ring, its resonator and its feed) are weighed beside
+   the knots as results come in. Every design takes the prior art's numbers (section 3): resonators designed to the Q
+   and resistance built boards reach, a secondary-emission model in the tracker, a drive clean at the secular lines,
+   and the vacuum the path asks. The theory goes to the ledger, and to Lean where it is mathematics: the
+   travelling-wave ring (section 4, N3), its pickups (N4), the flat ring against the knot (N6), the bend rule (item 6)
+   and the knotted study's laws. V4 measures the same ring as an antenna.
+5. **The radio side, as design.** Rev B revised on paper around one coherent channel (`REDESIGN.md`, the decision at
    its head), then its section 13 decisions; the Vivaldi findings folded in; the datasheet corrections applied to the
    schematic. The HackRF Pro (through open-source libhackrf bindings) and the controller become devices of a bench,
    as the theory's section 9.3 lays out, at the build stage.
@@ -406,6 +412,9 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
   boards ("that's also still an idea worth continuing to investigate").
 - 2026-11-21: the controller's sequence store grows from 64 to 256 words (protocol version 2); rev B's draft
   LOAD_SEQ2 takes 256 words too (`REDESIGN.md` section 8).
+- 2026-11-22: experiment 2's first simulations, the twin bench's instruments and its calibration rung, come before
+  the field compiler. The ring on one board was about keeping options open while the work is early, not a line of
+  its own ("i just meant keep options open, be flexible while in the early stages").
 
 Open for the owner at the build stage, from `docs/VIRTUAL_ANTENNA.md`:
 - V1's beacon: a synthesiser module locked to the HackRF's 10 MHz, a second RF source beside the HackRF; or sessions
