@@ -8,52 +8,96 @@ dimensions, strike the copper's faces at any angle, and free secondaries by Furm
 with its own yield and spectrum.
 
   FurmanPivi     the model (M. A. Furman and M. T. F. Pivi, "Probabilistic model for the simulation of secondary
-                 electron emission", Phys. Rev. ST Accel. Beams 5, 124404 (2002)): backscattered electrons (eq. 25 and
-                 47a; a half Gaussian under the impact energy, eq. 26), rediffused ones (eq. 28 and 47b; E^q under it)
-                 and true secondaries (eq. 31 and 48; n of them, n to M = 10, binomial per penetrating electron, eq. 43
-                 and 46, each with E^(p_n - 1) exp(-E / eps_n), their sum held under the impact energy), all leaving by
-                 cos^alpha of the angle from the normal. Defaults: copper as their Table I and Table II give it
-  FP_COPPER, FP_CONDITIONED
-                 bare copper as Furman and Pivi fitted it (N. Hilleret's CERN sample, chemically cleaned, not baked in
-                 situ: 2.09 at 271 eV at normal incidence, one at 27.3 eV, 0.496 at zero energy); and conditioned copper,
-                 the true secondaries scaled to a peak of 1.2, where V. Baglin et al. (Proc. EPAC 2000, 217, section 4.3)
-                 found unbaked copper's maximum settling under an electron dose above 10^-3 C/mm^2
-  Normal         the level-1 chart's surface: multipactor's yield at the impact energy, every secondary along the
-                 normal with Anza et al.'s exponential normal energy (CHART: ECSS-E-ST-20-01C Table 9-1 copper)
+                 electron emission", Phys. Rev. ST Accel. Beams 5, 124404 (2002)): backscattered electrons (eqs. 25
+                 and 47a; a half Gaussian under the impact's energy, eq. 26), rediffused ones (eqs. 28 and 47b; E^q
+                 under it, eq. 29) and true secondaries (eqs. 31, 32 and 48; n of them up to M = 10, binomial per
+                 penetrating electron, eqs. 43 and 46, each E^(p_n - 1) exp(-E / eps_n), eq. 33, their sum held under
+                 the impact's energy, eq. 52), all leaving by cos^alpha of the angle from the normal; the defaults
+                 copper's, their Tables I and II
+  FP_COPPER      bare copper as they fitted it (N. Hilleret's CERN sample, chemically cleaned, not baked in situ):
+                 2.09 at 271 eV at normal incidence (their 2.1 at 271 eV), one at 27.3 eV, 0.496 at zero energy
+  FP_CONDITIONED conditioned copper: the true secondaries alone scaled to a peak of 1.2, where V. Baglin et al.
+                 (Proc. EPAC 2000, 217, section 4.3) found unbaked copper's maximum settling under an electron dose
+                 above 10^-3 C/mm^2; one at 90.4 eV
+  Normal, CHART  the level-1 chart's surface: multipactor's yield at the impact's energy (ECSS-E-ST-20-01C Table 9-1
+                 copper), every secondary along the normal with Anza et al.'s exponential normal energy
   Chamber        where electrons fly and what they strike: the field per volt as a SectionGrid, the copper's boxes and
-                 the laminate's (an insulator), and the region past which an electron has escaped; Chamber.of(solved)
-                 from a solved section, Chamber.plates(gap, f) for parallel plates
-  impacts        electrons flown to their first impact: where, when, how fast and at what angle
-  track, growth  the population: emitted from the copper's faces at random times of the first period, flown by
-                 kick-drift-kick steps, each strike multiplying an electron's weight by the surface's yield and sending
-                 it off again from the strike as one secondary of the component drawn (an unbiased estimator of the
-                 population: Furman and Pivi's mean emission per impact and the spectrum of one emitted electron);
-                 resampled every RF period, so that the weight over the number is that period's growth; the growth in
-                 nepers per RF period, over seeds with its spread
+                 the insulators' (laminate, a board's body), and the region past which an electron has escaped;
+                 Chamber.of(solved) for a solved section, Chamber.plates and plates(fd) for parallel plates
+  impacts        electrons flown to their first impact: when, where, how fast and at what angle, on which face
+  track, growth  the population in time: seeds leave the copper's open faces at random times of the first period,
+                 flown by kick-drift-kick steps; each strike multiplies an electron's weight by the yield and sends it
+                 off as one emitted electron of the component drawn (an unbiased estimator: the mean emission per
+                 impact, the spectrum of one emitted electron), splitting and Russian roulette at the strikes holding
+                 the number; each period's growth the weight's, and the growth in nepers per RF period over seeds
+  generations    the population generation by generation: the effective yield, the spectral radius of the operator
+                 that carries one generation's emissions to the next (multipactor.effective_yield in two dimensions)
+  read, Reading  a case read both ways on a surface, with the laminate absorbing or emitting as the copper
   plate_threshold, calibrate
-                 the parallel-plate limit: the volts where the tracked growth crosses zero across a gap f d, and the gain
-                 that puts it on copper's lowest chart point (27.4 V at 0.70 GHz mm, multipactor.CALIBRATION)
+                 the parallel-plate limit: the volts where the tracked growth crosses zero at f d, and the gain that
+                 would put it on copper's lowest chart point (27.4 V at 0.70 GHz mm, multipactor.CALIBRATION)
   Case, cases, r1_section, facing_case
-                 the protocol's readings: T915-S's section B at 50.3 V, section B with its split widened to h refitted
-                 for 1 eV at q 0.5 (39.6 V, the split as a lever), and R1's rails at 50 V; facing strips fitted to a
-                 depth D at q 0.5 (E2-13's family)
+                 the protocol's readings: T915-S's section B at 50.3 V, section B with its split widened to h and
+                 refitted for 1 eV at q 0.5 (h 0.718 mm, 39.6 V: the split as a lever), R1's rails at 50 V; and facing
+                 strips fitted to a depth D at q 0.5, the gap scaled as the root of D (E2-13's family)
 
 **The model's limits.** The field is the section's quasi-static field, uniform along the path: no axial field, and
-neither a travelling wave's magnetic field nor its Doppler shift, both v_e / v_phase of what is kept (under 1 % for
-impacts under 100 eV on T915-S). Electrons are non-relativistic and carry no space charge: the growth is the
+neither a travelling wave's magnetic field nor its Doppler shift, each v_e / v_phase of what is kept (under 1 % for
+strikes under 100 eV on T915-S). Electrons are non-relativistic and carry no space charge: the growth is the
 population's small-signal rate, before its own field limits it. The laminate charges nothing: an electron that strikes
-it is absorbed (laminate=None), or the laminate emits as the copper does (laminate=the copper's surface); the two bracket
-an uncharged dielectric, and E2-13 counts where they agree. Copper's parameters come from one sample (bare) and one
-scaled case (conditioned); conditioning also raises the reflection at low energy, which Cimino et al. measured near one
-at zero energy on scrubbed copper (Phys. Rev. Lett. 93, 014801 (2004)) and which the conditioned case keeps at Furman
-and Pivi's 0.496. Furman and Pivi set alpha = 1 for the backscattered and rediffused electrons for expediency, noting
-their angular spectra differ from cos theta; their copper's angular dependence was fitted on aluminium samples. An
-electron that strikes nothing within `horizon` RF periods of leaving a surface is dropped as held (the well can hold
-it), and one that leaves the region has escaped.
+it is absorbed (laminate None), or the laminate emits as the copper does; the two bracket an uncharged dielectric, and
+E2-13 counts where they agree. Copper's parameters come from one sample (bare) and one scaled case (conditioned);
+conditioning also raises the reflection at low energy, which R. Cimino et al. measured near one at zero energy on
+scrubbed copper (Phys. Rev. Lett. 93, 014801 (2004)) and the conditioned case keeps at 0.496. Furman and Pivi set
+alpha = 1 for the backscattered and rediffused electrons for expediency, noting that their angular spectra differ, and
+took the angular dependence from aluminium. A flight that strikes nothing within the horizon (48 RF periods, as
+multipactor's) is dropped as held, one that leaves the region or the grid has escaped, and the region is a box: for
+facing strips 2h past the copper's outer edges and its back faces, for R1's rails 3.5 mm either way and 1.7 mm up.
 
-**Calibration.** In the parallel-plate limit, Normal on the chart's yield is multipactor's one-dimensional model, and
-the tracker agrees with multipactor.growth_rate there (tests/test_guide_emission.py). The parallel-plate readings and
-the protocol's numbers are in the module's notes at the end (NOTES), each with the settings that made it.
+**Calibration (DR-0), in the parallel-plate limit** (Claim). On the level-1 chart's own yield (Normal, multipactor's
+GAIN) the tracker is multipactor's one-dimensional model in two dimensions: its growth per RF period meets
+multipactor.growth_rate within 0.003 Np at 1.15 and 0.85 times copper's lowest point and at 0.9 and 1.1 times the
+held-out point, its effective yield multipactor.effective_yield within 0.6 %, and its threshold (plate_threshold, to
+the bisection's 0.7 %, three seeds, 500 electrons) lies at 27.3 V at 0.70 GHz mm (-0.3 % of ECSS's 27.4 V), 91.6 V at
+the held-out 1.68 GHz mm (-0.3 %) and within -1.7 to +1.8 % of the twelve blind points. Furman and Pivi's bare copper as
+published (gain one) multipacts later than the chart on its left branch and sooner on its right: +32.9 % at 0.66 GHz
+mm, +19.5 % at 0.70 (32.7 V), +4.6 % at 0.87, +0.3 % at 1.08, -3.1 % at 1.35 and -8.3 % at 1.68 (84.2 V), and not at
+all from 0.49 to 0.59 GHz mm within three times ECSS's volts: its crossover, 27.3 eV against the chart's 19 eV, moves
+the chart's nose to higher f d. One gain set at 0.70 GHz mm (0.837) would leave the held-out point 23 % low, outside
+DR-0's 10 %, so its copper is read as published, with the chart's yield beside it. Conditioned copper multipacts at
+1.6 to 2.1 times ECSS's volts from 1.51 to 2.62 GHz mm, and not at 1.20 within three times them. At T915-S's 1.674 GHz
+mm, 50.3 V keeps 4.5 dB on bare copper as published (5.2 dB on the chart) and 9.4 dB conditioned.
+
+**The protocol's readings** (Claims; read on the default grid, 1000 electrons, 30 RF periods of which 10 settle and 10
+generations of which 3 settle, 200 steps a period, seeds 0 to 3: the growth in Np per RF period and the effective
+yield, each the mean over the seeds with the standard deviation of the growth). Every reading decays, in both laminate
+models and on every yield:
+
+  case                          yield          laminate absorbs        laminate emits as the copper
+  T915-S section B, 50.3 V      bare           -0.165 +- 0.005, 0.798  -0.142 +- 0.004, 0.844
+                                conditioned    -0.176 +- 0.013, 0.679  -0.192 +- 0.012, 0.717
+                                the chart's    -0.094 +- 0.004, 0.866  -0.060 +- 0.006, 0.896
+  split h refitted, 39.6 V      bare           -0.180 +- 0.043, 0.713  -0.175 +- 0.006, 0.833
+                                conditioned    -0.186 +- 0.051, 0.626  -0.218 +- 0.021, 0.713
+                                the chart's    -0.136 +- 0.002, 0.827  -0.134 +- 0.002, 0.845
+  R1's rails, 50 V              bare           dies; -1.06, 0.644      dies; -1.12, 0.660
+                                conditioned    dies; -1.09, 0.637      dies; -1.09, 0.644
+                                the chart's    dies; -1.13, 0.735      dies; -1.11, 0.736
+
+The effective yields' spreads over the seeds are 0.002 to 0.017. On T915-S's section the strikes carry 16 eV on
+average, under bare copper's crossover, 9 to 17 % of them on the polyimide of the split and the margins, and 4 to 7 %
+of the population leaves the gap each period; both 1 eV wells decay, as MPC-H1 states for 1 eV (its falsifier, E2-13,
+is the family facing_case builds). Each R1 population is gone within 4 to 9 RF periods (Run.lived), and its effective
+yield, 0.64 to 0.66 on bare copper and 0.74 on the chart's, is under one: no generation frees as many electrons as
+the one before. How fast it falls while it lives, 1.06 to 1.13 Np a period (Run.decay), is how fast its electrons
+leave the region: in a region half as large again it lives 16 to 23 periods and falls 0.58 to 0.69 Np a period, its
+effective yield 0.640 against 0.648 in the default region. Of the seeds, the secondaries of a 50 eV strike, 78 % leave
+the rails' field before they strike again, those that strike carry 4.5 eV at the median, and the lineage settles on
+electrons that fall back onto the face they left at 0.5 to 3.5 eV. **Hypothesis (read from these numbers):** MPC-3's
+parallel-plate bound, -5.2 dB at 50 V, is conservative on R1's rails: in their own field the electrons leave before
+they multiply; DR-8's measured yield and a 3-D field test it. Settings: 100, 200 and 400 steps a period give -0.175,
+-0.162 and -0.162 on T915-S (bare, absorbing, two seeds), the effective yield 0.80 at each; 3000 electrons give -0.172,
+the coarse grid -0.166.
 SI units, except energies in eV and f d in GHz mm.
 """
 
@@ -85,14 +129,15 @@ __all__ = [
     "BACKSCATTERED",
     "CHART",
     "EPS",
-    "HORIZON",
     "FP_CONDITIONED",
     "FP_COPPER",
+    "HORIZON",
     "MULTIPLICITY",
     "QM",
     "REDIFFUSED",
     "ROUNDS",
     "SEED_ENERGY",
+    "SPLIT",
     "TRUE",
     "Box",
     "Case",
@@ -101,18 +146,22 @@ __all__ = [
     "FurmanPivi",
     "Growth",
     "Impacts",
+    "Lineage",
     "Normal",
+    "Reading",
     "Run",
     "Strike",
     "Surface",
     "calibrate",
     "cases",
     "facing_case",
+    "generations",
     "growth",
     "impacts",
     "plate_threshold",
     "plates",
     "r1_section",
+    "read",
     "track",
 ]
 
@@ -206,16 +255,16 @@ class FurmanPivi:
         true           delta_ts = d^ D(E / E^),  D(x) = s x / (s - 1 + x^s),
                        d^ = dts^ [1 + t1 (1 - cos^t2)],  E^ = Ets^ [1 + t3 (1 - cos^t4)]
 
-    (their eqs. 25, 28, 31, 47 and 48). An impact frees one backscattered electron with probability delta_e, one
+    (their eqs. 25, 28, 31, 32, 47 and 48). An impact frees one backscattered electron with probability delta_e, one
     rediffused with delta_r, and otherwise n true secondaries, n binomial over M = 10 with mean
     delta_ts / (1 - delta_e - delta_r) (eqs. 43 and 46). A backscattered electron leaves with a half Gaussian of width
     sigma_e under E (eq. 26), a rediffused one with (q + 1) E'^q / E^(q + 1) (eq. 29); n true secondaries with energies
-    each E'^(p_n - 1) exp(-E' / eps_n), their sum held under E (eq. 52, the normalised incomplete gamma). Every emitted
-    electron leaves by cos^alpha of its angle from the normal, its azimuth uniform.
+    each E'^(p_n - 1) exp(-E' / eps_n) (eq. 33), their sum held under E (eq. 52, through the normalised incomplete
+    gamma). Every emitted electron leaves by cos^alpha of its angle from the normal, its azimuth uniform.
 
-    The defaults are copper's (their Table I and Table II, fitted to N. Hilleret's CERN sample, chemically cleaned but not
-    baked in situ, at normal incidence; the angular parameters from aluminium data): 2.09 at 271 eV at normal incidence
-    (their 2.1 at 271 eV), one first at 27.3 eV, 0.496 at zero energy, where only backscattering is left."""
+    The defaults are copper's (their Table I and Table II, fitted to N. Hilleret's CERN sample, chemically cleaned but
+    not baked in situ, at normal incidence; the angular parameters from aluminium data): 2.09 at 271 eV at normal
+    incidence (their 2.1 at 271 eV), one first at 27.3 eV, 0.496 at zero energy, where only backscattering is left."""
 
     p1e_inf: float = 0.02
     p1e_peak: float = 0.496
@@ -245,7 +294,9 @@ class FurmanPivi:
 
     def __post_init__(self) -> None:
         if len(self.p_n) != MULTIPLICITY or len(self.eps_n) != MULTIPLICITY:
-            raise ValueError(f"p_n and eps_n take {MULTIPLICITY} values each, not {len(self.p_n)} and {len(self.eps_n)}")
+            raise ValueError(
+                f"p_n and eps_n take {MULTIPLICITY} values each, not {len(self.p_n)} and {len(self.eps_n)}"
+            )
         positive = (self.w, self.p, self.sigma_e, self.e_r, self.r, self.e_ts, self.s, *self.p_n, *self.eps_n)
         if not all(x > 0 for x in positive) or self.s <= 1 or self.q <= -1 or self.alpha < 0 or self.delta_ts < 0:
             raise ValueError(
@@ -263,18 +314,22 @@ class FurmanPivi:
     def elastic(self, energy: Arr | float, cos: Arr | float = 1.0) -> Arr:
         """delta_e: backscattered electrons per impact (eqs. 25 and 47a)."""
         e, c = np.asarray(energy, dtype=np.float64), np.clip(np.asarray(cos, dtype=np.float64), 0.0, 1.0)
-        base = self.p1e_inf + (self.p1e_peak - self.p1e_inf) * np.exp(-((np.abs(e - self.e_e) / self.w) ** self.p) / self.p)
+        base = self.p1e_inf + (self.p1e_peak - self.p1e_inf) * np.exp(
+            -((np.abs(e - self.e_e) / self.w) ** self.p) / self.p
+        )
         out: Arr = base * (1 + self.e1 * (1 - c**self.e2))
         return out
 
     def rediffused(self, energy: Arr | float, cos: Arr | float = 1.0) -> Arr:
         """delta_r: rediffused electrons per impact (eqs. 28 and 47b)."""
         e, c = np.asarray(energy, dtype=np.float64), np.clip(np.asarray(cos, dtype=np.float64), 0.0, 1.0)
-        out: Arr = self.p1r_inf * -np.expm1(-((np.maximum(e, 0.0) / self.e_r) ** self.r)) * (1 + self.r1 * (1 - c**self.r2))
+        out: Arr = (
+            self.p1r_inf * -np.expm1(-((np.maximum(e, 0.0) / self.e_r) ** self.r)) * (1 + self.r1 * (1 - c**self.r2))
+        )
         return out
 
     def true(self, energy: Arr | float, cos: Arr | float = 1.0) -> Arr:
-        """delta_ts: true secondaries per impact (eqs. 31 and 48)."""
+        """delta_ts: true secondaries per impact (eqs. 31, 32 and 48)."""
         e, c = np.asarray(energy, dtype=np.float64), np.clip(np.asarray(cos, dtype=np.float64), 0.0, 1.0)
         peak = self.delta_ts * (1 + self.t1 * (1 - c**self.t2))
         x = np.maximum(e, 0.0) / (self.e_ts * (1 + self.t3 * (1 - c**self.t4)))
@@ -316,7 +371,9 @@ class FurmanPivi:
         incidence is `peak`: how electron-cloud work models a conditioned surface."""
         floor = max(float(self.elastic(e) + self.rediffused(e)) for e in np.geomspace(1.0, 2e4, 401))
         if not peak > floor:
-            raise ValueError(f"the backscattered and rediffused electrons alone reach {floor:.3f}; a peak of {peak} is under it")
+            raise ValueError(
+                f"the backscattered and rediffused electrons alone reach {floor:.3f}; a peak of {peak} is under it"
+            )
         lo, hi = 0.0, 1.0
         while replace(self, delta_ts=self.delta_ts * hi).peak[1] < peak:
             hi *= 2
@@ -364,7 +421,9 @@ class FurmanPivi:
         de, dr, dts = self.elastic(e, c), self.rediffused(e, c), self.true(e, c)
         total = de + dr + dts
         pick = rng.uniform(size=e.size) * total
-        component: IntArr = np.where(pick < de, BACKSCATTERED, np.where(pick < de + dr, REDIFFUSED, TRUE)).astype(np.intp)
+        component: IntArr = np.where(pick < de, BACKSCATTERED, np.where(pick < de + dr, REDIFFUSED, TRUE)).astype(
+            np.intp
+        )
         out = np.zeros(e.size)
         back, red, tru = component == BACKSCATTERED, component == REDIFFUSED, component == TRUE
         out[back] = np.maximum(e[back] - _deficit(rng, np.maximum(e[back], 0.0), self.sigma_e), 0.0)
@@ -463,7 +522,9 @@ class Chamber:
         v = np.array([-t, 0.5 * gap, gap + t])
         grid = SectionGrid.sampled(lambda uu, vv: vv / gap, u, v, (0.0, 0.5 * gap))
         copper = (Box(-1.0, 1.0, -t, 0.0), Box(-1.0, 1.0, gap, gap + t))
-        return cls(grid, f, copper, (), Box(-1.0, 1.0, -t, gap + t), f"plates {gap * 1e3:g} mm apart at {f / 1e9:g} GHz")
+        return cls(
+            grid, f, copper, (), Box(-1.0, 1.0, -t, gap + t), f"plates {gap * 1e3:g} mm apart at {f / 1e9:g} GHz"
+        )
 
     @classmethod
     def of(cls, solved: Solved, region: Box | None = None) -> Chamber:
@@ -607,16 +668,19 @@ def _velocity(energy: Arr, cos: Arr, azimuth: Arr, normal: Arr) -> tuple[Arr, Ar
 
 class Impacts(NamedTuple):
     """Electrons flown to their first impact: the time (s; nan where none within the flight), the point (N, 2), the
-    velocity there (N, 3: across, toward and along the path), its energy (eV), the cosine of incidence, whether the
-    box struck is copper, and which struck at all."""
+    velocity there (N, 3: across, toward and along the path), its energy (eV), the cosine of incidence, the outward
+    normal of the face struck (N, 2), whether the box struck is copper, which struck at all, and which left the region
+    or the grid (the rest of those that struck nothing flew the whole span)."""
 
     time: Arr
     point: Arr
     velocity: Arr
     energy: Arr
     cos: Arr
+    normal: Arr
     copper: BoolArr
     struck: BoolArr
+    escaped: BoolArr
 
 
 def impacts(
@@ -644,7 +708,8 @@ def impacts(
     span = periods / chamber.f
     time, point = np.full(n, np.nan), np.full((n, 2), np.nan)
     hitv, energy, cosine = np.full((n, 3), np.nan), np.full(n, np.nan), np.full(n, np.nan)
-    copper, struck = np.zeros(n, dtype=np.bool_), np.zeros(n, dtype=np.bool_)
+    normal = np.zeros((n, 2))
+    copper, struck, escaped = (np.zeros(n, dtype=np.bool_) for _ in range(3))
     state = np.zeros(n, dtype=np.intp)  # 0 waiting, 1 flying, 2 done
     half = vel[:, :2].copy()  # the in-plane velocity, pre-kicked for the step under way
     first = math.floor(float(born.min()) / dt) if n else 0
@@ -677,17 +742,19 @@ def impacts(
             hitv[i, :2], hitv[i, 2] = v, vz
             energy[i] = 0.5 * speed2 / QM
             cosine[i] = np.abs((v * hit.normal[s]).sum(axis=1)) / np.sqrt(np.maximum(speed2, 1e-300))
-            copper[i], struck[i], state[i] = hit.copper[s], True, 2
+            normal[i], copper[i], struck[i], state[i] = hit.normal[s], hit.copper[s], True, 2
         rest = go[~s]
         x[rest] = x[rest] + disp[~s]
         a1, on = drive.accel(x[rest], t_end)
-        gone = ~on | ~chamber.inside(x[rest]) | ((t_end - born[rest]) > span)
+        out = ~on | ~chamber.inside(x[rest])
+        gone = out | ((t_end - born[rest]) > span)
         state[rest[gone]] = 2  # left the chamber, or flew the whole span: no impact
+        escaped[rest[out]] = True
         keep = ~gone
         half[rest[keep]] = half[rest[keep]] + a1[keep] * (0.5 * dur[~s][keep] + 0.5 * dt)[:, None]
         if not (state < 2).any():
             break
-    return Impacts(time, point, hitv, energy, cosine, copper, struck)
+    return Impacts(time, point, hitv, energy, cosine, normal, copper, struck, escaped)
 
 
 class Run(NamedTuple):
@@ -701,6 +768,19 @@ class Run(NamedTuple):
     laminate: float  # the share of the strikes' weight on insulators
     escaped: float  # the share of the population's weight leaving the region each period
     held: float  # the share dropped each period for striking nothing within the horizon
+
+    @property
+    def lived(self) -> int:
+        """The RF periods the population lived through: all of them, unless it died."""
+        zero = np.flatnonzero(self.factors <= 0)
+        return int(zero[0]) if zero.size else len(self.factors)
+
+    @property
+    def decay(self) -> float:
+        """The mean log of the periods' growths over those it lived through after the first (Np per RF period): the
+        rate a population that dies fell at."""
+        lived = self.factors[1 : self.lived]
+        return float(np.mean(np.log(lived))) if lived.size else math.nan
 
 
 class Growth(NamedTuple):
@@ -804,13 +884,13 @@ def track(
     within `horizon` RF periods of leaving a surface is dropped as held, and one that strikes more than ROUNDS times
     within a step is left at its face, its weight dropped.
 
-    The weights are kept in a window about w, the population's weight over `electrons` at the step's start (weight
-    windows, as transport Monte Carlo keeps them): an emission whose weight passes 2w is split into that many over w
-    electrons, each drawn from the surface on its own (at most SPLIT), and one under w/2 survives with its weight over w
-    as its chance, at w. Both keep the expected weight, and every copy leaves the strike with its own draw, so that a
-    population that mostly escapes keeps its number and does not collapse onto copies of one flight. Each period's
-    growth is the population's weight at its end over its weight at its start; the growth is the mean of their logs
-    over the periods after the first `settle`, and -inf if the population dies."""
+    The number is held near `electrons` by splitting and Russian roulette at the strikes, as transport Monte Carlo
+    keeps its weights: with w the population's weight over `electrons` at the step's start, an emission of weight W'
+    leaves as m electrons of weight w, m = floor(W'/w + U) for U uniform (none at roulette; past SPLIT, SPLIT
+    electrons sharing W'), each drawn from the surface on its own. That keeps the expected weight, and every copy leaves
+    the strike with its own draw, so that a population that mostly escapes keeps its number and does not collapse onto
+    copies of one flight. Each period's growth is the population's weight at its end over its weight at its start; the
+    growth is the mean of their logs over the periods after the first `settle`, and -inf if the population dies."""
     if not (0 <= settle < periods and electrons > 0 and steps >= 8 and horizon > 0):
         raise ValueError(
             f"a run takes 0 <= settle < periods, electrons, steps >= 8 and a horizon > 0, not {settle}, {periods}, "
@@ -826,6 +906,7 @@ def track(
     v_in, vz = _velocity(seeded.energy, seeded.cos, seeded.azimuth, normals[pick])
     sw = _Swarm(points[pick], v_in, vz, rng.uniform(0.0, period, electrons))
     start_weight = float(electrons)
+    target = 1.0  # the weight each emission leaves with
     factors: list[float] = []
     impacts_per, escaped_per, held_per = [], [], []
     energy = weighed = on_laminate = 0.0
@@ -838,7 +919,6 @@ def track(
             t = (period_index * steps + k) * dt
             t_end = t + dt
             n = sw.n
-            mean = float(sw.weight[:n].sum()) / electrons  # the window's centre
             fresh = np.flatnonzero(sw.waiting[:n] & (sw.born[:n] < t_end) & (sw.weight[:n] > 0))
             if fresh.size:
                 sw.waiting[fresh] = False
@@ -876,13 +956,12 @@ def track(
                     weighed += float(np.sum(before))
                     on_laminate += float(np.sum(before[~copper]))
                 y, e_out, c_out, az = _emit(rng, surface, laminate, w_ev, cos_in, copper)
+                # each emission leaves as m electrons of the target weight, m its weight over the target rounded at
+                # random (none, at roulette); past SPLIT, SPLIT electrons share its weight
                 w = before * y
-                # the weight window: split the heavy, play roulette with the light
-                heavy, light = w > 2 * mean, (w > 0) & (w < 0.5 * mean)
-                m = np.ones(i.size, dtype=np.intp)
-                m[heavy] = np.minimum(np.floor(w[heavy] / mean + rng.uniform(size=int(heavy.sum()))), SPLIT).astype(np.intp)
-                w[heavy] /= m[heavy]
-                w[light] = np.where(rng.uniform(size=int(light.sum())) < w[light] / mean, mean, 0.0)
+                m = np.floor(w / target + rng.uniform(size=i.size)).astype(np.intp)
+                w = np.where(m > SPLIT, w / SPLIT, np.where(m > 0, target, 0.0))
+                m = np.minimum(m, SPLIT)
                 sw.weight[i], sw.x[i], sw.last[i] = w, p, t_hit
                 live = w > 0
                 extra = np.where(live, m - 1, 0)
@@ -926,6 +1005,8 @@ def track(
         if total <= 0:
             break
         sw.compact()
+        # the target follows the population's growth, steered toward `electrons` alive
+        target *= (total / start_weight) * min(max(sw.n / electrons, 0.25), 4.0)
         start_weight = total
     kept = np.array(factors[settle:])
     if kept.size and bool(np.all(kept > 0)):
@@ -982,6 +1063,119 @@ def growth(
         return Growth(-math.inf if np.any(rates == -math.inf) else math.nan, math.nan, runs)
     spread = float(np.std(rates, ddof=1)) if len(rates) > 1 else math.nan
     return Growth(float(np.mean(rates)), spread, runs)
+
+
+# ---- generations ---------------------------------------------------------------------------------------------------
+class Lineage(NamedTuple):
+    """What generations measured, over the generations after the first `settle`: the secondaries per generation, each
+    flight weighted by exp(-rate T) for its flight of T RF periods (at rate 0 the effective yield), as the geometric
+    mean of the generations' with the standard error of its log, and each generation's; and of the flights, the share
+    that strike, their mean flight (RF periods), the mean energy of a strike (eV), the share of the strikes on
+    insulators and the share of the flights that leave the region."""
+
+    secondaries: float
+    spread: float
+    multipliers: Arr
+    struck: float
+    flight: float
+    energy: float
+    laminate: float
+    escaped: float
+
+
+def _systematic(weight: Arr, count: int, rng: np.random.Generator) -> IntArr:
+    """Systematic resampling: count indices drawn in proportion to weight, with the least spread."""
+    cumulative = np.cumsum(weight)
+    cumulative /= cumulative[-1]
+    out: IntArr = np.minimum(
+        np.searchsorted(cumulative, (rng.uniform() + np.arange(count)) / count, side="right"), weight.size - 1
+    )
+    return out
+
+
+def generations(
+    chamber: Chamber,
+    volts: float,
+    surface: Surface = FP_COPPER,
+    *,
+    laminate: Surface | None = None,
+    gain: float = 1.0,
+    rate: float = 0.0,
+    electrons: int = 1000,
+    count: int = 10,
+    settle: int = 3,
+    steps: int = 200,
+    horizon: float = HORIZON,
+    seed: int = 0,
+) -> Lineage:
+    """The population generation by generation, as multipactor's statistical theory counts it: `electrons` emitted
+    electrons (generation 0 the seeds of track) flown to their first impacts (impacts, within `horizon` RF periods),
+    each impact weighted by the surface's yield times exp(-rate T), T its flight in RF periods, zero for a flight that
+    strikes nothing, escapes, or meets an insulator that absorbs; the next generation `electrons` emissions drawn from
+    the impacts in proportion to weight (systematic resampling), each with its own draw from the surface, at its
+    impact's time within the RF period. A generation's multiplier is its mean weight. At rate 0 it is the effective
+    yield, the spectral radius of the operator that carries one generation's emissions to the next
+    (multipactor.effective_yield in two dimensions): above one the population grows, below one it dies."""
+    if not (0 <= settle < count and electrons > 0 and steps >= 8 and horizon > 0):
+        raise ValueError(
+            f"generations take 0 <= settle < count, electrons, steps >= 8 and a horizon > 0, not {settle}, {count}, "
+            f"{electrons}, {steps} and {horizon}"
+        )
+    rng = np.random.default_rng(seed)
+    period = 1 / chamber.f
+    points, normals, lengths = chamber.faces()
+    pick = rng.choice(len(lengths), size=electrons, p=lengths / lengths.sum())
+    seeded = surface.emit(rng, np.full(electrons, SEED_ENERGY), np.ones(electrons))
+    v, vz = _velocity(seeded.energy, seeded.cos, seeded.azimuth, normals[pick])
+    start, velocity = points[pick], np.column_stack([v, vz])
+    t0 = rng.uniform(0.0, period, electrons)
+    multipliers: list[float] = []
+    struck = flight = energy = laminate_share = escaped = 0.0
+    strikes = 0
+    for generation in range(count):
+        imp = impacts(chamber, volts, start, velocity, t0, gain=gain, steps=steps, periods=horizon)
+        hit = np.flatnonzero(imp.struck)
+        y = np.zeros(electrons)
+        if hit.size:
+            y[hit], _, _, _ = _emit(rng, surface, laminate, imp.energy[hit], imp.cos[hit], imp.copper[hit])
+        took = (imp.time - t0) / period
+        w = np.zeros(electrons)
+        w[hit] = y[hit] * np.exp(-rate * took[hit])
+        multipliers.append(float(w.mean()))
+        if generation >= settle:
+            struck += hit.size / electrons
+            escaped += float(imp.escaped.mean())
+            if hit.size:
+                strikes += hit.size
+                flight += float(took[hit].sum())
+                energy += float(imp.energy[hit].sum())
+                laminate_share += float((~imp.copper[hit]).sum())
+        if not w.sum() > 0:
+            break
+        pick = _systematic(w, electrons, rng)
+        _, e, c, a = _emit(rng, surface, laminate, imp.energy[pick], imp.cos[pick], imp.copper[pick])
+        v, vz = _velocity(e, c, a, imp.normal[pick])
+        start = imp.point[pick] + EPS * imp.normal[pick]
+        velocity = np.column_stack([v, vz])
+        t0 = np.mod(imp.time[pick], period)
+    kept = np.array(multipliers[settle:])
+    measured = max(len(multipliers) - settle, 1)
+    if kept.size and bool(np.all(kept > 0)):
+        logs = np.log(kept)
+        value = float(np.exp(np.mean(logs)))
+        spread = float(np.std(logs) / math.sqrt(logs.size)) if logs.size > 1 else math.inf
+    else:
+        value, spread = 0.0, math.inf
+    return Lineage(
+        value,
+        spread,
+        np.array(multipliers),
+        struck / measured,
+        flight / strikes if strikes else math.nan,
+        energy / strikes if strikes else math.nan,
+        laminate_share / strikes if strikes else math.nan,
+        escaped / measured,
+    )
 
 
 # ---- the parallel-plate limit --------------------------------------------------------------------------------------
@@ -1107,4 +1301,88 @@ def cases(grid: Grid | None = None) -> tuple[Case, ...]:
         Case("T915-S section B at 50.3 V", section_b(grid=grid), 50.3),
         Case("section B, split h, 1 eV at q 0.5", lever.section, lever.volts_for(1.0, 0.5)),
         Case("R1's rails at 50 V", r1_section(grid), 50.0),
+    )
+
+
+class Reading(NamedTuple):
+    """A case read on a surface: the tracked growth per RF period over seeds (growth), the rate a population that dies
+    fell at while it lived (its runs' mean decay; nan while it lives), and the effective yield over the same seeds,
+    their mean and spread (standard deviation), with each lineage."""
+
+    case: str
+    surface: str
+    laminate: str
+    volts: float
+    growth: Growth
+    decay: float
+    secondaries: float
+    secondaries_spread: float
+    lineages: tuple[Lineage, ...]
+
+    @property
+    def grows(self) -> bool:
+        """Multipactor: the population grows, its strikes freeing more than one electron a generation."""
+        return self.growth.rate > 0 and self.secondaries > 1
+
+
+def read(
+    case: Case,
+    surface: Surface = FP_COPPER,
+    *,
+    laminate: Surface | None = None,
+    gain: float = 1.0,
+    chamber: Chamber | None = None,
+    seeds: Sequence[int] = (0, 1, 2, 3),
+    electrons: int = 1000,
+    periods: int = 30,
+    settle: int = 10,
+    count: int = 10,
+    generation_settle: int = 3,
+    steps: int = 200,
+    horizon: float = HORIZON,
+) -> Reading:
+    """A case read both ways on a surface, the laminate absorbing (None) or emitting through `laminate`: track over
+    `periods` RF periods and generations over `count` generations, on each of `seeds`."""
+    ch = chamber if chamber is not None else case.chamber()
+    found = growth(
+        ch,
+        case.volts,
+        surface,
+        seeds=seeds,
+        laminate=laminate,
+        gain=gain,
+        electrons=electrons,
+        periods=periods,
+        settle=settle,
+        steps=steps,
+        horizon=horizon,
+    )
+    lineages = tuple(
+        generations(
+            ch,
+            case.volts,
+            surface,
+            laminate=laminate,
+            gain=gain,
+            electrons=electrons,
+            count=count,
+            settle=generation_settle,
+            steps=steps,
+            horizon=horizon,
+            seed=s,
+        )
+        for s in seeds
+    )
+    yields = np.array([lineage.secondaries for lineage in lineages])
+    died = [run.decay for run in found.runs if run.lived < len(run.factors) or run.factors[-1] <= 0]
+    return Reading(
+        case.name,
+        str(getattr(surface, "name", type(surface).__name__)),
+        "absorbs" if laminate is None else f"emits as {getattr(laminate, 'name', type(laminate).__name__)}",
+        case.volts,
+        found,
+        float(np.mean(died)) if died else math.nan,
+        float(np.mean(yields)),
+        float(np.std(yields, ddof=1)) if len(yields) > 1 else math.nan,
+        lineages,
     )
