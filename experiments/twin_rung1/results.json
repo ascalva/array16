@@ -1,0 +1,220 @@
+{
+ "checks": [
+  {
+   "criterion": "E2-21 well",
+   "ident": "E2-21 well, R1, realisation 0",
+   "passed": true,
+   "said": "first lost at 0.01179 eV against the axis model's 0.01179 eV (band 0.01108 to 0.01254); the robust threshold 0.03367 eV"
+  },
+  {
+   "criterion": "E2-21 well",
+   "ident": "E2-21 well, R1, on the bench",
+   "passed": true,
+   "said": "first lost at 0.01547 eV against the axis model's 0.01179 eV (band 0.01081 to 0.02268); the robust threshold 0.01728 eV"
+  },
+  {
+   "criterion": "E2-21 well control",
+   "ident": "E2-21 well, R1, realisation 0 at q 0.3",
+   "passed": true,
+   "said": "first lost at 0.03138 eV against the axis model's 0.03138 eV (band 0.0295 to 0.03338); the robust threshold 0.03256 eV"
+  },
+  {
+   "criterion": "slot depth",
+   "ident": "slot well, straight slot guide, realisation 0",
+   "passed": true,
+   "said": "escape at 0.2074 eV against the depth 0.2294 eV (band 0.1835 to 0.2867)"
+  },
+  {
+   "criterion": "E2-21 hold",
+   "ident": "E2-21 hold, R1, realisation 0",
+   "passed": false,
+   "said": "held to 9.344 eV (with the wave 9.344 eV, against it 9.344 eV; the first loss at 9.229 eV) against the static limit 9.307 eV (band 5.677 to 8.842)"
+  },
+  {
+   "criterion": "E2-21 senses",
+   "ident": "E2-21 hold, R1, realisation 0",
+   "passed": true,
+   "said": "the senses' limits 0.0 scan steps apart, 2 allowed"
+  },
+  {
+   "criterion": "E2-21 hold",
+   "ident": "E2-21 hold, R1, on the bench",
+   "passed": true,
+   "said": "held to 8.465 eV (with the wave 7.86 eV, against it 9.116 eV; the first loss at 7.764 eV) against the static limit 9.307 eV (band 4.69 to 9.3)"
+  },
+  {
+   "criterion": "E2-21 senses",
+   "ident": "E2-21 hold, R1, on the bench",
+   "passed": true,
+   "said": "|sqrt W- - sqrt W+| = 0.216 sqrt(eV) against Earth's most and two steps, 0.670"
+  },
+  {
+   "criterion": "E2-21 hold control",
+   "ident": "E2-21 hold, R1, realisation 0 at q 0.3",
+   "passed": true,
+   "said": "held to 3.269 eV (with the wave 3.309 eV, against it 3.228 eV; the first loss at 3.269 eV) against the static limit 3.28 eV (band 2.788 to 3.444)"
+  },
+  {
+   "criterion": "E2-21 senses",
+   "ident": "E2-21 hold, R1, realisation 0 at q 0.3",
+   "passed": true,
+   "said": "the senses' limits 1.0 scan steps apart, 2 allowed"
+  },
+  {
+   "criterion": "E2-22 static limit",
+   "ident": "E2-22 hold, T915-S, realisation 0",
+   "passed": true,
+   "said": "held to 9.996 eV (with the wave 9.282 eV, against it 10.76 eV; the first loss at 9.169 eV) against the static limit 11.64 eV (band 7.102 to 11.06)"
+  },
+  {
+   "criterion": "E2-22 static limit",
+   "ident": "E2-22 hold, flat ring 318, realisation 0",
+   "passed": false,
+   "said": "held to 32.25 eV (with the wave 32.25 eV, against it 32.25 eV; the first loss at 32.65 eV) against the static limit 32.43 eV (band 19.78 to 30.81)"
+  },
+  {
+   "criterion": "E2-22 static limit",
+   "ident": "E2-22 hold, helix (1, 3), realisation 0",
+   "passed": true,
+   "said": "held to 16.1 eV (with the wave 16.1 eV, against it 16.1 eV; the first loss at 16.3 eV) against the static limit 18.45 eV (band 11.26 to 17.53)"
+  },
+  {
+   "criterion": "E2-22 price of the knot",
+   "ident": "E2-22 hold, flat ring 318, realisation 0",
+   "passed": false,
+   "said": "32.25 eV over T915-S's 9.996 eV: 3.226 against the static 2.786 (band 2.368 to 3.204)"
+  },
+  {
+   "criterion": "E2-22 price of the knot",
+   "ident": "E2-22 hold, helix (1, 3), realisation 0",
+   "passed": true,
+   "said": "16.1 eV over T915-S's 9.996 eV: 1.611 against the static 1.585 (band 1.347 to 1.822)"
+  },
+  {
+   "criterion": "slot secular frequency",
+   "ident": "slot beta, straight slot guide, realisation 0",
+   "passed": true,
+   "said": "beta 0.326070 to 0.326078 against Mathieu's 0.326034 (at most 1.36e-04 off, 0.002 allowed); 4 of 4 held"
+  },
+  {
+   "criterion": "must fail control",
+   "ident": "must fail control, R1, on the bench",
+   "passed": true,
+   "said": "q 0.51 at 50.0 V: 32 of 32 held, 0 lost to the guide"
+  },
+  {
+   "criterion": "must fail",
+   "ident": "must fail, R1, on the bench at a 1 eV well",
+   "passed": true,
+   "said": "q 1.66 at 162.4 V (theory 1.64): 0 of 32 held, the last lost after 2.2 RF periods; the control held"
+  },
+  {
+   "criterion": "must fail",
+   "ident": "must fail, R1, on the bench at q 1.89",
+   "passed": true,
+   "said": "q 1.91 at 187.0 V (theory 1.89): 0 of 32 held, the last lost after 1.9 RF periods; the control held"
+  }
+ ],
+ "integrity": {
+  "benches": [
+   "twin-r1"
+  ],
+  "commits": [
+   "3e2149f6fc2c"
+  ],
+  "measured": 14,
+  "predictions_match_the_code": true,
+  "records_from_other_predictions": 0,
+  "records_from_uncommitted_code": 0,
+  "records_made_before_registration": 0,
+  "shots": 14
+ },
+ "summary": {
+  "E2-21 hold": {
+   "failed": [
+    "E2-21 hold, R1, realisation 0: held to 9.344 eV (with the wave 9.344 eV, against it 9.344 eV; the first loss at 9.229 eV) against the static limit 9.307 eV (band 5.677 to 8.842)"
+   ],
+   "judged": 2,
+   "passed": 1
+  },
+  "E2-21 hold control": {
+   "failed": [],
+   "judged": 1,
+   "passed": 1
+  },
+  "E2-21 senses": {
+   "failed": [],
+   "judged": 3,
+   "passed": 3
+  },
+  "E2-21 well": {
+   "failed": [],
+   "judged": 2,
+   "passed": 2
+  },
+  "E2-21 well control": {
+   "failed": [],
+   "judged": 1,
+   "passed": 1
+  },
+  "E2-21, every check": {
+   "failed": [
+    "E2-21 hold, R1, realisation 0: held to 9.344 eV (with the wave 9.344 eV, against it 9.344 eV; the first loss at 9.229 eV) against the static limit 9.307 eV (band 5.677 to 8.842)"
+   ],
+   "judged": 9,
+   "passed": 8
+  },
+  "E2-22 price of the knot": {
+   "failed": [
+    "E2-22 hold, flat ring 318, realisation 0: 32.25 eV over T915-S's 9.996 eV: 3.226 against the static 2.786 (band 2.368 to 3.204)"
+   ],
+   "judged": 2,
+   "passed": 1
+  },
+  "E2-22 static limit": {
+   "failed": [
+    "E2-22 hold, flat ring 318, realisation 0: held to 32.25 eV (with the wave 32.25 eV, against it 32.25 eV; the first loss at 32.65 eV) against the static limit 32.43 eV (band 19.78 to 30.81)"
+   ],
+   "judged": 3,
+   "passed": 2
+  },
+  "E2-22, every check": {
+   "failed": [
+    "E2-22 hold, flat ring 318, realisation 0: held to 32.25 eV (with the wave 32.25 eV, against it 32.25 eV; the first loss at 32.65 eV) against the static limit 32.43 eV (band 19.78 to 30.81)",
+    "E2-22 hold, flat ring 318, realisation 0: 32.25 eV over T915-S's 9.996 eV: 3.226 against the static 2.786 (band 2.368 to 3.204)"
+   ],
+   "judged": 5,
+   "passed": 3
+  },
+  "must fail": {
+   "failed": [],
+   "judged": 2,
+   "passed": 2
+  },
+  "must fail control": {
+   "failed": [],
+   "judged": 1,
+   "passed": 1
+  },
+  "must fail, every check": {
+   "failed": [],
+   "judged": 3,
+   "passed": 3
+  },
+  "slot depth": {
+   "failed": [],
+   "judged": 1,
+   "passed": 1
+  },
+  "slot secular frequency": {
+   "failed": [],
+   "judged": 1,
+   "passed": 1
+  },
+  "slot, every check": {
+   "failed": [],
+   "judged": 2,
+   "passed": 2
+  }
+ }
+}
