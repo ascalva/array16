@@ -1,0 +1,56 @@
+beam lifecycle study: full run of ring3d, sources, phase, speed, resonances, world
+
+== ring3d: the 932 mm ring on two facing boards, and the beam's field across the guide (figure 1) ==
+  ring 932.1 mm round, radius 148.4 mm; the h = 4 ramp drawn at lap 67, 117.0 eV synchronous: four bunches a quarter lap apart; the image of a centred line charge on the four quarters: 0.2500, 0.2500, 0.2500, 0.2500
+  [ring3d: 0.1 s]
+
+== sources: getting electrons in, and what gas does to them (figure 2) ==
+  265 nm: 1.33e+15 photons per second per milliwatt; magnesium as installed gives 4.27 nA per milliwatt
+  1e7 electrons in one turn of the 277 mm, 50 eV ring: lap 66 ns, 24.3 uA; 5684 mW of 265 nm light on magnesium as installed, 56.8 mW cleaned
+  1e7 electrons in one turn of the 932 mm, 50 eV ring: lap 222 ns, 7.2 uA; 1686 mW of 265 nm light on magnesium as installed, 16.9 mW cleaned
+  1e7 electrons in one turn of the 932 mm, 1 eV ring: lap 1572 ns, 1.0 uA; 238 mW of 265 nm light on magnesium as installed, 2.4 mW cleaned
+  resistive cooling at D = 1 mm: 0.16 to 1.42 ms in a segment (25 to 225 kOhm), 7.35 to 22.0 ms round a lap
+  a collision in exact Mathieu motion, the velocity redirected isotropically: c = 2 <dE>/E 2.025, 2.247, 2.879 at q = 0.1, 0.3, 0.5 from rest along the guide (e-fold every 1.43, 1.33, 1.12 collisions); in the steady state 1.658, 1.881, 2.513, the energy 81.8, 82.8, 85.2 % transverse (e-fold every 1.66, 1.51, 1.23 collisions)
+  1e-05 mbar: 0.1 eV to the 1 eV rim in 0.331 to 0.422 ms
+  1e-07 mbar: 0.1 eV to the 1 eV rim in 33.1 to 42.2 ms
+  1e-09 mbar: 0.1 eV to the 1 eV rim in 3.31e+03 to 4.22e+03 ms
+  at 0.1 eV resistive cooling overtakes the heating below 2.2e-06 to 2.0e-05 mbar
+  at 1 eV resistive cooling overtakes the heating below 6.9e-07 to 6.2e-06 mbar
+  [sources: 0.0 s]
+
+== phase: the h = 4 ramp's longitudinal phase space, and the h = 13 ramp's numbers (figure 3) ==
+  h = 4: chirp 18.0 -> 34.6 MHz in 20.5 us (135 laps), 0.811 MHz per us (h dW e / m L^2 = 0.810); 48.6 % captured at 2.73 eV rms; bucket +-3.30 eV at 50 eV, +-6.35 eV at 185 eV; Q_s 0.105 and 0.055, f_s 0.472 MHz at every energy; the spread of the 1943 captured grows 1.48 times from 58.0 to 175.0 eV, against sqrt of the energies' ratio 1.74; from lap 30 on it grows as W^0.503; the captured electrons' first synchrotron periods run 10.73 to 12.73 laps (quartiles), against 1/Q_s = 9.52 at 50 eV
+  h = 13: chirp 58.5 -> 112.5 MHz in 20.5 us (135 laps), 2.635 MHz per us (h dW e / m L^2 = 2.631); 45.4 % captured at 1.58 eV rms; bucket +-1.83 eV at 50 eV, +-3.52 eV at 185 eV; Q_s 0.189 and 0.098, f_s 0.852 MHz at every energy; the spread of the 1814 captured grows 1.65 times from 58.0 to 175.0 eV, against sqrt of the energies' ratio 1.74; from lap 30 on it grows as W^0.498; the captured electrons' first synchrotron periods run 5.74 to 6.74 laps (quartiles), against 1/Q_s = 5.28 at 50 eV
+  the ramp's 125.8 m of path against a free path of 40.5 m at 1e-5 mbar (sigma 1e-19 m^2, 293 K): unscattered 4.5 % at 1e-05 mbar, 73.3 % at 1e-06 mbar, 96.9 % at 1e-07 mbar
+  [phase: 0.2 s]
+
+== speed: relativity, the travelling wave, the beam's fields and its image current (figure 4) ==
+  beta: 1 eV 0.001978, 10 eV 0.006256, 100 eV 0.01978, 185 eV 0.0269, 1000 eV 0.06247, 10000 eV 0.195, 79000 eV 0.4999
+  riding with the wave q grows 185 eV: n_eff 1 1.03, n_eff 2 1.06; 10000 eV: n_eff 1 1.24, n_eff 2 1.64; 79000 eV: n_eff 1 2, n_eff 2 3.8e+03
+  1e7 electrons at 185 eV round 932 mm: 13.9 uA, 61.8 V/m and 5.54 nT at 0.5 mm
+  10^5 electrons at 185 eV in a 22 mm bunch through a 40 mm pickup: 4.01 fC on a quarter, a 1.46 uA pulse 2.73 ns wide, 73 uV on 50 ohm
+  [speed: 0.1 s]
+
+== resonances: a board orotron, Smith-Purcell lines, and the tune along the ramp (figure 5) ==
+  Madey: -d/dpsi sinc^2(psi/2) peaks at psi = 2.606; times pi/2, 0.4242; 4 G = 1.697
+  start currents at 100 eV over 1 mm: N 50, h/d 0.25, 10 kOhm: 1.1 × 10⁻⁶ A; N 50, h/d 0.25, 1 kOhm: 1.1 × 10⁻⁵ A; N 50, h/d 0.5, 1 kOhm: 2.5 × 10⁻⁴ A; N 20, h/d 0.5, 1 kOhm: 0.0039 A; 1e7 electrons round 932 mm at 100 eV carry 10.2 uA
+  the 0.4-6 GHz band at normal emission: d 0.5 mm: 0.114 to 25.6 eV; d 1 mm: 0.455 to 102 eV; d 3 mm: 4.09 to 924 eV; d 10 mm: 45.5 to 1.06e+04 eV; 100 eV over 1 mm at 5.93 GHz
+  1 GHz guide, 106 MHz secular: over the 135 laps of the ramp nu 23.6 -> 12.3 (50 -> 185 eV), 23 half-integer resonances crossed; d(2 nu)/dlap -0.46 -> -0.07, near a whole number at laps []...[]; mean action after the ramp with one 1 mm joint at 10 % 1.02 (over the last 12 laps 1.01 to 1.02), at 5 % 1.012 times
+  5.75 GHz facing boards, 610 MHz: over the 135 laps of the ramp nu 135.6 -> 70.5 (50 -> 185 eV), 131 half-integer resonances crossed; d(2 nu)/dlap -2.67 -> -0.39, near a whole number at laps [10, 11, 44]...[48, 49, 50]; mean action after the ramp with one 1 mm joint at 10 % 1.75 (over the last 12 laps 1.75 to 2.30), at 5 % 1.040 times
+  [resonances: 0.0 s]
+
+== world: stray fields, argon's Ramsauer-Townsend window, Sagnac and Aharonov-Bohm (figure 6) ==
+  a stray field E moves a held electron by eE/(m w_sec^2): 0.396 um per V/m at 106 MHz, 0.012 um per V/m at 610 MHz; the Earth's 50 uT moves a beam by evB/(m w_sec^2): 4.8 um for 185 eV, 610 MHz, 12 um for 1 eV, 106 MHz
+  argon by MERT, A = -1.65 a0, alpha = 11.08 a0^3, fitted D = 47.37 a0^3 and A_1 = -12.48 a0^3 (residual 1e-12): sigma 1.1e-21 m^2 at 0.285 eV; in 1e-5 mbar an electron lives 1.72 ms at 0.1 eV, 10.5 ms at 0.25 eV, 11.6 ms at 0.285 eV, 0.461 ms at 1 eV, longest at 0.279 eV; at 10 eV with the section's 2e-19 m^2, 11 us
+  Sagnac at 40.7 N: 0.822 rad per m^2; 0.0568 rad round the 932 mm circle (691 cm^2), 0.0206 rad for the trefoil's projected 251 cm^2; Aharonov-Bohm: one radian per 9.52 fT through the circle; hbar w_sec at 106 MHz 0.44 ueV (5.09 mK), 2.3e+05 quanta in 0.1 eV
+  [world: 0.0 s]
+
+== figures ==
+  wrote ring3d.png
+  wrote sources.png
+  wrote phase.png
+  wrote speed.png
+  wrote resonances.png
+  wrote world.png
+
+done in 4 s

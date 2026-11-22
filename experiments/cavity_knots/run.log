@@ -1,0 +1,72 @@
+cavity knots study: full run of models, nullsets, charts, folds, sections, power, tolerance
+
+== worked: TE113 + TE221 in a copper cylinder at 2.45 GHz (section 7) ==
+  x'11 = 1.841184, x'22 = 6.706133: d/a = 1.3780, ka = 7.0831 (TE221 7.0831); a = 13.79 cm, d = 19.01 cm, 11.36 litres
+  Q 55,967 (TE113), 89,953 (TE221), 81,658 for the mix (83.3 % of its energy in TE221); linewidth 30.0 kHz; E_rms at 1 W 10.27 kV/m
+  loop 0: 34.15 cm, rho 0.455-0.861 a, z/d 0.171-0.829, 1.92 cm from the nearest wall, 2 folds
+  loop 1: 34.15 cm, rho 0.455-0.861 a, z/d 0.171-0.829, 1.92 cm from the nearest wall, 2 folds
+  loop 2: 31.68 cm, rho 0.000-0.506 a, z/d 0.171-0.829, 3.25 cm from the nearest wall, 2 folds, in the plane y = 0
+  open null lines, traced to within a step of the walls and carried on along their end tangents to them: 19.96 cm from cap to cap; 15.64 cm from side wall to side wall; 15.64 cm from side wall to side wall; linking numbers of the loops (0,1) -5.5e-19, (0,2) +3.5e-10, (1,2) -3.5e-10
+  loop 0: the flood on a 101 x 101 x 70 grid leaves at 0.0193 of the mean |E|^2; Newton puts the saddle at 0.01919, rho 0.545 a, phi -121.4 deg, z/d 0.904 (index 1, |grad| 2e-15)
+  loop 1: the flood on a 101 x 101 x 70 grid leaves at 0.0193 of the mean |E|^2; Newton puts the saddle at 0.01919, rho 0.545 a, phi 121.4 deg, z/d 0.904 (index 1, |grad| 2e-15)
+  loop 2: the flood on a 101 x 101 x 70 grid leaves at 0.0253 of the mean |E|^2; Newton puts the saddle at 0.02531, rho 0.252 a, phi -180.0 deg, z/d 0.905 (index 1, |grad| 8e-16)
+  escape saddles (the lowest and its mirror images in y = 0 and z = d/2): s = 0.01919, 0.01919, 0.01919, 0.01919; depth 375.4 micro-eV per watt = 4.80 times RFG-2's ceiling; 25 meV takes 67 W, 1 eV 2.66 kW; peak |E|^2 7.87 times the mean, 28.8 kV/m at 1 W
+  across loop 0 the gradients run 3.67-11.37 and 2.70-9.08 E_rms/a (medians 5.886, 4.816): Mathieu q 6.5 × 10⁻⁴ and 5.3 × 10⁻⁴ at 1 W, secular 0.56 and 0.46 MHz (q 0.0206 and 0.0168 at 1 kW); c|B|/E_rms on the loops 0.09-2.66, 0.09-2.66, 0.20-2.90; the magnetic quiver term at most 368.7 beta^2 of a loop's depth
+  two loop feeds at (+-a, 0, d/2), coupling to H_z, driven as sum and difference: TE113 cos +0.000 / -3.945; TE113 sin -0.000 / +0.000; TE221 cos -28.200 / +0.000; TE221 sin +0.000 / -0.000
+
+== models: the owner's sphere, and the worked cylinder (figure 1) ==
+  sphere TE l = 3, n = 1: ka 6.9879, radius 13.61 cm, 7 modes, Q 101,559; one real field (seed 2026): 14 critical points of A (4 maxima, 6 saddles, 4 minima; max - saddles + min = 2), so 7 null diameters
+  7 loop feeds on its wall, placed and turned by a seeded search: the coupling matrix's condition number 1.15; three pickups added where they most raise its smallest singular value
+  [models: 1.1 s]
+
+== nullsets: a sphere family, the two-profile cylinder over C, and a cube field (figure 2) ==
+  sphere TE l = 2, n = 2: ka 9.0950, radius 17.71 cm, 5 modes, Q 132,182; one real field (seed 7): 6 critical points of A (2 maxima, 2 saddles, 2 minima; max - saddles + min = 2), so 3 null diameters; zero-field shells at r/a = 0.6337
+  the cylinder's nulls lie over C, det(grad Phi1, grad Phi2) = 0: on the traced curves |det| / (|grad Phi1| |grad Phi2|) is at most 6.3e-13
+  cube of the (1, 2, 3) family, side sqrt(14) lambda / 2 = 22.9 cm, six TE_z modes, seed 30: 2 closed loops (1.782, 1.782 sides long, 2, 2 folds), 4 lines from wall to wall; linking numbers +2.1e-08
+  closed loops in the fields of seeds 0 to 11: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  [nullsets: 15.2 s]
+
+== charts: the sphere's families and the cylinder's mode chart (figure 3) ==
+  87 sphere families below ka = 20; the closest of different type or degree: TM(9,3) at 19.648474 and TE(5,4) at 19.653152, 2.381e-04 apart: 52 to 68 linewidths of copper at 2.45 GHz (radius 38.3 cm)
+  at 2.45 GHz: TE l=1 ka 4.4934, 8.75 cm, Q 65,305; TM l=1 ka 2.7437, 5.34 cm, Q 29,282; TE l=2 ka 5.7635, 11.22 cm, Q 83,763; TM l=2 ka 3.8702, 7.54 cm, Q 33,717; TE l=3 ka 6.9879, 13.61 cm, Q 101,559; TM l=3 ka 4.9734, 9.69 cm, Q 37,214
+  89 cylinder modes drawn; TE113 and TE221 cross at (a/d)^2 = 0.52665 (d/a = 1.3780), (ka)^2 = 50.170
+  [charts: 0.2 s]
+
+== folds: where a null curve turns in height, and the wall there (figure 4) ==
+  fold at z/d 0.171: |E|^2 grows from it with exponent 2.01 across, horizontal, 1.84 across, the other normal, 4.02 along the tangent (from 0.01 to 0.02 a); 2.001, 1.989, 4.002 below 0.003 a
+  fold at z/d 0.829: |E|^2 grows from it with exponent 1.98 across, horizontal, 2.13 across, the other normal, 3.97 along the tangent (from 0.01 to 0.02 a); 1.999, 2.011, 3.998 below 0.003 a
+  along loop 0 the softer normal gradient runs 2.70 to 9.08 E_rms/a (3.37 times), 2.70, 2.70 at the folds; the stiffer 3.67 to 11.37
+  height turns: a trefoil in two-bridge position 4, a Hopf link of round circles 4 (its linking number +1.000)
+  [folds: 0.1 s]
+
+== sections: the worked field in section, and the escape path (figure 5) ==
+  the saddle at s = 0.01919, azimuth -121.4 deg: its Hessian's eigenvalues -6.20, 3.40, 18.65 (of mean |E|^2 per a^2); descending either way it reaches loop and cap, the path rising nowhere above the saddle (0.01888)
+  [sections: 2.5 s]
+
+== power: depth against power at 2.45 GHz, and the thresholds (figure 6) ==
+  fields carried in from far away (RFG-2): 7.8 × 10⁻⁵ eV per watt; 25 meV takes 320 W, 1 eV 1.3 × 10⁴ W
+  the worked cavity's null loops: 3.8 × 10⁻⁴ eV per watt; 25 meV takes 67 W, 1 eV 2664 W
+  facing boards, h = 0.5 mm, 10 kOhm (RFG-3): 3.7 eV per watt; 25 meV takes 0.0067 W, 1 eV 0.27 W; the slope holds to 7.03 eV (q = 0.908)
+  four rods, h = 0.5 mm, 10 kOhm (RFG-3): 15 eV per watt; 25 meV takes 0.0017 W, 1 eV 0.067 W; the slope holds to 17.36 eV (q = 0.908)
+  the side wall's |E|^2 peaks at 0.942 of the mean: 18.4 meV per watt of ponderomotive energy, so copper's 30 to 100 eV crossover at 513 to 1711 W for returning electrons (3.17 U_p) and 203 to 678 W for crossing ones (8 U_p); air at 3 MV/m peak at 10.8 kW; 10 to 30 kV/m at the antinodes at 0.12 to 1.08 W
+  [power: 0.0 s]
+
+== tolerance: the tube's floor against the split of the two modes (figure 7) ==
+  d ln(f1/f2) = 0.8288 d ln(a/d) (CAV-8)
+  split 0.50 linewidth: relative mode phase 47.8 deg, the tube's floor 14.8 s, 1019 nm on the radius
+  split 0.10 linewidth: relative mode phase 10.2 deg, the tube's floor 0.933 s, 204 nm on the radius
+  split 0.05 linewidth: relative mode phase 5.1 deg, the tube's floor 0.237 s, 102 nm on the radius
+  split 0.02 linewidth: relative mode phase 2.0 deg, the tube's floor 0.0381 s, 41 nm on the radius
+  a floor of a tenth of the depth takes a split under 0.032 linewidths, 66 nm on the radius; driven where Q1 delta1 = Q2 delta2 a half-linewidth split costs 4.29 times the power
+  [tolerance: 0.5 s]
+
+== figures ==
+  wrote models.png
+  wrote nullsets.png
+  wrote charts.png
+  wrote folds.png
+  wrote sections.png
+  wrote power.png
+  wrote tolerance.png
+
+done in 25 s
