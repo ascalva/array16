@@ -537,8 +537,8 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    each lost electron's place in the twin's records, the bend's shift of the null against the axisymmetric reference,
    the geometry module, multipactor with secondary emission (Furman and Pivi) in a 2-D tracker, and the shots for H1
    to H4 of stage 1's report, E2-2, E2-9, E2-13 and E2-15, as `experiments/twin_rung2.py`. 2b: the joints, the
-   two-rail model of the one-board ring and the full-lap resonance. 2c: the rest of the design review. First the modules its section 8.1 names to join before stage 2 registers: the
-   boundary-element windows with the null tracker (`array16/guide/bem.py`), the axisymmetric bend reference
+   two-rail model of the one-board ring and the full-lap resonance. 2c: the rest of the design review. First the
+   modules its section 8.1 names to join before stage 2 registers: the boundary-element windows with the null tracker (`array16/guide/bem.py`), the axisymmetric bend reference
    (`axisym.py`), the compiled ramp (`ramp.py`) and the plates, planforms and layouts (`geometry.py`); and the twin's
    records carrying each lost electron's place along the path, its position in the section and its step. Then
    T915-S's joints: the kick across a solved joint, the axial field on the null of a piece without its mirror, the
