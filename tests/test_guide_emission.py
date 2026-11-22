@@ -432,6 +432,17 @@ def test_t915s_at_one_ev_decays_in_both_laminate_models() -> None:
     assert found.laminate.startswith("emits as")
 
 
+def test_the_strips_own_field_multipacts_when_overdriven() -> None:
+    # the control for the decays: section B at 160 V, 3.2 times T915-S's drive and twice its gap's parallel-plate
+    # threshold on bare copper (84.8 V), multiplies in the strips' own field, every generation larger than the last
+    chamber = em.Chamber.of(gs.solve(gs.section_b(grid=gs.COARSE)))
+    run = em.track(chamber, 160.0, em.FP_COPPER, **QUICK)
+    lineage = em.generations(chamber, 160.0, em.FP_COPPER, **BRIEF)
+    assert run.growth > 0.4
+    assert lineage.secondaries > 1.2
+    assert run.energy > em.FP_COPPER.crossover  # the strikes now carry more than bare copper's crossover
+
+
 def test_r1_rails_at_50_volts_throw_their_electrons_out() -> None:
     # R1's rails at 50 V read -5.2 dB at level 1 as parallel plates, yet in their own field the electrons that leave
     # the copper mostly leave the rails' field before they strike again: the population dies, each generation smaller

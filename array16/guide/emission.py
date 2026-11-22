@@ -57,16 +57,17 @@ facing strips 2h past the copper's outer edges and its back faces, for R1's rail
 **Calibration (DR-0), in the parallel-plate limit** (Claim). On the level-1 chart's own yield (Normal, multipactor's
 GAIN) the tracker is multipactor's one-dimensional model in two dimensions: its growth per RF period meets
 multipactor.growth_rate within 0.003 Np at 1.15 and 0.85 times copper's lowest point and at 0.9 and 1.1 times the
-held-out point, its effective yield multipactor.effective_yield within 0.6 %, and its threshold (plate_threshold, to
-the bisection's 0.7 %, three seeds, 500 electrons) lies at 27.3 V at 0.70 GHz mm (-0.3 % of ECSS's 27.4 V), 91.6 V at
-the held-out 1.68 GHz mm (-0.3 %) and within -1.7 to +1.8 % of the twelve blind points. Furman and Pivi's bare copper as
-published (gain one) multipacts later than the chart on its left branch and sooner on its right: +32.9 % at 0.66 GHz
-mm, +19.5 % at 0.70 (32.7 V), +4.6 % at 0.87, +0.3 % at 1.08, -3.1 % at 1.35 and -8.3 % at 1.68 (84.2 V), and not at
-all from 0.49 to 0.59 GHz mm within three times ECSS's volts: its crossover, 27.3 eV against the chart's 19 eV, moves
-the chart's nose to higher f d. One gain set at 0.70 GHz mm (0.837) would leave the held-out point 23 % low, outside
-DR-0's 10 %, so its copper is read as published, with the chart's yield beside it. Conditioned copper multipacts at
-1.6 to 2.1 times ECSS's volts from 1.51 to 2.62 GHz mm, and not at 1.20 within three times them. At T915-S's 1.674 GHz
-mm, 50.3 V keeps 4.5 dB on bare copper as published (5.2 dB on the chart) and 9.4 dB conditioned.
+held-out point, its effective yield multipactor.effective_yield within 0.6 % (1000 electrons, three seeds), and its
+threshold (plate_threshold, to the bisection's 0.7 %, three seeds, 500 electrons, 120 steps a period) lies at 27.3 V at
+0.70 GHz mm (-0.3 % of ECSS's 27.4 V), 91.6 V at the held-out 1.68 GHz mm (-0.3 %) and within -1.7 to +1.8 % of the
+twelve blind points. Furman and Pivi's bare copper as published (gain one) multipacts later than the chart on its left
+branch and sooner on its right: +32.9 % at 0.66 GHz mm, +17.8 % at 0.70 (32.3 V), +4.6 % at 0.87, -0.3 % at 1.08, -3.8 %
+at 1.35 and -7.7 % at 1.68 (84.8 V), and not at all from 0.49 to 0.59 GHz mm within three times ECSS's volts: its
+crossover, 27.3 eV against the chart's 19 eV, moves the chart's nose to higher f d. One gain set at 0.70 GHz mm (0.849)
+would leave the held-out point 22 % low, outside DR-0's 10 %, so its copper is read as published, with the chart's yield
+beside it. Conditioned copper multipacts at 1.6 to 2.1 times ECSS's volts from 1.51 to 2.62 GHz mm, and not at 1.20
+within three times them. At T915-S's 1.674 GHz mm, 50.3 V keeps 4.5 dB on bare copper as published (5.2 dB on the chart)
+and 9.4 dB conditioned.
 
 **The protocol's readings** (Claims; read on the default grid, 1000 electrons, 30 RF periods of which 10 settle and 10
 generations of which 3 settle, 200 steps a period, seeds 0 to 3: the growth in Np per RF period and the effective
@@ -82,22 +83,25 @@ models and on every yield:
                                 the chart's    -0.136 +- 0.002, 0.827  -0.134 +- 0.002, 0.845
   R1's rails, 50 V              bare           dies; -1.06, 0.644      dies; -1.12, 0.660
                                 conditioned    dies; -1.09, 0.637      dies; -1.09, 0.644
-                                the chart's    dies; -1.13, 0.735      dies; -1.11, 0.736
+                                the chart's    dies; -1.13, 0.735      dies; -1.10, 0.736
 
-The effective yields' spreads over the seeds are 0.002 to 0.017. On T915-S's section the strikes carry 16 eV on
-average, under bare copper's crossover, 9 to 17 % of them on the polyimide of the split and the margins, and 4 to 7 %
-of the population leaves the gap each period; both 1 eV wells decay, as MPC-H1 states for 1 eV (its falsifier, E2-13,
-is the family facing_case builds). Each R1 population is gone within 4 to 9 RF periods (Run.lived), and its effective
-yield, 0.64 to 0.66 on bare copper and 0.74 on the chart's, is under one: no generation frees as many electrons as
-the one before. How fast it falls while it lives, 1.06 to 1.13 Np a period (Run.decay), is how fast its electrons
-leave the region: in a region half as large again it lives 16 to 23 periods and falls 0.58 to 0.69 Np a period, its
-effective yield 0.640 against 0.648 in the default region. Of the seeds, the secondaries of a 50 eV strike, 78 % leave
-the rails' field before they strike again, those that strike carry 4.5 eV at the median, and the lineage settles on
-electrons that fall back onto the face they left at 0.5 to 3.5 eV. **Hypothesis (read from these numbers):** MPC-3's
-parallel-plate bound, -5.2 dB at 50 V, is conservative on R1's rails: in their own field the electrons leave before
-they multiply; DR-8's measured yield and a 3-D field test it. Settings: 100, 200 and 400 steps a period give -0.175,
--0.162 and -0.162 on T915-S (bare, absorbing, two seeds), the effective yield 0.80 at each; 3000 electrons give -0.172,
-the coarse grid -0.166.
+The effective yields' spreads over the seeds are 0.002 to 0.017. On T915-S's section, on bare copper, the strikes carry
+16 eV on average, under its crossover, 9 to 17 % of them on the polyimide of the split and the margins, and 4 to 7 % of
+the population leaves the gap each period; both 1 eV wells decay, as MPC-H1 states for 1 eV (its falsifier, E2-13, is
+the family facing_case builds). The control: section B overdriven multiplies in its own field on bare copper, at +0.009
+Np a period at 100 V, +0.52 at 130 V and +0.83 at 160 V (coarse grid, 300 electrons, one seed; effective yields 1.01,
+1.29 and 1.50), above its gap's parallel-plate threshold of 84.8 V, so at 50.3 V it keeps about 6 dB in its own field:
+the decays are the field's and the yield's, not the instrument's. Each R1 population is gone within 4 to 9 RF periods
+(Run.lived), and its effective yield, 0.64 to 0.66 on bare copper and 0.74 on the chart's, is under one: no generation
+frees as many electrons as the one before. How fast it falls while it lives, 1.06 to 1.13 Np a period (Run.decay), is
+how fast its electrons leave the region: in a region half as large again it lives 16 to 23 periods and falls 0.58 to
+0.69 Np a period, its effective yield 0.640 against 0.648 in the default region. Of the seeds, the secondaries of a 50
+eV strike, 78 % leave the rails' field before they strike again, those that strike carry 4.5 eV at the median, and the
+lineage settles on electrons that fall back onto the face they left at 0.5 to 3.5 eV. **Hypothesis (read from these
+numbers):** MPC-3's parallel-plate bound, -5.2 dB at 50 V, is conservative on R1's rails: in their own field the
+electrons leave before they multiply; DR-8's measured yield and a 3-D field test it. Settings: 100, 200 and 400 steps a
+period give -0.175, -0.162 and -0.162 on T915-S (bare, absorbing, two seeds), the effective yield 0.80 at each; 3000
+electrons give -0.172, the coarse grid -0.166.
 SI units, except energies in eV and f d in GHz mm.
 """
 
