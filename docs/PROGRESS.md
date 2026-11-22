@@ -1,7 +1,7 @@
 # Progress
 
 Where the work stands, what was decided, and what comes next, written so that a fresh reader or agent can pick
-it up. `AGENTS.md` holds the owner's rules; this file holds the state. Updated 2026-11-21.
+it up. `AGENTS.md` holds the owner's rules; this file holds the state. Updated 2026-11-22.
 
 ## 1. The question
 
@@ -29,7 +29,7 @@ test; ideas may stay theoretical but must be physically and experimentally plaus
 ## 2. What exists
 
 **Repository.** Public at github.com/ascalva/array16, AGPL-3.0, CI on every push (ruff, strict mypy, pytest;
-`formal/check.sh` for the proofs). 211 tests (`uv run pytest -q`, about 17 s). History starts from the tree as it
+`formal/check.sh` for the proofs). 221 tests (`uv run pytest -q`, about 21 s). History starts from the tree as it
 stood on 2026-11-16.
 
 **Radio side** (as imported; see `README.md`, `ARCHITECTURE.md`, `REDESIGN.md`).
@@ -103,6 +103,26 @@ with the Propositions to prove first named. `experiments/virtual_antenna_study.p
 `array16.particles` for the confinement numbers, in about 24 s; its `run.log` and `results.json` hold the numbers the
 captions and the text quote, and `tests/test_virtual_antenna_study.py` holds 13 of its results to the document's and
 checks its titles and a quick run.
+
+**The knotted guide** (`docs/KNOTTED_GUIDE.md`, 2026-11-21). The owner's knot-first study, from five lens memos
+(topology, fields, drive, particles, buildability) and their adversarial verification, then a critic's review of the
+whole and a revision: how boards make a knot (its section 3), the fields of joints, bends and torsion (4), the drive as
+a ring resonator, the first compile problem (5), what electrons hold, where joints heat them, acceleration, their own
+fields, loading and detection (6), what the knot asks of the field compiler (7), the hardware modelled before it is
+built, a design review of fifteen checks on a twin bench (8), seven lead designs and a case that must fail (9),
+experiment 2 in simulation with its order of work and stop rule (10), and laws proposed in five families, KNT, SEG,
+RNG, JNT and MPC (11). `experiments/knotted_guide_study.py` draws its figures into `experiments/knotted_guide/` in
+about 170 s, and `tests/test_knotted_guide_study.py` holds its numbers to the document's. A few of the revision's
+numbers were checked by scratch scripts and are not yet in the study's `run.log`: the strips' section solve (n_eff
+1.031), T915-S as a ring (Q 381, R 2.54 kΩ) with its 60-draw spacer Monte Carlo, and the slot guide's section (Q 49
+on FR-4, 179 on RO4003C); section 5 folds them in.
+
+**Prior art** (`docs/PRIOR_ART.md`, 2026-11-21). Four sweeps (prior art, applications, lessons, novelty), each checked
+by an adversarial verifier, then a synthesis over 35 re-checked sources. Printed ion tracks with turns, switches and
+levels (SLIM, sold as an instrument), electrons guided and trapped on microwave boards, RF quadrupole rings, ion
+racetracks on chips and RF gaps that accelerate on FR-4 all exist; a closed RF guide that holds electrons and speeds
+them round a drawn ring or knot from one radio apparently has not been built. Its lessons for the designs are in
+section 3.
 
 ## 3. What has been found
 
@@ -220,6 +240,42 @@ magnetic guide wound on five closed curves, 142 shots, ten criteria fixed before
   the centre of the square, −15.0 dB a quarter wavelength across the region, −30.7 dB a quarter wavelength away from
   it, −2.4 dB a wavelength across (the case that must fail); generalised spectrum 0, −5.9, −22.3 and −28.6 dB.
 
+**The knotted guide** (`docs/KNOTTED_GUIDE.md`, its labels kept).
+- **Levels and pieces.** One rigid two-layer board makes a planar ring. On parallel levels joined by ramps a knot of
+  bridge number b needs at least 2b ramps, four for the trefoil; a slot along a closed path frees an island, c + 2
+  pieces for a diagram of c crossings and two for the ring.
+- **Size.** A knot turns through more than 4π, so its length exceeds 4π times its tightest bend radius (Proposition
+  KNT-3): by the bend rule at h = 0.5 mm, at least 12.6 mm of path per unit of held energy over well depth, and 16 to
+  33 mm by what tracking held.
+- **Drive.** The knot is a ring resonator of shunt resistance Z₀Q/(2πm). Against 2 % rms spacer error two re-solved
+  feeds leave a backward wave of 0.011 of the forward in the median and keep 0.94 of a perfect ring's depth per watt,
+  where a fixed hybrid leaves 0.22 and 0.58 (60 draws); one feed makes a standing wave.
+- **The lead design, T915-S:** facing flex strips on the r/R = 0.45 trefoil at 915 MHz, m = 1, 318 mm on 25 µm
+  polyimide (n_eff 1.031). A 1 eV well at q = 0.5 takes 50.3 V: 0.50 W on bare copper, 0.63 to 2.3 W on the fab's
+  ENIG. Cut into six DC-isolated segments (T915-S6), one chirp of 5.60 to 15.84 MHz takes electrons from 1 to 8 eV in
+  117 laps, at about 1.1 × 10⁻⁵ mbar.
+- **Particles.** Facing boards bent in their plane hold 0.605·D·R/h by the static balance; joints of the null-step
+  family heat unless smooth over three secular wavelengths, 29 mm at 8 eV. A bunch on the trefoil is an axial dipole at
+  3f_rev and an in-plane one at f_rev and 2f_rev, where on a ring it is an in-plane dipole at f_rev alone: the beam's
+  harmonics carry the knot's symmetry.
+- **Building.** The twist that closes the strips makes them non-developable, and their two plates differ by 23 mm;
+  the stacked boards' slot guide holds 85 % of its field in the laminate; copper multipacts above wells of 2 to 3 eV
+  (Hypothesis). The flat facing-board ring of the same length holds 2.7 to 3.3 times T915-S: the price of the knot.
+- **For the compiler:** topology and geometry become its step 0, and one copper carries three operators at once (DC
+  steering, the megahertz chirp, the 915 MHz ring), each with its own price list. The ring's G has two cheap modes, ±m,
+  over a floor about a hundred times lower.
+
+**What the prior art sets** (`docs/PRIOR_ART.md`).
+- Built board resonators reach Q 35 to 41 and about 1 kΩ; 100 kΩ asks Q near 3,000 on a 50 Ω half-wave line. Depth
+  per watt on built boards sits about ten times below the 10 kΩ examples above.
+- Copper's lowest two-surface multipactor boundary is 27.4 V near 0.70 GHz·mm: the first run's 25 V rods sit 0.8 dB
+  under it, facing boards reach it at wells of 2.5 to 3 eV, and the tracker takes a secondary-emission model.
+- The drive does the heating: a board trap lost its electrons to the drive's 6th and 7th subharmonics, so f_sec stays
+  clear of Ω/n for small n, and nothing in the HackRF's drive, aliases included, sits at f_sec, 2f_sec or Ω ± f_sec.
+- The 932 mm ring's 126 m acceleration keeps 73 % of its electrons unscattered at 10⁻⁶ mbar, 4.5 % at 10⁻⁵.
+- An RF null cannot pass straight through a crossing (Wesenberg 2009): joints are shaped from solved fields.
+- SLIM-Pickins, an open-source KiCad layout from a path string, is a starting point for generating the boards.
+
 ## 4. Theory leads
 
 Leads to derive properly, prove where they are mathematics, and test, each marked with its status. N3 to N7 keep the
@@ -302,16 +358,22 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    error and a moving lead. Its hardware rungs (`benches/v1_rung1.toml` and sessions T, `docs/VIRTUAL_ANTENNA.md`
    section 10.1) come at the build stage of rule 12. Then V2 (comb lines through 2-bit elements on a Wilkinson
    tree), V3 (the rev B tile and whips) and V4 (the ring guide as an antenna), each first on a simulated bench.
-3. **The closed RF guide, as one case of synthesis** (experiment 2), in simulation. Theory first: the travelling-wave
-   ring (section 4, N3), its pickups (N4), the flat ring against the knot (N6) and the bend rule (item 6), each on
-   the ledger and proved in Lean where it is mathematics. The guide's electrodes may span several boards in three
-   dimensions (owner, 2026-11-21), so its path is free to leave the plane: rings, racetracks and torus knots, built
-   from facing-board segments, stacks or flexible boards, with the joints between boards in the model. Then the
-   guide's modes, Q and R/Q from an eigenmode run; electrodes on facing boards (ELE-2) driven from one channel
-   through a 90° hybrid, on an ISM band (915, 2450 or 5800 MHz, `docs/VIRTUAL_ANTENNA.md` section 7.3); particles
-   tracked in the computed field on the core; a protocol with predictions and criteria committed before any
-   tracking, on `array16.lab`; and a report carrying 3-D views of the electrodes, fields and orbits. V4 measures
-   the same ring as an antenna.
+3. **The closed RF guide, as one case of synthesis** (experiment 2), in simulation. Two lines run side by side
+   (owner, 2026-11-21). Knots across several boards, on the order of work of `docs/KNOTTED_GUIDE.md` section 10:
+   the instruments of its section 8.1 and the design review first, with the guide's modes, Q and R/Q from an
+   eigenmode run; R1's rail ring, the flat ring and the (1, 3) helix as the calibration rung; then T915-S, S2-C3,
+   T915-S6 to accelerate, and L26, T915-R and T2450-S, beside the sharp six-stick trefoil that must fail; predictions
+   E2-1 to E2-27 and their criteria committed before any tracking, on `array16.lab`, and a report carrying 3-D views
+   of boards, fields and orbits. Before that, the revision's scratch checks (the strips' section solve, T915-S as a
+   ring with its Monte Carlo, the slot guide's section) join `experiments/knotted_guide_study.py` and its `run.log`.
+   And a ring with everything on a single board, a study of its own on the knotted study's solver and drive model:
+   the surface ring of two rails (ELE-1, ELE-3), the board's own top and bottom copper as a facing pair around a
+   channel routed through it (with how the channel's island is held), and one board carrying the ring, its resonator
+   and its feed network. Both take the prior art's numbers (section 3): resonators designed to the Q and resistance
+   built boards reach, a secondary-emission model in the tracker, a drive clean at the secular lines, and the vacuum
+   the path asks. The theory goes to the ledger, and to Lean where it is mathematics: the travelling-wave ring
+   (section 4, N3), its pickups (N4), the flat ring against the knot (N6), the bend rule (item 6) and the knotted
+   study's laws. V4 measures the same ring as an antenna.
 4. **The radio side, as design.** Rev B revised on paper around one coherent channel (`REDESIGN.md`, the decision at
    its head), then its section 13 decisions; the Vivaldi findings folded in; the datasheet corrections applied to the
    schematic. The HackRF Pro (through open-source libhackrf bindings) and the controller become devices of a bench,
@@ -340,6 +402,8 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
   and built once those are understood well enough to finalise the design (`AGENTS.md` rule 12).
 - 2026-11-21: the array may span several boards arranged in three dimensions; one board would hold a guide to a
   planar ring, and a knot takes a path out of the plane (`AGENTS.md` rule 1).
+- 2026-11-21: the ring with everything on a single board stays a design line beside the knots across several
+  boards ("that's also still an idea worth continuing to investigate").
 - 2026-11-21: the controller's sequence store grows from 64 to 256 words (protocol version 2); rev B's draft
   LOAD_SEQ2 takes 256 words too (`REDESIGN.md` section 8).
 
