@@ -17,6 +17,8 @@ vacuum above a board by the laminate's pull on E, a correction to a force that i
                  enter; grad phi at the nodes by second-order differences and bilinearly between them
   SectionField   the grid swept along a path with a frame, the curve's twist-free axes turned by a framing angle
                  theta(s) or normals given per sample, driven by TravellingWave, StandingWave or InPhase (a PathDrive)
+  BendShift      opt-in: the facing boards' null moved toward the centre of each bend by its first-order shift,
+                 2 ln 2 / pi^2 h^2/R in the boards' plane and h^2/(pi R) toward them (array16/guide/axisym.py)
 
 A particle's place along the path follows from its nearest sample: it lies between that sample's normal plane and a
 neighbour's, and its foot is on Hermite's cubic through the two. The nearest sample is found by searching a window round
@@ -122,6 +124,53 @@ class InPhase:
 
     def slowness(self, length: float) -> float | None:
         return None
+
+
+# ---- the bend's shift of the null -----------------------------------------------------------------------------------
+BEND_IN_PLANE = 2 * math.log(2) / math.pi**2  # 0.140461: the null's shift toward a bend's centre in the boards' plane,
+# over h^2/R, to first order in h/R (Proposition, array16/guide/axisym.py; E2-2's 0.1405)
+BEND_TOWARD = 1 / math.pi  # 0.318310: the same for a bend toward the boards, out of their plane (E2-2's 0.318)
+
+
+@dataclass(frozen=True)
+class BendShift:
+    """The first-order bend correction of a facing-board section swept along a curved path: the null moved toward the
+    centre of the bend by h^2 (inplane kappa_u, toward kappa_v) in the section, where kappa_u = kappa . first and
+    kappa_v = kappa . second are the path's curvature vector dT/ds (1/m) in the boards' plane and toward them, and h is
+    the null's distance to either board (m). The section's pattern moves with its null, copper included: a particle at
+    (u, v) feels the section's field at (u - du, v - dv). Near the null, to first order in h/R and in the distance from
+    it, that is the bent boards' field: the bend adds a uniform field there, which the shift cancels, and no gradient.
+    Farther out the bend's first-order terms of third degree make the well lopsided across the bend, which this leaves
+    to the boundary-element solve (array16/guide/bem.py), and the copper is misplaced by the shift itself, 7.7 um in the
+    boards' plane and 17 um toward them on a bend of 15.3 mm at h = 0.915 mm, T915-S's tightest.
+
+    The coefficients are the gapless facing boards' (ELE-2), derived and held to the axisymmetric reference by
+    quadrature in array16/guide/axisym.py: 2 ln 2 / pi^2 = 0.1405 in the boards' plane and 1/pi = 0.3183 toward them
+    (Propositions; E2-2). The first order is linear in the curvature vector, so a bend at an angle psi to the boards'
+    plane moves the null by (h^2/R) (inplane cos psi, toward sin psi): (inplane cos^2 psi + toward sin^2 psi) h^2/R
+    toward the centre and (toward - inplane) sin psi cos psi h^2/R across that. The gradient at the null is even in the
+    curvature, so it does not change at first order: the reference puts its change at -0.084 (h/R)^2 in the boards'
+    plane and +0.069 (h/R)^2 toward them, under 3.1e-4 on T915-S's tightest bend, and this correction leaves it out.
+    Another section (the slot guide, one board's rails) takes its own coefficients."""
+
+    h: float
+    inplane: float = BEND_IN_PLANE
+    toward: float = BEND_TOWARD
+
+    def __post_init__(self) -> None:
+        if not (math.isfinite(self.h) and self.h > 0 and math.isfinite(self.inplane) and math.isfinite(self.toward)):
+            raise ValueError(
+                f"a bend correction takes the null's distance to the boards h > 0 (m) and finite coefficients, not "
+                f"h = {self.h}, inplane = {self.inplane}, toward = {self.toward}"
+            )
+
+    def displacement(self, kappa_u: Arr, kappa_v: Arr) -> tuple[Arr, Arr]:
+        """The null's displacement (du, dv) (m) in the section where the path's curvature is kappa_u in the boards'
+        plane and kappa_v toward them (1/m, along u and v)."""
+        h2 = self.h * self.h
+        du: Arr = self.inplane * h2 * np.asarray(kappa_u, dtype=np.float64)
+        dv: Arr = self.toward * h2 * np.asarray(kappa_v, dtype=np.float64)
+        return du, dv
 
 
 # ---- the section ----------------------------------------------------------------------------------------------------
@@ -388,8 +437,10 @@ class SectionField:
     it, so the field crosses the seam continuously exactly when the section is invariant under that turn.
 
     The swept null is the section's, on the path wherever the frame closes; the path's curvature and torsion enter
-    only through the frame (the null's own inward shift on a bend, 0.1405 h^2/R in the boards' plane, is the
-    three-dimensional solve's, not this model's). A call searches a window of 2 window + 1 samples round each
+    only through the frame, unless `bend` (a BendShift, off by default) moves the facing boards' null toward each
+    bend's centre by its first-order shift, 0.1405 h^2/R in the boards' plane and 0.318 h^2/R toward them, the
+    curvature taken at the samples by second differences and in the frame, and linearly between samples as the frame
+    turns. A straight path has no bend to correct. A call searches a window of 2 window + 1 samples round each
     particle's last nearest sample, and every sample for any the window does not settle: on the first call, after a
     jump of more than `window` samples, or beyond the curve's thickness (its least bend radius, or half its closest
     approach to itself, whichever is less). With integrate's push, on a 4000-sample trefoil, that is 0.42 us a
@@ -406,6 +457,7 @@ class SectionField:
     drive: PathDrive
     axis: Arr | None = None
     window: int = 2
+    bend: BendShift | None = None
     _memory: _Memory = field(default_factory=_Memory, init=False, repr=False, compare=False)
 
     def __post_init__(self) -> None:
@@ -428,6 +480,8 @@ class SectionField:
         )
         if frame_error > 1e-6:
             raise ValueError(f"the frame must be unit normals with second = T x first; it is off by {frame_error:.2g}")
+        if self.bend is not None and not isinstance(self.bend, BendShift):
+            raise ValueError(f"a swept section's bend correction is a BendShift or None, not {self.bend!r}")
 
     @classmethod
     def along(
@@ -439,10 +493,13 @@ class SectionField:
         theta: float | Arr = 0.0,
         normals: Arr | None = None,
         window: int = 2,
+        bend: BendShift | None = None,
     ) -> SectionField:
         """The section swept along a closed curve. The frame is the curve's twist-free axes (e1, e2) turned by the
         framing angle theta, one for all or one per sample: first = cos theta e1 + sin theta e2, second = T x first.
-        Or normals (n, 3) give the first normal at each sample, made unit and normal to T.
+        Or normals (n, 3) give the first normal at each sample, made unit and normal to T. bend, a BendShift, moves the
+        facing boards' null toward each bend's centre by its first-order shift (None, the default: the section's null
+        stays on the path).
 
         A framing that closes after a lap turns by (k pi - holonomy) / L a metre, theta = theta0 + that times s. The
         knotted study's framing(curve, k) gives the board normal n_b = cos theta_b e1 + sin theta_b e2 and the
@@ -458,7 +515,7 @@ class SectionField:
             given = np.asarray(normals, dtype=np.float64)
             first = given - _dot(given, t)[:, None] * t
             first /= np.linalg.norm(first, axis=1)[:, None]
-        return cls(grid, curve.points, t, first, np.cross(t, first), curve.length, drive, window=window)
+        return cls(grid, curve.points, t, first, np.cross(t, first), curve.length, drive, window=window, bend=bend)
 
     @classmethod
     def straight(
@@ -504,6 +561,42 @@ class SectionField:
         twist, comes back against the frame it started from: 0 for a frame that closes, pi for one that closes by an
         odd number of half turns, the curve's holonomy for its twist-free axes."""
         return self._path.seam
+
+    @cached_property
+    def curvature_vector(self) -> Arr:
+        """The closed path's curvature vector dT/ds at each sample (n, 3) (1/m), by second differences of the samples
+        (equally spaced in arc length) without its part along the tangent: zero on a straight path."""
+        pts, t = self.points, self.tangents
+        if self.axis is not None:
+            return np.zeros_like(pts)
+        step = self.length / len(pts)
+        k = (np.roll(pts, -1, 0) - 2 * pts + np.roll(pts, 1, 0)) / step**2
+        out: Arr = k - _dot(k, t)[:, None] * t
+        return out
+
+    @cached_property
+    def _bend_rows(self) -> Arr:
+        """Each segment's curvature in the frame, (n, 4): kappa . first and kappa . second at its start, and their
+        changes to its end, where the next sample's curvature is taken on the frame the segment ends on (across the
+        seam, the first sample's frame turned by the seam)."""
+        rows, k = self._path.packed, self.curvature_vector
+        first, second = rows[:, 12:15], rows[:, 18:21]
+        nxt = np.roll(k, -1, 0)
+        start_u, start_v = _dot(k, first), _dot(k, second)
+        end_u, end_v = _dot(nxt, first + rows[:, 15:18]), _dot(nxt, second + rows[:, 21:24])
+        out: Arr = np.ascontiguousarray(np.stack([start_u, start_v, end_u - start_u, end_v - start_v], 1))
+        return out
+
+    def null_shift(self, where: Placement) -> tuple[Arr, Arr]:
+        """The bend correction's displacement of the null (du, dv) (m) in the section at particles where a Placement
+        puts them: the curvature in the frame at each segment's ends, linearly between them; zero without `bend` or on
+        a straight path."""
+        if self.bend is None or self.axis is not None:
+            zero = np.zeros(len(where.s))
+            return zero, zero.copy()
+        rows = self._bend_rows[where.segment]
+        f = np.clip(where.s * (len(self.points) / self.length) - where.segment, 0.0, 1.0)
+        return self.bend.displacement(rows[:, 0] + f * rows[:, 2], rows[:, 1] + f * rows[:, 3])
 
     @cached_property
     def _cloud(self) -> tuple[Arr, Arr, Arr]:
@@ -661,7 +754,11 @@ class SectionField:
 
     # ---- the fields --------------------------------------------------------------------------------------------------
     def _fields(self, where: Placement, t: float) -> tuple[Arr, Arr | None, BoolArr]:
-        g, on = self.grid._gradient_at(where.u, where.v)
+        if self.bend is not None and self.axis is None:
+            du, dv = self.null_shift(where)
+            g, on = self.grid._gradient_at(where.u - du, where.v - dv)
+        else:
+            g, on = self.grid._gradient_at(where.u, where.v)
         volts = np.where(on, self.drive(where.s * (2 * math.pi / self.length), t), 0.0)
         across, toward = -volts * g[:, 0], -volts * g[:, 1]
         e: Arr = across[:, None] * where.first + toward[:, None] * where.second

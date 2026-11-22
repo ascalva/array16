@@ -533,8 +533,13 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    understate it (section 3). Its field solver is the operator the compiler needs for board electrodes.
 2. **Stage 2 of experiment 2: T915-S on the twin bench** (`docs/KNOTTED_GUIDE.md` section 10), its predictions and
    criteria committed before any tracking, on 59 draws (93 where one failure is allowed), with three-dimensional views
-   of boards, fields and orbits. First the modules its section 8.1 names to join before stage 2 registers: the
-   boundary-element windows with the null tracker (`array16/guide/bem.py`), the axisymmetric bend reference
+   of boards, fields and orbits. It runs in three parts, each registered before it runs (started 2026-11-22). 2a:
+   each lost electron's place in the twin's records, the bend's shift of the null against the axisymmetric reference,
+   the geometry module, multipactor with secondary emission (Furman and Pivi) in a 2-D tracker, and the shots for H1
+   to H4 of stage 1's report, E2-2, E2-9, E2-13 and E2-15, as `experiments/twin_rung2.py`. 2b: the joints, the
+   two-rail model of the one-board ring and the full-lap resonance. 2c: the rest of the design review. First the
+   modules its section 8.1 names to join before stage 2 registers: the boundary-element windows with the null
+   tracker (`array16/guide/bem.py`), the axisymmetric bend reference
    (`axisym.py`), the compiled ramp (`ramp.py`) and the plates, planforms and layouts (`geometry.py`); and the twin's
    records carrying each lost electron's place along the path, its position in the section and its step. Then
    T915-S's joints: the kick across a solved joint, the axial field on the null of a piece without its mirror, the
@@ -656,6 +661,11 @@ Open for the owner at the build stage, from `docs/VIRTUAL_ANTENNA.md`:
 
 ## 7. Notes for whoever continues
 
+- Work in flight is snapshotted to the branch `wip/snapshots` on origin about every 20 minutes while a session works:
+  the working tree, tracked changes and untracked files, each snapshot scanned by gitleaks; `main` carries only
+  reviewed commits. To pick up after losing a machine, clone, compare `wip/snapshots` with `main`, and read this file
+  and the latest experiment's `PROTOCOL.md`. A registered run is resumable: `run` measures only the shots not yet on
+  file, at the registered commit.
 - The files under the lint and type gates are listed in `pyproject.toml`; the older ones are not yet.
 - `.venv` is uv's environment. `.env` is older and holds the openEMS Python modules; `vivaldi_openems.py` and
   `twin_openems_line.py` run there (the latter's `section` stage also under uv). `.twin_cache/` holds the twin's solved

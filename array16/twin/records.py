@@ -60,8 +60,8 @@ class Losses:
                it launched the electron with
       how      how it was lost: struck, left or stopped (HOW)
       step     the step it was lost in, integrate's count: step dt <= time <= (step + 1) dt. The watch stopped it
-               after the next step (Detection.step is one more) for one that struck or left, after this one for one
-               stopped
+               after the next step for one that struck or left (Detection.step is one more, or the same for one off
+               the grid from its launch), after this one for one stopped
       time     when it was lost (s): when it crossed onto the copper, a board or the grid's edge, or the end of the
                step after which it was stopped
       s        its arc length along the path then (m, 0 to `length`)
@@ -141,22 +141,27 @@ class Losses:
 
 class LossLog:
     """What a watch keeps to write its Losses: the places its last two calls were given, the velocities of the last,
-    and the entries so far, nothing a step beyond that. The watch calls `note` after every step with what it found: the
-    electrons the field found off the grid at the start of the step just taken (`hit`), those another observer stopped
-    (`others`), the laps each has gone, and how far along the path each now is (m, from its start). With `start`, where
-    the electrons were launched (N, 3), the first step's crossings are found as every other's; without it an electron
-    lost in the first step is placed where the field first found it off the grid, or, off it from its launch, where
-    the first step left it."""
+    each electron's arc length at its start, and the entries so far, nothing a step beyond that. The watch calls `note`
+    after every step with what it found: the electrons the field found off the grid at the start of the step just
+    taken (`hit`), those another observer stopped (`others`), the laps each has gone by the watch's count, and how far
+    along the path each now is (m, from its start). An entry's laps are its arc length's advance on its start's, the
+    whole laps added that bring them nearest the watch's count. With `start`, where the electrons were launched (N, 3),
+    the first step's crossings are found as every other's and the laps counted from the launch; without it the laps
+    are counted from where the first step left the electrons, and one lost in the first step is placed where the field
+    first found it off the grid, or, off it from its launch, where the first step left it."""
 
     def __init__(self, swept: SectionField, count: int, start: Arr | None = None) -> None:
         self.swept, self.count = swept, count
         self._last: Arr | None = None if start is None else np.array(start, dtype=np.float64).reshape(count, 3)
+        self._origin: Arr | None = None if self._last is None else swept.locate(self._last).s
         self._before: Arr | None = None
         self._pace: Arr | None = None  # gamma v over the step that ended at _last
         self._entries: list[dict[str, Any]] = []
 
     def note(self, step: int, t: float, x: Arr, u: Arr, hit: BoolArr, others: BoolArr, laps: Arr, gone: Arr) -> None:
         """Write the entries of the electrons lost at this call of the watch, after step `step` at time t."""
+        if self._origin is None:
+            self._origin = self.swept.locate(x).s
         dt = t / (step + 1)
         struck, stopped = np.flatnonzero(hit), np.flatnonzero(others)
         if len(struck):
@@ -164,9 +169,9 @@ class LossLog:
         if len(stopped):
             where, _ = self._place(x[stopped])
             how = np.full(len(stopped), STOPPED)
-            gone_laps = gone[stopped] / self.swept.length
+            counted = gone[stopped] / self.swept.length
             self._entries.append(
-                self._entry(stopped, how, step, np.full(len(stopped), t), where, gone_laps, x[stopped], u[stopped])
+                self._entry(stopped, how, step, np.full(len(stopped), t), where, counted, x[stopped], u[stopped])
             )
         self._before, self._last = self._last, np.array(x, dtype=np.float64)
         self._pace = np.array(u, dtype=np.float64)
@@ -189,15 +194,14 @@ class LossLog:
         _, _, on = self.swept.grid.gradient_at(where.u, where.v)
         return where, on
 
-    def _crossing(self, a: Arr, b: Arr) -> tuple[Arr, Arr]:
+    def _crossing(self, a: Arr, b: Arr) -> Arr:
         """The fraction of the way from a, which the field found on the grid, to b, which it found off it, at which
-        each segment first leaves the grid (1 where the segment's ends do not bear that out: b, the field's own
-        finding), and the arc length at b (m)."""
+        each segment first leaves the grid: 1 where the segment's ends do not bear that out (b, the field's own
+        finding)."""
         count, parts = len(a), np.arange(_SCAN + 1) / _SCAN
         span = b - a
-        where, on = self._place((a[:, None, :] + parts[None, :, None] * span[:, None, :]).reshape(-1, 3))
+        _, on = self._place((a[:, None, :] + parts[None, :, None] * span[:, None, :]).reshape(-1, 3))
         grid_on = on.reshape(count, _SCAN + 1)
-        at_b: Arr = where.s.reshape(count, _SCAN + 1)[:, -1]
         rows = np.flatnonzero(grid_on[:, 0] & ~grid_on.all(axis=1))
         first = np.argmin(grid_on[rows], axis=1)  # the first part found off the grid
         low, high = (first - 1) / _SCAN, first / _SCAN
@@ -207,27 +211,23 @@ class LossLog:
             low, high = np.where(inside, mid, low), np.where(inside, high, mid)
         fraction: Arr = np.ones(count)
         fraction[rows] = high
-        return fraction, at_b
+        return fraction
 
     def _crossed(self, idx: IntArr, step: int, dt: float, x: Arr, u: Arr, laps: Arr) -> dict[str, Any]:
         """The entries of the electrons the field found off the grid at the start of step `step`: where each crossed,
         over the step before, between the last place it was found on the grid and the first it was found off."""
-        lap, count = self.swept.length, len(idx)
+        count = len(idx)
         pace = u[idx] if self._pace is None else self._pace[idx]
-        gone = laps[idx]
         if self._last is None:  # off the grid from a launch the watch was not given: where the first step left it
             point, when, lost = x[idx], np.full(count, (step + 1) * dt), 0
-            where, _ = self._place(point)
         elif self._before is None:  # off the grid at its launch, or lost in the first step of a launch not given
             point, when, lost = self._last[idx], np.full(count, step * dt), max(step - 1, 0)
-            where, _ = self._place(point)
         else:
             a, b = self._before[idx], self._last[idx]
-            fraction, at_b = self._crossing(a, b)
+            fraction = self._crossing(a, b)
             point = a + fraction[:, None] * (b - a)
             when, lost = (step - 1 + fraction) * dt, step - 1
-            where, _ = self._place(point)
-            gone = gone + (np.mod(where.s - at_b + lap / 2, lap) - lap / 2) / lap
+        where, _ = self._place(point)
         grid = self.swept.grid
         pu, pv = where.u, where.v
         inside = (
@@ -239,13 +239,17 @@ class LossLog:
             & (pv <= grid.v[-1])
         )
         how = np.where(inside, STRUCK, LEFT)
-        return self._entry(idx, how, lost, when, where, gone, point, pace)
+        return self._entry(idx, how, lost, when, where, laps[idx], point, pace)
 
     def _entry(
-        self, idx: IntArr, how: StrArr, step: int, when: Arr, where: Placement, laps: Arr, point: Arr, pace: Arr
+        self, idx: IntArr, how: StrArr, step: int, when: Arr, where: Placement, counted: Arr, point: Arr, pace: Arr
     ) -> dict[str, Any]:
-        """One call's entries: the electrons' rows, how and when each was lost, its place, and its energy and sense
-        from gamma v over its last step (`pace`)."""
+        """One call's entries: the electrons' rows, how and when each was lost, its place, its laps (its arc length's
+        advance on its start's, with the whole laps that bring them nearest the watch's count, `counted`), and its
+        energy and sense from gamma v over its last step (`pace`)."""
+        assert self._origin is not None
+        advance = (where.s - self._origin[idx]) / self.swept.length
+        laps = advance + np.round(counted - advance)
         tangent = np.cross(where.first, where.second)  # second = T x first
         along = (pace * tangent).sum(axis=1)
         w = (pace * pace).sum(axis=1) / C0**2  # (gamma v / c)^2 = gamma^2 - 1
