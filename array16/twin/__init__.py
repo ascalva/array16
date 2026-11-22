@@ -15,7 +15,9 @@ the build stage as a change of bench file:
                 by the hash of its content and the solver's source), the ring of segments (array16.guide.ring) and the
                 section swept along the path (array16.particles.sections)
   TwinDetector  observers for integrate: the particles held and lost, where and when each was lost, the currents the
-                pickups carry, and the charge the held particles bring to the dump
+                pickups carry, and the charge the held particles bring to the dump; and, asked for (`losses`), an
+                entry for each electron lost: where along the path and in the section it left, when, with what
+                energy and sense, and how (array16.twin.records)
   TwinVacuum    the pressure, an electron's mean free path and lifetime between collisions, and an observer that stops
                 the electrons the gas scatters
 
@@ -100,6 +102,8 @@ from array16.particles import (
 )
 from array16.particles.sections import PathDrive
 
+from .records import Losses, LossLog
+
 __all__ = [
     "CACHE",
     "Collisions",
@@ -108,6 +112,7 @@ __all__ = [
     "Driven",
     "FrameSpec",
     "Framing",
+    "Losses",
     "PathSpec",
     "Pickup",
     "Realisation",
@@ -873,8 +878,10 @@ class Detection:
     aperture) and stopped by another observer (the gas); each particle's fate (0 held, 1 lost, 2 stopped), the step,
     time (s) and arc length (m) it ended at (-1 and nan for the held), and the laps it went round; the pickups'
     currents (A, (T, P)) at the times recorded (s); the charge the held particles bring to the dump when the drive
-    stops (C) and the volts it puts on the collector's charge amplifier (V); and the mean current lost to the guide
-    over the run (A)."""
+    stops (C) and the volts it puts on the collector's charge amplifier (V); the mean current lost to the guide
+    over the run (A); and, where the watch was asked for them, the entries of the electrons lost and stopped
+    (array16.twin.records.Losses: where each crossed onto the copper, a board or the grid's edge, or was stopped),
+    else None."""
 
     held: int
     lost: int
@@ -889,6 +896,7 @@ class Detection:
     dump_charge: float
     dump_volts: float
     loss_current: float
+    losses: Losses | None = None
 
 
 class Watch:
@@ -896,7 +904,9 @@ class Watch:
     field found off its grid (a step after they left it, as SectionField.stop_off_grid), notes those another observer
     stopped, follows each particle's arc length and laps along the path (from `start`, where the particles were
     launched, or else from where the first step left them), and records the current each pickup carries, the change
-    of the image charge induced on it over the step."""
+    of the image charge induced on it over the step. With `losses` it also writes an entry for each electron lost or
+    stopped (array16.twin.records.LossLog), one an electron and nothing a step: everything else it records is the
+    same either way."""
 
     def __init__(
         self,
@@ -908,6 +918,8 @@ class Watch:
         collector: float,
         every: int = 1,
         start: Arr | None = None,
+        *,
+        losses: bool = False,
     ) -> None:
         self.field, self.count, self.pickups = field, count, tuple(pickups)
         self.charge, self.weight, self.collector, self.every = charge, weight, collector, every
@@ -924,6 +936,7 @@ class Watch:
         self._induced: Arr | None = None
         self._then = 0.0
         self._last = 0.0
+        self._log = LossLog(field.swept, count, start) if losses else None
         if start is not None:
             s, _ = self._arc(np.asarray(start, dtype=np.float64))
             if self.pickups:
@@ -963,6 +976,8 @@ class Watch:
             self.fate[idx], self.step[idx], self.time[idx], self.at[idx] = fate, step, t, s[idx]
         going = self.fate == 0
         self.laps = np.where(going, gone / self.field.length, self.laps)
+        if self._log is not None:
+            self._log.note(step, t, x, u, hit, others, self.laps, gone)
         self._last = t
         if self.pickups and (step + 1) % self.every == 0:
             induced = self._image(s, going)
@@ -996,6 +1011,7 @@ class Watch:
             dump_charge=dump,
             dump_volts=dump / self.collector,
             loss_current=lost * abs(self.charge) * self.weight / self._last if self._last > 0 else 0.0,
+            losses=None if self._log is None else self._log.losses(),
         )
 
 
@@ -1003,8 +1019,10 @@ class TwinDetector:
     """The detector of the twin bench (docs/KNOTTED_GUIDE.md sections 6.7 and 8.3): pickups along the path, the dump's
     collector with its charge amplifier, and the count of what is lost. Options, as a bench file gives them: the
     pickups' places (fractions of a lap), their length (m), coupling (the share of a passing charge's image each
-    takes; 30 % in section 6.5) and edge (m); the collector's capacitance (F); and how many particles each tracked one
-    stands for. `watch` makes the observer for one run."""
+    takes; 30 % in section 6.5) and edge (m); the collector's capacitance (F); how many particles each tracked one
+    stands for; and whether each watch writes an entry for every electron lost (`losses`: where along the path and in
+    the section it left, when, with what energy and sense, and how; array16.twin.records), which a shot may also ask
+    of its own watch. `watch` makes the observer for one run."""
 
     def __init__(
         self,
@@ -1015,6 +1033,7 @@ class TwinDetector:
         collector: float = 1e-12,
         weight: float = 1.0,
         every: int = 1,
+        losses: bool = False,
     ) -> None:
         if not (length > edge > 0 and 0 <= coupling <= 1 and collector > 0 and weight > 0 and every >= 1):
             raise ValueError(
@@ -1022,8 +1041,12 @@ class TwinDetector:
                 f"positive weight and a recording interval of a step or more, not {length}, {edge}, {coupling}, "
                 f"{collector}, {weight} and {every}"
             )
+        if not isinstance(losses, bool):
+            raise ValueError(
+                f"a detector writes the entries of the electrons lost or not, losses true or false, not {losses!r}"
+            )
         self.pickups = tuple(Pickup(float(at), length, coupling, edge) for at in pickups)
-        self.collector, self.weight, self.every = collector, weight, every
+        self.collector, self.weight, self.every, self.losses = collector, weight, every, losses
 
     def watch(
         self,
@@ -1033,14 +1056,22 @@ class TwinDetector:
         charge: float = -E,
         weight: float | None = None,
         start: Arr | None = None,
+        losses: bool | None = None,
     ) -> Watch:
         """The observer for one run of `count` particles of `charge` (C, an electron's by default) in `field`, counting
-        their laps from `start` (N, 3), where they were launched, when it is given."""
+        their laps from `start` (N, 3), where they were launched, when it is given; writing an entry for each electron
+        lost when `losses` asks it (the detector's own setting by default), from the launch on when `start` is given."""
         heft = self.weight if weight is None else weight
-        return Watch(field, count, self.pickups, charge, heft, self.collector, self.every, start)
+        keep = self.losses if losses is None else losses
+        return Watch(field, count, self.pickups, charge, heft, self.collector, self.every, start, losses=keep)
 
     def identity(self) -> dict[str, Any]:
-        return {"pickups": plain(self.pickups), "collector_F": self.collector, "weight": self.weight}
+        """What a record keeps of the detector: its pickups, collector and weight, and that it writes the entries of the
+        electrons lost where it does."""
+        out: dict[str, Any] = {"pickups": plain(self.pickups), "collector_F": self.collector, "weight": self.weight}
+        if self.losses:
+            out["losses"] = True
+        return out
 
 
 # ---- the vacuum -----------------------------------------------------------------------------------------------------
