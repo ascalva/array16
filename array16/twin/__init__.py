@@ -8,12 +8,14 @@ the build stage as a change of bench file:
     realisation = 1
 
   Design        a design file (designs/*.toml): the band and the ring's order, the cross-section, the path and its
-                frame, the drive, and the tolerances a realisation draws
+                frame, the bend's shift of the null where it asks for one, the drive, and the tolerances a
+                realisation draws
   TwinGuide     one realisation of a design: tune (the ring's +-m pair, as a sweep finds it), drive (compiled current
                 feeds: the volts round the ring, the power, the backward wave, the well) and field() (a Fields for
                 integrate), from the solved cross-section (array16.guide.sections, each solve cached under .twin_cache/
-                by the hash of its content and the solver's source), the ring of segments (array16.guide.ring) and the
-                section swept along the path (array16.particles.sections)
+                by the hash of its content and the solver's source), the ring of segments (array16.guide.ring), the
+                path and its closing frame (array16.guide.geometry: the circle, the ellipse, the torus knots) and the
+                section swept along it (array16.particles.sections)
   TwinDetector  observers for integrate: the particles held and lost, where and when each was lost, the currents the
                 pickups carry, and the charge the held particles bring to the dump; and, asked for (`losses`), an
                 entry for each electron lost: where along the path and in the section it left, when, with what
@@ -26,16 +28,19 @@ design's seed and k, what a build departs by and the predictions do not know: th
 impedance and place, the split's etch and the laminate's permittivity (array16.guide.ring.ring_draw), and Earth's field
 in an orientation drawn uniformly. The calibration finds them blind, as on V1's simulated array.
 
-The model. The section's field is quasi-static and swept along the path, its null where the 2-D solve puts it; the
-bend's shift of the null and the field along the path come with the 3-D solve array16/guide/bem.py will hold (section
-4.5). Its magnetic field is T x E / v at the wave's phase velocity from the loaded section's E, where a line on a
-laminate carries the air line's pattern, (n/c) T x E_air: the magnetic force is v_e / v_phase of the electric, 1 % at
-9 eV on R1, and the Doppler shift and the magnetic term cancel in the pseudopotential to that order; RingWave gives
-the backward part of the wave, |b/a| under 1e-3 on the designs, the forward wave's slowness. The ring is one line mode,
-both of R1's rails driven alike: full wave finds R1's two rails resonating apart (experiments/twin_openems_line), and
-the two-rail line matrices, with the bridges between the rails, will join array16.guide.ring for the drive R1 is built
-with. The gas scatters with one total cross-section at every energy; LXCat's cross-sections by energy will take its
-place for a named gas. SI units, pressures in mbar.
+The model. The section's field is quasi-static and swept along the path, its null where the 2-D solve puts it, or,
+where the design asks ([bend] shift = true) or a sweep does (bend=True), moved toward each bend's centre by its
+first-order shift, 0.1405 h^2/R in the boards' plane and 0.318 h^2/R toward them (array16.particles.sections.BendShift,
+held to the axisymmetric reference of array16/guide/axisym.py; E2-2); the bend's higher orders and the field along the
+path come with the 3-D solve array16/guide/bem.py will hold (section 4.5). Its magnetic field is T x E / v at the
+wave's phase velocity from the loaded section's E, where a line on a laminate carries the air line's pattern,
+(n/c) T x E_air: the magnetic force is v_e / v_phase of the electric, 1 % at 9 eV on R1, and the Doppler shift and the
+magnetic term cancel in the pseudopotential to that order; RingWave gives the backward part of the wave, |b/a| under
+1e-3 on the designs, the forward wave's slowness. The ring is one line mode, both of R1's rails driven alike: full wave
+finds R1's two rails resonating apart (experiments/twin_openems_line), and the two-rail line matrices, with the bridges
+between the rails, will join array16.guide.ring for the drive R1 is built with. The gas scatters with one total
+cross-section at every energy; LXCat's cross-sections by energy will take its place for a named gas. SI units,
+pressures in mbar.
 """
 
 from __future__ import annotations
@@ -55,7 +60,9 @@ from typing import Any, Literal
 
 import numpy as np
 
+from array16.guide import geometry as _geometry
 from array16.guide import sections as _sections
+from array16.guide.geometry import Framing, curvature_vector, framing
 from array16.guide.ring import (
     RING_NODES,
     RING_SENSITIVITY,
@@ -100,12 +107,14 @@ from array16.particles import (
     mathieu_q,
     ponderomotive_ev,
 )
-from array16.particles.sections import PathDrive
+from array16.particles.sections import BEND_IN_PLANE, BEND_TOWARD, BendShift, PathDrive
 
 from .records import Losses, LossLog
 
 __all__ = [
     "CACHE",
+    "PATHS",
+    "BendSpec",
     "Collisions",
     "Design",
     "Detection",
@@ -143,30 +152,36 @@ GEOMETRIES: dict[str, type[FacingStrips] | type[SlotGuide] | type[Rails]] = {
 GAPLESS_STEP = 1 / 40  # of h: the node spacing of a closed-form section sampled for the swept field
 FREE_PATH = (0.4, 1e-3, 295.0)  # an electron's mean free path (m) at 1e-3 mbar and 295 K: the estimate of sections
 # 6.5 and 8.2, 11 us between collisions at 1 eV and 6.3e-5 mbar, which sets TwinVacuum's cross-section
+PATHS = ("circle", "ellipse", "torus", "straight")  # the paths a design is swept along (array16.guide.geometry)
 
 
 # ---- the design file ------------------------------------------------------------------------------------------------
 @dataclass(frozen=True)
 class PathSpec:
-    """The path the section is swept along: a circle in the xy plane, a (p, q) torus knot on a torus of radii r/R =
-    ratio (the trefoil is (2, 3)), or a straight line repeating every lap (a ring unrolled); its length (m), or None for
-    m guided waves at the band on the solved section's index, the ring resonant there; and its samples."""
+    """The path the section is swept along, as array16.guide.geometry draws it: a circle in the xy plane (ring), an
+    ellipse in it whose least radius of curvature is `tightest` (m; b^2/a, at the ends of its major axis, along x, the
+    path starting at one), a (p, q) torus knot on a torus of radii r/R = ratio (torus: the trefoil is (2, 3), the
+    unknotted helix (1, 3)), or a straight line repeating every lap (a ring unrolled); its length (m), or None for m
+    guided waves at the band on the solved section's index, the ring resonant there; and its samples."""
 
-    kind: Literal["circle", "torus", "straight"]
+    kind: Literal["circle", "ellipse", "torus", "straight"]
     length: float | None
     samples: int
     ratio: float = 0.0
     p: int = 2
     q: int = 3
+    tightest: float | None = None
 
 
 @dataclass(frozen=True)
 class FrameSpec:
     """How the section turns along the path. With k None, the curve's twist-free axes turned by theta (rad): the first
-    normal, u's direction, is cos theta e1 + sin theta e2. With k, the board normal closes after a lap with k half
-    turns against the twist-free frame, turning (k pi - holonomy)/L a metre from theta0 (rad; None: the start that
-    keeps the largest radius of curvature in the boards' plane, the knotted study's rule), and u runs across the
-    boards' plane."""
+    normal, u's direction, is cos theta e1 + sin theta e2. On the circle and the ellipse, which lie in the xy plane,
+    e1 lies in that plane and points outward and e2 = T x e1 down the axis, so theta = pi puts the bend wholly in the
+    boards' plane (u inward, v up) and theta = pi/2 wholly toward them (u down the axis, v inward): array16.guide.
+    geometry.flat's 'in-plane' and 'toward'. With k, the board normal closes after a lap with k half turns against the
+    twist-free frame, turning (k pi - holonomy)/L a metre from theta0 (rad; None: the start that keeps the largest
+    radius of curvature in the boards' plane, the knotted study's rule), and u runs across the boards' plane."""
 
     theta: float = 0.0
     k: int | None = None
@@ -195,11 +210,25 @@ class Tolerance:
     earth: float = 0.0
 
 
-_TOP = {"name", "about", "seed", "band", "section", "path", "frame", "drive", "tolerance"}
+@dataclass(frozen=True)
+class BendSpec:
+    """The bend's first-order shift of the null as a design states it ([bend]): whether the swept section takes it
+    (`shift`), and its coefficients over h^2/R in the boards' plane and toward them, h the section's distance from the
+    null to its copper (array16.particles.sections.BendShift). The defaults are the facing boards', 2 ln 2/pi^2 and
+    1/pi (Propositions, held to the axisymmetric reference of array16/guide/axisym.py: E2-2's 0.1405 and 0.318); a
+    section other than facing strips states its own."""
+
+    shift: bool = False
+    inplane: float = BEND_IN_PLANE
+    toward: float = BEND_TOWARD
+
+
+_TOP = {"name", "about", "seed", "band", "section", "path", "frame", "bend", "drive", "tolerance"}
 _TABLES = {
     "band": {"f", "m"},
-    "path": {"kind", "length", "samples", "ratio", "p", "q"},
+    "path": {"kind", "length", "samples", "ratio", "p", "q", "tightest"},
     "frame": {"theta_deg", "k", "theta0_deg"},
+    "bend": {"shift", "inplane", "toward"},
     "drive": {"volts", "q", "feeds"},
     "tolerance": {f.name for f in fields(Tolerance)},
 }
@@ -253,6 +282,34 @@ def _section(spec: Mapping[str, Any], f: float, where: str) -> tuple[Section, fl
     return section, aperture
 
 
+def _bend(spec: Mapping[str, Any] | None, section: Section, kind: str, path: str, where: str) -> BendSpec | None:
+    """The [bend] table: None where the design states none. It takes shift = true or false and, for a section other
+    than facing strips, its own coefficients."""
+    if spec is None:
+        return None
+    shift = spec.get("shift")
+    if not isinstance(shift, bool):
+        raise ValueError(
+            f"{where}: [bend] takes shift = true or false, the null moved toward each bend's centre or not: not "
+            f"{shift!r}"
+        )
+    if not ({"inplane", "toward"} <= set(spec) or isinstance(section.geometry, FacingStrips)):
+        raise ValueError(
+            f"{where}: the {kind} section's bend correction takes its own coefficients over h^2/R, [bend] inplane and "
+            "toward: the facing boards' 2 ln 2/pi^2 and 1/pi are theirs"
+        )
+    if shift and path == "straight":
+        raise ValueError(
+            f"{where}: a straight path has no bend to shift the null by; [bend] shift = true takes a curve"
+        )
+    out = BendSpec(shift, float(spec.get("inplane", BEND_IN_PLANE)), float(spec.get("toward", BEND_TOWARD)))
+    try:
+        BendShift(section.geometry.distance, out.inplane, out.toward)
+    except ValueError as error:
+        raise ValueError(f"{where}: [bend] {error}") from error
+    return out
+
+
 @dataclass(frozen=True)
 class Design:
     """A design as its file states it: name, a line about it and the seed its realisations are drawn from; the band
@@ -260,7 +317,8 @@ class Design:
     distances h, that the swept field covers: a particle beyond it has left the guide); the path and its frame; the
     drive, as peak volts (across the resonator, as array16.guide.sections counts them) or as the null's Mathieu q,
     through `feeds` compiled current feeds; and the tolerances. `source` is where it was read from, relative to the
-    repository, and `digest` its file's sha256."""
+    repository, and `digest` its file's sha256. `bend` is the bend's shift of the null as the file states it ([bend]),
+    None where it states none: the swept section keeps its null on the path unless a sweep asks for the shift."""
 
     name: str
     about: str
@@ -277,6 +335,7 @@ class Design:
     tolerance: Tolerance
     source: str = ""
     digest: str = ""
+    bend: BendSpec | None = None
 
     @classmethod
     def load(cls, path: Path) -> Design:
@@ -302,9 +361,9 @@ class Design:
         section, aperture = _section(spec.get("section", {}), f, where)
         path = spec.get("path", {})
         kind = path.get("kind", "circle")
-        if kind not in ("circle", "torus", "straight"):
-            raise ValueError(f"{where}: [path] kind is circle, torus or straight, not {kind!r}")
-        length = path.get("length")
+        if kind not in PATHS:
+            raise ValueError(f"{where}: [path] kind is circle, ellipse, torus or straight, not {kind!r}")
+        length, tightest = path.get("length"), path.get("tightest")
         route = PathSpec(
             kind,
             None if length is None else float(length),
@@ -312,11 +371,23 @@ class Design:
             float(path.get("ratio", 0.0)),
             int(path.get("p", 2)),
             int(path.get("q", 3)),
+            None if tightest is None else float(tightest),
         )
         if route.samples < 3 or (route.length is not None and not route.length > 0):
             raise ValueError(f"{where}: a path takes 3 samples or more and a positive length")
         if kind == "torus" and not 0 < route.ratio < 1:
             raise ValueError(f"{where}: a torus knot takes 0 < ratio = r/R < 1, not {route.ratio}")
+        if (kind == "ellipse") != (route.tightest is not None):
+            raise ValueError(
+                f"{where}: an ellipse takes [path] tightest, its least radius of curvature (m), and no other path does"
+            )
+        if route.tightest is not None and not (
+            route.tightest > 0 and (route.length is None or route.length > 2 * math.pi * route.tightest)
+        ):
+            raise ValueError(
+                f"{where}: an ellipse's least radius of curvature lies above 0 and under that of the circle of its "
+                f"length, its length over 2 pi: not {route.tightest} m"
+            )
         frame = spec.get("frame", {})
         k = frame.get("k")
         if k is not None and kind == "straight":
@@ -354,6 +425,7 @@ class Design:
             tolerance=tolerance,
             source=source,
             digest=digest,
+            bend=_bend(spec.get("bend"), section, str(spec.get("section", {}).get("kind")), kind, where),
         )
 
 
@@ -425,57 +497,6 @@ def solve_cached(section: Section, cache: Path | None = CACHE) -> Solved:
     solved = solve(section)
     _write(path, key, solved)
     return solved
-
-
-# ---- frames: the knotted study's framing ----------------------------------------------------------------------------
-def curvature_vector(curve: ClosedCurve) -> Arr:
-    """dT/ds at every point (n, 3), by second differences, without its part along the tangent (the knotted study's)."""
-    pts, ds = curve.points, curve.length / len(curve)
-    k = (np.roll(pts, -1, 0) - 2 * pts + np.roll(pts, 1, 0)) / ds**2
-    t = curve.tangents
-    out: Arr = k - (k * t).sum(1)[:, None] * t
-    return out
-
-
-@dataclass(frozen=True, eq=False)
-class Framing:
-    """Board normals along a curve (experiments/knotted_guide_study.py's Framing): its twist-free axes turned by
-    theta0 + twist s, so that after a lap they come back turned by k pi. normal is the board normal n_b, across the
-    direction T x n_b in the boards' plane; kappa_g and kappa_n are the curvature in the boards' plane and toward them
-    (1/m)."""
-
-    k: int
-    theta0: float
-    twist: float
-    normal: Arr
-    across: Arr
-    kappa_g: Arr
-    kappa_n: Arr
-
-    @property
-    def inplane_radius(self) -> float:
-        """The smallest radius of curvature in the boards' plane (m)."""
-        return float(1 / np.abs(self.kappa_g).max())
-
-
-def framing(curve: ClosedCurve, k: int, theta0: float | None = None, starts: int = 720) -> Framing:
-    """The framing that closes with k half turns against the twist-free frame, (k pi - holonomy) / L a metre; without
-    theta0, the start that keeps the largest in-plane radius (section 3.5). The knotted study's, the same arithmetic."""
-    n, length = len(curve), curve.length
-    e1, e2 = curve.axes
-    kv = curvature_vector(curve)
-    a, b = (kv * e1).sum(1), (kv * e2).sum(1)
-    twist = (k * math.pi - curve.holonomy) / length
-    s = np.arange(n) * length / n
-    if theta0 is None:
-        trial = np.linspace(0, math.pi, starts, endpoint=False)
-        th = trial[:, None] + twist * s[None, :]
-        kg = np.cos(th) * b[None, :] - np.sin(th) * a[None, :]  # kappa . (T x n_b), n_b = cos th e1 + sin th e2
-        theta0 = float(trial[int(np.argmin(np.abs(kg).max(1)))])
-    th = theta0 + twist * s
-    normal = np.cos(th)[:, None] * e1 + np.sin(th)[:, None] * e2
-    across = np.cross(curve.tangents, normal)
-    return Framing(k, theta0, twist, normal, across, (kv * across).sum(1), (kv * normal).sum(1))
 
 
 # ---- the ring's volts along the path --------------------------------------------------------------------------------
@@ -614,6 +635,15 @@ def _resolve(path: str | Path) -> Path:
     return out if out.is_absolute() else ROOT / out
 
 
+def _asked(bend: object) -> bool | None:
+    """A sweep's `bend`: True or False, or None for the design's."""
+    if bend is not None and not isinstance(bend, bool):
+        raise ValueError(
+            f"a sweep takes the bend's shift of the null or not, bend true or false (None: the design's), not {bend!r}"
+        )
+    return bend
+
+
 def _span(lo: float, hi: float, step: float, centre: float) -> Arr:
     """Nodes `step` apart from about lo to about hi, one of them on `centre`."""
     below, above = math.floor((centre - lo) / step + 1e-9), math.floor((hi - centre) / step + 1e-9)
@@ -623,7 +653,8 @@ def _span(lo: float, hi: float, step: float, centre: float) -> Arr:
 
 class TwinGuide:
     """One realisation of a design, as a device of the twin bench (docs/KNOTTED_GUIDE.md section 8.3): what the
-    resonance (tune), the drive (drive) and the field (field) of the guide built once would be. Options, as a bench
+    resonance (tune), the drive (drive) and the field (field) of the guide built once would be, with the bend's shift of
+    the null where the design or a sweep asks for it (bend_shift). Options, as a bench
     file gives them: the design file (relative to the repository), the realisation (0, the default, is the design as
     drawn), and the cache folder for solved sections (.twin_cache/ by default). Nothing is solved until it is asked
     for; a solve is read back from the cache when its content has been solved before."""
@@ -655,18 +686,21 @@ class TwinGuide:
 
     @cached_property
     def curve(self) -> ClosedCurve | None:
-        """The path as a closed curve of the design's samples (None for a straight path)."""
+        """The path as a closed curve of the design's samples, as array16.guide.geometry draws it: the ring, the
+        ellipse or the torus knot of the guide's length (None for a straight path)."""
         path, length = self.design.path, self.length
         if path.kind == "circle":
-            return ClosedCurve.circle(length / (2 * math.pi), path.samples)
+            return _geometry.ring(length, path.samples)
         if path.kind == "torus":
-            knot = ClosedCurve.torus_knot(1.0, path.ratio, path.samples, path.p, path.q)
-            return ClosedCurve(knot.points * (length / knot.length), length)
+            return _geometry.torus(path.ratio, length, path.samples, path.p, path.q)
+        if path.kind == "ellipse":
+            assert path.tightest is not None
+            return _geometry.ellipse(length, path.tightest, path.samples)
         return None
 
     @cached_property
     def framing(self) -> Framing | None:
-        """The closing framing, where the design asks for one."""
+        """The closing framing (array16.guide.geometry.framing), where the design asks for one."""
         frame = self.design.frame
         if frame.k is None or self.curve is None:
             return None
@@ -735,15 +769,37 @@ class TwinGuide:
             return SectionGrid.sampled(lambda pu, pv: boards.potential(pu, pv - h, 1.0), u, v, (0.0, h))
         raise ValueError("the slot guide has no gapless closed form: its field is the solved section's")
 
-    def sweep(self, grid: SectionGrid, drive: PathDrive) -> SectionField:
+    def bend_shift(self, bend: bool | None = None) -> BendShift | None:
+        """The bend correction a sweep takes (array16.particles.sections.BendShift), or None: as the design states it
+        ([bend] shift; off where it states nothing) for `bend` None, else on (True) or off (False). On, it moves the
+        null toward each bend's centre by h^2 (inplane kappa_u, toward kappa_v), with h the section's distance from the
+        null to its copper (its geometry's: half the facing strips' gap) and the design's coefficients, the facing
+        boards' where it states none; a section other than facing strips takes its own, from [bend]."""
+        spec = self.design.bend
+        if not ((spec is not None and spec.shift) if _asked(bend) is None else bend):
+            return None
+        geometry = self.design.section.geometry
+        if spec is None:
+            if not isinstance(geometry, FacingStrips):
+                raise ValueError(
+                    f"{self.design.source or self.design.name}: a {type(geometry).__name__} section's bend correction "
+                    "takes its own coefficients over h^2/R, [bend] inplane and toward: the facing boards' are not its"
+                )
+            spec = BendSpec(True)
+        return BendShift(geometry.distance, spec.inplane, spec.toward)
+
+    def sweep(self, grid: SectionGrid, drive: PathDrive, *, bend: bool | None = None) -> SectionField:
         """A section grid swept along the design's path in its frame, driven by any PathDrive: field() with the
-        realised ring's volts, or a StandingWave, an InPhase or a static drive of the experiment's own."""
-        path, frame = self.design.path, self.design.frame
+        realised ring's volts, or a StandingWave, an InPhase or a static drive of the experiment's own; the null moved
+        toward each bend's centre where the design states it or `bend` asks (bend_shift). A straight path has no bend
+        to shift it by."""
+        path, frame, asked = self.design.path, self.design.frame, _asked(bend)
         if self.curve is None:
             return SectionField.straight(grid, self.length, drive, samples=path.samples, theta=frame.theta)
+        shift = self.bend_shift(asked)
         if self.framing is not None:
-            return SectionField.along(grid, self.curve, drive, normals=self.framing.across)
-        return SectionField.along(grid, self.curve, drive, theta=frame.theta)
+            return SectionField.along(grid, self.curve, drive, normals=self.framing.across, bend=shift)
+        return SectionField.along(grid, self.curve, drive, theta=frame.theta, bend=shift)
 
     # ---- what the device answers -------------------------------------------------------------------------------
     def tune(self, m: int | None = None) -> Tuning:
@@ -826,17 +882,25 @@ class TwinGuide:
             profile=profile,
         )
 
-    def field(self, driven: Driven | None = None, *, model: Literal["solved", "gapless"] = "solved") -> TwinField:
+    def field(
+        self,
+        driven: Driven | None = None,
+        *,
+        model: Literal["solved", "gapless"] = "solved",
+        bend: bool | None = None,
+    ) -> TwinField:
         """The realisation's field, a Fields for integrate: the section (`model`) swept along the path and driven by
         the realised ring's volts (`driven`, the design's drive by default) as a RingWave, with Earth's field where the
-        realisation draws it. A gap error dh/h at a node scales the null's gradient there by (1 + dh/h)^-2, which the
-        volts carry, so that the null's q and secular frequency follow the drawn gap; the section keeps the shape the
-        design draws, so its barrier field is scaled as the gradient is, (1 + dh/h)^-1 more than the gap gives."""
+        realisation draws it, and the null moved toward each bend's centre where the design states it or `bend` asks
+        (bend_shift). A gap error dh/h at a node scales the null's gradient there by (1 + dh/h)^-2, which the volts
+        carry, so that the null's q and secular frequency follow the drawn gap; the section keeps the shape the design
+        draws, so its barrier field is scaled as the gradient is, (1 + dh/h)^-1 more than the gap gives."""
+        asked = _asked(bend)
         driven = self.drive() if driven is None else driven
         drawn = self.drawn
         wave = RingWave.of(driven.profile / (1 + drawn.rel) ** 2, 2 * math.pi * driven.f, self.design.m)
         earth = drawn.earth if bool(np.any(drawn.earth)) else None
-        return TwinField(self.sweep(self.grid(model), wave), self.curve, earth)
+        return TwinField(self.sweep(self.grid(model), wave, bend=asked), self.curve, earth)
 
     def identity(self) -> dict[str, Any]:
         """What a record keeps of this device: the design file and its sha256, the realisation, and the section's solve

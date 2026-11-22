@@ -67,7 +67,8 @@ class Losses:
       s        its arc length along the path then (m, 0 to `length`)
       laps     the laps it had gone along the path from its start then, negative against the path's direction
       u, v     its place in the section (m, the section grid's coordinates: the null at the grid's null, u across the
-               path in the boards' plane, v from the board toward the null)
+               path in the boards' plane, v from the board toward the null; where the field moves the null toward
+               each bend's centre, the coordinates it reads the grid at, so the moved null is still at the grid's)
       energy   its kinetic energy (eV), over the step in which it was lost
       sense    its sense along the path then: +1 along the path's tangent, -1 against it, 0 square across it (to a
                millionth of its speed)
@@ -189,8 +190,14 @@ class LossLog:
     # ---- where an electron crossed ----------------------------------------------------------------------------------
     def _place(self, points: Arr) -> tuple[Placement, BoolArr]:
         """Where points are along the path and in the section (SectionField.locate, which searches every sample and
-        keeps nothing of it), and which of them the field would find on its grid."""
+        keeps nothing of it), in the section grid's coordinates as the field reads them, and which of them the field
+        would find on its grid. Where the field moves the null toward each bend's centre (SectionField.bend), it reads
+        the grid, copper and boards included, at (u - du, v - dv), and so do the entries: a struck electron's entry
+        lies on the face of the copper as the field placed it."""
         where = self.swept.locate(points)
+        if self.swept.bend is not None:
+            du, dv = self.swept.null_shift(where)
+            where = where._replace(u=where.u - du, v=where.v - dv)
         _, _, on = self.swept.grid.gradient_at(where.u, where.v)
         return where, on
 

@@ -59,6 +59,12 @@ include = [
     "tests/test_twin_rung1_figures.py",
     "experiments/twin_openems_line.py",
     "tests/test_twin_openems_line.py",
+    "tests/test_twin_records.py",
+    "tests/test_guide_axisym.py",
+    "tests/test_guide_geometry.py",
+    "tests/test_particle_bend.py",
+    "tests/test_guide_emission.py",
+    "tests/test_twin_designs.py",
 ]
 
 [tool.ruff.lint]
@@ -103,4 +109,10 @@ files = [
     "tests/test_twin_rung1_figures.py",
     "experiments/twin_openems_line.py",
     "tests/test_twin_openems_line.py",
+    "tests/test_twin_records.py",
+    "tests/test_guide_axisym.py",
+    "tests/test_guide_geometry.py",
+    "tests/test_particle_bend.py",
+    "tests/test_guide_emission.py",
+    "tests/test_twin_designs.py",
 ]

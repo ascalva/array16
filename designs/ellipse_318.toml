@@ -1,0 +1,55 @@
+# The ellipse of 318 mm (experiments/twin_rung1/REPORT.md section 6, H1; docs/KNOTTED_GUIDE.md section 10): T915-S's
+# section closed in the boards' own plane at T915-S's length, on the ellipse whose tightest radius is T915-S's least
+# radius in its boards' plane: a planar path whose bend changes along it. Beside the flat ring of the same length it
+# tells leaving the plane apart from the changing bend: H1 has the ellipse hold its static limit, as the flat ring did;
+# H1a, about 0.86 of it, as the paths out of the plane did. Read by array16.twin.Design; the path is
+# array16.guide.geometry.ellipse, its points on the ellipse and equally spaced in arc length.
+#
+# At the twin's length, 317.76 mm (m = 1 on the solved index 1.0311): semi-axes 64.33 and 34.56 mm, the radius
+# 18.570 mm at the ends of the major axis (b^2/a; the path starts at one, on the x axis) and 119.7 mm at the ends of the
+# minor one, the bend wholly in the boards' plane. Stage 1's static balance puts its static limit at 11.92 eV, at the
+# start, the tightest bend (T915-S's 11.64 eV and the flat ring's 32.43 eV lie 0.80 lap round). The frame is the
+# flat ring's: theta_deg = 180 on the ellipse's twist-free axes is array16.guide.geometry.flat(curve, "in-plane"). The
+# bend's shift of the null is left out, as in stage 1's designs, so that H1's paths compare like for like; [bend]
+# shift = true, or TwinGuide.field(bend=True), puts it in (6.3 um toward the centre at the tightest bend).
+name = "ellipse 318"
+about = "T915-S's facing flex strips on an ellipse of its length, its tightest radius T915-S's in-plane one"
+seed = 319
+
+[band]
+f = 915e6
+m = 1
+
+[section]               # section B, as T915-S
+kind = "facing"
+gap = 1.83e-3
+width = 7.32e-3
+split = 0.2745e-3
+margin = 1.83e-3
+laminate = "polyimide"
+thickness = 25e-6
+copper = 18e-6
+grid = "default"
+aperture = 4.0
+
+[path]
+kind = "ellipse"
+tightest = 18.56998e-3  # m: T915-S's least radius in its boards' plane, framed k = 0 on 4000 samples, at this length
+samples = 4000
+
+[frame]
+theta_deg = 180.0       # u inward and v up: the boards in the ellipse's plane, as the flat ring's
+
+[drive]
+volts = 50.0
+feeds = 2
+
+[tolerance]             # built as T915-S is
+spacers = 0.02
+stations = 24
+joint_dz = -0.02
+joint_sd = 0.01
+scarf = 29.4e-3
+split_sd = 0.2
+eps = 0.1
+earth = 50e-6

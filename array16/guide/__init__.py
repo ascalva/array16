@@ -1,4 +1,5 @@
-"""Instruments for guides made of boards: cross-sections, the ring resonator and multipactor.
+"""Instruments for guides made of boards: cross-sections, the ring resonator, the path's geometry, the bend's shift of
+the null, and multipactor.
 
 The modules of `docs/KNOTTED_GUIDE.md` section 8.1, taken from the knotted study's typed ports and held to its numbers.
 
@@ -7,13 +8,20 @@ The modules of `docs/KNOTTED_GUIDE.md` section 8.1, taken from the knotted study
                escape, and Solved.section_grid, the potential per volt as a particles.SectionGrid to sweep along a path
   ring         the ring of segments and the line matrices: resonances and their splitting, the backward wave, compiled
                feeds, and the tolerance draws of a built ring
+  geometry     the path's frames, plates and their flat outlines on ClosedCurve (KNT-10), and the paths stage 2 sets
+               against T915-S: the ring, the ellipse of a tightest radius, the (1, 3) helix, framed flat or closing
+  axisym       the axisymmetric bend reference by quadrature: where a bend moves the facing boards' null in their plane
+               and toward them (E2-2, DR-0), which particles.sections.BendShift carries into the swept field
   multipactor  two-surface multipactor: the impact bound, the level-1 chart, copper's yield, the statistical threshold
                calibrated on ECSS, and a tracker of the population
+  emission     Furman and Pivi's secondary emission and a 2-D tracker of a population in a solved section's own field
+               (E2-13, DR-8, MPC-H1), calibrated in the parallel-plate limit on the chart's yield (DR-0)
 
-The bench drivers that put them together, TwinGuide, TwinDetector and TwinVacuum, are array16.twin.
+The modules geometry, axisym and emission are imported as modules (array16.guide.emission), their names not lifted
+here. The bench drivers that put them together, TwinGuide, TwinDetector and TwinVacuum, are array16.twin.
 """
 
-from . import multipactor, ring, sections
+from . import axisym, emission, geometry, multipactor, ring, sections
 from .multipactor import (
     BLIND,
     BLIND_BAND,
@@ -173,6 +181,7 @@ __all__ = [
     "ToleranceCase",
     "ToleranceRun",
     "Yield",
+    "axisym",
     "best_drive",
     "calibrate",
     "chart",
@@ -181,6 +190,7 @@ __all__ = [
     "ecss_copper",
     "edge_weights",
     "effective_yield",
+    "emission",
     "energy2d",
     "escape_flood",
     "facing_depth",
@@ -191,6 +201,7 @@ __all__ = [
     "flights",
     "focusing",
     "gap_depth",
+    "geometry",
     "growth_rate",
     "impact_bound",
     "impact_energy",

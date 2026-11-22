@@ -1,0 +1,53 @@
+# The flat ring of 318 mm bent toward its boards (experiments/twin_rung1/REPORT.md section 6, H1; docs/KNOTTED_GUIDE.md
+# section 10, E2-9): T915-S's section on the flat ring of its length, the strips two coaxial cylinders round the ring's
+# axis with the gap radial, so that the ring bends wholly toward the boards, on their stiff side: planar, and of
+# constant curvature. It is designs/flat_ring_318.toml with its frame turned by 90 degrees, and tells leaving the plane
+# apart from the stiff side: H1 has it hold its static limit, as the flat ring did; H1b, the stiff side giving a bend
+# nothing, about the flat ring's own 32 eV. Read by array16.twin.Design.
+#
+# Radius 50.57 mm. The section's static strength toward its boards is 5.42 D/h, across their plane 1.199 D/h (stage
+# 1's static balance at q 0.49, experiments/twin_rung1), so its static limit is 146.7 eV, 4.52 times the flat ring's
+# 32.43 eV, at the same place, 0.80 lap round, where the drive's ripple leaves the weakest well.
+# The frame: theta_deg = 90 on the ring's twist-free axes is array16.guide.geometry.flat(curve, "toward"). The bend's
+# shift of the null is left out, as in stage 1's designs; [bend] shift = true, or TwinGuide.field(bend=True), puts it in
+# (5.3 um toward the centre, h^2/(pi R)).
+name = "flat ring 318, stiff"
+about = "T915-S's facing flex strips on a flat ring of its length, bent toward the boards, on their stiff side"
+seed = 320
+
+[band]
+f = 915e6
+m = 1
+
+[section]               # section B, as T915-S
+kind = "facing"
+gap = 1.83e-3
+width = 7.32e-3
+split = 0.2745e-3
+margin = 1.83e-3
+laminate = "polyimide"
+thickness = 25e-6
+copper = 18e-6
+grid = "default"
+aperture = 4.0
+
+[path]
+kind = "circle"
+samples = 4000
+
+[frame]
+theta_deg = 90.0        # u down the ring's axis and v inward: the boards coaxial cylinders, the ring bent toward them
+
+[drive]
+volts = 50.0
+feeds = 2
+
+[tolerance]             # built as T915-S is
+spacers = 0.02
+stations = 24
+joint_dz = -0.02
+joint_sd = 0.01
+scarf = 29.4e-3
+split_sd = 0.2
+eps = 0.1
+earth = 50e-6

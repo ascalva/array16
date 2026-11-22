@@ -1,0 +1,27 @@
+# The twin bench of experiment 2's stage 2: T915-S, the facing flex strips on the r/R = 0.45 trefoil at 915 MHz, its
+# guide, detector and vacuum simulated (docs/KNOTTED_GUIDE.md sections 8.3 and 10; array16/twin), as twin_r1.toml sets
+# R1's for stage 1. The detector writes an entry for every electron lost: how (struck, left or stopped), when, where
+# along the path and in the section, with what energy and sense (array16.twin.records; H3 of
+# experiments/twin_rung1/REPORT.md). Shots on other designs or realisations open them beside the bench's guide.
+# Workers left out: all this machine's cores but two. array16.lab runs a bench that has devices in one process, its
+# batches in order, so they reach a pool only where an experiment asks for no device.
+name = "twin-r2"
+
+[device.array]          # the HackRF Pro alone; the controller emulated by fwsim
+driver = "array16.sim:SimBackend"
+radio = "hackrf"
+
+[device.guide]          # T915-S's resonance, drive and field in one tolerance realisation
+driver = "array16.twin:TwinGuide"
+design = "designs/t915s.toml"
+realisation = 1
+
+[device.detector]       # two pickups a quarter lap apart, the dump's collector at 1 pF, an entry for each loss
+driver = "array16.twin:TwinDetector"
+pickups = [0.0, 0.25]
+collector = 1e-12
+losses = true
+
+[device.vacuum]         # 1e-6 mbar: an electron's mean free path 400 m, 1260 laps of T915-S
+driver = "array16.twin:TwinVacuum"
+pressure = 1e-6

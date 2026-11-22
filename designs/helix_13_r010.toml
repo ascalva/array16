@@ -1,0 +1,52 @@
+# The (1, 3) helix at r/R = 0.1 (experiments/twin_rung1/REPORT.md section 6, H1; docs/KNOTTED_GUIDE.md section 10):
+# T915-S's section on the unknotted torus curve that winds three times round a torus once round, at T915-S's length,
+# framed k = 0, as designs/helix_13.toml is at r/R = 0.2. With it and r/R = 0.3 it tells leaving the plane apart from the
+# changing bend: H1 has each keep about 0.86 of its static limit; H1a, what each keeps moving with how fast its bend
+# turns. Read by array16.twin.Design; the path is array16.guide.geometry.helix.
+#
+# Its tightest bend is 31.47 mm; framed k = 0 its tightest radius in the boards' plane is 60.08 mm, 3.24 times T915-S's
+# (and 2.06 times T915-S's tightest bend). Stage 1's static balance puts its static limit at 34.72 eV, 0.77 lap round
+# (18.45 eV at r/R = 0.2). The bend's shift of the null is left out, as in stage 1's designs.
+name = "helix (1, 3), r/R 0.1"
+about = "T915-S's facing flex strips on the (1, 3) torus curve at r/R = 0.1, framed k = 0"
+seed = 1310
+
+[band]
+f = 915e6
+m = 1
+
+[section]               # section B, as T915-S
+kind = "facing"
+gap = 1.83e-3
+width = 7.32e-3
+split = 0.2745e-3
+margin = 1.83e-3
+laminate = "polyimide"
+thickness = 25e-6
+copper = 18e-6
+grid = "default"
+aperture = 4.0
+
+[path]
+kind = "torus"
+ratio = 0.1
+p = 1
+q = 3
+samples = 3000
+
+[frame]
+k = 0
+
+[drive]
+volts = 50.0
+feeds = 2
+
+[tolerance]             # built as T915-S is
+spacers = 0.02
+stations = 24
+joint_dz = -0.02
+joint_sd = 0.01
+scarf = 29.4e-3
+split_sd = 0.2
+eps = 0.1
+earth = 50e-6

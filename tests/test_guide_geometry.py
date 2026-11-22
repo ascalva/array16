@@ -79,11 +79,13 @@ def test_the_framing_is_the_twins_to_the_bit(ratio: float, p: int, n: int, k: in
 
 
 @pytest.mark.parametrize("k", [0, -1, -3])
-def test_knt_10_the_plates_differ_by_2h_times_the_curvature_toward_the_boards(k: int) -> None:
-    # KNT-10: the plates at +-h along the board normal differ in length by -2h oint kappa_n ds, to under a micrometre on
-    # T915-S (23.42 mm framed k = 0, 13.77 mm at k = -1, 7 um at k = -3). The h^2 terms cancel in the difference, and
-    # what is left is h^3 oint tau_g^2 kappa_n ds, tau_g the normal's turning across the boards' plane: -0.69 um at
-    # k = 0, which the plates give to 10 % (the rest is h^5 and the samples' spacing).
+def test_the_plates_differ_by_2h_times_the_curvature_toward_the_boards(k: int) -> None:
+    # KNT-10 (docs/KNOTTED_GUIDE.md section 11; the test takes the law's name, test_knt_10_..., when the law joins
+    # docs/LAWS.md, which tests/test_laws.py holds every test so named to): the plates at +-h along the board normal
+    # differ in length by -2h oint kappa_n ds, to under a micrometre on T915-S (23.42 mm framed k = 0, 13.77 mm at
+    # k = -1, 7 um at k = -3). The h^2 terms cancel in the difference, and what is left is h^3 oint tau_g^2 kappa_n ds,
+    # tau_g the normal's turning across the boards' plane: -0.69 um at k = 0, which the plates give to 10 % (the rest is
+    # h^5 and the samples' spacing).
     knot = _t915s()
     frame = geometry.framing(knot, k)
     step = knot.length / len(knot)

@@ -7,7 +7,8 @@
   curves       ClosedCurve: tangents, twist-free axes, holonomy, writhe
   rods         QuadRods: four thin rods along a curve
   sections     SectionGrid, SectionField: a solved cross-section swept along a path with a frame, driven as a
-               TravellingWave, a StandingWave or InPhase
+               TravellingWave, a StandingWave or InPhase; BendShift, the bend's first-order shift of the facing
+               boards' null toward each bend's centre (BEND_IN_PLANE, BEND_TOWARD), off unless asked for
   rf           the pseudo-potential; a quadrupole guide's Mathieu q, secular frequency, depth and limits; the depth
                a watt buys, radiated freely or stored in a resonator on electrodes, and the volts and q it takes
   electrodes   RailPair, FacingBoards: electrodes printed on boards, their nulls, gradients and share of a
@@ -51,10 +52,21 @@ from .rf import (
     volts_for_depth,
 )
 from .rods import QuadRods
-from .sections import InPhase, SectionField, SectionGrid, StandingWave, TravellingWave
+from .sections import (
+    BEND_IN_PLANE,
+    BEND_TOWARD,
+    BendShift,
+    InPhase,
+    SectionField,
+    SectionGrid,
+    StandingWave,
+    TravellingWave,
+)
 from .tracking import Flight, GuideTrack, GuideWatch, Launch, Observer, PathRecorder, integrate, track_guide
 
 __all__ = [
+    "BEND_IN_PLANE",
+    "BEND_TOWARD",
     "C0",
     "EPS0",
     "KB",
@@ -64,6 +76,7 @@ __all__ = [
     "Z0",
     "Arr",
     "BField",
+    "BendShift",
     "BoolArr",
     "CArr",
     "ClosedCurve",

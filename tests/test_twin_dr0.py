@@ -9,7 +9,15 @@ Wheeler's closed form only (Pozar's form is the rule on a closed-form Z0); and R
 (experiments/twin_openems_line) against the decomposed model, 0.5 % in f and 15 % in Q, with the twin's own R1 section
 against that run's. The full wave holds n_eff, Z0, the share rule through Q_d and the two-rail ring; its copper is PEC,
 read off the cells and calibrated by the static twin, and the face integral's limit, 3.5 to 5 % under the rule, is the
-check of the copper's loss that does not use it (tests/test_twin_openems_line.py)."""
+check of the copper's loss that does not use it (tests/test_twin_openems_line.py).
+
+Stage 2a's: the axisymmetric bend reference (array16/guide/axisym.py) against its first order to 0.1 % and E2-2's
+0.1405 and 0.318 to 2 % at R = 40h, and the twin's bent null on a ring of R = 40h, swept by TwinGuide with [bend], where
+the reference puts it, to 0.1 %, in the boards' plane and toward them; and the 2-D multipactor tracker
+(array16/guide/emission.py) between parallel plates on the chart's own yield against ECSS at its calibration point and
+its held-out one, 10 %, each growth within 0.012 Np a period of multipactor's operator (the boundary-element bias
+against the reference is stage 2b's record, and the tracker's twelve blind points, -1.7 to +1.8 %, the module's own
+reading)."""
 
 from __future__ import annotations
 
@@ -22,8 +30,9 @@ import numpy as np
 import pytest
 
 from array16 import particles as pt
+from array16.guide import axisym, ring
+from array16.guide import emission as em
 from array16.guide import multipactor as mp
-from array16.guide import ring
 from array16.guide import sections as gs
 from array16.particles import FacingBoards, InPhase, RailPair, SectionField
 from array16.twin import Design, TwinGuide
@@ -32,6 +41,34 @@ ROOT = Path(__file__).resolve().parents[1]
 DESIGNS = ROOT / "designs"
 FULL_WAVE = ROOT / "experiments" / "twin_openems_line" / "results.json"
 H = 1e-3  # m: the gapless sections' h
+H915 = 0.915e-3  # m: T915-S's h, section B's
+RING_40H = """
+name = "section B on a ring of R = 40h"
+seed = 40
+[band]
+f = 915e6
+m = 1
+[section]
+kind = "facing"
+gap = 1.83e-3
+width = 7.32e-3
+split = 0.2745e-3
+margin = 1.83e-3
+laminate = "polyimide"
+thickness = 25e-6
+copper = 18e-6
+grid = "coarse"
+[path]
+kind = "circle"
+length = {length!r}
+samples = 2000
+[frame]
+theta_deg = {theta!r}
+[bend]
+shift = true
+[drive]
+volts = 50.0
+"""
 
 
 def _coarse(name: str, where: Path) -> Path:
@@ -211,6 +248,84 @@ def test_the_multipactor_model_is_consistent_with_ecss_at_its_held_out_point() -
     # model was built, and ECSS's chart is itself a model of the same yield, so two models agree here
     assert mp.threshold(mp.CALIBRATION[0]) == pytest.approx(mp.CALIBRATION[1], rel=2e-3)
     assert mp.threshold(mp.HELD_OUT[0]) == pytest.approx(mp.HELD_OUT[1], rel=0.10)
+
+
+# ---- the 2-D multipactor tracker between plates, ECSS to 10 % -------------------------------------------------------
+@pytest.mark.parametrize(("fd", "volts"), [mp.CALIBRATION, mp.HELD_OUT])
+def test_dr_0_the_2d_tracker_between_plates_multipacts_where_ecss_does(fd: float, volts: float) -> None:
+    # DR-0's ECSS to 10 %, on the 2-D tracker of array16/guide/emission.py in its parallel-plate limit, on the level-1
+    # chart's own yield (Normal, through multipactor's gain): at copper's lowest chart point (27.4 V at 0.70 GHz mm,
+    # where the gain was set) and at the held-out point nearest T915-S's 1.674 GHz mm (91.9 V at 1.68), the population
+    # decays at 0.9 times ECSS's volts and grows at 1.1 times them, beyond four spreads over the seeds either way, so
+    # its threshold lies within 10 % of the chart's (the module's bisection: 27.30 and 91.58 V, -0.3 % each); each
+    # growth meets multipactor's operator, the one-dimensional model, within 0.012 Np a period
+    chamber = em.plates(fd)
+    for scale in (0.9, 1.1):
+        found = em.growth(
+            chamber, scale * volts, em.CHART, gain=mp.GAIN, seeds=(0, 1), electrons=300, periods=16, settle=6, steps=80
+        )
+        assert (found.rate > 0) == (scale > 1)
+        assert abs(found.rate) > 4 * found.spread
+        assert found.rate == pytest.approx(mp.growth_rate(fd, scale * volts), abs=4 * found.spread + 0.012)
+
+
+# ---- the bend's shift of the null against the axisymmetric reference, 0.1 % -----------------------------------------
+def test_dr_0_the_axisymmetric_reference_meets_its_first_order_and_e2_2() -> None:
+    # DR-0 and E2-2: the gapless facing boards bent round R = 40h, solved by quadrature, move the null toward the bend's
+    # centre by 0.140473 h^2/R in the boards' plane and 0.318364 h^2/R toward them: within 0.1 % of the first order,
+    # 2 ln 2/pi^2 and 1/pi (0.0085 % and 0.017 % above), and within E2-2's 2 % of its 0.1405 and 0.318 (0.318 is 1/pi to
+    # three figures, which the reference lies 0.115 % above); the gradient at the moved null is the straight boards'
+    # pi V/4h^2 to 1e-4
+    stated: tuple[tuple[axisym.Way, float], ...] = (("in-plane", 0.1405), ("toward", 0.318))
+    for way, value in stated:
+        found = axisym.bend(axisym.E2_2_RADIUS, way)
+        assert found.coefficient == pytest.approx(found.first_order, rel=1e-3)
+        assert found.coefficient > found.first_order
+        assert found.coefficient == pytest.approx(value, rel=0.02)
+        assert found.gradient == pytest.approx(1.0, abs=1e-4)
+    assert axisym.bend(40.0, "in-plane").coefficient == pytest.approx(0.1404729, abs=1e-7)
+    assert axisym.bend(40.0, "toward").coefficient == pytest.approx(0.3183644, abs=1e-7)
+
+
+def _swept_null(field: SectionField, i: int) -> tuple[float, float]:
+    """Where the swept field vanishes in sample i's normal plane: the null's offsets from the path along the frame's
+    first and second normals (m), by Newton's method on E there, its derivatives by differences 1e-7 m apart."""
+    point, first, second = field.points[i], field.first[i], field.second[i]
+    at = np.zeros(2)
+    for _ in range(6):
+        probes = at + np.array([[0.0, 0.0], [1e-7, 0.0], [0.0, 1e-7]])
+        e, _ = field(point + probes[:, :1] * first + probes[:, 1:] * second, 0.0)
+        assert e is not None
+        here = np.column_stack([e @ first, e @ second])
+        jacobian = np.column_stack([here[1] - here[0], here[2] - here[0]]) / 1e-7
+        at = at - np.linalg.solve(jacobian, here[0])
+    return float(at[0]), float(at[1])
+
+
+def test_dr_0_the_twin_moves_a_bent_guides_null_where_the_reference_puts_it(tmp_path: Path) -> None:
+    # on the chain the twin runs: section B's gapless boards (ELE-2, h = 0.915 mm) on a ring of R = 40h, framed with the
+    # bend in the boards' plane (theta_deg = 180) and toward them (theta_deg = 90), [bend] shift = true, swept by
+    # TwinGuide: at every station the swept null stands toward the ring's centre by the axisymmetric reference's shift
+    # at R = 40h to 0.1 % (3.21 and 7.28 um), along u in the boards' plane and along v toward them and nowhere else;
+    # with the bend left out it stays on the path
+    radius = 40 * H915
+    frames: tuple[tuple[float, axisym.Way, int], ...] = ((180.0, "in-plane", 0), (90.0, "toward", 1))
+    for theta, way, axis in frames:
+        path = tmp_path / f"ring_40h_{way}.toml"
+        path.write_text(RING_40H.format(length=2 * math.pi * radius, theta=theta))
+        guide = TwinGuide(path, cache=tmp_path / "cache")
+        assert guide.length / (2 * math.pi * H915) == pytest.approx(40.0, rel=1e-12)
+        reference = axisym.bend(40.0, way).shift * H915
+        grid = guide.grid("gapless")
+        bent, flat = guide.sweep(grid, InPhase(1.0, 0.0)), guide.sweep(grid, InPhase(1.0, 0.0), bend=False)
+        for i in (0, 500, 1000, 1500):
+            null = _swept_null(bent, i)
+            assert null[axis] == pytest.approx(reference, rel=1e-3)
+            assert abs(null[1 - axis]) < 1e-6 * reference
+            assert max(abs(c) for c in _swept_null(flat, i)) < 1e-12
+            inward = -bent.points[i] / np.linalg.norm(bent.points[i])
+            assert (bent.first[i] if axis == 0 else bent.second[i]) @ inward == pytest.approx(1.0, abs=1e-12)
+        assert "solved" not in vars(guide)  # the gapless boards' chain solves nothing
 
 
 # ---- the receded solve against Wheeler's closed form to 1 % -------------------------------------------------------
