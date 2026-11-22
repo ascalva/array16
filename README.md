@@ -43,9 +43,10 @@ predictions are committed before the runs that test them, and every tool used or
   50 eV beam to 185 eV in 135 laps and captured 45 % of it.
 - **Energy sets a knot's size, and its drive is a compile problem.** A knot turns through more than 4π, so its length
   exceeds 4π times its tightest bend radius. The guide is a ring resonator: against 2 % rms spacer error, two
-  re-solved feeds leave a backward wave of 0.011 of the forward, where a fixed hybrid leaves 0.22. The lead design,
-  facing flex strips on a trefoil at 915 MHz, takes 0.50 W for a 1 eV well on bare copper; cut into six segments, one
-  chirp of 5.6 to 15.8 MHz takes electrons from 1 to 8 eV in 117 laps.
+  re-solved feeds leave a backward wave of 0.013 of the forward, where a fixed hybrid leaves 0.13. The lead design,
+  facing flex strips on a trefoil at 915 MHz, takes 0.89 W for a 1 eV well on bare copper, and about 0.33 W with the
+  split between each board's halves widened to the gap's half-width; cut into six segments, one chirp of 5.6 to
+  15.8 MHz takes electrons from 1 to 8 eV in 117 laps.
 - **A cavity's nulls close into loops only where its symmetry is broken.** In a perfect sphere a real TE field's nulls
   are diameters. Closed null loops take two mode families with different radial profiles at one frequency, which a
   deformed sphere or a tuned cylinder supplies: a copper cylinder tuned that way holds three null loops in a well
@@ -77,7 +78,7 @@ predictions are committed before the runs that test them, and every tool used or
 ## Run it
 
     uv sync --extra dev                  # the environment, from uv.lock
-    uv run pytest -q                     # the tests, about 25 s
+    uv run pytest -q                     # the tests, about a minute
     uv run ruff check && uv run mypy     # lint and strict types, for the files named in pyproject.toml
     (cd formal && lake exe cache get) && ./formal/check.sh    # the proofs; needs elan, and about 7 GB for Mathlib
 
@@ -86,7 +87,7 @@ Each study script writes its figures, `run.log` and `results.json` into a folder
 pass):
 
     uv run python experiments/virtual_antenna_study.py   # about 25 s
-    uv run python experiments/knotted_guide_study.py     # about 3 min
+    uv run python experiments/knotted_guide_study.py     # about 5 min
     uv run python experiments/cavity_knots_study.py      # about 25 s
     uv run python experiments/beam_lifecycle_study.py    # a few seconds
 

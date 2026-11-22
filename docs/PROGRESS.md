@@ -29,7 +29,7 @@ test; ideas may stay theoretical but must be physically and experimentally plaus
 ## 2. What exists
 
 **Repository.** Public at github.com/ascalva/array16, AGPL-3.0, CI on every push (ruff, strict mypy, pytest;
-`formal/check.sh` for the proofs). 244 tests (`uv run pytest -q`, about 25 s). History starts from the tree as it
+`formal/check.sh` for the proofs). 256 tests (`uv run pytest -q`, about a minute). History starts from the tree as it
 stood on 2026-11-16.
 
 **Radio side** (as imported; see `README.md`, `ARCHITECTURE.md`, `REDESIGN.md`).
@@ -112,10 +112,11 @@ fields, loading and detection (6), what the knot asks of the field compiler (7),
 built, a design review of fifteen checks on a twin bench (8), seven lead designs and a case that must fail (9),
 experiment 2 in simulation with its order of work and stop rule (10), and laws proposed in five families, KNT, SEG,
 RNG, JNT and MPC (11). `experiments/knotted_guide_study.py` draws its figures into `experiments/knotted_guide/` in
-about 170 s, and `tests/test_knotted_guide_study.py` holds its numbers to the document's. A few of the revision's
-numbers were checked by scratch scripts and are not yet in the study's `run.log`: the strips' section solve (n_eff
-1.031), T915-S as a ring (Q 381, R 2.54 kΩ) with its 60-draw spacer Monte Carlo, and the slot guide's section (Q 49
-on FR-4, 179 on RO4003C); section 5 folds them in.
+about 5 min, and `tests/test_knotted_guide_study.py` holds its numbers to the document's. The revision's checks are
+sections of the study (`line`, `ring`, `beam`, `numbers`). Computing them there moved every conductor Q onto Wheeler's
+incremental-inductance rule on the real copper (18 µm on flex, 35 µm on rigid boards), which converges and matches
+stripline's closed form to 1 %, where the charge rule on zero-thickness copper drifts with the grid: the flex strips'
+Q is 214, not 381, and a 1 eV well on T915-S takes 0.89 W, not 0.50 W.
 
 **Cavity knots and the beam's lifecycle** (`docs/CAVITY_KNOTS.md`, `docs/BEAM_LIFECYCLE.md`, 2026-11-21). The owner's
 questions of that day, from two theory memos, their adversarial verification, the two documents with their figures,
@@ -258,22 +259,26 @@ magnetic guide wound on five closed curves, 142 shots, ten criteria fixed before
   KNT-3): by the bend rule at h = 0.5 mm, at least 12.6 mm of path per unit of held energy over well depth, and 16 to
   33 mm by what tracking held.
 - **Drive.** The knot is a ring resonator of shunt resistance Z₀Q/(2πm). Against 2 % rms spacer error two re-solved
-  feeds leave a backward wave of 0.011 of the forward in the median and keep 0.94 of a perfect ring's depth per watt,
-  where a fixed hybrid leaves 0.22 and 0.58 (60 draws); one feed makes a standing wave.
+  feeds leave a backward wave of 0.013 of the forward in the median and keep 0.94 of a perfect ring's depth per watt,
+  where a fixed hybrid leaves 0.13 and 0.74 (60 draws); one feed makes a standing wave.
 - **The lead design, T915-S:** facing flex strips on the r/R = 0.45 trefoil at 915 MHz, m = 1, 318 mm on 25 µm
-  polyimide (n_eff 1.031). A 1 eV well at q = 0.5 takes 50.3 V: 0.50 W on bare copper, 0.63 to 2.3 W on the fab's
-  ENIG. Cut into six DC-isolated segments (T915-S6), one chirp of 5.60 to 15.84 MHz takes electrons from 1 to 8 eV in
-  117 laps, at about 1.1 × 10⁻⁵ mbar.
+  polyimide (n_eff 1.031). A 1 eV well at q = 0.5 takes 50.3 V: 0.89 W on bare copper (Q 214), 1.1 to 4.2 W on the
+  fab's ENIG. Cut into six DC-isolated segments (T915-S6), one chirp of 5.60 to 15.84 MHz takes electrons from 1 to
+  8 eV in 117 laps, at about 1.1 × 10⁻⁵ mbar.
+- **The split as a lever** (Claim). The copper's loss sits at the edges of the split between each board's halves. At
+  the same 1 eV well, widening the split from 0.3h to h raises Q from 210 to 290, closes the gap to 0.72 mm to keep q,
+  and cuts the power from 0.88 to 0.33 W (0.26 W at 1.25h); at 1.5h the well leaks through the split.
 - **Particles.** Facing boards bent in their plane hold 0.605·D·R/h by the static balance; joints of the null-step
   family heat unless smooth over three secular wavelengths, 29 mm at 8 eV. A bunch on the trefoil is an axial dipole at
   3f_rev and an in-plane one at f_rev and 2f_rev, where on a ring it is an in-plane dipole at f_rev alone: the beam's
   harmonics carry the knot's symmetry.
 - **Building.** The twist that closes the strips makes them non-developable, and their two plates differ by 23 mm;
-  the stacked boards' slot guide holds 85 % of its field in the laminate; copper multipacts above wells of 2 to 3 eV
+  the stacked boards' slot guide holds 85 % of its field in the laminate (Q 43 on FR-4, 117 on RO4003C, on 35 µm
+  copper); copper multipacts above wells of 2 to 3 eV
   (Hypothesis). The flat facing-board ring of the same length holds 2.7 to 3.3 times T915-S: the price of the knot.
 - **For the compiler:** topology and geometry become its step 0, and one copper carries three operators at once (DC
   steering, the megahertz chirp, the 915 MHz ring), each with its own price list. The ring's G has two cheap modes, ±m,
-  over a floor about a hundred times lower.
+  over a floor about 125 times lower.
 
 **Cavity knots** (`docs/CAVITY_KNOTS.md`, its labels kept).
 - **A perfect sphere gives rays.** A real standing TE field is `E = ∇ψ × r` in a sphere and `∇Π × ẑ` in a cylinder, so
@@ -382,11 +387,11 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
 ## 5. Next, in order
 
 1. **Experiment 2's first simulations: the twin bench and its calibration rung** (stages 0 and 1 of
-   `docs/KNOTTED_GUIDE.md` section 10, before the compiler; owner, 2026-11-22). First, the knotted study's revision
-   checks join its script, so its `run.log` carries the numbers the designs rest on (section 2). Then the instruments
-   of its section 8.1, each with tests that would catch it wrong: 2-D sections by finite volumes (Z₀, n_eff, laminate
-   share, Q, gradient, escape), the three-dimensional field of a board layout, the guide's modes, Q and R/Q from an
-   eigenmode run (openEMS, or Palace), electrons tracked in the solved field rather than an ideal one, and a
+   `docs/KNOTTED_GUIDE.md` section 10, before the compiler; owner, 2026-11-22). The instruments of its section 8.1,
+   each with tests that would catch it wrong: 2-D sections by finite volumes (Z₀, n_eff, laminate share, Q by
+   Wheeler's rule on the real copper, gradient, escape), taken from the study's converged solver, with the split as a
+   lever to re-score the lead designs; the three-dimensional field of a board layout, the guide's modes, Q and R/Q
+   from an eigenmode run (openEMS, or Palace), electrons tracked in the solved field rather than an ideal one, and a
    secondary-emission model for multipactor, on a simulated twin bench of `array16.lab` that runs the design review's
    DR-0. Then the calibration rung, its predictions and criteria committed before any tracking: R1's rail ring on one
    board (E2-21), the flat ring and the (1, 3) helix (E2-22), and the straight slot guide in three dimensions against

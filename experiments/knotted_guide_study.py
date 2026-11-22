@@ -16,14 +16,24 @@ computes the figures that carry that theory (section of the document; figure num
                 width floor; one segment's four basis fields and the banded operator of a segmented trefoil (4; 5)
   drive         the ring model: |V(s)| on the trefoil for three drives, ripple against the number of feeds, and
                 the singular values of the drive operator (5.3; 6)
-  laminate      Q against the split and the laminate per band; the power a 1 eV well takes against frequency with
-                the bend-limited energy; the multipactor chart with the operating lines (5.4, 5.5; 7)
+  laminate      Q against the split and the laminate per band, Wheeler's rule on the copper's thickness; the power the
+                same 1 eV well takes against the split, the well solved at each split; the power a 1 eV well takes
+                against frequency with the bend-limited energy; the multipactor chart with the operating lines (5.4,
+                5.5; 7)
   held          held and lost against energy on the trefoil and the ring; the facing boards' well and force; the
                 energy held against curvature along the knot (6.1; 9)
   stopbands     reach against energy for each joint case with the resonance families' centres, and the fine scan
                 round tune 54 on the trefoil against the flat ring (6.2; 10)
   acceleration  energy against lap for the six-gap pi-mode ramp with its band crossings, and the crossing gain
                 against the ramp rate (6.4; 11)
+  line          section B and the slot guide as lines, converged: the copper's 18 and 35 um and the polyimide's
+                25 um resolved, Q_c by Wheeler's rule calibrated on stripline, the charge rule on uniform cells beside
+                it (3.3, 5.1, 5.4; line.png)
+  ring          T915-S as a ring of line segments: the Monte Carlo over spacers, joints, laminate and etch, the fixed
+                hybrid against two re-solved feeds (5.2, 5.3; ring.png)
+  beam          a bunch's multipoles on the trefoil and on the ring, and the control curves (3.2, 6.6)
+  numbers       the revision's arithmetic: held energy, power, Q and heat, joints, pressure, T915-S6, stray fields,
+                space charge, one board's rails, S2-C3, L26, the bias network (3 to 9)
 
 Figures 8 and 12 of the document are diagrams drawn in the document itself.
 
@@ -33,14 +43,17 @@ Figures 8 and 12 of the document are diagrams drawn in the document itself.
 
 Models: curves and framings from array16.particles.ClosedCurve; the boards' fields from the gapless facing-board
 model (array16.particles.FacingBoards, ELE-2), from Fourier kernels between two planes, and from finite-difference
-Laplace solves on grids (vacuum in three dimensions; laminate by finite volumes in two); the drive from a ring of
-transmission line with joints and feeds; electrons tracked with array16.particles.integrate in the fields of four
-thin rods (QuadRods) or of an ideal quadrupole channel. Outputs: knotted_guide/{*.png, results.json, run.log}.
+Laplace solves on grids (vacuum in three dimensions; laminate by finite volumes in two, the copper's loss by
+Wheeler's incremental-inductance rule where its thickness is resolved); the drive from a ring of transmission line
+with joints and feeds, and T915-S's tolerances from a nodal-admittance ring of line segments; electrons tracked with
+array16.particles.integrate in the fields of four thin rods (QuadRods) or of an ideal quadrupole channel. Outputs:
+knotted_guide/{*.png, results.json, run.log}.
 """
 
 from __future__ import annotations
 
 import argparse
+import functools
 import heapq
 import json
 import math
@@ -76,7 +89,8 @@ SUPERSCRIPTS = str.maketrans("-0123456789", "⁻⁰¹²³⁴⁵⁶⁷⁸⁹")
 F915 = 915e6
 FH = 0.839e6  # f h (Hz m) of a 1 eV well near q = 0.5 on facing boards: 50.3 V
 H915 = 0.915e-3  # T915-S: null to copper (gap 1.83 mm)
-L915 = 0.318  # T915-S: m = 1 at 915 MHz on 25 um polyimide, n_eff 1.031
+N915 = 1.031  # T915-S: section B's index at 915 MHz, its 18 um copper and 25 um polyimide resolved ("line")
+L915 = pt.C0 / (N915 * F915)  # T915-S: m = 1 at 915 MHz, 317.8 mm
 RATIO915 = 0.45  # T915-S: r / R of its trefoil
 WIDTH915 = 8 * H915  # T915-S: strip width
 QUARTER915 = L915 / 4  # a quarter guided wave at m = 1: the two closing joints' and the two feeds' spacing
@@ -1170,6 +1184,18 @@ def compute_strips(quick: bool) -> dict[str, Any]:
         row["edge_strain"] = (fr.twist * b) ** 2 / 3
         row["centre_strain"] = -((fr.twist * b) ** 2) / 6
         row["wrinkle_scale"] = (43e-6 / WIDTH915) ** 2
+        row["wrinkle_ratio"] = abs(row["centre_strain"]) / row["wrinkle_scale"]
+        row["torsion_cost"] = (fr.twist * H915) ** 2
+        if k % 2:  # odd k: the two plates are one band of twice the length, the second lap's in-plane sense reversed
+            dl_p, kg_p = plate(knot, fr.normal, +H915)
+            dl_m, kg_m = plate(knot, fr.normal, -H915)
+            dl, kg = np.concatenate([dl_p, dl_m]), np.concatenate([kg_p, -kg_m])
+            xy, heading = develop(dl, kg)
+            _, short, long = smallest_box(outline(xy, heading, WIDTH915)[::4])
+            row["band_mm"] = float(dl.sum()) / MM
+            row["band_box_mm"] = (short / MM, long / MM)
+            row["band_turning_deg"] = math.degrees(float((kg * dl).sum()))
+            row["band_clearance_mm"] = self_clearance(xy, WIDTH915) / MM
         out["framings"][k] = row
         say(
             f"  k = {k:+d}: twist {row['twist_deg_per_mm']:+.3f} deg/mm, in-plane radius >= "
@@ -1181,7 +1207,36 @@ def compute_strips(quick: bool) -> dict[str, Any]:
             f"{row['box_minus_mm'][1]:.0f} mm; edges strain {row['edge_strain']:+.1e}, centre "
             f"{row['centre_strain']:+.1e}"
         )
+        say(
+            f"    oint kappa_n ds = {row['integral_kappa_n']:+.2f} rad, 2h times it "
+            f"{2 * H915 * row['integral_kappa_n'] / MM:+.1f}"
+            f" mm; the centre's compression {row['wrinkle_ratio']:.1f} times the wrinkling scale (t/W)^2 = "
+            f"{row['wrinkle_scale']:.2e} of 43 um flex {WIDTH915 / MM:.2f} mm wide; torsion cost (tau h)^2 = "
+            f"{row['torsion_cost']:.1e}"
+            + (
+                f"; one band of 2L {row['band_mm']:.0f} mm, laid flat in a {row['band_box_mm'][0]:.0f} x "
+                f"{row['band_box_mm'][1]:.0f} mm box, turning {row['band_turning_deg']:.0f} deg, its centre line "
+                f"{row['band_clearance_mm']:.1f} mm from itself at the closest"
+                if k % 2
+                else ""
+            )
+        )
+    out["bending_strain"] = 0.055e-3 / knot.bend_radius
+    say(
+        f"  0.11 mm flex bent to the tightest bend {knot.bend_radius / MM:.2f} mm strains "
+        f"{out['bending_strain'] * 100:.2f} %"
+    )
     return out
+
+
+def self_clearance(xy: Arr, width: float, step: int = 4) -> float:
+    """The least distance (m) between a strip's centre-line points laid flat that lie more than three widths apart
+    along it: under the width, the strip overlaps itself."""
+    p = xy[::step]
+    dist = np.linalg.norm(p[:, None, :] - p[None, :, :], axis=2)
+    ds = float(np.linalg.norm(np.diff(p, axis=0), axis=1).mean())
+    far = np.abs(np.arange(len(p))[:, None] - np.arange(len(p))[None, :]) * ds > 3 * width
+    return float(dist[far].min()) if far.any() else math.inf
 
 
 def signed(k: int) -> str:
@@ -2479,12 +2534,21 @@ class RingCase:
         )
 
 
-DRIVE_CASES = (
-    RingCase("915 MHz, m = 1", F915, 1.13, 193, 73, 1, 6),
-    RingCase("the same, feed susceptance compensated", F915, 1.13, 193, 73, 1, 6, compensated=True),
+DRIVE_2450 = (  # the drive lens's 2450 MHz rings
     RingCase("2450 MHz, m = 2", 2450e6, 1.20, 128, 66, 2, 6),
     RingCase("must fail: m = 3, three joints, 2450 MHz", 2450e6, 1.20, 128, 66, 3, 3),
 )
+
+
+def drive_cases(quick: bool) -> tuple[RingCase, ...]:
+    """The drive study's rings: section A's at 915 MHz, its Q and Z0 from the line study (Wheeler's rule on 35 um
+    copper; the index as drawn), and the drive lens's rings at 2450 MHz."""
+    a = line_results(quick)["section_A"]["RO4003C 0.51 mm, slotted"]
+    return (
+        RingCase("915 MHz, m = 1", F915, A_INDEX, a["Q"], a["z0"], 1, 6),
+        RingCase("the same, feed susceptance compensated", F915, A_INDEX, a["Q"], a["z0"], 1, 6, compensated=True),
+        *DRIVE_2450,
+    )
 
 
 def compute_drive(quick: bool) -> dict[str, Any]:
@@ -2493,8 +2557,9 @@ def compute_drive(quick: bool) -> dict[str, Any]:
     count = 41
     rng = np.random.default_rng(16)
     out: dict[str, Any] = {"cases": {}, "draws": draws}
+    cases = drive_cases(quick)
     began = time.time()
-    for case in DRIVE_CASES:
+    for case in cases:
         ks: tuple[int, ...] = (1, 2, 3, 4, 6) if case.m == 3 else (1, 2, 3, 4, 6, 8, 12)
         if case.compensated:
             ks = (2, 6)
@@ -2512,15 +2577,17 @@ def compute_drive(quick: bool) -> dict[str, Any]:
         rows["shunt_ohm"] = case.ring(1, None).shunt
         out["cases"][case.label] = rows
         say(
-            f"  {case.label} ({case.length / MM:.0f} mm, R = Z0 Q/(2 pi m) = {rows['shunt_ohm']:.0f} ohm), medians of "
+            f"  {case.label} ({case.length / MM:.0f} mm, n {case.index}, Q {case.q:.0f}, Z0 {case.z0:.1f} ohm, R = Z0 "
+            f"Q/(2 pi m) = {rows['shunt_ohm']:.0f} ohm), medians of "
             f"{draws} draws: "
             + ", ".join(f"K = {k} {r:.3f}" for k, r in zip(ks, rows["median"], strict=True))
-            + f"; feeds at the joints {rows['at_joints']:.3f}; untuned hybrid {rows['hybrid']:.3f}"
+            + f"; feeds at the joints {rows['at_joints']:.3f}; untuned hybrid {rows['hybrid']:.3f}; 90th percentiles "
+            + ", ".join(f"K = {k} {r:.3f}" for k, r in zip(ks, rows["p90"], strict=True))
         )
     say(f"  [{time.time() - began:.0f} s]")
     # the singular values of G for K = 6 at 915 MHz, at the frequency where the largest peaks
     out["singular"] = {}
-    for case in DRIVE_CASES[:2]:
+    for case in cases[:2]:
         ring = case.ring(6, None)
         freqs = ring.resonance() * (1 + np.linspace(-0.02, 0.02, 201 if quick else 801))
         sv = np.array([np.linalg.svd(g, compute_uv=False) for g in ring.operator(freqs)]) / math.sqrt(ring.samples)
@@ -2534,7 +2601,7 @@ def compute_drive(quick: bool) -> dict[str, Any]:
             f"  K = 6, {case.label}: singular values {np.round(sv[peak], 1).tolist()} V/A at {freqs[peak] / 1e6:.1f} "
             f"MHz; sqrt(K) R/2 = {math.sqrt(6) * ring.shunt / 2:.0f}"
         )
-    case = DRIVE_CASES[0]
+    case = cases[0]
     # one draw, three drives: one feed, the untuned hybrid, two compiled feeds
     draw = np.random.default_rng(3)
     shown = {}
@@ -2666,10 +2733,18 @@ def figure_drive(res: dict[str, Any], out: Path) -> None:
 
 # ---- laminate (figure 7) ------------------------------------------------------------------------------------------
 COPPER_SIGMA = 5.8e7  # S/m, bare copper
-COPPER_T = 18e-6  # m, the flex fab's copper: the cutoff of the strips' edge fields
+COPPER_T = 18e-6  # m, the flex fab's copper: section B's strips and the flex ribbon
+RIGID_COPPER_T = 35e-6  # m, 1 oz: the rigid boards' copper (section A, the slot guide, rigid FR-4 strips)
 POLYIMIDE = (3.3, 0.004)
 FR4 = (4.4, 0.02)
-LAMINATES = {"copper alone": (0.0, 1.0, 0.0), "polyimide 25 µm": (25e-6, *POLYIMIDE), "FR-4 0.8 mm": (0.8e-3, *FR4)}
+RO4003C = (3.55, 0.0027)
+# Section B's strips behind each laminate of figure 7: on flex (18 um copper, the film 2h wider than the copper) or on
+# a rigid board (35 um copper, the board out to the walls)
+LAMINATES: dict[str, dict[str, Any]] = {
+    "copper alone": {"copper": COPPER_T, "laminate": 0.0},
+    "polyimide 25 µm": {"copper": COPPER_T, "laminate": 25e-6, "er": POLYIMIDE[0], "tand": POLYIMIDE[1]},
+    "FR-4 0.8 mm": {"copper": RIGID_COPPER_T, "laminate": 0.8e-3, "er": FR4[0], "tand": FR4[1], "wide": math.inf},
+}
 # ECSS-E-ST-20-01C, the lowest two-surface multipactor threshold for copper: f x d (GHz mm) against peak volts
 ECSS_CU = (
     (0.47, 36.6), (0.50, 32.5), (0.56, 29.7), (0.62, 28.1), (0.70, 27.4), (0.82, 28.7), (0.92, 31.9), (1.02, 37.0),
@@ -2682,61 +2757,44 @@ ECSS_CU = (
 )  # fmt: skip
 
 
-def strip_section(width: float, split: float, laminate: float, er: float, cutoff: float) -> dict[str, float]:
-    """Facing strips `width` wide split by `split` at y = +-1 (lengths in h; halves at +-1/2, so V = 1), laminate
-    `laminate` thick of permittivity er behind the copper, 2h wider than it; solved on the quarter x, y >= 0 (odd in
-    both) inside grounded walls 8h out, by finite volumes on a grid `cutoff` fine at the copper's edges. Returns the
-    capacitance per metre over eps0 in air and with the laminate, the laminate's share of the field energy, the
-    index and impedance of the quadrupole mode, and the air problem's sum of E_n^2 dl over the copper's faces (per
-    V^2/h), which sets the copper's loss (the surface current of the air problem's charge)."""
-    xmax, ymax = width / 2 + 8.0, 1.0 + laminate + 8.0
-    x = nodes(0.0, xmax, [split / 2, width / 2, width / 2 + 2.0], cutoff, 0.4, 0.25)
-    yfeats = [1.0] if laminate == 0 else [1.0, 1.0 + laminate]
-    y = nodes(0.0, ymax, yfeats, min(cutoff, laminate / 3) if laminate > 0 else cutoff, 0.4, 0.25)
-    gx, gy = np.meshgrid(x, y, indexing="ij")
-    copper = (np.abs(gy - 1.0) < 1e-12) & (gx >= split / 2 - 1e-12) & (gx <= width / 2 + 1e-12)
-    fixed = copper | (gx == 0) | (gy == 0) | (gx >= xmax - 1e-12) | (gy >= ymax - 1e-12)
-    value = np.where(copper, -0.5, 0.0)
-    xc, yc = (x[1:] + x[:-1]) / 2, (y[1:] + y[:-1]) / 2
-    cx, cy = np.meshgrid(xc, yc, indexing="ij")
-    lam = (cy > 1.0) & (cy < 1.0 + laminate) & (cx < width / 2 + 2.0)
-    ones = np.ones_like(cx)
-    eps = np.where(lam, er, 1.0)
-    phi_air = laplace2d(x, y, ones, fixed, value)
-    c_air = 4 * energy2d(x, y, ones, phi_air)
-    if laminate > 0:
-        phi_eps = laplace2d(x, y, eps, fixed, value)
-        c_eps = 4 * energy2d(x, y, eps, phi_eps)
-        share = 4 * energy2d(x, y, np.where(lam, er, 0.0), phi_eps) / c_eps
-    else:
-        c_eps, share = c_air, 0.0
-    jc = int(np.argmin(np.abs(y - 1.0)))
-    on = (x >= split / 2 - 1e-12) & (x <= width / 2 + 1e-12)
-    below = (phi_air[on, jc] - phi_air[on, jc - 1]) / (y[jc] - y[jc - 1])
-    above = (phi_air[on, jc + 1] - phi_air[on, jc]) / (y[jc + 1] - y[jc])
-    xi = x[on]
-    dl = np.gradient(xi) if len(xi) > 1 else np.ones(1)
-    dl[0] /= 2
-    dl[-1] /= 2
-    surface = 4 * float(((below**2 + above**2) * dl).sum())
+def section_grid(quick: bool) -> dict[str, float]:
+    """The graded grid of the section solves: converged (the line study's fine grid), or its coarse grid for a quick
+    run."""
+    fine, coarse, growth = (1 / 8, 0.1, 0.1) if quick else (1 / 16, 0.05, 0.1)
+    return {"fine": fine, "coarse": coarse, "growth": growth}
+
+
+def section_job(job: tuple[float, float, dict[str, Any]]) -> dict[str, float]:
+    """One facing-strips section (facing_section), for a process pool."""
+    h, f, kwargs = job
+    return facing_section(h, f, **kwargs)
+
+
+def lever_job(job: tuple[float, dict[str, float]]) -> dict[str, float]:
+    """Section B's split g/h as a lever (section 5.4), on a grid: the well solved at the gapless boards' h (its gradient
+    and depth share), h set so that 1 eV sits at q = 0.5 at 915 MHz, the section solved again at that h (Q by
+    Wheeler's rule, Z0, the well), and the power the same 1 eV well then takes, V^2 / (2 R), R = Z0 Q / (2 pi)."""
+    g, grid = job
+    lam: dict[str, Any] = {**LAMINATES["polyimide 25 µm"], "split": g, "well": True, **grid}
+    first = facing_section(FH / F915, F915, **lam)
+    h = pt.electrode_drive_at_q(1.0, 0.5, 1.0, 1.0, first["depth_share"], first["gamma"]).f / F915
+    sec = facing_section(h, F915, **lam)
+    shunt = sec["z0"] * sec["Q"] / (2 * math.pi)
+    at = pt.electrode_drive_at_q(1.0, 0.5, shunt, 1.0, sec["depth_share"], sec["gamma"])
     return {
-        "c_air": c_air,
-        "c_eps": c_eps,
-        "share": share,
-        "index": math.sqrt(c_eps / c_air),
-        "z0": 1 / (pt.C0 * pt.EPS0 * math.sqrt(c_eps * c_air)),
-        "surface": surface,
+        "g": g,
+        "h_mm": h / MM,
+        "split_mm": g * h / MM,
+        "gamma": sec["gamma"],
+        "depth_share": sec["depth_share"],
+        "V": at.volts,
+        "Qc": sec["Qc"],
+        "Q": sec["Q"],
+        "z0": sec["z0"],
+        "R": shunt,
+        "P": at.power,
+        "h_check_mm": at.f / F915 / MM,
     }
-
-
-def section_q(sec: dict[str, float], f: float, tand: float, resistance: float = 1.0) -> dict[str, float]:
-    """A section's Q at frequency f with h = f h / f: the copper's, 2 c h / (delta S) for surface resistance
-    `resistance` times bare copper's, the laminate's, 1 / (share tan delta), and both."""
-    h = FH / f
-    delta = math.sqrt(2 / (2 * math.pi * f * pt.MU0 * COPPER_SIGMA))
-    qc = 2 * sec["c_air"] * h / (delta * sec["surface"]) / resistance
-    qd = 1 / (sec["share"] * tand) if sec["share"] * tand > 0 else math.inf
-    return {"Qc": qc, "Qd": qd, "Q": 1 / (1 / qc + 1 / qd)}
 
 
 @dataclass(frozen=True)
@@ -2825,60 +2883,67 @@ def growth_job(job: tuple[float, float, int, float]) -> dict[str, Any]:
 def compute_laminate(quick: bool) -> dict[str, Any]:
     say("\n== laminate: Q against the split and the laminate, the power a 1 eV well takes, multipactor ==")
     out: dict[str, Any] = {}
-    splits = (0.1, 0.3, 0.6, 1.0, 1.5) if quick else (0.1, 0.2, 0.3, 0.45, 0.6, 0.8, 1.0, 1.25, 1.5)
+    grid = section_grid(quick)
+    splits = (0.1, 0.3, 1.0) if quick else (0.1, 0.2, 0.3, 0.45, 0.6, 0.8, 1.0, 1.25, 1.5)
     bands = (F915, 2450e6)
-    began = time.time()
-    curves: dict[str, Any] = {}
-    for f in bands:
-        h = FH / f
-        cutoff = COPPER_T / h
-        for name, (thick, er, tand) in LAMINATES.items():
-            rows = []
-            for g in splits:
-                sec = strip_section(8.0, g, thick / h, er, cutoff)
-                rows.append({"g": g, **sec, **section_q(sec, f, tand)})
-            curves[f"{f / 1e6:.0f} MHz, {name}"] = rows
-    out["curves"] = curves
-    say(f"  Q against g/h on strips 8h wide [{time.time() - began:.0f} s]:")
-    for name, rows in curves.items():
-        say("    " + name + ": " + ", ".join(f"g/h {r['g']:g} Q {r['Q']:.0f}" for r in rows))
-    b915 = next(r for r in curves["915 MHz, polyimide 25 µm"] if abs(r["g"] - 0.3) < 1e-9)
-    out["section_B"] = b915
-    say(
-        f"  section B at 915 MHz (8h wide, split 0.3h, 25 um polyimide): n_eff {b915['index']:.4f}, polyimide share "
-        f"{b915['share']:.3f}, Z0 {b915['z0']:.1f} ohm, Q_c {b915['Qc']:.0f} (bare copper), Q {b915['Q']:.0f}; "
-        f"m = 1 takes {pt.C0 / (b915['index'] * F915) / MM:.0f} mm"
-    )
-    # the power a 1 eV well takes on section B against frequency, per order m, and the energy the bend holds
-    fb = pt.FacingBoards(2.0)
-    drive = pt.electrode_drive_at_q(1.0, 0.5, 1.0, 1.0, fb.depth_share, fb.gradient_share)
-    volts = drive.volts
     freqs = (
         np.array([0.433e9, 0.7e9, F915, 1.5e9, 2.45e9, 4.0e9, 5.8e9])
         if not quick
         else np.array([0.433e9, F915, 2.45e9, 5.8e9])
     )
-    power: dict[int, list[float]] = {m: [] for m in range(1, 6)}
-    index = []
+    began = time.time()
+    sections: list[tuple[float, float, dict[str, Any]]] = []
+    keys: list[tuple[Any, ...]] = []
+    for f in bands:
+        for name, lam in LAMINATES.items():
+            for g in splits:
+                sections.append((FH / f, f, {**lam, "split": g, **grid}))
+                keys.append(("sweep", f"{f / 1e6:.0f} MHz, {name}", g))
     for f in freqs:
-        h = FH / f
-        sec = strip_section(8.0, 0.3, 25e-6 / h, *POLYIMIDE[:1], COPPER_T / h)
-        q = section_q(sec, f, POLYIMIDE[1])
+        sections.append((FH / float(f), float(f), {**LAMINATES["polyimide 25 µm"], **grid}))
+        keys.append(("power", float(f)))
+    solved = dict(zip(keys, run_jobs(section_job, sections), strict=True))
+    curves: dict[str, Any] = {}
+    for key, row in solved.items():
+        if key[0] == "sweep":
+            curves.setdefault(key[1], []).append({"g": key[2], **row})
+    out["curves"] = curves
+    say(
+        f"  Q against g/h on strips 8h wide, Wheeler's rule on the copper's thickness (18 um on flex, 35 um on FR-4) "
+        f"[{time.time() - began:.0f} s]:"
+    )
+    for name, rows in curves.items():
+        say("    " + name + ": " + ", ".join(f"g/h {r['g']:g} Q {r['Q']:.0f}" for r in rows))
+    b915 = next(r for r in curves["915 MHz, polyimide 25 µm"] if abs(r["g"] - 0.3) < 1e-9)
+    out["section_B"] = b915
+    say(
+        f"  section B at 915 MHz on the sweep (h = f h / f = {FH / F915 / MM:.3f} mm, 8h wide, split 0.3h, 25 um "
+        f"polyimide, 18 um copper): n_eff {b915['index']:.4f}, polyimide share {b915['share']:.4f}, Z0 "
+        f"{b915['z0']:.2f} ohm, Q_c {b915['Qc']:.0f} (bare copper), Q {b915['Q']:.0f}"
+    )
+    # the power a 1 eV well takes on section B against frequency, per order m, and the energy the bend holds
+    fb = pt.FacingBoards(2.0)
+    drive = pt.electrode_drive_at_q(1.0, 0.5, 1.0, 1.0, fb.depth_share, fb.gradient_share)
+    volts = drive.volts
+    power: dict[int, list[float]] = {m: [] for m in range(1, 6)}
+    index, quality = [], []
+    for f in freqs:
+        sec = solved["power", float(f)]
         index.append(sec["index"])
+        quality.append(sec["Q"])
         for m in power:
-            shunt = sec["z0"] * q["Q"] / (2 * math.pi * m)
-            power[m].append(volts**2 / (2 * shunt))
+            power[m].append(volts**2 / (2 * sec["z0"] * sec["Q"] / (2 * math.pi * m)))
     held = {}
     bend_over_length = torus(RATIO915, 1.0, 3000).bend_radius
     for m in power:
         length = m * pt.C0 / (float(np.mean(index)) * F915)
         ratio = bend_over_length * length / (FH / F915)
         held[m] = (0.61 * 0.605 * ratio, 0.95 * 0.605 * ratio)
-    out["power"] = {"f": freqs, "P": power, "volts": volts, "held": held, "index": index}
+    out["power"] = {"f": freqs, "P": power, "volts": volts, "held": held, "index": index, "Q": quality}
     say(
-        f"  1 eV at q = 0.5 takes {volts:.1f} V; on section B: "
+        f"  1 eV at q = 0.5 takes {volts:.1f} V on the gapless boards; on section B: "
         + ", ".join(
-            f"{f / 1e9:g} GHz m = {m}: {power[m][i]:.2f} W"
+            f"{f / 1e9:g} GHz m = {m}: Q {quality[i]:.0f}, {power[m][i]:.2f} W"
             for m, f, i in (
                 (1, F915, list(freqs).index(F915)),
                 (2, 2.45e9, list(freqs).index(2.45e9)),
@@ -2886,6 +2951,24 @@ def compute_laminate(quick: bool) -> dict[str, Any]:
             )
         )
     )
+    fr4 = next(r for r in curves["2450 MHz, FR-4 0.8 mm"] if abs(r["g"] - 0.3) < 1e-9)
+    shunt = fr4["z0"] * fr4["Q"] / (2 * math.pi * 2)
+    out["rigid_2450"] = {**fr4, "R": shunt, "P": volts**2 / (2 * shunt)}
+    say(
+        f"  section B on rigid FR-4 0.8 mm at 2450 MHz, m = 2 (35 um copper): share {fr4['share']:.3f}, Q_c "
+        f"{fr4['Qc']:.0f}, Q_d {fr4['Qd']:.0f}, Q {fr4['Q']:.0f}, Z0 {fr4['z0']:.1f} ohm, R {shunt:.0f} ohm, 1 eV "
+        f"takes {volts**2 / (2 * shunt):.1f} W"
+    )
+    # the split as a lever: at each split the well solved, h set for 1 eV at q = 0.5 and 915 MHz, the power it takes
+    lever = run_jobs(lever_job, [(g, grid) for g in splits])
+    out["lever"] = lever
+    say("  the split as a lever, at the same well (1 eV at q = 0.5, 915 MHz), the well solved at each split:")
+    for r in lever:
+        say(
+            f"    g/h {r['g']:g} ({r['split_mm']:.3f} mm at h {r['h_mm']:.3f} mm): gradient {r['gamma']:.3f} V/h^2, "
+            f"depth share {r['depth_share']:.4f}, {r['V']:.1f} V; Q_c {r['Qc']:.0f}, Q {r['Q']:.0f}, Z0 {r['z0']:.1f} "
+            f"ohm, R {r['R']:.0f} ohm; 1 eV takes {r['P']:.3f} W, {1 / r['P']:.2f} eV per W"
+        )
     say(
         "  the bend holds, by the discounted static limit: "
         + ", ".join(f"m = {m}: {lo:.1f} to {hi:.1f} eV per eV" for m, (lo, hi) in held.items())
@@ -2932,11 +3015,12 @@ def compute_laminate(quick: bool) -> dict[str, Any]:
 
 
 def figure_laminate(res: dict[str, Any], out: Path) -> None:
-    """Figure 7: Q against g/h and laminate per band; power for 1 eV against frequency with the bend-limited energy;
-    the ECSS boundary with the operating lines at q = 0.3, 0.5 and 0.7 and the model's growth."""
+    """Figure 7: Q against g/h and laminate per band; the power the same 1 eV well takes against the split, the well
+    solved at each split; power for 1 eV against frequency with the bend-limited energy; the ECSS boundary with the
+    operating lines at q = 0.3, 0.5 and 0.7 and the model's growth."""
     plt = _pyplot()
-    fig = plt.figure(figsize=(15.5, 6.6))
-    grid = fig.add_gridspec(1, 3, wspace=0.3, top=0.82)
+    fig = plt.figure(figsize=(15.5, 12.0))
+    grid = fig.add_gridspec(2, 2, wspace=0.22, hspace=0.32, top=0.9)
     ax = fig.add_subplot(grid[0, 0])
     for k, (name, rows) in enumerate(res["curves"].items()):
         g = [r["g"] for r in rows]
@@ -2961,11 +3045,33 @@ def figure_laminate(res: dict[str, Any], out: Path) -> None:
     )
     ax.set_xlabel("split over h, g/h (strips 8h wide)")
     ax.set_ylabel("Q (bare copper)")
-    ax.set_ylim(45, 3000)
+    ax.set_ylim(30, 3000)
     ax.legend(fontsize=7.0, loc="upper center", ncol=2)
-    _log_ticks(ax.yaxis, [50, 100, 200, 400, 800])
-    ax.set_title("Q of the strips' quadrupole mode by laminate\n(solid 915 MHz, dashed 2450 MHz)")
+    _log_ticks(ax.yaxis, [30, 50, 100, 200, 400, 800])
+    ax.set_title("Q of the strips' quadrupole mode by laminate (solid 915 MHz, dashed 2450 MHz),\nWheeler's rule on "
+                 "18 µm copper (35 µm on FR-4)")  # fmt: skip
     ax = fig.add_subplot(grid[0, 1])
+    lever = res["lever"]
+    g = [r["g"] for r in lever]
+    ax.plot(g, [r["P"] for r in lever], "o-", color=BLUE, label="power for 1 eV at q = 0.5, 915 MHz (left)")
+    for r in lever:
+        ax.annotate(f"{r['V']:.0f} V\nQ {r['Q']:.0f}", (r["g"], r["P"]), xytext=(4, 6), textcoords="offset points",
+                    fontsize=7.2, color=INK2)  # fmt: skip
+    ax.set_xlabel("split over h, g/h (strips 8h wide, polyimide 25 µm, h set for q = 0.5)")
+    ax.set_ylabel("watts for the same 1 eV well")
+    ax.set_ylim(0, 1.25 * max(r["P"] for r in lever))
+    twin = ax.twinx()
+    twin.plot(g, [r["gamma"] for r in lever], "s--", color=ORANGE, ms=4, label="the null's gradient, V/h² (right)")
+    twin.plot(g, [4 * r["depth_share"] for r in lever], "^:", color=GREEN, ms=4,
+              label="depth share over the gapless boards' ¼ (right)")  # fmt: skip
+    twin.set_ylim(0, 1.1)
+    twin.grid(False)
+    handles = ax.get_legend_handles_labels()[0] + twin.get_legend_handles_labels()[0]
+    ax.legend(handles, [str(h.get_label()) for h in handles], fontsize=7.4, loc="lower left")
+    best = min(lever, key=lambda r: float(r["P"]))
+    ax.set_title(f"the split as a lever: the least power, {best['P']:.2f} W, at g = {best['g']:g}h; the well solved at "
+                 "each split")  # fmt: skip
+    ax = fig.add_subplot(grid[1, 0])
     pw = res["power"]
     f = np.asarray(pw["f"]) / 1e9
     for m, colour in zip(range(1, 6), SERIES, strict=False):
@@ -2985,8 +3091,8 @@ def figure_laminate(res: dict[str, Any], out: Path) -> None:
     ax.legend(fontsize=7.4, loc="upper left")
     _log_ticks(ax.xaxis, [0.433, 0.915, 2.45, 5.8])
     _log_ticks(ax.yaxis, [0.3, 1, 3, 10])
-    ax.set_title("the flex strips (section B, bare copper)\nas a ring of m guided waves")
-    ax = fig.add_subplot(grid[0, 2])
+    ax.set_title("the flex strips (section B, bare copper) as a ring of m guided waves")
+    ax = fig.add_subplot(grid[1, 1])
     ecss = res["ecss"]
     ax.loglog(ecss[:, 0], ecss[:, 1], color=INK, lw=2.0, label="ECSS-E-ST-20-01C, copper")
     fd = np.geomspace(0.4, 10, 200)
@@ -3022,6 +3128,931 @@ def figure_laminate(res: dict[str, Any], out: Path) -> None:
         "power grows as m√f while the energy the bend holds grows with m alone",
     )
     _save(fig, out, "laminate")
+
+
+# ---- line: section B and the slot guide as lines, converged (sections 3.3, 5.1 and 5.4) --------------------------
+SLOT_BOARDS = {"FR-4 0.8 mm": (0.8, *FR4), "RO4003C 0.813 mm": (0.813, *RO4003C)}
+# Section A (section 5.1): rigid boards' strips 1.5h wide either side of a split h, at h = 0.92 mm, the boards out to
+# the walls, routed as a slot under the split; and the same strips on a 50 um polyimide film
+SECTION_A: dict[str, dict[str, Any]] = {
+    "FR-4 0.8 mm, solid": {
+        "copper": RIGID_COPPER_T, "laminate": 0.8e-3, "er": FR4[0], "tand": FR4[1], "wide": math.inf
+    },
+    "FR-4 0.8 mm, slotted": {
+        "copper": RIGID_COPPER_T, "laminate": 0.8e-3, "er": FR4[0], "tand": FR4[1], "wide": math.inf, "slotted": True
+    },
+    "RO4003C 0.51 mm, slotted": {
+        "copper": RIGID_COPPER_T, "laminate": 0.51e-3, "er": RO4003C[0], "tand": RO4003C[1], "wide": math.inf,
+        "slotted": True,
+    },
+    "polyimide 50 µm in air": {"copper": COPPER_T, "laminate": 50e-6, "er": POLYIMIDE[0], "tand": POLYIMIDE[1]},
+}  # fmt: skip
+A_VOLTS = 54.9  # V: 1 eV at q = 0.5 on section A's drawn well (the hardware lens's), at h = 0.92 mm
+A_INDEX = 1.13  # section A's index as drawn (the drive lens's ring)
+SLOT_STRIPS = (0.5, 1.0, 2.0, 5.3)  # mm
+H2450 = 0.3425e-3  # section B's h at 2450 MHz
+ENIG = (1.3, 5.0)  # ENIG's surface resistance over bare copper's at 915 MHz, by a layered skin-depth estimate
+STRIPLINES = ((1.0, 0.035, 1.6), (2.0, 0.018, 1.0), (1.0, 0.018, 1.0))  # width, thickness, plane spacing (mm)
+
+
+def uniform(lo: float, hi: float, step: float) -> Arr:
+    """Nodes from lo to hi, `step` apart, as slotline.py lays them."""
+    out: Arr = np.arange(lo, hi + step / 2, step)
+    return out
+
+
+def slot_line(
+    board: float,
+    er: float,
+    tand: float,
+    strip: float,
+    planes: float,
+    step: float = 0.025,
+    slot: float = 1.0,
+    pull: float = 0.2,
+    width: float = 6.0,
+    f: float = F915,
+) -> dict[str, float]:
+    """The slot guide as a line (section 3.3; the revision's slotline.py): finite volumes on a uniform grid `step`
+    mm fine over x >= 0 (odd in x). A board `board` mm thick with a routed slot `slot` wide, copper strips without
+    thickness on both faces from slot/2 + pull to slot/2 + pull + strip, the top at +1 V and the bottom at -1 V (the
+    four strips' quadrupole), grounded planes `planes` mm from either face and a grounded wall `width` mm out, or 2
+    mm beyond the strip where that is further (slotline.py's 6 mm wall touched its 5.3 mm strips).
+    Returns C' (pF/m), n_eff, Z0, the laminate's share of the field energy, Q_d = 1 / (share tan delta), Q_c by the
+    charge rule (the air problem's surface charge on the strips' faces as their current, its edge fields cut off by
+    the cell), the guided wavelength (mm), and the null's gradient and on-axis barrier over G0 = pi V / (4 h^2) and
+    D0's field V / 2h, h = slot / 2."""
+    x = uniform(0.0, max(width, slot / 2 + pull + strip + 2.0), step)
+    z = uniform(-(board / 2 + planes), board / 2 + planes, step)
+    edge = step / 4
+    fixed = np.zeros((len(x), len(z)), dtype=bool)
+    value = np.zeros((len(x), len(z)))
+    fixed[0, :] = fixed[-1, :] = True
+    fixed[:, 0] = fixed[:, -1] = True
+    jt, jb = int(np.argmin(np.abs(z - board / 2))), int(np.argmin(np.abs(z + board / 2)))
+    cu = (x >= slot / 2 + pull - edge) & (x <= slot / 2 + pull + strip + edge)
+    fixed[cu, jt] = fixed[cu, jb] = True
+    value[cu, jt], value[cu, jb] = 1.0, -1.0
+    cx, cz = np.meshgrid((x[1:] + x[:-1]) / 2, (z[1:] + z[:-1]) / 2, indexing="ij")
+    lam = (cx >= slot / 2) & (np.abs(cz) <= board / 2)
+    ones = np.ones_like(cx)
+    eps = np.where(lam, er, 1.0)
+    phi_air = laplace2d(x, z, ones, fixed, value)
+    phi = laplace2d(x, z, eps, fixed, value)
+    # energies over x >= 0 (slotline.py's we: half of the whole section's integral of eps |grad phi|^2, times two)
+    we_air, we = energy2d(x, z, ones, phi_air), energy2d(x, z, eps, phi)
+    share = energy2d(x, z, np.where(lam, er, 0.0), phi) / we
+    faces = [(jt, jt + 1), (jt, jt - 1), (jb, jb + 1), (jb, jb - 1)]
+    s2 = sum(float((((phi_air[cu, a] - phi_air[cu, b]) / step) ** 2).sum()) for a, b in faces) * step * 2
+    volts = 2.0
+    cp, ca = 2 * we * pt.EPS0 / volts**2, 2 * we_air * pt.EPS0 / volts**2
+    index = math.sqrt(cp / ca)
+    rs = math.sqrt(math.pi * f * pt.MU0 / COPPER_SIGMA)
+    power = 0.5 * pt.C0 * index * ca * volts**2
+    lost = 0.5 * rs * pt.C0**2 * index**2 * pt.EPS0**2 * s2 * 1e3  # s2 in (V/mm)^2 mm
+    qc = (2 * math.pi * f * index / pt.C0) / (2 * lost / (2 * power))
+    qd = 1 / (share * tand)
+    axis = phi[1, :] / step  # dphi/dx beside x = 0
+    j0 = int(np.argmin(np.abs(z)))
+    h = slot / 2
+    up = np.abs(axis[j0:])
+    top = next((k for k in range(1, len(up) - 1) if up[k] >= up[k - 1] and up[k] > up[k + 1]), None)
+    return {
+        "C_pF": cp * 1e12,
+        "index": index,
+        "z0": 1 / (pt.C0 * math.sqrt(cp * ca)),
+        "share": share,
+        "Qd": qd,
+        "Qc": qc,
+        "Q": 1 / (1 / qc + 1 / qd),
+        "lam_g_mm": pt.C0 / (index * f) / MM,
+        "gradient_G0": abs((axis[j0 + 1] - axis[j0 - 1]) / (2 * step)) / (math.pi * volts / (4 * h * h)),
+        "barrier_D0": (float(up[top]) / (volts / (2 * h))) ** 2 if top else math.nan,
+    }
+
+
+def facing_line(
+    h: float,
+    step: float,
+    box: float = 2.0,
+    wide: float = 2.0,
+    polyimide: float = 0.025,
+    er: float = POLYIMIDE[0],
+    tand: float = POLYIMIDE[1],
+    f: float = F915,
+) -> dict[str, float]:
+    """Section B as the revision's sectionB.py (box 2, the polyimide `wide` h wider than the copper) and slotline.py's
+    facing_case (box 4, as wide as the copper) solve it, lengths in mm: strips 8h wide split 0.3h, without thickness,
+    at z = +-h (halves at -+1/2 V), polyimide `polyimide` mm thick behind them, on a uniform grid `step` h fine over
+    x >= 0 inside grounded walls box max(W/2, 2h) out in x and 2 box h beyond the polyimide in z. Returns C', n_eff,
+    Z0, the polyimide's share, Q_c by the charge rule, Q_d, Q, and the polyimide's thickness as the grid holds it
+    (the cells whose centres lie behind the copper's node and inside the layer)."""
+    d = step * h
+    half, split = 4 * h, 0.15 * h
+    x = uniform(0.0, half + box * max(half, 2 * h), d)
+    reach = h + polyimide + box * 2 * h
+    z = uniform(-reach, reach, d)
+    edge = d / 4
+    fixed = np.zeros((len(x), len(z)), dtype=bool)
+    value = np.zeros((len(x), len(z)))
+    fixed[0, :] = fixed[-1, :] = True
+    fixed[:, 0] = fixed[:, -1] = True
+    jt, jb = int(np.argmin(np.abs(z - h))), int(np.argmin(np.abs(z + h)))
+    cu = (x >= split - edge) & (x <= half + edge)
+    fixed[cu, jt] = fixed[cu, jb] = True
+    value[cu, jt], value[cu, jb] = -0.5, 0.5
+    cx, cz = np.meshgrid((x[1:] + x[:-1]) / 2, (z[1:] + z[:-1]) / 2, indexing="ij")
+    lam = (cx <= half + wide * h) & (np.abs(cz) >= h) & (np.abs(cz) <= h + polyimide)
+    ones = np.ones_like(cx)
+    eps = np.where(lam, er, 1.0)
+    phi_air = laplace2d(x, z, ones, fixed, value)
+    phi = laplace2d(x, z, eps, fixed, value)
+    we_air, we = energy2d(x, z, ones, phi_air), energy2d(x, z, eps, phi)
+    share = energy2d(x, z, np.where(lam, er, 0.0), phi) / we
+    faces = [(jt, jt + 1), (jt, jt - 1), (jb, jb + 1), (jb, jb - 1)]
+    s2 = sum(float((((phi_air[cu, a] - phi_air[cu, b]) / d) ** 2).sum()) for a, b in faces) * d * 2
+    cp, ca = 2 * we * pt.EPS0, 2 * we_air * pt.EPS0
+    index = math.sqrt(cp / ca)
+    rs = math.sqrt(math.pi * f * pt.MU0 / COPPER_SIGMA)
+    power = 0.5 * pt.C0 * index * ca
+    lost = 0.5 * rs * pt.C0**2 * index**2 * pt.EPS0**2 * s2 * 1e3
+    qc = (2 * math.pi * f * index / pt.C0) / (2 * lost / (2 * power))
+    qd = 1 / (share * tand)
+    layer = np.flatnonzero(lam[0] & (cz[0] > 0))
+    return {
+        "C_pF": cp * 1e12,
+        "index": index,
+        "z0": 1 / (pt.C0 * math.sqrt(cp * ca)),
+        "share": share,
+        "Qc": qc,
+        "Qd": qd,
+        "Q": 1 / (1 / qc + 1 / qd),
+        "cell_um": d * 1e3,
+        "layer_um": float(z[layer[-1] + 1] - z[layer[0]]) * 1e3 if len(layer) else 0.0,
+    }
+
+
+def facing_air(h: float, rise: float, step: float = 0.025, polyimide: float = 0.025) -> tuple[float, float]:
+    """sectionB.py's gap sensitivity: the air capacitance (F/m) of section B's strips without thickness, 8h wide and
+    split 0.3h at h (mm), moved to +-rise mm on the same grid (W and g fixed in millimetres), and the half-gap the grid
+    puts them at (mm)."""
+    d = step * h
+    half, split = 4 * h, 0.15 * h
+    x = uniform(0.0, half + 2 * max(half, 2 * h), d)
+    reach = rise + polyimide + 4 * h
+    z = uniform(-reach, reach, d)
+    fixed = np.zeros((len(x), len(z)), dtype=bool)
+    value = np.zeros((len(x), len(z)))
+    fixed[0, :] = fixed[-1, :] = True
+    fixed[:, 0] = fixed[:, -1] = True
+    jt, jb = int(np.argmin(np.abs(z - rise))), int(np.argmin(np.abs(z + rise)))
+    cu = (x >= split - d / 4) & (x <= half + d / 4)
+    fixed[cu, jt] = fixed[cu, jb] = True
+    value[cu, jt], value[cu, jb] = -0.5, 0.5
+    ones = np.ones((len(x) - 1, len(z) - 1))
+    phi = laplace2d(x, z, ones, fixed, value)
+    return 2 * energy2d(x, z, ones, phi) * pt.EPS0, float(z[jt] - z[jb]) / 2
+
+
+def wheeler_qc(c0: float, c1: float, recede: float, f: float, resistance: float = 1.0) -> float:
+    """Q_c by Wheeler's incremental-inductance rule: the air problem's capacitance C0 and C1 with every copper face
+    receded by `recede` (m), L' = mu0 eps0 / C', R' = (R_s / mu0) dL'/dn, Q_c = 2 recede / (delta (C0/C1 - 1)), for
+    surface resistance `resistance` times bare copper's."""
+    delta = math.sqrt(2 / (2 * math.pi * f * pt.MU0 * COPPER_SIGMA))
+    return 2 * recede / (delta * (c0 / c1 - 1)) / resistance
+
+
+def facing_section(
+    h: float,
+    f: float,
+    *,
+    half: float = 4.0,
+    split: float = 0.3,
+    copper: float = COPPER_T,
+    laminate: float = 25e-6,
+    er: float = POLYIMIDE[0],
+    tand: float = POLYIMIDE[1],
+    wide: float = 2.0,
+    slotted: bool = False,
+    rise: float = 1.0,
+    fine: float = 1 / 16,
+    coarse: float = 0.05,
+    growth: float = 0.1,
+    wall: float = 8.0,
+    recede: float = 1 / 8,
+    well: bool = False,
+) -> dict[str, float]:
+    """Facing strips with their copper's thickness (sections 5.1 and 5.4), on the quarter x, y >= 0 (odd in both;
+    lengths in h): copper `copper` thick from the face y = rise back, from x = split/2 to `half` (section B: strips 8h
+    wide split 0.3h, half 4; section A: strips 1.5h wide either side of a split h, half 2), the laminate `laminate`
+    thick behind the copper out to `wide` h beyond it (math.inf: a board to the walls), routed away under the split
+    when slotted; grounded walls `wall` h out; a graded grid `fine` of the copper's thickness at its faces and corners.
+    Returns C' and the air problem's C' (pF/m), n_eff, Z0, the laminate's share of the field energy, Q_c by Wheeler's
+    rule (every copper face receded by `recede` of the copper's thickness), Q_d and Q; with `well`, the null's gradient
+    over V/h^2 and the depth share, the squared field over V/h of the escape saddle a flood from the null finds (the
+    gapless boards of ELE-2: pi/4 and 1/4)."""
+    tc, tp = copper / h, laminate / h
+    back, rc = rise + tc, recede * tc
+    xmax, ymax = half + wall, back + tp + wall
+    xfeat = [split / 2, half, split / 2 + rc, half - rc] + ([half + wide] if tp > 0 and math.isfinite(wide) else [])
+    yfeat = [rise, back, rise + rc, back - rc] + ([back + tp] if tp > 0 else [])
+    if well:  # the null's neighbourhood as fine as the copper, for its gradient
+        xfeat.append(0.0)
+        yfeat.append(0.0)
+    x = nodes(0.0, xmax, xfeat, fine * tc, coarse, growth)
+    y = nodes(0.0, ymax, yfeat, min(fine * tc, tp / 3) if tp > 0 else fine * tc, coarse, growth)
+    gx, gy = np.meshgrid(x, y, indexing="ij")
+    walls = (gx == 0) | (gy == 0) | (gx >= xmax - 1e-12) | (gy >= ymax - 1e-12)
+    cx, cy = np.meshgrid((x[1:] + x[:-1]) / 2, (y[1:] + y[:-1]) / 2, indexing="ij")
+    lam = (cy > back) & (cy < back + tp) & (cx < half + wide) & ((cx > split / 2) if slotted else True)
+    ones = np.ones_like(cx)
+
+    def copper_at(cut: float) -> BoolArr:
+        cu: BoolArr = (gy >= rise + cut - 1e-12) & (gy <= back - cut + 1e-12) & (gx >= split / 2 + cut - 1e-12)
+        cu &= gx <= half - cut + 1e-12
+        return cu
+
+    def solve(cut: float, cells: Arr) -> tuple[float, Arr]:
+        cu = copper_at(cut)
+        phi = laplace2d(x, y, cells, cu | walls, np.where(cu, -0.5, 0.0), tol=1e-12)
+        return 4 * energy2d(x, y, cells, phi), phi
+
+    c0, phi = solve(0.0, ones)
+    c1, _ = solve(rc, ones)
+    share = 0.0
+    ce = c0
+    if tp > 0 and er != 1.0:
+        eps = np.where(lam, er, 1.0)
+        ce, phi = solve(0.0, eps)
+        share = 4 * energy2d(x, y, np.where(lam, er, 0.0), phi) / ce
+    qc = wheeler_qc(c0, c1, rc * h, f)
+    qd = 1 / (share * tand) if share * tand > 0 else math.inf
+    out = {
+        "C_pF": ce * pt.EPS0 * 1e12,
+        "Ca_pF": c0 * pt.EPS0 * 1e12,
+        "index": math.sqrt(ce / c0),
+        "z0": 1 / (pt.C0 * pt.EPS0 * math.sqrt(ce * c0)),
+        "share": share,
+        "Qc": qc,
+        "Qd": qd,
+        "Q": 1 / (1 / qc + 1 / qd),
+        "nodes": float(len(x) * len(y)),
+    }
+    if well:
+        out["gamma"] = float(-phi[1, 1] / (x[1] * y[1]))
+        emag = np.hypot(np.gradient(phi, x, axis=0), np.gradient(phi, y, axis=1))
+        cu = copper_at(0.0)
+        near = cu.copy()
+        near[1:, :] |= cu[:-1, :]
+        near[:-1, :] |= cu[1:, :]
+        near[:, 1:] |= cu[:, :-1]
+        near[:, :-1] |= cu[:, 1:]
+        saddle, where = escape_flood(
+            x, y, emag, (0, 0), lambda i, j: bool(near[i, j]) or x[i] >= half + 2.0 or y[j] >= back
+        )
+        out["depth_share"] = saddle**2
+        out["saddle_x"], out["saddle_y"] = where
+    return out
+
+
+def thick_slot_qc(
+    board: float,
+    strip: float,
+    planes: float,
+    copper: float = RIGID_COPPER_T / MM,
+    slot: float = 1.0,
+    pull: float = 0.2,
+    width: float = 6.0,
+    f: float = F915,
+    fine: float = 1 / 8,
+    recede: float = 1 / 8,
+    coarse: float = 0.1,
+    growth: float = 0.15,
+) -> float:
+    """The slot guide's Q_c by Wheeler's rule with its copper's thickness (section 3.3), lengths in mm: on the quarter
+    x, z >= 0 (odd in both), the strip's copper `copper` thick on the board's face from slot/2 + pull to slot/2 +
+    pull + strip at 1 V, a grounded plane `planes` from the board's face and a wall `width` out (or 2 mm beyond the
+    strip), in air."""
+    x0, x1, z0, z1 = slot / 2 + pull, slot / 2 + pull + strip, board / 2, board / 2 + copper
+    width = max(width, x1 + 2.0)
+    top, rc = board / 2 + planes, recede * copper
+    x = nodes(0.0, width, [slot / 2, x0, x1, x0 + rc, x1 - rc], fine * copper, coarse, growth)
+    z = nodes(0.0, top, [z0, z1, z0 + rc, z1 - rc], fine * copper, coarse, growth)
+    gx, gz = np.meshgrid(x, z, indexing="ij")
+    walls = (gx == 0) | (gz == 0) | (gx >= width - 1e-12) | (gz >= top - 1e-12)
+    ones = np.ones((len(x) - 1, len(z) - 1))
+    caps = []
+    for cut in (0.0, rc):
+        cu = (gx >= x0 + cut - 1e-12) & (gx <= x1 - cut + 1e-12) & (gz >= z0 + cut - 1e-12) & (gz <= z1 - cut + 1e-12)
+        phi = laplace2d(x, z, ones, cu | walls, np.where(cu, 1.0, 0.0), tol=1e-12)
+        caps.append(energy2d(x, z, ones, phi))
+    return wheeler_qc(caps[0], caps[1], rc * MM, f)
+
+
+def stripline_wheeler(
+    width: float, thick: float, spacing: float, f: float = 1e9, fine: float = 1 / 16
+) -> dict[str, float]:
+    """The calibration of Wheeler's rule on the graded grid (rule 5): a strip `width` wide and `thick` thick centred
+    between grounded planes `spacing` apart (mm), every conductor receded by thick/8, against stripline's closed form
+    from Wheeler (Pozar, Microwave Engineering, eq. 3.198, for sqrt(eps_r) Z0 < 120 ohm)."""
+    side = width / 2 + 6.0
+    caps = []
+    for cut in (0.0, thick / 8):
+        x = nodes(0.0, side, [width / 2, width / 2 - thick / 8], fine * thick, 0.05, 0.1)
+        y = nodes(0.0, spacing / 2 + cut, [thick / 2, thick / 2 - thick / 8, spacing / 2, spacing / 2 + thick / 8],
+                  fine * thick, 0.05, 0.1)  # fmt: skip
+        gx, gy = np.meshgrid(x, y, indexing="ij")
+        cu = (gx <= width / 2 - cut + 1e-12) & (gy <= thick / 2 - cut + 1e-12)
+        fixed = cu | (gy >= spacing / 2 + cut - 1e-12) | (gx >= side - 1e-12)
+        ones = np.ones((len(x) - 1, len(y) - 1))
+        phi = laplace2d(x, y, ones, fixed, np.where(cu, 1.0, 0.0), tol=1e-12)
+        caps.append(4 * energy2d(x, y, ones, phi))
+    z0 = 1 / (pt.C0 * pt.EPS0 * caps[0])
+    rs = math.sqrt(math.pi * f * pt.MU0 / COPPER_SIGMA)
+    alpha = rs * (1 / caps[1] - 1 / caps[0]) / (thick / 8 * MM) / (2 * z0)
+    a = (
+        1
+        + 2 * width / (spacing - thick)
+        + (spacing + thick) / (spacing - thick) * math.log((2 * spacing - thick) / thick) / math.pi
+    )
+    formula = 2.7e-3 * rs * z0 / (30 * math.pi * (spacing - thick) * MM) * a
+    return {"z0": z0, "alpha": alpha, "formula": formula, "ratio": alpha / formula}
+
+
+def line_job(job: tuple[str, tuple[Any, ...]]) -> dict[str, Any]:
+    """One section solve of the line study, for a process pool."""
+    kind, args = job
+    if kind == "slot":
+        return slot_line(*args)
+    if kind == "slot_qc":
+        return {"Qc": thick_slot_qc(*args)}
+    if kind == "facing":
+        return facing_line(*args)
+    if kind == "thick":
+        h, f, fine, coarse, growth, *rest = args
+        return facing_section(h, f, fine=fine, coarse=coarse, growth=growth, rise=rest[0] if rest else 1.0)
+    if kind == "section":
+        return facing_section(*args[:2], **args[2])
+    if kind == "gap":
+        cap, half = facing_air(*args)
+        return {"C": cap, "half_gap": half}
+    if kind == "stripline":
+        return stripline_wheeler(*args)
+    raise ValueError(kind)
+
+
+@functools.lru_cache(maxsize=2)
+def line_results(quick: bool) -> dict[str, Any]:
+    """Every solve of the line study, once a run (the ring and the arithmetic take section B's Q from it)."""
+    last_grid = section_grid(quick)
+    grids = (
+        {"coarse": (last_grid["fine"], last_grid["coarse"], last_grid["growth"])}
+        if quick
+        else {"coarse": (1 / 8, 0.1, 0.1), "fine": (last_grid["fine"], last_grid["coarse"], last_grid["growth"])}
+    )
+    bands = {"915 MHz": (H915, F915), "2450 MHz": (H2450, 2450e6)}
+    jobs: list[tuple[str, tuple[Any, ...]]] = []
+    keys: list[tuple[str, ...]] = []
+    for band, (h, f) in bands.items():
+        for grid, (fine, coarse, growth) in grids.items():
+            jobs.append(("thick", (h, f, fine, coarse, growth)))
+            keys.append(("thick", band, grid))
+        for step in (0.025,) if quick else (0.025, 0.0125):
+            jobs.append(("facing", (h / MM, step, 2.0, 2.0, 0.025, POLYIMIDE[0], POLYIMIDE[1], f)))
+            keys.append(("uniform", band, f"{step}"))
+    last = list(grids)[-1]
+    fine, coarse, growth = grids[last]
+    for rise in (1.0, 1.06):
+        jobs.append(("thick", (H915, F915, fine, coarse, growth, rise)))
+        keys.append(("rise", f"{rise}"))
+    if not quick:
+        for rise in (0.915, 0.915 * 1.06):
+            jobs.append(("gap", (0.915, rise)))
+            keys.append(("gap", f"{rise:.4f}"))
+        jobs.append(("facing", (0.915, 0.025, 4.0, 0.0)))
+        keys.append(("calibration",))
+    for width, thick, spacing in STRIPLINES:
+        jobs.append(("stripline", (width, thick, spacing)))
+        keys.append(("stripline", f"{width}, {thick}, {spacing}"))
+    for name, kwargs in SECTION_A.items():
+        jobs.append(("section", (HA, F915, {"half": 2.0, "split": 1.0, "well": True, **kwargs, **last_grid})))
+        keys.append(("section_A", name))
+    strips = (0.5,) if quick else SLOT_STRIPS
+    for strip in strips:
+        for name, (board, er, tand) in SLOT_BOARDS.items():
+            for planes in (1.0, 3.0):
+                jobs.append(("slot", (board, er, tand, strip, planes)))
+                keys.append(("slot", f"{strip}", name, f"{planes}"))
+                jobs.append(("slot_qc", (board, strip, planes)))
+                keys.append(("slot_qc", f"{strip}", name, f"{planes}"))
+    if not quick:
+        jobs.append(("slot", (0.8, *FR4, 0.5, 1.0, 0.0125)))
+        keys.append(("slot_half_cell",))
+    solved = dict(zip(keys, run_jobs(line_job, jobs), strict=True))
+    out: dict[str, Any] = {"grids": list(grids), "section_B": {}, "uniform": {}, "slot": []}
+    for band in bands:
+        rows = {grid: solved["thick", band, grid] for grid in grids}
+        best = dict(rows[last])
+        for factor in ENIG:
+            qc = best["Qc"] / factor
+            best[f"Qc_enig_{factor:g}"] = qc
+            best[f"Q_enig_{factor:g}"] = 1 / (1 / qc + 1 / best["Qd"])
+        out["section_B"][band] = {"grids": rows, **best}
+        out["uniform"][band] = {k[2]: v for k, v in solved.items() if k[0] == "uniform" and k[1] == band}
+    out["section_A"] = {}
+    for name in SECTION_A:
+        row = dict(solved["section_A", name])
+        for m in (1, 2, 3):
+            row[f"R{m}"] = row["z0"] * row["Q"] / (2 * math.pi * m)
+            row[f"P{m}"] = A_VOLTS**2 / (2 * row[f"R{m}"])
+        own = pt.electrode_drive_at_q(1.0, 0.5, row["R1"], 1.0, row["depth_share"], row["gamma"])
+        row["own_V"], row["own_h_mm"], row["own_P1"] = own.volts, own.f / F915 / MM, own.power
+        out["section_A"][name] = row
+    c0, c1 = solved["rise", "1.0"], solved["rise", "1.06"]
+    out["gap_sensitivity"] = math.log(c1["Ca_pF"] / c0["Ca_pF"]) / math.log(1.06)
+    if not quick:
+        g0, g1 = solved["gap", "0.9150"], solved["gap", f"{0.915 * 1.06:.4f}"]
+        out["gap_uniform"] = {
+            "C_pF": (g0["C"] * 1e12, g1["C"] * 1e12),
+            "half_gap": (g0["half_gap"], g1["half_gap"]),
+            "sensitivity": math.log(g1["C"] / g0["C"]) / math.log(g1["half_gap"] / g0["half_gap"]),
+        }
+        out["calibration"] = solved["calibration",]
+        out["slot_half_cell"] = solved["slot_half_cell",]
+    out["stripline"] = {k[1]: v for k, v in solved.items() if k[0] == "stripline"}
+    for strip in strips:
+        for name in SLOT_BOARDS:
+            for planes in (1.0, 3.0):
+                row = dict(solved["slot", f"{strip}", name, f"{planes}"])
+                row["Qc_charge"], row["Q_charge"] = row["Qc"], row["Q"]
+                row["Qc"] = solved["slot_qc", f"{strip}", name, f"{planes}"]["Qc"]
+                row["Q"] = 1 / (1 / row["Qc"] + 1 / row["Qd"])
+                row["R1"] = row["z0"] * row["Q"] / (2 * math.pi)
+                row["P40"] = 40.0**2 / (2 * row["R1"])
+                out["slot"].append({"strip": strip, "board": name, "planes": planes, **row})
+    return out
+
+
+def compute_line(quick: bool) -> dict[str, Any]:
+    say("\n== line: section B and the slot guide as transmission lines, converged ==")
+    began = time.time()
+    out = line_results(quick)
+    say(f"  [{time.time() - began:.0f} s]")
+    for band, rows in out["uniform"].items():
+        for r in rows.values():
+            say(
+                f"  section B at {band} on sectionB.py's uniform grid, cell {r['cell_um']:.1f} um (copper without "
+                f"thickness): the 25 um polyimide is {r['layer_um']:.1f} um on it; C' {r['C_pF']:.2f} pF/m, n_eff "
+                f"{r['index']:.4f}, share {r['share']:.4f}, Z0 {r['z0']:.1f} ohm, Q_c by the charge rule {r['Qc']:.0f}"
+            )
+    for band, row in out["section_B"].items():
+        for grid, r in row["grids"].items():
+            say(
+                f"  section B at {band} with the copper's 18 um and the polyimide's 25 um resolved ({grid} grid, "
+                f"{r['nodes']:.0f} nodes): C' {r['C_pF']:.2f} pF/m, n_eff {r['index']:.4f}, share {r['share']:.4f}, "
+                f"Z0 {r['z0']:.2f} ohm, Q_c {r['Qc']:.1f} by Wheeler's rule, Q_d {r['Qd']:.0f}, Q {r['Q']:.1f}"
+            )
+    b = out["section_B"]["915 MHz"]
+    say(
+        f"  section B at 915 MHz, converged: n_eff {b['index']:.3f}, polyimide {b['share'] * 100:.1f} % of the field "
+        f"energy, Z0 {b['z0']:.1f} ohm, C' {b['C_pF']:.2f} pF/m; bare copper Q_c {b['Qc']:.0f}, Q {b['Q']:.0f}; ENIG "
+        f"(R_s 1.3 to 5 times) Q_c {b['Qc_enig_1.3']:.0f} to {b['Qc_enig_5']:.0f}, Q {b['Q_enig_1.3']:.0f} to "
+        f"{b['Q_enig_5']:.0f}; m = 1 takes {pt.C0 / (b['index'] * F915) / MM:.1f} mm"
+    )
+    c = out["section_B"]["2450 MHz"]
+    say(
+        f"  section B at 2450 MHz, converged: n_eff {c['index']:.3f}, polyimide {c['share'] * 100:.1f} %, Z0 "
+        f"{c['z0']:.1f} ohm, Q_c {c['Qc']:.0f}, Q {c['Q']:.0f}; m = 2 takes "
+        f"{2 * pt.C0 / (c['index'] * 2450e6) / MM:.0f}"
+        " mm"
+    )
+    for name, a in out["section_A"].items():
+        say(
+            f"  section A (strips 1.5h wide either side of a split h, h {HA / MM:.2f} mm) on {name}, "
+            f"{SECTION_A[name]['copper'] / 1e-6:.0f} um copper: n_eff {a['index']:.4f}, share {a['share']:.3f}, Z0 "
+            f"{a['z0']:.1f} ohm, Q_c {a['Qc']:.0f}, Q_d {a['Qd']:.0f}, Q {a['Q']:.0f}; m = 1: R {a['R1']:.0f} ohm, "
+            f"1 eV at the drawn well's {A_VOLTS} V takes {a['P1']:.2f} W; its solved well: gradient "
+            f"{a['gamma']:.3f} V/h^2, depth share {a['depth_share']:.4f}, 1 eV at q 0.5 {a['own_V']:.1f} V with the "
+            f"null {a['own_h_mm']:.2f} mm from the copper at 915 MHz"
+        )
+    a = out["section_A"]["RO4003C 0.51 mm, slotted"]
+    say(
+        f"  on section A's slotted RO4003C, 1 eV at {A_VOLTS} V: m = 1 (the sticks) R {a['R1']:.0f} ohm, "
+        f"{a['P1']:.3f} W; m = 2 (L26) R {a['R2']:.0f} ohm, {a['P2']:.3f} W; m = 3 R {a['R3']:.0f} ohm, "
+        f"{a['P3']:.2f} W"
+    )
+    say(
+        f"  gap sensitivity, the copper resolved: d ln C'/d ln h = {out['gap_sensitivity']:.3f} (h up 6 %, W and g "
+        "fixed in millimetres)"
+    )
+    if "gap_uniform" in out:
+        g = out["gap_uniform"]
+        say(
+            f"  the same on sectionB.py's grid (air): C' {g['C_pF'][0]:.2f} -> {g['C_pF'][1]:.2f} pF/m for h "
+            f"{g['half_gap'][0]:.4f} -> {g['half_gap'][1]:.4f} mm: d ln C'/d ln h = {g['sensitivity']:.3f}"
+        )
+        cal = out["calibration"]
+        say(
+            f"  slotline.py's calibration line (section B by the charge rule, box 4, cell {cal['cell_um']:.1f} um): "
+            f"C' {cal['C_pF']:.2f} pF/m, n_eff {cal['index']:.4f}, share {cal['share']:.4f}, Z0 {cal['z0']:.1f} ohm, "
+            f"Q_c {cal['Qc']:.0f}, {cal['Qc'] / b['Qc']:.2f} times Wheeler's"
+        )
+    for name, r in out["stripline"].items():
+        say(
+            f"  Wheeler's rule on the graded grid, stripline (width, thickness, spacing {name} mm): Z0 "
+            f"{r['z0']:.1f} ohm, alpha_c {r['alpha']:.5f} Np/m against the closed form's {r['formula']:.5f}: "
+            f"{r['ratio']:.3f}"
+        )
+    for r in out["slot"]:
+        say(
+            f"  slot guide, strip {r['strip']:.1f} mm, {r['board']}, planes {r['planes']:.1f} mm off: C' "
+            f"{r['C_pF']:.1f} pF/m, n {r['index']:.3f}, Z0 {r['z0']:.1f}, share {r['share']:.3f}, Q_d {r['Qd']:.0f}, "
+            f"Q_c {r['Qc']:.0f} by Wheeler's rule on 35 um copper (charge rule {r['Qc_charge']:.0f}), Q {r['Q']:.0f} "
+            f"(charge rule {r['Q_charge']:.0f}), lam_g {r['lam_g_mm']:.0f} mm, R(m = 1) {r['R1']:.0f} ohm, 40 V "
+            f"takes {r['P40']:.2f} W at m = 1; grad {r['gradient_G0']:.3f} G0, on-axis barrier {r['barrier_D0']:.3f} D0"
+        )
+    if "slot_half_cell" in out:
+        r = out["slot_half_cell"]
+        say(
+            f"  slot guide, strip 0.5 mm, FR-4, planes 1.0 mm, at half the cell: n {r['index']:.3f}, Z0 "
+            f"{r['z0']:.1f}, share {r['share']:.3f}, lam_g {r['lam_g_mm']:.0f} mm, grad {r['gradient_G0']:.3f} G0, "
+            f"barrier {r['barrier_D0']:.3f} D0"
+        )
+    small = [r for r in out["slot"] if r["strip"] <= 1.0]
+    say(
+        f"  the laminate holds {min(r['share'] for r in small) * 100:.0f} to "
+        f"{max(r['share'] for r in small) * 100:.0f} "
+        "% of the field on 0.5 and 1.0 mm strips"
+    )
+    return out
+
+
+def figure_line(res: dict[str, Any], out: Path) -> None:
+    """Section B's conductor Q by the charge rule on uniform cells against Wheeler's rule with the copper's thickness;
+    Wheeler's rule against stripline's closed form; the slot guide's Q against its strips' width by both rules."""
+    plt = _pyplot()
+    fig = plt.figure(figsize=(15.5, 5.6))
+    grid = fig.add_gridspec(1, 3, wspace=0.3, top=0.8)
+    ax = fig.add_subplot(grid[0, 0])
+    labels, values, colours = [], [], []
+    for band, colour in (("915 MHz", BLUE), ("2450 MHz", ORANGE)):
+        for r in res["uniform"][band].values():
+            labels.append(f"{band}, charge rule, {r['cell_um']:.1f} µm cells")
+            values.append(r["Qc"])
+            colours.append(BLUES[3] if band == "915 MHz" else "#f3a77f")
+        for grid_name, r in res["section_B"][band]["grids"].items():
+            labels.append(f"{band}, Wheeler, 18 µm copper, {grid_name} grid")
+            values.append(r["Qc"])
+            colours.append(colour)
+    xs = np.arange(len(values))
+    ax.bar(xs, values, color=colours)
+    for x, v in zip(xs, values, strict=True):
+        ax.text(x, v + 6, f"{v:.0f}", ha="center", fontsize=7.6)
+    ax.set_xticks(xs)
+    ax.set_xticklabels(labels, fontsize=7.0, rotation=35, ha="right")
+    ax.set_ylabel("conductor Q of section B (bare copper)")
+    ax.set_title("section B: the copper's loss by rule")
+    ax = fig.add_subplot(grid[0, 1])
+    if "stripline" in res:
+        names = list(res["stripline"])
+        ratios = [res["stripline"][n]["ratio"] for n in names]
+        ax.bar(np.arange(len(names)), ratios, color=GREEN)
+        for at, (name, r) in enumerate(zip(names, ratios, strict=True)):
+            z0 = res["stripline"][name]["z0"]
+            ax.text(at, r + 0.01, f"{r:.3f}\n(Z₀ {z0:.0f} Ω)", ha="center", fontsize=7.6)
+        ax.set_xticks(np.arange(len(names)))
+        ax.set_xticklabels([f"w, t, b =\n{n} mm" for n in names], fontsize=7.4)
+        ax.axhline(1.0, color=MUTED, lw=0.9, ls=":")
+        ax.set_ylim(0.8, 1.15)
+    ax.set_ylabel("α_c by Wheeler's rule over stripline's closed form")
+    ax.set_title("calibration: Wheeler's rule on the graded grid")
+    ax = fig.add_subplot(grid[0, 2])
+    for name, colour in zip(SLOT_BOARDS, (BLUE, ORANGE), strict=True):
+        rows = [r for r in res["slot"] if r["board"] == name and r["planes"] == 1.0]
+        strips = [r["strip"] for r in rows]
+        ax.plot(strips, [r["Q"] for r in rows], "o-", color=colour, label=f"{name}: Wheeler, 35 µm copper")
+        ax.plot(strips, [r["Q_charge"] for r in rows], "o--", color=colour, mfc=SURFACE, label=f"{name}: charge rule")
+    ax.set_xlabel("strip width (mm), planes 1 mm off")
+    ax.set_ylabel("Q of the slot guide at 915 MHz")
+    ax.legend(fontsize=7.4)
+    ax.set_title("the slot guide: Q against the strips' width")
+    b = res["section_B"]["915 MHz"]
+    _suptitle(
+        fig,
+        f"Section B at 915 MHz: with its copper's 18 µm and the polyimide's 25 µm resolved, n_eff {b['index']:.3f}, "
+        f"the polyimide's share {b['share'] * 100:.1f} %, Z₀ {b['z0']:.1f} Ω, and Wheeler's rule gives Q_c "
+        f"{b['Qc']:.0f} (Q {b['Q']:.0f}), where the charge rule on uniform cells gives about twice that and drifts "
+        "with the cell",
+    )
+    _save(fig, out, "line")
+
+
+# ---- ring: T915-S as a ring of line segments, its tolerance Monte Carlo (sections 5.2 and 5.3) -------------------
+RING_NODES = 192
+RING_SENSITIVITY = 0.50  # d ln Z0 / d ln h, the buildability lens's (section 5.1)
+# label, finish (its Q from the line study, or a number), spacer gap error, draws, seed, joint error sd, split etch sd,
+# index (None: N915)
+RING_CASES: tuple[tuple[str, str | float, float, int, int, float, float, float | None], ...] = (
+    ("bare copper, 2 %", "bare", 0.02, 60, 7, 0.01, 0.0, None),
+    ("bare copper, 1 %", "bare", 0.01, 30, 8, 0.01, 0.0, None),
+    ("bare copper, 3 %", "bare", 0.03, 30, 9, 0.01, 0.0, None),
+    ("ENIG high, 2 %", "enig 1.3", 0.02, 30, 10, 0.01, 0.0, None),
+    ("ENIG low, 2 %", "enig 5", 0.02, 30, 11, 0.01, 0.0, None),
+    ("bare copper, 2 %, split etched 20 %", "bare", 0.02, 30, 12, 0.01, 0.2, None),
+    ("joints alone, bare copper", "bare", 0.0, 30, 14, 0.01, 0.0, None),
+    ("as drawn before the revision: n 1.067, Q 338, 2 %", 338.0, 0.02, 30, 13, 0.01, 0.0, 1.067),
+)
+
+
+def ring_admittance(f: float, length: float, z: Arr, n: Arr, q0: float) -> CArr:
+    """The nodal admittance (N x N) of a closed ring of N line segments, segment k from node k to node k + 1, of
+    impedance z_k and index n_k, losing beta / (2 Q0) (the buildability lens's ring, lens5/ring.py)."""
+    count = len(z)
+    beta = 2 * math.pi * f * n / pt.C0
+    g = (beta / (2 * q0) + 1j * beta) * length / count
+    yc, ys = 1 / (z * np.tanh(g)), -1 / (z * np.sinh(g))
+    out: CArr = np.zeros((count, count), dtype=np.complex128)
+    idx = np.arange(count)
+    nxt = (idx + 1) % count
+    np.add.at(out, (idx, idx), yc)
+    np.add.at(out, (nxt, nxt), yc)
+    np.add.at(out, (idx, nxt), ys)
+    np.add.at(out, (nxt, idx), ys)
+    return out
+
+
+def ring_purity(v: CArr, m: int) -> float:
+    """|b/a|: the smaller over the larger of the node voltages' azimuthal components of order -m and +m."""
+    k = np.arange(len(v))
+    a = abs(np.sum(v * np.exp(2j * math.pi * m * k / len(v))))
+    b = abs(np.sum(v * np.exp(-2j * math.pi * m * k / len(v))))
+    return float(min(a, b) / max(a, b))
+
+
+def ring_score(length: float, m: int, z: Arr, n: Arr, rel: Arr, q0: float, compensate: bool) -> dict[str, float]:
+    """The ring driven by two current feeds a quarter guided wave apart, the second at w times the first: over 49
+    frequencies within 3/Q0 of the resonance and over w = +-i (the fixed 90 degree hybrid) or, compensated, 13
+    amplitudes from 0.5 to 2 by 37 phases (two re-solved feeds), the best weakest depth per watt, the depth going as
+    |V|^2 / (1 + dh/h)^2 (lens5/ring.py's evaluate, vectorised over w)."""
+    count = len(z)
+    feeds = (0, count // (4 * m))
+    f0 = m * pt.C0 / (float(np.mean(n)) * length)
+    if compensate:
+        ws = np.array(
+            [
+                a * np.exp(1j * p)
+                for a in np.linspace(0.5, 2.0, 13)
+                for p in np.linspace(-math.pi, math.pi, 37, endpoint=False)
+            ]
+        )
+    else:
+        ws = np.array([1j, -1j])
+    best: tuple[float, float, complex, CArr, Arr] | None = None
+    for f in np.linspace(f0 * (1 - 3 / q0), f0 * (1 + 3 / q0), 49):
+        inv = np.linalg.inv(ring_admittance(float(f), length, z, n, q0))
+        v = inv[:, [feeds[0]]] + inv[:, [feeds[1]]] * ws[None, :]
+        power = 0.5 * np.real(v[feeds[0]] + np.conj(ws) * v[feeds[1]])
+        depth = np.abs(v) ** 2 / (1 + rel[:, None]) ** 2
+        score = depth.min(axis=0) / power
+        k = int(np.argmax(score))
+        if best is None or float(score[k]) > best[0]:
+            best = (float(score[k]), float(f), complex(ws[k]), v[:, k], depth[:, k])
+    assert best is not None
+    score_best, f_best, w, v_best, depth_best = best
+    return {
+        "f_over_f0": f_best / (m * pt.C0 / length),
+        "score": score_best,
+        "purity": ring_purity(v_best, m),
+        "ripple": float(depth_best.min() / depth_best.max()),
+        "w_abs": abs(w),
+        "w_deg": math.degrees(math.atan2(w.imag, w.real)),
+    }
+
+
+def ring_draw(
+    rng: np.random.Generator,
+    length: float,
+    sigma: float,
+    index: float,
+    joint_sd: float,
+    split_sd: float,
+    joint_dz: float = -0.02,
+    sigma_eps: float = 0.1,
+) -> tuple[Arr, Arr, Arr]:
+    """One built ring (ring915.py's realise): SPACERS stations at a random offset, each with a relative gap error of
+    sd sigma, linear between them; ln Z = 0.5 dh/h; a slow split-width error of sd split_sd at seven stations,
+    d ln Z / d ln g about 0.03; two closing joints SCARF long, a quarter guided wave (+-0.5 mm) apart at a random
+    place, each dz = joint_dz + N(0, joint_sd) in ln Z; the laminate's permittivity off by N(0, sigma_eps), dn /
+    d eps_r = 0.0253. Returns Z (ohm), n and dh/h at the RING_NODES nodes."""
+    s = np.arange(RING_NODES) * length / RING_NODES
+    st = np.arange(SPACERS) * length / SPACERS + rng.uniform(0, length / SPACERS)
+    st = np.sort(st % length)
+    dh = rng.normal(0, sigma, SPACERS)
+    rel: Arr = np.interp(s, np.concatenate([st - length, st, st + length]), np.concatenate([dh, dh, dh]))
+    lnz = RING_SENSITIVITY * rel
+    if split_sd > 0:
+        k = rng.normal(0, split_sd, 6)
+        lnz = lnz + 0.03 * np.interp(s, np.linspace(0, length, 7), np.concatenate([k, k[:1]]))
+    s0 = rng.uniform(0, length)
+    for base in (s0, s0 + length / 4 + rng.normal(0, 0.5e-3)):
+        dz = joint_dz + rng.normal(0, joint_sd)
+        lnz = lnz + np.where(np.abs(((s - base + length / 2) % length) - length / 2) < SCARF / 2, dz, 0.0)
+    z: Arr = 50.0 * np.exp(lnz)
+    n: Arr = np.full(RING_NODES, index * (1 + 0.0253 * rng.normal(0, sigma_eps) / index))
+    return z, n, rel
+
+
+def ring_draw_stations(
+    rng: np.random.Generator, length: float, sigma: float, index: float, sigma_eps: float = 0.1
+) -> tuple[Arr, Arr, Arr]:
+    """lens5/ring.py's realise for the 2.45 GHz strips, without joints: SPACERS stations at fixed places (the first at
+    s = 0), each with a relative gap error of sd sigma, linear between them; ln Z = 0.5 dh/h; the laminate's
+    permittivity off by N(0, sigma_eps), dn / d eps_r = 0.0253."""
+    s = np.arange(RING_NODES) * length / RING_NODES
+    st = np.arange(SPACERS) * length / SPACERS
+    dh = rng.normal(0, sigma, SPACERS)
+    rel: Arr = np.interp(s, np.concatenate([st, [length]]), np.concatenate([dh, dh[:1]]))
+    z: Arr = 50.0 * np.exp(RING_SENSITIVITY * rel)
+    n: Arr = np.full(RING_NODES, index * (1 + 0.0253 * rng.normal(0, sigma_eps) / index))
+    return z, n, rel
+
+
+def ring_harmonic(z: Arr, m: int = 1) -> float:
+    """|c_2m|: the lap harmonic 2m of ln Z, whose twice splits +-m by that fraction of the frequency."""
+    k = np.arange(len(z))
+    return float(abs(np.sum(np.log(z / 50.0) * np.exp(2j * math.pi * 2 * m * k / len(z))) / len(z)))
+
+
+def ring_job(job: tuple[float, Arr, Arr, Arr, float, int]) -> dict[str, Any]:
+    """One drawn ring of order m driven by the fixed hybrid and by two re-solved feeds, for a process pool."""
+    length, z, n, rel, q0, m = job
+    return {"fixed": ring_score(length, m, z, n, rel, q0, False), "comp": ring_score(length, m, z, n, rel, q0, True)}
+
+
+def strips_2450(q0: float, index: float, draws: int) -> dict[str, Any]:
+    """The 2.45 GHz strips' tolerance as the buildability lens ran it (lens5/ring.py): m = 2, 24 spacers at fixed
+    stations with 10 um rms gap error on its h = 0.8391e6 / 2.45e9 m, no joints, seed 1, the 12 draws at 5 um drawn
+    first; the median 2Q|c_2m|, and the fixed hybrid's and two re-solved feeds' depth per watt over a perfect ring's."""
+    h = 0.8391e6 / 2.45e9
+    length = 2 * pt.C0 / (index * 2450e6)
+    rng = np.random.default_rng(1)
+    for _ in range(12):
+        ring_draw_stations(rng, length, 5e-6 / h, index)
+    built = [ring_draw_stations(rng, length, 10e-6 / h, index) for _ in range(draws)]
+    flat = np.full(RING_NODES, 50.0), np.full(RING_NODES, index), np.zeros(RING_NODES)
+    ref = ring_score(length, 2, *flat, q0, False)
+    runs = run_jobs(ring_job, [(length, z, n, rel, q0, 2) for z, n, rel in built])
+    split = float(np.median([2 * q0 * ring_harmonic(z, 2) for z, _, _ in built]))
+    return {
+        "Q0": q0,
+        "index": index,
+        "sigma_pct": 100 * 10e-6 / h,
+        "draws": draws,
+        "split_median": split,
+        "allowed_pct": 100 * 10e-6 / h / split,
+        "allowed_um": 10e-6 / split * 2 / 1e-6,
+        "hybrid_depth_median": float(np.median([r["fixed"]["score"] for r in runs])) / ref["score"],
+        "resolved_depth_median": float(np.median([r["comp"]["score"] for r in runs])) / ref["score"],
+        "hybrid_purity_median": float(np.median([r["fixed"]["purity"] for r in runs])),
+        "resolved_purity_median": float(np.median([r["comp"]["purity"] for r in runs])),
+    }
+
+
+def compute_ring(quick: bool) -> dict[str, Any]:
+    say("\n== ring: T915-S as a ring of 192 line segments, spacers, joints and laminate drawn ==")
+    line = line_results(quick)["section_B"]["915 MHz"]
+    finishes = {"bare": line["Q"], "enig 1.3": line["Q_enig_1.3"], "enig 5": line["Q_enig_5"]}
+    began = time.time()
+    out: dict[str, Any] = {"cases": {}, "Q": finishes}
+    for label, finish, sigma, draws, seed, joint_sd, split_sd, index in RING_CASES:
+        q0 = finish if isinstance(finish, float) else finishes[finish]
+        n_eff = N915 if index is None else index
+        length = pt.C0 / (n_eff * F915)
+        rng = np.random.default_rng(seed)
+        count = min(draws, 4) if quick else draws
+        built = [ring_draw(rng, length, sigma, n_eff, joint_sd, split_sd) for _ in range(count)]
+        ref = ring_score(
+            length, 1, np.full(RING_NODES, 50.0), np.full(RING_NODES, n_eff), np.zeros(RING_NODES), q0, False
+        )
+        runs = run_jobs(ring_job, [(length, z, n, rel, q0, 1) for z, n, rel in built])
+        rows = np.array(
+            [
+                (
+                    2 * q0 * ring_harmonic(z),
+                    r["fixed"]["purity"],
+                    r["fixed"]["score"] / ref["score"],
+                    r["comp"]["purity"],
+                    r["comp"]["score"] / ref["score"],
+                    r["comp"]["w_abs"],
+                    r["comp"]["w_deg"],
+                )
+                for (z, _, _), r in zip(built, runs, strict=True)
+            ]
+        )
+        med, p90, p10 = np.median(rows, 0), np.percentile(rows, 90, 0), np.percentile(rows, 10, 0)
+        case: dict[str, Any] = {
+            "Q0": q0,
+            "sigma_pct": 100 * sigma,
+            "draws": count,
+            "length_mm": length / MM,
+            "split_median": float(med[0]),
+            "split_p90": float(p90[0]),
+            "hybrid_purity_median": float(med[1]),
+            "hybrid_purity_p90": float(p90[1]),
+            "hybrid_depth_median": float(med[2]),
+            "hybrid_depth_p10": float(p10[2]),
+            "resolved_purity_median": float(med[3]),
+            "resolved_purity_p90": float(p90[3]),
+            "resolved_depth_median": float(med[4]),
+            "resolved_depth_p10": float(p10[4]),
+            "weight_abs": (float(rows[:, 5].min()), float(rows[:, 5].max())),
+            "weight_deg": (float(rows[:, 6].min()), float(rows[:, 6].max())),
+            "perfect_purity": ref["purity"],
+            "_rows": rows,
+        }
+        out["cases"][label] = case
+        say(
+            f"  {label} (Q {q0:.0f}, {length / MM:.1f} mm, {count} draws): splitting {case['split_median']:.2f} "
+            f"linewidths ({case['split_p90']:.2f} at the 90th percentile); fixed hybrid |b/a| "
+            f"{case['hybrid_purity_median']:.3f} ({case['hybrid_purity_p90']:.3f}), depth per watt "
+            f"{case['hybrid_depth_median']:.3f} (10th percentile {case['hybrid_depth_p10']:.3f}); re-solved feeds "
+            f"|b/a| {case['resolved_purity_median']:.4f} ({case['resolved_purity_p90']:.4f}), depth per watt "
+            f"{case['resolved_depth_median']:.3f} ({case['resolved_depth_p10']:.3f}); second feed "
+            f"{case['weight_abs'][0]:.2f} to {case['weight_abs'][1]:.2f} in amplitude, {case['weight_deg'][0]:.0f} to "
+            f"{case['weight_deg'][1]:.0f} deg"
+        )
+    band = line_results(quick)["section_B"]["2450 MHz"]
+    for name, q0, index in (("as the lens ran it", 250.0, 1.067), ("Q by Wheeler's rule", band["Q"], band["index"])):
+        r = strips_2450(q0, index, 4 if quick else 12)
+        out.setdefault("strips_2450", {})[name] = r
+        say(
+            f"  the 2.45 GHz strips, m = 2, {name} (Q {q0:.0f}, n {index:.4f}, {r['draws']} draws at "
+            f"{r['sigma_pct']:.2f} % of h): median 2Q|c_2m| {r['split_median']:.3f}, so 2Q|c_2m| <= 1 in the median "
+            f"allows {r['allowed_pct']:.1f} % ({r['allowed_um']:.0f} um of the 2h gap); depth per watt, fixed hybrid "
+            f"{r['hybrid_depth_median']:.3f}, two re-solved feeds {r['resolved_depth_median']:.3f}"
+        )
+    say(f"  [{time.time() - began:.0f} s]")
+    q = finishes["bare"]
+    out["spacer_rule"] = 2 * q * RING_SENSITIVITY * 0.02 / math.sqrt(SPACERS)
+    out["loss_ripple"] = 1 - math.exp(-2 * math.pi / q)
+    say(
+        f"  spacer rule 2 Q S sigma / sqrt(N) at Q {q:.0f}, S {RING_SENSITIVITY}, {SPACERS} spacers and 2 %: "
+        f"{out['spacer_rule']:.2f} linewidths; fed at one place the depth falls by 1 - exp(-2 pi m / Q) = "
+        f"{out['loss_ripple'] * 100:.1f} % a lap"
+    )
+    return out
+
+
+def figure_ring(res: dict[str, Any], out: Path) -> None:
+    """T915-S's ring Monte Carlo: splitting against the spacers' gap error; the backward wave and the depth per watt
+    of the fixed hybrid against two re-solved feeds, by case."""
+    plt = _pyplot()
+    fig = plt.figure(figsize=(15.5, 5.8))
+    grid = fig.add_gridspec(1, 3, wspace=0.3, top=0.8)
+    cases = res["cases"]
+    ax = fig.add_subplot(grid[0, 0])
+    bare = [cases[k] for k in ("bare copper, 1 %", "bare copper, 2 %", "bare copper, 3 %")]
+    sig = [c["sigma_pct"] for c in bare]
+    ax.plot(sig, [c["split_median"] for c in bare], "o-", color=BLUE, label="median of the draws")
+    ax.plot(sig, [c["split_p90"] for c in bare], "o--", color=BLUE, mfc=SURFACE, label="90th percentile")
+    q = res["Q"]["bare"]
+    ax.plot(sig, [2 * q * RING_SENSITIVITY * s / 100 / math.sqrt(SPACERS) for s in sig], ":", color=INK2,
+            label="2Q·S·$\\sigma$/√N (rms)")  # fmt: skip
+    ax.axhline(1.0, color=MUTED, lw=0.9)
+    ax.set_xlabel("the spacers' rms gap error (%)")
+    ax.set_ylabel("splitting of ±m, 2Q|c₂ₘ| (linewidths)")
+    ax.legend(fontsize=7.6)
+    ax.set_title(f"splitting on bare copper (Q {q:.0f})")
+    labels = [k.replace(", bare copper", "").replace(" the revision", "") for k in cases]
+    xs = np.arange(len(labels))
+    for col, (key, title, scale) in enumerate(
+        (("purity", "backward wave |b/a| (median, bar to the 90th percentile)", "log"),
+         ("depth", "depth per watt over a perfect ring's (median, bar to the 10th percentile)", "linear"))
+    ):  # fmt: skip
+        ax = fig.add_subplot(grid[0, col + 1])
+        for name, colour, dx in (("hybrid", ORANGE, -0.18), ("resolved", BLUE, 0.18)):
+            med = [c[f"{name}_{key}_median"] for c in cases.values()]
+            edge = [c[f"{name}_{key}_{'p90' if key == 'purity' else 'p10'}"] for c in cases.values()]
+            ax.bar(xs + dx, med, width=0.34, color=colour,
+                   label="the fixed 90° hybrid" if name == "hybrid" else "two re-solved feeds")  # fmt: skip
+            ax.vlines(xs + dx, np.minimum(med, edge), np.maximum(med, edge), color=INK, lw=1.0)
+        ax.set_yscale(scale)
+        ax.set_xticks(xs)
+        ax.set_xticklabels(labels, rotation=35, ha="right", fontsize=7.0)
+        if key == "depth":
+            ax.set_ylim(0, 1.2)
+        ax.legend(fontsize=7.4, loc="upper center", ncol=2)
+        ax.set_title(title, fontsize=8.6)
+    two = cases["bare copper, 2 %"]
+    _suptitle(
+        fig,
+        f"T915-S as a ring of {RING_NODES} line segments with {SPACERS} spacers, two closing joints and two feeds a "
+        f"quarter wave apart: at 2 % rms gap error the ±1 pair splits by {two['split_median']:.2f} linewidths in the "
+        f"median; the fixed hybrid leaves |b/a| {two['hybrid_purity_median']:.2f} and "
+        f"{two['hybrid_depth_median']:.2f} of a perfect ring's depth per watt, two re-solved feeds "
+        f"{two['resolved_purity_median']:.3f} and {two['resolved_depth_median']:.2f}",
+    )
+    _save(fig, out, "ring")
 
 
 # ---- tracking: jobs for a process pool ----------------------------------------------------------------------------
@@ -3808,6 +4839,540 @@ def figure_acceleration(res: dict[str, Any], out: Path) -> None:
     _save(fig, out, "acceleration")
 
 
+# ---- beam: the particles' own fields on the knot and on the ring, and the control curves (sections 3.2, 6.6) -----
+BEAM_CURRENT = 11.6e-9  # A: 3.4e4 electrons at 1 eV round the first run's guide (section 6.5)
+
+
+def bunch_multipoles(curve: ClosedCurve, harmonics: int = 6) -> dict[str, Any]:
+    """A bunch of charge Q circulating on a closed curve at constant speed (section 6.6): per harmonic k of f_rev,
+    its electric dipole p_k / Q = <r e^(-2 pi i k s / L)> (mm) with its part along the axis, and the amplitude of its
+    oscillating magnetic dipole, (1/2) oint r x T e^(-2 pi i k s / L) ds (mm^2, times Q v / L); and a steady beam's
+    vector area (1/2) oint r x dr (mm^2), whose product with the current is the magnetic moment."""
+    p = curve.points - curve.points.mean(0)
+    s = np.arange(len(curve)) / len(curve)
+    area = 0.5 * np.cross(p, np.roll(p, -1, 0) - p).sum(0)
+    rows = []
+    for k in range(1, harmonics + 1):
+        e = np.exp(-2j * math.pi * k * s)
+        dipole = (p * e[:, None]).mean(0)
+        magnetic = 0.5 * (np.cross(p, curve.tangents) * e[:, None]).mean(0) * curve.length
+        rows.append(
+            {
+                "k": k,
+                "dipole_mm": float(np.linalg.norm(dipole)) / MM,
+                "axial_mm": float(abs(dipole[2])) / MM,
+                "magnetic_mm2": float(np.linalg.norm(magnetic)) / MM**2,
+            }
+        )
+    return {"area_mm2": area / MM**2, "area_abs_mm2": float(np.linalg.norm(area)) / MM**2, "harmonics": rows}
+
+
+def strand_clearance(curve: ClosedCurve, n: int = 1500) -> float:
+    """The closest approach (m) of a curve's strands: the least distance between points more than an eighth of a lap
+    apart along it, on n points."""
+    pts = ClosedCurve.from_polygon(curve.points, n).points
+    dist = np.linalg.norm(pts[:, None, :] - pts[None, :, :], axis=2)
+    sep = np.abs(np.arange(n)[:, None] - np.arange(n)[None, :])
+    return float(dist[np.minimum(sep, n - sep) > n // 8].min())
+
+
+def control_curves(length: float, n: int) -> dict[str, ClosedCurve]:
+    """The controls beside the trefoil at its length (sections 3.2 and 3.6): the flat ring, lifted figures of eight
+    (unknotted, not planar), the figure-eight knot 4_1, T(2, 5) and T(3, 4), and the unknotted (1, 3) torus curves."""
+    out = {"flat ring": scaled(ClosedCurve.circle(1.0, n), length)}
+    for a, b, lift in ((1.0, 0.5, 0.2), (1.0, 0.6, 0.25), (1.0, 0.7, 0.3), (1.0, 0.8, 0.3)):
+        out[f"lifted figure of eight, b {b}, lift {lift}"] = scaled(ClosedCurve.figure_eight(a, b, lift, n), length)
+    out["4₁, common form"] = figure_eight_knot(length, n)
+    for p, q in ((2, 5), (3, 4)):
+        for ratio in (0.3, 0.45):
+            out[f"T({p}, {q}) at r/R {ratio}"] = torus(ratio, length, n, p, q)
+    for ratio in (0.1, 0.15, 0.2, 0.3):
+        out[f"T(1, 3) at r/R {ratio}"] = torus(ratio, length, n, 1, 3)
+    return out
+
+
+def compute_beam(quick: bool) -> dict[str, Any]:
+    say("\n== beam: a bunch's multipoles on T915-S's trefoil and on the ring; the control curves ==")
+    n = 2000 if quick else 6000
+    knot = torus(RATIO915, L915, n)
+    ring = scaled(ClosedCurve.circle(1.0, n), L915)
+    out: dict[str, Any] = {"length_mm": L915 / MM}
+    for name, curve in (("trefoil", knot), ("ring", ring)):
+        m = bunch_multipoles(curve)
+        out[name] = m
+        say(
+            f"  {name} ({curve.length / MM:.1f} mm): vector area {m['area_abs_mm2']:.0f} mm^2 along the axis "
+            f"(components {', '.join(f'{v:.1f}' for v in m['area_mm2'])}); per harmonic k of f_rev, |p_k|/Q, its axial "
+            "part, and |(1/2) oint r x T e ds|: "
+            + "; ".join(
+                f"k = {r['k']}: {r['dipole_mm']:.3f} mm ({r['axial_mm']:.3f}), {r['magnetic_mm2']:.1f} mm^2"
+                for r in m["harmonics"]
+            )
+        )
+    ratio = out["trefoil"]["area_abs_mm2"] / out["ring"]["area_abs_mm2"]
+    out["moment_ratio"] = ratio
+    out["moments"] = {k: BEAM_CURRENT * out[k]["area_abs_mm2"] * MM**2 for k in ("trefoil", "ring")}
+    say(
+        f"  a steady {BEAM_CURRENT * 1e9:.1f} nA beam's magnetic moment: trefoil {out['moments']['trefoil']:.2e} A "
+        "m^2, "
+        f"ring of the same length {out['moments']['ring']:.2e} A m^2 (L^2 / 4 pi = "
+        f"{L915**2 / (4 * math.pi) / MM**2:.0f}"
+        f" mm^2): {ratio:.2f} of the ring's; the trefoil's writhe {torus(RATIO915, L915, 3000).writhe:.3f}"
+    )
+    out["strands_mm"] = strand_clearance(knot) / MM
+    say(
+        f"  T915-S's strands pass {out['strands_mm']:.2f} mm apart at their centre lines; strips {WIDTH915 / MM:.2f} "
+        "mm wide"
+    )
+    tref = torus(RATIO915, L915, 4000)
+    frame = framing(tref, 0)
+    controls = {}
+    for name, curve in control_curves(L915, 1500 if quick else 3000).items():
+        row: dict[str, Any] = {
+            "bend_mm": curve.bend_radius / MM,
+            "total_curvature_pi": curve.total_curvature / math.pi,
+            "holonomy_deg": math.degrees(curve.holonomy),
+        }
+        text = (
+            f"tightest bend {row['bend_mm']:.2f} mm, total curvature {row['total_curvature_pi']:.3f} pi, holonomy "
+            f"{row['holonomy_deg']:.1f} deg"
+        )
+        if name.startswith("4₁"):
+            row["writhe"] = curve.writhe
+            row["strands_mm"] = strand_clearance(curve) / MM
+            row["ropelength_ratio"] = ROPELENGTH["4₁"] / ROPELENGTH["3₁"]
+            text += (
+                f", writhe {row['writhe']:.3f}, strands {row['strands_mm']:.2f} mm apart; by ropelength "
+                f"{row['ropelength_ratio']:.2f} times the trefoil's length for the same tube"
+            )
+        if name.startswith("T(1, 3)"):
+            row["inplane_mm"] = framing(curve, 0).inplane_radius / MM
+            row["held_over_trefoil"] = (
+                row["bend_mm"] * MM / tref.bend_radius,
+                row["inplane_mm"] * MM / frame.inplane_radius,
+            )
+            text += (
+                f", framed k = 0 its in-plane radius {row['inplane_mm']:.2f} mm: {row['held_over_trefoil'][0]:.2f} "
+                "times "
+                f"T915-S's tightest bend, {row['held_over_trefoil'][1]:.2f} times its in-plane radius"
+            )
+        if name == "flat ring":
+            text = f"radius {row['bend_mm']:.2f} mm"
+        controls[name] = row
+        say(f"  {name} at {L915 / MM:.1f} mm: {text}")
+    out["controls"] = controls
+    return out
+
+
+# ---- numbers: the revision's arithmetic (sections 3 to 9) ---------------------------------------------------------
+SIGMA_SB = 5.670374419e-8  # W / (m^2 K^4)
+QM = pt.E / pt.ME  # |q/m| of the electron (C/kg)
+HEAT_POINT = (0.58, 24.0, 0.307)  # the hardware lens's radiation balance: 0.58 W raised a 307 mm ring 24 K
+COUPLING = (1.11, 1.25)  # what the amplifier gives over what the ring takes: the feeds' coupling loss, 0.45 to 1 dB
+HACKRF_DBM = (5.0, 15.0)  # the HackRF One's transmit power at 915 MHz (its maker's figure; the Pro's is measured)
+BIAS_INDUCTOR = (100e-9, 60.0)  # the segments' star inductors: henry and Q at 915 MHz (section 6.4)
+FREE_PATH = 0.4  # m, an electron's mean free path at 1e-3 mbar (an estimate)
+
+
+def half_db(value: float) -> float:
+    """A level rounded to the half decibel."""
+    return math.floor(2 * value + 0.5) / 2
+
+
+def feed_capacitor(shunt: float, feeds: int = 2, source: float = 50.0, f: float = F915) -> float:
+    """The series capacitor (F) through which a 50 ohm source presents the conductance 1 / (K R) that critically
+    couples K feeds into a ring of shunt resistance R: Re 1 / (50 + 1 / (i w C)) = 1 / (K R)."""
+    return 1 / (2 * math.pi * f * math.sqrt(source * feeds * shunt - source**2))
+
+
+def lobe_bends(r0: float, a: float) -> tuple[float, float]:
+    """S2-C3's layout rho = r0 + a cos(3 phi / 2) bent on its outer and inner lobes: rho^2 / |rho - rho''|."""
+    return (r0 + a) ** 2 / (r0 + a + 2.25 * a), (r0 - a) ** 2 / (r0 - a - 2.25 * a)
+
+
+def layout_length(r0: float, a: float, steps: int = 200000) -> float:
+    """The length of rho = r0 + a cos(3 phi / 2) over two turns (m)."""
+    phi = np.linspace(0, 4 * math.pi, steps, endpoint=False)
+    rho = r0 + a * np.cos(1.5 * phi)
+    return float(np.sum(np.hypot(rho, -1.5 * a * np.sin(1.5 * phi))) * 4 * math.pi / steps)
+
+
+def compute_numbers(quick: bool) -> dict[str, Any]:
+    say("\n== numbers: the revision's arithmetic, from the study's own solves ==")
+    out: dict[str, Any] = {}
+    f, w = F915, 2 * math.pi * F915
+    beta = mathieu_beta(0.5)
+    fs = beta * f / 2
+    ws2 = (2 * math.pi * fs) ** 2
+    fb = FacingBoards(2.0)
+    v1 = pt.electrode_drive_at_q(1.0, 0.5, 1.0, 1.0, fb.depth_share, fb.gradient_share).volts
+    d40 = pt.ponderomotive_ev(40 / 1e-3, f)
+    out["mathieu"] = {"beta": beta, "first_order": 0.5 / math.sqrt(2), "fs_MHz": fs / 1e6, "V1": v1, "D0_40V": d40}
+    say(
+        f"  Mathieu beta at q 0.5: {beta:.4f} (first order {0.5 / math.sqrt(2):.4f}); f_s at 915 MHz {fs / 1e6:.1f} "
+        f"MHz; 1 eV at q 0.5 on facing boards: {v1:.2f} V; D0 at 40 V and h 0.5 mm: {d40:.3f} eV"
+    )
+    # the length bound
+    say("  length bound:")
+    for h in (0.5e-3, H915):
+        rule = 8 * math.pi * h
+        say(
+            f"    h {h / MM:.3f} mm: bend rule 8 pi h = {rule / MM:.2f} mm per unit W/D; with 0.77 to 0.38 of it held "
+            f"{rule / 0.77 / MM:.1f} to {rule / 0.38 / MM:.1f} mm; facing boards' static limit 4 pi h / 0.605 = "
+            f"{4 * math.pi * h / 0.605 / MM:.1f} mm"
+        )
+    first = 8 * math.pi * 0.5 * 16.6
+    out["first_run_length_mm"] = (first, first / 0.77, first / 0.38)
+    say(
+        f"    W/D 16.6 at h 0.5 mm: {first:.0f} mm by the rule, {first / 0.77:.0f} to {first / 0.38:.0f} mm by tracking"
+    )
+    # T915-S's held energy per eV of depth
+    knot = torus(RATIO915, L915, 4000)
+    rt, rg = knot.bend_radius, framing(knot, 0).inplane_radius
+    helix = {r: torus(r, L915, 3000, 1, 3).bend_radius for r in (0.2, 0.15)}
+    flat = L915 / (2 * math.pi)
+    held = {}
+    say(f"  T915-S at {L915 / MM:.1f} mm, held energy per eV of depth (static 0.605 R/h):")
+    for name, r in (("tightest bend as if in the plane", rt), ("in-plane radius, k = 0", rg)):
+        st = 0.605 * r / H915
+        held[name] = {"R_mm": r / MM, "static": st, "discounted": (0.61 * st, 0.95 * st), "rule": r / (2 * H915)}
+        say(
+            f"    {name} {r / MM:.2f} mm: static {st:.2f}; x0.61 {0.61 * st:.1f}, x0.95 {0.95 * st:.1f}; rule R/2h "
+            f"{r / (2 * H915):.2f}"
+        )
+    held["flat ring"] = {"R_mm": flat / MM, "static": 0.605 * flat / H915, "over": (flat / rg, flat / rt)}
+    say(
+        f"    flat ring of {L915 / MM:.1f} mm: radius {flat / MM:.2f} mm, static {0.605 * flat / H915:.1f}; "
+        f"{flat / rg:.2f} (in-plane) to {flat / rt:.2f} (tightest) times T915-S"
+    )
+    for r, bend in helix.items():
+        held[f"helix {r}"] = {"R_mm": bend / MM, "static": 0.605 * bend / H915, "over": (bend / rg, bend / rt)}
+        say(
+            f"    T(1, 3) at r/R {r}, tightest bend {bend / MM:.2f} mm: static {0.605 * bend / H915:.1f}; "
+            f"{bend / rg:.2f} (over the in-plane radius) to {bend / rt:.2f} (over the tightest bend) times T915-S"
+        )
+    out["held"] = held
+    # power, Q and heat on section B
+    line = line_results(quick)
+    b = line["section_B"]["915 MHz"]
+    cp, z0 = b["C_pF"] * 1e-12, b["z0"]
+    heat_area = HEAT_POINT[0] / (SIGMA_SB * ((300 + HEAT_POINT[1]) ** 4 - 300**4)) * (L915 / HEAT_POINT[2])
+    finishes = {}
+    say(
+        f"  power, Q and heat on section B at {L915 / MM:.1f} mm (n_eff {b['index']:.4f}, share {b['share']:.4f}, Z0 "
+        f"{z0:.2f} ohm, C' {b['C_pF']:.2f} pF/m, Q_d {b['Qd']:.0f} at tan delta {POLYIMIDE[1]}):"
+    )
+    for name, factor in (("bare copper", 1.0), ("ENIG, mild", ENIG[0]), ("ENIG, severe", ENIG[1])):
+        qc = b["Qc"] / factor
+        q = 1 / (1 / qc + 1 / b["Qd"])
+        shunt = z0 * q / (2 * math.pi)
+        power = v1**2 / (2 * shunt)
+        dissipated = math.pi * f * cp * v1**2 * L915 / q
+        dbm = tuple(10 * math.log10(power * c * 1e3) for c in COUPLING)
+        rise = (300**4 + power / (SIGMA_SB * heat_area)) ** 0.25 - 300
+        cap = feed_capacitor(shunt)
+        finishes[name] = {
+            "Qc": qc,
+            "Q": q,
+            "R": shunt,
+            "P": power,
+            "P_line": dissipated,
+            "dBm": dbm,
+            "rise_K": rise,
+            "feed_pF": cap * 1e12,
+            "linewidth_MHz": f / q / 1e6,
+        }
+        say(
+            f"    {name}: Q_c {qc:.0f}, Q {q:.0f}, R {shunt:.0f} ohm, 1 eV ({v1:.2f} V) takes {power:.3f} W (pi f C' "
+            "V^2 "
+            f"L / Q {dissipated:.3f} W), amplifier {dbm[0]:.1f} to {dbm[1]:.1f} dBm, radiation-only rise {rise:.0f} K; "
+            f"two feeds couple critically through {cap * 1e12:.3f} pF each in series ({2 * cap * 1e12:.2f} pF a "
+            f"balun arm); linewidth {f / q / 1e6:.2f} MHz"
+        )
+    bare, mild, severe = finishes["bare copper"], finishes["ENIG, mild"], finishes["ENIG, severe"]
+    amp: dict[str, Any] = {
+        "bare": half_db(sum(bare["dBm"]) / 2),
+        "enig": (half_db(mild["dBm"][0]), half_db(severe["dBm"][1])),
+    }
+    amp["gain_dB"] = (amp["bare"] - HACKRF_DBM[1], amp["enig"][1] - HACKRF_DBM[0])
+    out["finishes"] = finishes
+    out["amplifier"] = amp
+    say(
+        f"    to the half decibel: bare copper +{amp['bare']:.1f} dBm, ENIG +{amp['enig'][0]:.1f} to "
+        f"+{amp['enig'][1]:.1f} dBm; from the HackRF's {HACKRF_DBM[0]:.0f} to {HACKRF_DBM[1]:.0f} dBm an amplifier of "
+        f"{amp['gain_dB'][0]:.1f} to {amp['gain_dB'][1]:.1f} dB"
+    )
+    c = line["section_B"]["2450 MHz"]
+    length2 = 2 * pt.C0 / (c["index"] * 2450e6)
+    shunt2 = c["z0"] * c["Q"] / (2 * math.pi * 2)
+    power2 = v1**2 / (2 * shunt2)
+    area2 = heat_area * (length2 / L915) * (H2450 / H915)  # the strips' faces scale with their width 8h and length
+    rise2 = (300**4 + power2 / (SIGMA_SB * area2)) ** 0.25 - 300
+    lens2 = (300**4 + 1.7 / (SIGMA_SB * area2)) ** 0.25 - 300
+    out["band_2450"] = {"length_mm": length2 / MM, "R": shunt2, "P": power2, "rise_K": rise2, "rise_lens_K": lens2}
+    say(
+        f"    section B at 2450 MHz, m = 2 ({length2 / MM:.1f} mm, Q {c['Q']:.0f}, Z0 {c['z0']:.1f} ohm): R "
+        f"{shunt2:.0f} "
+        f"ohm, 1 eV takes {power2:.2f} W, a radiation-only rise of {rise2:.0f} K with the faces' area scaled by width "
+        f"and length ({lens2:.0f} K at the lens's 1.7 W)"
+    )
+    say(
+        f"    radiating eps A {heat_area * 1e4:.1f} cm^2 (the hardware lens's {HEAT_POINT[1]:.0f} K at "
+        f"{HEAT_POINT[0]} W "
+        f"on {HEAT_POINT[2] / MM:.0f} mm); quarter guided wave {L915 / 4 / MM:.1f} mm; fill time Q / (pi f) "
+        f"{bare['Q'] / (math.pi * f) * 1e9:.0f} ns"
+    )
+    # the lead design's other figures
+    lap = L915 / pt.v_of(1)
+    out["T915-S"] = {
+        "two_w_margin_mm": (rt - 2 * WIDTH915) / MM,
+        "inplane_half_widths": rg / (WIDTH915 / 2),
+        "split_mm": 0.3 * H915 / MM,
+        "free_space": L915 / (pt.C0 / f),
+        "pickups_mm": L915 / 6 / MM,
+        "lap_us": lap * 1e6,
+    }
+    t915 = out["T915-S"]
+    say(
+        f"  T915-S: its tightest bend {rt / MM:.2f} mm meets the 2W rule by {t915['two_w_margin_mm']:.2f} mm; in-plane "
+        f"radius {t915['inplane_half_widths']:.2f} half-widths; split 0.3h = {t915['split_mm']:.3f} mm; "
+        f"{t915['free_space']:.3f} of a free-space wavelength round; pickups a sixth of a guided wave apart "
+        f"{t915['pickups_mm']:.1f} mm; a 1 eV lap {lap * 1e6:.2f} us"
+    )
+    for pressure in (6.3e-5, 1e-6):
+        life = FREE_PATH * 1e-3 / pressure / pt.v_of(1)
+        rate = 3.4e4 / life
+        say(
+            f"  at {pressure:.1e} mbar a 1 eV electron lives {life * 1e6:.3g} us between collisions: 3.4e4 held takes "
+            f"{rate:.2g} captured a second, {rate * pt.E * 1e9:.2g} nA"
+        )
+    say(f"  3.4e4 electrons dumped: {3.4e4 * pt.E * 1e15:.2f} fC, {3.4e4 * pt.E / 1e-12 * 1e3:.2f} mV on 1 pF")
+    # joints, kicks and tunes
+    say("  joints, kicks and tunes at 915 MHz and q 0.5:")
+    tunes = {}
+    for energy in (1, 2, 4, 8):
+        v = pt.v_of(energy)
+        tunes[energy] = fs * L915 / v
+        say(
+            f"    {energy} eV: v {v:.3e} m/s, v/f {v / f / MM:.2f} mm, 3v/(f(1 - beta)) "
+            f"{3 * v / (f * (1 - beta)) / MM:.1f}"
+            f" mm, secular wavelength {v / fs / MM:.2f} mm, three of them {3 * v / fs / MM:.1f} mm, tune on "
+            f"{L915 / MM:.1f} mm {fs * L915 / v:.1f}"
+        )
+    out["tunes"] = tunes
+    for ratio in (2, 8):
+        x = 4.44 / 0.5 * math.sqrt(1 / ratio)
+        say(f"    W = {ratio} D: omega h / v = {x:.2f}; 1 % common mode at 50 V: {0.5 / math.cosh(x) * 1e3:.1f} meV")
+    align = 0.2 * math.sqrt(0.069 / 0.55)
+    out["alignment_h"] = align
+    say(
+        "    0.2h both ways kicks 69 meV at 2 eV and 0.55 eV at 8 eV (K 0.0014 and 0.011): 7 % of the well at 8 eV "
+        "takes "
+        f"{align:.3f} h = {align * H915 / 1e-6:.0f} um; a 6 mm straight meets 3v/(f(1 - beta)) up to "
+        f"{(6e-3 * f * (1 - beta) / 3) ** 2 / (2 * QM):.2f} eV"
+    )
+    # pressure
+    say(f"  pressure (mean free path {FREE_PATH} m at 1e-3 mbar, an estimate):")
+    for name, path in (
+        (f"20 laps of {L915 / MM:.0f} mm", 20 * L915),
+        ("10 laps", 10 * L915),
+        ("1 to 8 eV, 117 laps", 117 * L915),
+        ("one lap", L915),
+    ):
+        p = FREE_PATH * 1e-3 / path
+        say(f"    {name}: {path:.2f} m; a mean free path that long at {p:.1e} mbar, ten times it at {p / 10:.1e} mbar")
+    for p in (1e-2, 1e-3):
+        say(
+            f"    at {p:.0e} mbar the mean free path is {FREE_PATH * 1e-3 / p:.2f} m, "
+            f"{FREE_PATH * 1e-3 / p / L915:.2f} laps"
+        )
+    # T915-S6
+    f1, f8 = pt.v_of(1) / L915, pt.v_of(8) / L915
+    t = L915 / 0.06 * math.sqrt(pt.ME / (2 * pt.E)) * 2 * (math.sqrt(8) - 1)
+    out["T915-S6"] = {"chirp_MHz": (3 * f1 / 1e6, 3 * f8 / 1e6), "time_us": t * 1e6, "segment_mm": L915 / 6 / MM}
+    say(
+        f"  T915-S6: f_rev {f1 / 1e6:.3f} to {f8 / 1e6:.3f} MHz, chirp 3 f_rev {3 * f1 / 1e6:.2f} to "
+        f"{3 * f8 / 1e6:.2f} "
+        f"MHz; 60 meV a lap takes {math.ceil(7 / 0.06)} laps, {t * 1e6:.1f} us, {math.ceil(t / 10e-6)} slots of 10 us; "
+        f"segments {L915 / 6 / MM:.1f} mm; two tones: the sideband {3 * f1 / 1e6:.2f} to {3 * f8 / 1e6:.2f} MHz above "
+        f"the carrier, tuned {3 * f8 / 2 / 1e6:.2f} MHz above 915 MHz"
+    )
+    # Earth's field
+    field = 50e-6
+    for energy in (1, 8):
+        v = pt.v_of(energy)
+        gyro = v / (QM * field)
+        say(
+            f"  Earth's 50 uT at {energy} eV: gyroradius {gyro / MM:.0f} mm; v x B over 2W/R on the {rt / MM:.2f} mm "
+            f"bend {rt / gyro:.3f}; equilibrium moved {QM * v * field / ws2 / 1e-6:.1f} um, the bend's own "
+            f"{v * v / (rt * ws2) / 1e-6:.1f} um; 2R/r_g {2 * rt / gyro:.2f}"
+        )
+    # contact potentials
+    for dv in (0.01, 0.1):
+        e = dv / (2 * H915)
+        say(
+            f"  contact potential {dv} V across {2 * H915 / MM:.2f} mm: {e:.1f} V/m, a 1 eV electron moved "
+            f"{QM * e / ws2 / 1e-6:.1f} um"
+        )
+    out["steering_mV_per_um"] = (ws2 / QM * 2 * H915 * 1e-6 * 1e3, math.pi / (2 * H915) * 50 * 1e-6 * 1e3)
+    say(
+        f"  steering: DC {out['steering_mV_per_um'][0]:.1f} mV per um, RF at 50 V {out['steering_mV_per_um'][1]:.0f} "
+        "mV "
+        "per um"
+    )
+    # space charge, images and beam loading
+    nmax = 2 * pt.EPS0 * ws2 / (QM * pt.E)
+    count_max = nmax * math.pi * (50e-6) ** 2 * L915
+    say(
+        f"  space charge at q 0.5, 1 eV, a 50 um beam: limit {nmax:.2e} per m^3 = {count_max:.2e} electrons on "
+        f"{L915 / MM:.0f} mm (with first-order f_s {nmax * (0.5 / math.sqrt(2) / beta) ** 2:.2e} per m^3)"
+    )
+    stored = bare["P"] * bare["Q"] / w
+    loading = {}
+    for count in (3.4e4, 1.35e5, count_max):
+        lam = count * pt.E / L915
+        gc = lam * math.pi / (16 * pt.EPS0 * H915**2)
+        dnu = QM * gc / (2 * ws2) * fs * L915 / pt.v_of(1)
+        current = count * pt.E * pt.v_of(1) / L915
+        pickup = 10 * math.log10((0.3 * 2 * current) ** 2 * 50 / 2 * 1e3)
+        micro = count * pt.E * w * 0.25 * math.pi / (4 * H915**2) * (50e-6) ** 2
+        detune = v1 * micro / 2 / (2 * w * stored) * f
+        loading[count] = {"current_nA": current * 1e9, "tune": (dnu, dnu / 3), "dBm": pickup, "detune_Hz": detune}
+        say(
+            f"    {count:.2e} electrons: {current * 1e9:.1f} nA; image tune shift {dnu:.4f} coherent, {dnu / 3:.4f} "
+            f"incoherent; bunched, {pickup:.0f} dBm on a 50 ohm pickup coupling 30 %; micromotion current "
+            f"{micro * 1e9:.1f} nA detuning the ring {detune:.0f} Hz, {detune / (f / bare['Q']):.1e} of its linewidth"
+        )
+    out["loading"] = loading
+    # one board's rails
+    rails = {}
+    for h in (0.5e-3, 0.575e-3):
+        span = (1 + math.sqrt(5)) * h
+        gap = span - math.sqrt(span * span - 4 * h * h)
+        pair = pt.RailPair(gap, span - gap)
+        volts = 0.5 * w * w / (2 * QM * pair.gradient(1.0))
+        depth = pair.depth_share * volts * 0.5 / (8 * pair.gradient_share)
+        rails[h] = {"strip_mm": gap / MM, "rail_mm": (span - gap) / MM, "volts": volts, "depth": depth}
+        say(
+            f"  one board, the null {pair.null_height / MM:.3f} mm up: centre strip {gap / MM:.2f} mm, rails "
+            f"{(span - gap) / MM:.2f} mm; q 0.5 at {volts:.1f} V, a {depth:.4f} eV well"
+        )
+    best = rails[0.575e-3]
+    pair = pt.RailPair(best["strip_mm"] * MM, best["rail_mm"] * MM)
+    one = pt.electrode_drive_at_q(1.0, 0.5, 1.0, 1.0, pair.depth_share, pair.gradient_share)
+    up = one.f / f
+    say(
+        f"  one board at 1 eV and q 0.5: {one.volts:.0f} V, the null {up / MM:.2f} mm up at 915 MHz; at 0.5 mm up the "
+        f"same 1 eV needs q {0.5 * up / 0.5e-3:.2f}"
+    )
+    for radius in (31.8e-3, rt, flat):
+        say(
+            f"    rails' {best['depth']:.4f} eV well round {radius / MM:.1f} mm: "
+            f"{best['depth'] * radius / (2 * 0.575e-3):.2f} eV by the rule"
+        )
+    rods = pt.electrode_drive_at_q(1.0, 0.5, 1.0, 1.0)
+    r0 = rods.f / f
+    say(
+        f"  a rolled four-strip tube: 1 eV at q 0.5 takes {rods.volts:.0f} V with r0 {r0 / MM:.2f} mm at 915 MHz; at "
+        "r0 "
+        f"1 mm and q 0.5, {(1e-3 / r0) ** 2:.2f} eV at {8 * (1e-3 / r0) ** 2 / 0.5:.0f} V; bent to {rt / MM:.2f} mm "
+        "its "
+        f"wall strains {r0 / rt:.3f} at r0 and {1e-3 / rt:.3f} at 1 mm"
+    )
+    out["rails"] = rails
+    # S2-C3's ramps and levels
+    outer, inner = lobe_bends(33.2e-3, 4e-3)
+    say(
+        f"  S2-C3 at 40 V (D0 {d40:.2f} eV, floor 0.23 G0 flush, clearance 0.87 h), its lobes bent {outer / MM:.1f} "
+        f"and {inner / MM:.1f} mm:"
+    )
+    ramps = {}
+    for name, radius in (("outer lobes", outer), ("inner lobes", inner), ("climb alone", 0.242)):
+        ramp_ev = 0.23**2 * 0.87 * radius / 1e-3 * d40
+        ramps[name] = (ramp_ev, 4 * ramp_ev)
+        say(
+            f"    ramps on the {name} ({radius / MM:.1f} mm): {ramp_ev:.1f} eV; with the floor doubled "
+            f"{4 * ramp_ev:.1f} eV"
+        )
+    for level in (0.10, 0.14):
+        say(
+            f"    a level of {level} D0 = {level * d40:.2f} eV: on the outer lobes by the rule "
+            f"{level * d40 * outer / 1e-3:.1f} eV, "
+            f"tracked 0.43 to 0.72 of it {0.43 * level * d40 * outer / 1e-3:.1f} to "
+            f"{0.72 * level * d40 * outer / 1e-3:.1f}"
+            f" eV; round R0 = 33.2 mm by the rule {level * d40 * 33.2:.1f} eV"
+        )
+    out["ramps"] = ramps
+    # draws for a criterion
+    draws = {}
+    for failures in (0, 1, 2):
+        n = failures + 1
+        while sum(math.comb(n, j) * 0.05**j * 0.95 ** (n - j) for j in range(failures + 1)) > 0.05:
+            n += 1
+        draws[failures] = n
+    out["draws"] = draws
+    say(
+        "  95 % at 95 % confidence: "
+        + ", ".join(f"{n} draws with at most {k} failure{'s' if k != 1 else ''}" for k, n in draws.items())
+    )
+    # S2-C3's resonance
+    at33 = layout_length(33e-3, 4e-3)
+    out["s2c3"] = {}
+    for row in line["slot"]:
+        if row["strip"] != 0.5 or row["planes"] != 1.0:
+            continue
+        for m in (1, 2):
+            length = m * row["lam_g_mm"] * MM
+            r0 = (length - at33 + 4 * math.pi * 33e-3) / (4 * math.pi)
+            lobe = lobe_bends(r0, 4e-3)[0]
+            shunt = row["R1"] / m
+            out["s2c3"][f"{row['board']}, m = {m}"] = {
+                "lobe_mm": lobe / MM,
+                "length_mm": length / MM,
+                "R0_mm": r0 / MM,
+                "R": shunt,
+                "P40": 1600 / (2 * shunt),
+            }
+            say(
+                f"  S2-C3 on {row['board']}, 0.5 mm strips, m = {m}: {length / MM:.0f} mm (R0 {r0 / MM:.1f} mm, outer "
+                f"lobes bent {lobe / MM:.1f} mm, with "
+                f"a = 4 mm; {at33 / MM:.1f} mm at R0 = 33 mm), R {shunt:.0f} ohm, 40 V takes {1600 / (2 * shunt):.2f} W"
+            )
+    # L26
+    say("  L26 at 915 MHz on facing rigid boards (24 steps, 14 corners):")
+    for straight in (6e-3, 10.4e-3, 29.4e-3):
+        for pitch in (26e-3, 32e-3, 40e-3):
+            radius = (pitch - straight) / 2
+            if radius > 0:
+                say(
+                    f"    straights {straight / MM:.1f} mm, pitch {pitch / MM:.0f} mm: corners {radius / MM:.1f} mm, "
+                    f"length {(24 * pitch - 14 * (2 - math.pi / 2) * radius) / MM:.0f} mm"
+                )
+    # the bias network of T915-S6
+    henry, quality = BIAS_INDUCTOR
+    star = quality * 2 * math.pi * f * henry
+    bias = {}
+    for name, parallel in (("1 Mohm resistors", 1e6), ("100 kohm resistors", 1e5), ("the star inductors", star)):
+        loss = 24 * 25**2 / (2 * parallel)
+        bias[name] = {"W": loss, "share": loss / bare["P"]}
+        say(
+            f"  bias, {name} ({parallel / 1e3:.1f} kohm): {loss * 1e3:.1f} mW for the 24 strips, "
+            f"{loss / bare['P'] * 100:.0f} % of the ring's {bare['P']:.2f} W"
+        )
+    segment = cp * L915 / 6
+    say(
+        f"  a strip segment holds {segment * 1e12:.1f} pF (C' L / 6); with 1 Mohm its bias corner is "
+        f"{1 / (2 * math.pi * 1e6 * segment) / 1e3:.0f} kHz; the star's inductors {henry * 1e9:.0f} nH are "
+        f"{2 * math.pi * 5.6e6 * henry:.1f} to {2 * math.pi * 15.84e6 * henry:.1f} ohm across the chirp"
+    )
+    out["bias"] = bias
+    return out
+
+
+def no_figure(res: dict[str, Any], out: Path) -> None:
+    """A section whose numbers the document quotes in its text, with no figure of its own."""
+
+
 # ---- plotting -----------------------------------------------------------------------------------------------------
 def _pyplot() -> Any:
     """matplotlib's pyplot on the Agg backend, set to the house style: one sans face, recessive grid and axes, the
@@ -3904,9 +5469,13 @@ SECTIONS: dict[str, tuple[Callable[[bool], dict[str, Any]], Callable[[dict[str, 
     "joints": (compute_joints, figure_joints),
     "drive": (compute_drive, figure_drive),
     "laminate": (compute_laminate, figure_laminate),
+    "line": (compute_line, figure_line),
+    "ring": (compute_ring, figure_ring),
     "held": (compute_held, figure_held),
     "stopbands": (compute_stopbands, figure_stopbands),
     "acceleration": (compute_acceleration, figure_acceleration),
+    "beam": (compute_beam, no_figure),
+    "numbers": (compute_numbers, no_figure),
 }
 ORDER = tuple(SECTIONS)
 KEEP = 64  # results.json keeps arrays and lists of at most this many numbers; the figures hold the rest

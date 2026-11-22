@@ -1,10 +1,10 @@
-knotted guide study: full run of arrangements, knots, strips, ramp, joints, drive, laminate, held, stopbands, acceleration, 11 processes
+knotted guide study: full run of arrangements, knots, strips, ramp, joints, drive, laminate, line, ring, held, stopbands, acceleration, beam, numbers, 11 processes
 
 == arrangements: boards carrying a trefoil, at one scale ==
   S2-C3: 421.5 mm, tightest bend in the plane 29.4 mm (19.2 mm with the 16 mm ramps' climb), 3 crossings at 20.5 deg, six ramps between levels 1.813 mm apart
   sticks: corners turn 128.8 deg, consecutive corner planes meet at [20.1, 46.1] deg; rounded to 8.0 mm the path is 291 mm on a 384 mm hexagon, its shortest straight 24.5 mm; at that path the corners round to 13.8 mm before a straight falls under 10.4 mm (a 291 mm hexagon rounded to 8.0 mm keeps 10.5 mm straights and a 198 mm path)
   L26: 24 steps, 14 sticks, 8 planar runs, corners of 90 deg
-  T915-S: 318 mm, tightest bend 15.30 mm; k = 0 twist +0.481 deg/mm, in-plane radius >= 18.6 mm
+  T915-S: 318 mm, tightest bend 15.29 mm; k = 0 twist +0.482 deg/mm, in-plane radius >= 18.6 mm
   [arrangements: 0.1 s]
 
 == knots: layouts on two levels, energy against joints and bends, length against W/D ==
@@ -23,17 +23,21 @@ knotted guide study: full run of arrangements, knots, strips, ramp, joints, driv
   rounded sticks: 291 mm, tightest bend 8.0 mm, h 0.920 mm: rule R/2h = 4.3, L / (8 pi h W/D) = 2.89
   L26: 582 mm, tightest bend 7.9 mm, h 0.920 mm: rule R/2h = 4.3, L / (8 pi h W/D) = 5.86
   R1 channel ring: 210 mm, tightest bend 33.4 mm, h 0.500 mm: rule R/2h = 33.4, L / (8 pi h W/D) = 0.50
-  flat ring control: 318 mm, tightest bend 50.6 mm, h 0.915 mm: rule R/2h = 27.7, L / (8 pi h W/D) = 0.50
+  flat ring control: 318 mm, tightest bend 50.6 mm, h 0.915 mm: rule R/2h = 27.6, L / (8 pi h W/D) = 0.50
   L > 8 pi h W/D: 12.6 mm per unit of W/D at h = 0.5 mm; facing boards' static limit 19.0 mm per unit at h = 0.915 mm
   [knots: 0.8 s]
 
 == strips: curvature, torsion, framings and plates ==
   r/R = 0.30, 276.5 mm (the first run): tightest bend 16.58 mm, total curvature 4.44 pi, holonomy -67.0 deg, writhe -3.186; a straight strip folds 0.00015 mm from the curve
-  r/R = 0.45, 318 mm (T915-S): tightest bend 15.30 mm, total curvature 5.37 pi, holonomy -153.0 deg, writhe -3.425; a straight strip folds 0.46 mm from the curve
-  k = +0: twist +0.481 deg/mm, in-plane radius >= 18.6 mm, kappa_n changes sign 6 times a lap, 0.80 of the curvature maxima toward the boards; plates 329.7 and 306.3 mm, boxes 21 x 315 and 21 x 292 mm; edges strain +3.1e-04, centre -1.6e-04
-  k = -1: twist -0.085 deg/mm, in-plane radius >= 15.6 mm, kappa_n changes sign 8 times a lap, 0.50 of the curvature maxima toward the boards; plates 326.6 and 312.8 mm, boxes 72 x 187 and 70 x 176 mm; edges strain +9.8e-06, centre -4.9e-06
-  k = -3: twist -1.217 deg/mm, in-plane radius >= 29.0 mm, kappa_n changes sign 4 times a lap, 0.89 of the curvature maxima toward the boards; plates 319.7 and 319.7 mm, boxes 44 x 287 and 44 x 287 mm; edges strain +2.0e-03, centre -1.0e-03
-  [strips: 1.4 s]
+  r/R = 0.45, 318 mm (T915-S): tightest bend 15.29 mm, total curvature 5.37 pi, holonomy -153.0 deg, writhe -3.425; a straight strip folds 0.46 mm from the curve
+  k = +0: twist +0.482 deg/mm, in-plane radius >= 18.6 mm, kappa_n changes sign 6 times a lap, 0.80 of the curvature maxima toward the boards; plates 329.5 and 306.1 mm, boxes 21 x 315 and 21 x 292 mm; edges strain +3.2e-04, centre -1.6e-04
+    oint kappa_n ds = -12.80 rad, 2h times it -23.4 mm; the centre's compression 4.6 times the wrinkling scale (t/W)^2 = 3.45e-05 of 43 um flex 7.32 mm wide; torsion cost (tau h)^2 = 5.9e-05
+  k = -1: twist -0.085 deg/mm, in-plane radius >= 15.6 mm, kappa_n changes sign 8 times a lap, 0.50 of the curvature maxima toward the boards; plates 326.4 and 312.6 mm, boxes 72 x 186 and 70 x 176 mm; edges strain +9.8e-06, centre -4.9e-06
+    oint kappa_n ds = -7.53 rad, 2h times it -13.8 mm; the centre's compression 0.1 times the wrinkling scale (t/W)^2 = 3.45e-05 of 43 um flex 7.32 mm wide; torsion cost (tau h)^2 = 1.8e-06; one band of 2L 639 mm, laid flat in a 76 x 315 mm box, turning 0 deg, its centre line 0.1 mm from itself at the closest
+  k = -3: twist -1.218 deg/mm, in-plane radius >= 29.0 mm, kappa_n changes sign 4 times a lap, 0.89 of the curvature maxima toward the boards; plates 319.5 and 319.5 mm, boxes 44 x 287 and 44 x 287 mm; edges strain +2.0e-03, centre -1.0e-03
+    oint kappa_n ds = -0.00 rad, 2h times it -0.0 mm; the centre's compression 29.2 times the wrinkling scale (t/W)^2 = 3.45e-05 of 43 um flex 7.32 mm wide; torsion cost (tau h)^2 = 3.8e-04; one band of 2L 639 mm, laid flat in a 44 x 571 mm box, turning -0 deg, its centre line 20.5 mm from itself at the closest
+  0.11 mm flex bent to the tightest bend 15.29 mm strains 0.36 %
+  [strips: 1.6 s]
 
 == ramp: two slotted boards' four layers, the cut-out that must fail, the slot guide's section ==
   bases of four layers (0.8 mm boards 1.0 mm apart, 1.0 mm slot) on a 0.05 mm grid [12 s]
@@ -61,46 +65,115 @@ knotted guide study: full run of arrangements, knots, strips, ramp, joints, driv
   [joints: 11.9 s]
 
 == drive: the knot as a ring resonator, feeds compiled to a travelling wave ==
-  915 MHz, m = 1 (290 mm, R = Z0 Q/(2 pi m) = 2242 ohm), medians of 20 draws: K = 1 0.985, K = 2 0.041, K = 3 0.027, K = 4 0.016, K = 6 0.011, K = 8 0.009, K = 12 0.007; feeds at the joints 0.006; untuned hybrid 0.316
-  the same, feed susceptance compensated (290 mm, R = Z0 Q/(2 pi m) = 2242 ohm), medians of 20 draws: K = 2 0.009, K = 6 0.006; feeds at the joints 0.006; untuned hybrid 0.286
-  2450 MHz, m = 2 (204 mm, R = Z0 Q/(2 pi m) = 672 ohm), medians of 20 draws: K = 1 0.971, K = 2 0.100, K = 3 0.078, K = 4 0.062, K = 6 0.054, K = 8 0.041, K = 12 0.033; feeds at the joints 0.012; untuned hybrid 0.350
-  must fail: m = 3, three joints, 2450 MHz (306 mm, R = Z0 Q/(2 pi m) = 448 ohm), medians of 20 draws: K = 1 0.538, K = 2 0.689, K = 3 0.637, K = 4 0.716, K = 6 0.763; feeds at the joints 0.969; untuned hybrid 0.663
+  915 MHz, m = 1 (290 mm, n 1.13, Q 251, Z0 73.5 ohm, R = Z0 Q/(2 pi m) = 2934 ohm), medians of 20 draws: K = 1 0.986, K = 2 0.037, K = 3 0.024, K = 4 0.015, K = 6 0.010, K = 8 0.009, K = 12 0.007; feeds at the joints 0.006; untuned hybrid 0.398; 90th percentiles K = 1 0.993, K = 2 0.364, K = 3 0.235, K = 4 0.018, K = 6 0.400, K = 8 0.430, K = 12 0.009
+  the same, feed susceptance compensated (290 mm, n 1.13, Q 251, Z0 73.5 ohm, R = Z0 Q/(2 pi m) = 2934 ohm), medians of 20 draws: K = 2 0.009, K = 6 0.007; feeds at the joints 0.006; untuned hybrid 0.375; 90th percentiles K = 2 0.311, K = 6 0.064
+  2450 MHz, m = 2 (204 mm, n 1.2, Q 128, Z0 66.0 ohm, R = Z0 Q/(2 pi m) = 672 ohm), medians of 20 draws: K = 1 0.971, K = 2 0.100, K = 3 0.078, K = 4 0.062, K = 6 0.054, K = 8 0.041, K = 12 0.033; feeds at the joints 0.012; untuned hybrid 0.350; 90th percentiles K = 1 0.986, K = 2 0.110, K = 3 0.105, K = 4 0.437, K = 6 0.071, K = 8 0.047, K = 12 0.037
+  must fail: m = 3, three joints, 2450 MHz (306 mm, n 1.2, Q 128, Z0 66.0 ohm, R = Z0 Q/(2 pi m) = 448 ohm), medians of 20 draws: K = 1 0.538, K = 2 0.689, K = 3 0.637, K = 4 0.716, K = 6 0.763; feeds at the joints 0.969; untuned hybrid 0.663; 90th percentiles K = 1 0.852, K = 2 0.811, K = 3 0.680, K = 4 0.760, K = 6 0.799
   [23 s]
-  K = 6, 915 MHz, m = 1: singular values [2782.9, 2782.9, 28.1, 9.6, 9.6, 5.1] V/A at 873.0 MHz; sqrt(K) R/2 = 2746
-  K = 6, the same, feed susceptance compensated: singular values [2775.3, 2775.3, 29.1, 9.9, 9.9, 5.2] V/A at 911.9 MHz; sqrt(K) R/2 = 2746
-  one draw, one feed: ripple 0.980, efficiency 0.95
-  one draw, untuned hybrid: ripple 0.570, efficiency 0.69
-  one draw, two compiled feeds: ripple 0.046, efficiency 0.70
-  [drive: 23.3 s]
+  K = 6, 915 MHz, m = 1: singular values [3642.5, 3642.4, 28.4, 9.7, 9.7, 5.1] V/A at 877.5 MHz; sqrt(K) R/2 = 3594
+  K = 6, the same, feed susceptance compensated: singular values [3631.5, 3631.5, 29.3, 10.0, 10.0, 5.3] V/A at 911.9 MHz; sqrt(K) R/2 = 3594
+  one draw, one feed: ripple 0.983, efficiency 0.83
+  one draw, untuned hybrid: ripple 0.649, efficiency 0.64
+  one draw, two compiled feeds: ripple 0.557, efficiency 0.82
+  [drive: 63.7 s]
 
 == laminate: Q against the split and the laminate, the power a 1 eV well takes, multipactor ==
-  Q against g/h on strips 8h wide [1 s]:
-    915 MHz, copper alone: g/h 0.1 Q 334, g/h 0.2 Q 447, g/h 0.3 Q 512, g/h 0.45 Q 584, g/h 0.6 Q 619, g/h 0.8 Q 693, g/h 1 Q 701, g/h 1.25 Q 710, g/h 1.5 Q 750
-    915 MHz, polyimide 25 µm: g/h 0.1 Q 234, g/h 0.2 Q 337, g/h 0.3 Q 394, g/h 0.45 Q 462, g/h 0.6 Q 486, g/h 0.8 Q 584, g/h 1 Q 581, g/h 1.25 Q 579, g/h 1.5 Q 640
-    915 MHz, FR-4 0.8 mm: g/h 0.1 Q 67, g/h 0.2 Q 74, g/h 0.3 Q 78, g/h 0.45 Q 83, g/h 0.6 Q 87, g/h 0.8 Q 92, g/h 1 Q 95, g/h 1.25 Q 99, g/h 1.5 Q 103
-    2450 MHz, copper alone: g/h 0.1 Q 291, g/h 0.2 Q 378, g/h 0.3 Q 398, g/h 0.45 Q 426, g/h 0.6 Q 476, g/h 0.8 Q 484, g/h 1 Q 513, g/h 1.25 Q 510, g/h 1.5 Q 541
-    2450 MHz, polyimide 25 µm: g/h 0.1 Q 178, g/h 0.2 Q 264, g/h 0.3 Q 285, g/h 0.45 Q 307, g/h 0.6 Q 367, g/h 0.8 Q 372, g/h 1 Q 407, g/h 1.25 Q 401, g/h 1.5 Q 442
-    2450 MHz, FR-4 0.8 mm: g/h 0.1 Q 59, g/h 0.2 Q 64, g/h 0.3 Q 66, g/h 0.45 Q 68, g/h 0.6 Q 70, g/h 0.8 Q 72, g/h 1 Q 74, g/h 1.25 Q 75, g/h 1.5 Q 77
-  section B at 915 MHz (8h wide, split 0.3h, 25 um polyimide): n_eff 1.0335, polyimide share 0.078, Z0 42.1 ohm, Q_c 449 (bare copper), Q 394; m = 1 takes 317 mm
-  1 eV at q = 0.5 takes 50.3 V; on section B: 0.915 GHz m = 1: 0.48 W, 2.45 GHz m = 2: 1.39 W, 5.8 GHz m = 5: 5.21 W
-  the bend holds, by the discounted static limit: m = 1: 6.0 to 9.3 eV per eV, m = 2: 11.9 to 18.6 eV per eV, m = 3: 17.9 to 27.9 eV per eV, m = 4: 23.9 to 37.2 eV per eV, m = 5: 29.8 to 46.5 eV per eV
+  Q against g/h on strips 8h wide, Wheeler's rule on the copper's thickness (18 um on flex, 35 um on FR-4) [51 s]:
+    915 MHz, copper alone: g/h 0.1 Q 107, g/h 0.2 Q 177, g/h 0.3 Q 229, g/h 0.45 Q 282, g/h 0.6 Q 322, g/h 0.8 Q 358, g/h 1 Q 383, g/h 1.25 Q 403, g/h 1.5 Q 415
+    915 MHz, polyimide 25 µm: g/h 0.1 Q 101, g/h 0.2 Q 166, g/h 0.3 Q 214, g/h 0.45 Q 265, g/h 0.6 Q 302, g/h 0.8 Q 337, g/h 1 Q 361, g/h 1.25 Q 381, g/h 1.5 Q 393
+    915 MHz, FR-4 0.8 mm: g/h 0.1 Q 48, g/h 0.2 Q 60, g/h 0.3 Q 66, g/h 0.45 Q 73, g/h 0.6 Q 77, g/h 0.8 Q 82, g/h 1 Q 85, g/h 1.25 Q 89, g/h 1.5 Q 92
+    2450 MHz, copper alone: g/h 0.1 Q 64, g/h 0.2 Q 111, g/h 0.3 Q 146, g/h 0.45 Q 186, g/h 0.6 Q 212, g/h 0.8 Q 237, g/h 1 Q 255, g/h 1.25 Q 268, g/h 1.5 Q 277
+    2450 MHz, polyimide 25 µm: g/h 0.1 Q 60, g/h 0.2 Q 103, g/h 0.3 Q 134, g/h 0.45 Q 170, g/h 0.6 Q 194, g/h 0.8 Q 217, g/h 1 Q 234, g/h 1.25 Q 247, g/h 1.5 Q 256
+    2450 MHz, FR-4 0.8 mm: g/h 0.1 Q 35, g/h 0.2 Q 46, g/h 0.3 Q 52, g/h 0.45 Q 57, g/h 0.6 Q 60, g/h 0.8 Q 62, g/h 1 Q 64, g/h 1.25 Q 66, g/h 1.5 Q 67
+  section B at 915 MHz on the sweep (h = f h / f = 0.917 mm, 8h wide, split 0.3h, 25 um polyimide, 18 um copper): n_eff 1.0310, polyimide share 0.0735, Z0 41.66 ohm, Q_c 229 (bare copper), Q 214
+  1 eV at q = 0.5 takes 50.3 V on the gapless boards; on section B: 0.915 GHz m = 1: Q 214, 0.89 W, 2.45 GHz m = 2: Q 134, 3.02 W, 5.8 GHz m = 5: Q 88, 12.83 W
+  section B on rigid FR-4 0.8 mm at 2450 MHz, m = 2 (35 um copper): share 0.625, Q_c 147, Q_d 80, Q 52, Z0 28.3 ohm, R 117 ohm, 1 eV takes 10.8 W
+  the split as a lever, at the same well (1 eV at q = 0.5, 915 MHz), the well solved at each split:
+    g/h 0.1 (0.092 mm at h 0.918 mm): gradient 0.784 V/h^2, depth share 0.2484, 50.5 V; Q_c 107, Q 101, Z0 34.0 ohm, R 547 ohm; 1 eV takes 2.331 W, 0.43 eV per W
+    g/h 0.2 (0.182 mm at h 0.911 mm): gradient 0.778 V/h^2, depth share 0.2484, 50.1 V; Q_c 175, Q 165, Z0 38.7 ohm, R 1013 ohm; 1 eV takes 1.239 W, 0.81 eV per W
+    g/h 0.3 (0.270 mm at h 0.899 mm): gradient 0.768 V/h^2, depth share 0.2484, 49.5 V; Q_c 224, Q 210, Z0 41.6 ohm, R 1392 ohm; 1 eV takes 0.878 W, 1.14 eV per W
+    g/h 0.45 (0.393 mm at h 0.873 mm): gradient 0.745 V/h^2, depth share 0.2483, 48.0 V; Q_c 270, Q 253, Z0 44.8 ohm, R 1805 ohm; 1 eV takes 0.639 W, 1.57 eV per W
+    g/h 0.6 (0.503 mm at h 0.838 mm): gradient 0.715 V/h^2, depth share 0.2483, 46.1 V; Q_c 297, Q 279, Z0 47.2 ohm, R 2095 ohm; 1 eV takes 0.508 W, 1.97 eV per W
+    g/h 0.8 (0.625 mm at h 0.781 mm): gradient 0.668 V/h^2, depth share 0.2481, 43.0 V; Q_c 309, Q 291, Z0 49.9 ohm, R 2311 ohm; 1 eV takes 0.401 W, 2.50 eV per W
+    g/h 1 (0.718 mm at h 0.718 mm): gradient 0.614 V/h^2, depth share 0.2480, 39.6 V; Q_c 307, Q 290, Z0 52.1 ohm, R 2406 ohm; 1 eV takes 0.326 W, 3.07 eV per W
+    g/h 1.25 (0.794 mm at h 0.635 mm): gradient 0.545 V/h^2, depth share 0.2477, 35.2 V; Q_c 289, Q 274, Z0 54.7 ohm, R 2384 ohm; 1 eV takes 0.260 W, 3.85 eV per W
+    g/h 1.5 (0.980 mm at h 0.653 mm): gradient 0.477 V/h^2, depth share 0.1894, 40.3 V; Q_c 304, Q 289, Z0 57.1 ohm, R 2621 ohm; 1 eV takes 0.310 W, 3.22 eV per W
+  the bend holds, by the discounted static limit: m = 1: 6.0 to 9.4 eV per eV, m = 2: 12.0 to 18.7 eV per eV, m = 3: 18.0 to 28.1 eV per eV, m = 4: 24.1 to 37.5 eV per eV, m = 5: 30.1 to 46.8 eV per eV
   MPC-2: 1 eV at q = 0.5 is f d = 1.678 GHz mm and 50.3 V, 5.2 dB below ECSS's copper boundary (91.7 V)
   one-dimensional two-surface model on ECSS's copper boundary (log10 growth over the run): 0.56: +1.53, 0.92: -3.47, 1.43: -3.45, 1.88: -2.95, 2.34: -2.90, 2.92: -0.40
     q = 0.3: 0.5 eV (1.98 GHz mm, 42 V) -4.68, 1 eV (2.80 GHz mm, 84 V) -10.00, 1.5 eV (3.43 GHz mm, 126 V) -10.00, 2 eV (3.96 GHz mm, 168 V) -10.00, 3 eV (4.85 GHz mm, 251 V) -2.13, 4 eV (5.59 GHz mm, 335 V) -10.00, 5 eV (6.25 GHz mm, 419 V) -10.00
     q = 0.5: 0.5 eV (1.19 GHz mm, 25 V) -4.51, 1 eV (1.68 GHz mm, 50 V) -4.08, 1.5 eV (2.06 GHz mm, 75 V) -3.32, 2 eV (2.37 GHz mm, 101 V) -2.10, 3 eV (2.91 GHz mm, 151 V) -0.26, 4 eV (3.36 GHz mm, 201 V) +1.04, 5 eV (3.75 GHz mm, 251 V) +1.44
     q = 0.7: 0.5 eV (0.85 GHz mm, 18 V) -4.85, 1 eV (1.20 GHz mm, 36 V) -4.58, 1.5 eV (1.47 GHz mm, 54 V) -4.56, 2 eV (1.70 GHz mm, 72 V) -4.32, 3 eV (2.08 GHz mm, 108 V) -3.32, 4 eV (2.40 GHz mm, 144 V) -2.20, 5 eV (2.68 GHz mm, 180 V) -0.69
   [multipactor 1 s]
-  [laminate: 2.0 s]
+  [laminate: 81.2 s]
+
+== line: section B and the slot guide as transmission lines, converged ==
+  [0 s]
+  section B at 915 MHz on sectionB.py's uniform grid, cell 22.9 um (copper without thickness): the 25 um polyimide is 22.9 um on it; C' 82.50 pF/m, n_eff 1.0312, share 0.0730, Z0 41.7 ohm, Q_c by the charge rule 462
+  section B at 915 MHz on sectionB.py's uniform grid, cell 11.4 um (copper without thickness): the 25 um polyimide is 22.9 um on it; C' 82.05 pF/m, n_eff 1.0310, share 0.0724, Z0 41.9 ohm, Q_c by the charge rule 409
+  section B at 2450 MHz on sectionB.py's uniform grid, cell 8.6 um (copper without thickness): the 25 um polyimide is 25.7 um on it; C' 89.30 pF/m, n_eff 1.0732, share 0.1676, Z0 40.1 ohm, Q_c by the charge rule 283
+  section B at 2450 MHz on sectionB.py's uniform grid, cell 4.3 um (copper without thickness): the 25 um polyimide is 25.7 um on it; C' 88.70 pF/m, n_eff 1.0723, share 0.1655, Z0 40.3 ohm, Q_c by the charge rule 250
+  section B at 915 MHz with the copper's 18 um and the polyimide's 25 um resolved (coarse grid, 45198 nodes): C' 82.62 pF/m, n_eff 1.0312, share 0.0739, Z0 41.63 ohm, Q_c 226.0 by Wheeler's rule, Q_d 3385, Q 211.9
+  section B at 915 MHz with the copper's 18 um and the polyimide's 25 um resolved (fine grid, 106920 nodes): C' 82.57 pF/m, n_eff 1.0311, share 0.0737, Z0 41.65 ohm, Q_c 228.2 by Wheeler's rule, Q_d 3394, Q 213.8
+  section B at 2450 MHz with the copper's 18 um and the polyimide's 25 um resolved (coarse grid, 32032 nodes): C' 91.09 pF/m, n_eff 1.0659, share 0.1533, Z0 39.03 ohm, Q_c 145.3 by Wheeler's rule, Q_d 1631, Q 133.4
+  section B at 2450 MHz with the copper's 18 um and the polyimide's 25 um resolved (fine grid, 85505 nodes): C' 90.94 pF/m, n_eff 1.0655, share 0.1524, Z0 39.08 ohm, Q_c 146.5 by Wheeler's rule, Q_d 1640, Q 134.5
+  section B at 915 MHz, converged: n_eff 1.031, polyimide 7.4 % of the field energy, Z0 41.7 ohm, C' 82.57 pF/m; bare copper Q_c 228, Q 214; ENIG (R_s 1.3 to 5 times) Q_c 176 to 46, Q 167 to 45; m = 1 takes 317.8 mm
+  section B at 2450 MHz, converged: n_eff 1.065, polyimide 15.2 %, Z0 39.1 ohm, Q_c 147, Q 134; m = 2 takes 230 mm
+  section A (strips 1.5h wide either side of a split h, h 0.92 mm) on FR-4 0.8 mm, solid, 35 um copper: n_eff 1.4039, share 0.593, Z0 58.8 ohm, Q_c 287, Q_d 84, Q 65; m = 1: R 611 ohm, 1 eV at the drawn well's 54.9 V takes 2.47 W; its solved well: gradient 0.605 V/h^2, depth share 0.2115, 1 eV at q 0.5 45.8 V with the null 0.77 mm from the copper at 915 MHz
+  section A (strips 1.5h wide either side of a split h, h 0.92 mm) on FR-4 0.8 mm, slotted, 35 um copper: n_eff 1.1881, share 0.240, Z0 69.5 ohm, Q_c 287, Q_d 208, Q 121; m = 1: R 1336 ohm, 1 eV at the drawn well's 54.9 V takes 1.13 W; its solved well: gradient 0.618 V/h^2, depth share 0.2126, 1 eV at q 0.5 46.5 V with the null 0.78 mm from the copper at 915 MHz
+  section A (strips 1.5h wide either side of a split h, h 0.92 mm) on RO4003C 0.51 mm, slotted, 35 um copper: n_eff 1.1238, share 0.187, Z0 73.5 ohm, Q_c 287, Q_d 1980, Q 251; m = 1: R 2934 ohm, 1 eV at the drawn well's 54.9 V takes 0.51 W; its solved well: gradient 0.616 V/h^2, depth share 0.2113, 1 eV at q 0.5 46.7 V with the null 0.78 mm from the copper at 915 MHz
+  section A (strips 1.5h wide either side of a split h, h 0.92 mm) on polyimide 50 µm in air, 18 um copper: n_eff 1.0488, share 0.109, Z0 80.0 ohm, Q_c 269, Q_d 2295, Q 241; m = 1: R 3066 ohm, 1 eV at the drawn well's 54.9 V takes 0.49 W; its solved well: gradient 0.613 V/h^2, depth share 0.2075, 1 eV at q 0.5 47.2 V with the null 0.78 mm from the copper at 915 MHz
+  on section A's slotted RO4003C, 1 eV at 54.9 V: m = 1 (the sticks) R 2934 ohm, 0.514 W; m = 2 (L26) R 1467 ohm, 1.027 W; m = 3 R 978 ohm, 1.54 W
+  gap sensitivity, the copper resolved: d ln C'/d ln h = -0.396 (h up 6 %, W and g fixed in millimetres)
+  the same on sectionB.py's grid (air): C' 77.58 -> 75.76 pF/m for h 0.9150 -> 0.9722 mm: d ln C'/d ln h = -0.391
+  slotline.py's calibration line (section B by the charge rule, box 4, cell 22.9 um): C' 81.06 pF/m, n_eff 1.0284, share 0.0665, Z0 42.3 ohm, Q_c 461, 2.02 times Wheeler's
+  Wheeler's rule on the graded grid, stripline (width, thickness, spacing 1.0, 0.035, 1.6 mm): Z0 84.2 ohm, alpha_c 0.04850 Np/m against the closed form's 0.04801: 1.010
+  Wheeler's rule on the graded grid, stripline (width, thickness, spacing 2.0, 0.018, 1.0 mm): Z0 37.5 ohm, alpha_c 0.05938 Np/m against the closed form's 0.05979: 0.993
+  Wheeler's rule on the graded grid, stripline (width, thickness, spacing 1.0, 0.018, 1.0 mm): Z0 63.1 ohm, alpha_c 0.06956 Np/m against the closed form's 0.06964: 0.999
+  slot guide, strip 0.5 mm, FR-4 0.8 mm, planes 1.0 mm off: C' 94.8 pF/m, n 1.708, Z0 60.1, share 0.845, Q_d 59, Q_c 158 by Wheeler's rule on 35 um copper (charge rule 292), Q 43 (charge rule 49), lam_g 192 mm, R(m = 1) 412 ohm, 40 V takes 1.94 W at m = 1; grad 0.335 G0, on-axis barrier 0.103 D0
+  slot guide, strip 0.5 mm, FR-4 0.8 mm, planes 3.0 mm off: C' 93.7 pF/m, n 1.731, Z0 61.6, share 0.855, Q_d 58, Q_c 163 by Wheeler's rule on 35 um copper (charge rule 300), Q 43 (charge rule 49), lam_g 189 mm, R(m = 1) 422 ohm, 40 V takes 1.90 W at m = 1; grad 0.343 G0, on-axis barrier 0.118 D0
+  slot guide, strip 0.5 mm, RO4003C 0.813 mm, planes 1.0 mm off: C' 78.0 pF/m, n 1.558, Z0 66.7, share 0.813, Q_d 456, Q_c 158 by Wheeler's rule on 35 um copper (charge rule 295), Q 117 (charge rule 179), lam_g 210 mm, R(m = 1) 1243 ohm, 40 V takes 0.64 W at m = 1; grad 0.328 G0, on-axis barrier 0.103 D0
+  slot guide, strip 0.5 mm, RO4003C 0.813 mm, planes 3.0 mm off: C' 76.8 pF/m, n 1.578, Z0 68.5, share 0.825, Q_d 449, Q_c 163 by Wheeler's rule on 35 um copper (charge rule 304), Q 120 (charge rule 181), lam_g 208 mm, R(m = 1) 1304 ohm, 40 V takes 0.61 W at m = 1; grad 0.335 G0, on-axis barrier 0.118 D0
+  slot guide, strip 1.0 mm, FR-4 0.8 mm, planes 1.0 mm off: C' 148.4 pF/m, n 1.751, Z0 39.4, share 0.868, Q_d 58, Q_c 205 by Wheeler's rule on 35 um copper (charge rule 336), Q 45 (charge rule 49), lam_g 187 mm, R(m = 1) 282 ohm, 40 V takes 2.84 W at m = 1; grad 0.340 G0, on-axis barrier 0.109 D0
+  slot guide, strip 1.0 mm, FR-4 0.8 mm, planes 3.0 mm off: C' 145.6 pF/m, n 1.791, Z0 41.0, share 0.885, Q_d 56, Q_c 212 by Wheeler's rule on 35 um copper (charge rule 346), Q 45 (charge rule 49), lam_g 183 mm, R(m = 1) 291 ohm, 40 V takes 2.75 W at m = 1; grad 0.351 G0, on-axis barrier 0.132 D0
+  slot guide, strip 1.0 mm, RO4003C 0.813 mm, planes 1.0 mm off: C' 120.9 pF/m, n 1.593, Z0 43.9, share 0.839, Q_d 441, Q_c 205 by Wheeler's rule on 35 um copper (charge rule 342), Q 140 (charge rule 193), lam_g 206 mm, R(m = 1) 978 ohm, 40 V takes 0.82 W at m = 1; grad 0.332 G0, on-axis barrier 0.109 D0
+  slot guide, strip 1.0 mm, RO4003C 0.813 mm, planes 3.0 mm off: C' 118.1 pF/m, n 1.626, Z0 45.9, share 0.860, Q_d 431, Q_c 213 by Wheeler's rule on 35 um copper (charge rule 352), Q 142 (charge rule 194), lam_g 201 mm, R(m = 1) 1040 ohm, 40 V takes 0.77 W at m = 1; grad 0.343 G0, on-axis barrier 0.133 D0
+  slot guide, strip 2.0 mm, FR-4 0.8 mm, planes 1.0 mm off: C' 254.8 pF/m, n 1.790, Z0 23.4, share 0.888, Q_d 56, Q_c 260 by Wheeler's rule on 35 um copper (charge rule 372), Q 46 (charge rule 49), lam_g 183 mm, R(m = 1) 173 ohm, 40 V takes 4.63 W at m = 1; grad 0.341 G0, on-axis barrier 0.111 D0
+  slot guide, strip 2.0 mm, FR-4 0.8 mm, planes 3.0 mm off: C' 247.3 pF/m, n 1.857, Z0 25.0, share 0.915, Q_d 55, Q_c 265 by Wheeler's rule on 35 um copper (charge rule 377), Q 45 (charge rule 48), lam_g 176 mm, R(m = 1) 181 ohm, 40 V takes 4.43 W at m = 1; grad 0.355 G0, on-axis barrier 0.141 D0
+  slot guide, strip 2.0 mm, RO4003C 0.813 mm, planes 1.0 mm off: C' 206.1 pF/m, n 1.625, Z0 26.3, share 0.862, Q_d 429, Q_c 261 by Wheeler's rule on 35 um copper (charge rule 380), Q 162 (charge rule 202), lam_g 202 mm, R(m = 1) 680 ohm, 40 V takes 1.18 W at m = 1; grad 0.333 G0, on-axis barrier 0.111 D0
+  slot guide, strip 2.0 mm, RO4003C 0.813 mm, planes 3.0 mm off: C' 198.6 pF/m, n 1.680, Z0 28.2, share 0.896, Q_d 414, Q_c 267 by Wheeler's rule on 35 um copper (charge rule 386), Q 162 (charge rule 200), lam_g 195 mm, R(m = 1) 728 ohm, 40 V takes 1.10 W at m = 1; grad 0.347 G0, on-axis barrier 0.141 D0
+  slot guide, strip 5.3 mm, FR-4 0.8 mm, planes 1.0 mm off: C' 605.4 pF/m, n 1.825, Z0 10.1, share 0.905, Q_d 55, Q_c 339 by Wheeler's rule on 35 um copper (charge rule 409), Q 48 (charge rule 49), lam_g 180 mm, R(m = 1) 76 ohm, 40 V takes 10.52 W at m = 1; grad 0.341 G0, on-axis barrier 0.111 D0
+  slot guide, strip 5.3 mm, FR-4 0.8 mm, planes 3.0 mm off: C' 579.2 pF/m, n 1.931, Z0 11.1, share 0.946, Q_d 53, Q_c 329 by Wheeler's rule on 35 um copper (charge rule 396), Q 46 (charge rule 47), lam_g 170 mm, R(m = 1) 81 ohm, 40 V takes 9.92 W at m = 1; grad 0.356 G0, on-axis barrier 0.145 D0
+  slot guide, strip 5.3 mm, RO4003C 0.813 mm, planes 1.0 mm off: C' 486.8 pF/m, n 1.653, Z0 11.3, share 0.882, Q_d 420, Q_c 341 by Wheeler's rule on 35 um copper (charge rule 419), Q 188 (charge rule 210), lam_g 198 mm, R(m = 1) 340 ohm, 40 V takes 2.36 W at m = 1; grad 0.333 G0, on-axis barrier 0.111 D0
+  slot guide, strip 5.3 mm, RO4003C 0.813 mm, planes 3.0 mm off: C' 460.5 pF/m, n 1.743, Z0 12.6, share 0.932, Q_d 397, Q_c 332 by Wheeler's rule on 35 um copper (charge rule 407), Q 181 (charge rule 201), lam_g 188 mm, R(m = 1) 364 ohm, 40 V takes 2.20 W at m = 1; grad 0.348 G0, on-axis barrier 0.145 D0
+  slot guide, strip 0.5 mm, FR-4, planes 1.0 mm, at half the cell: n 1.708, Z0 60.7, share 0.845, lam_g 192 mm, grad 0.330 G0, barrier 0.100 D0
+  the laminate holds 81 to 89 % of the field on 0.5 and 1.0 mm strips
+  [line: 0.0 s]
+
+== ring: T915-S as a ring of 192 line segments, spacers, joints and laminate drawn ==
+  bare copper, 2 % (Q 214, 317.8 mm, 60 draws): splitting 0.78 linewidths (1.44 at the 90th percentile); fixed hybrid |b/a| 0.129 (0.237), depth per watt 0.737 (10th percentile 0.553); re-solved feeds |b/a| 0.0132 (0.0204), depth per watt 0.944 (0.927); second feed 0.50 to 2.00 in amplitude, -180 to 161 deg
+  bare copper, 1 % (Q 214, 317.8 mm, 30 draws): splitting 0.60 linewidths (0.86 at the 90th percentile); fixed hybrid |b/a| 0.098 (0.143), depth per watt 0.796 (10th percentile 0.728); re-solved feeds |b/a| 0.0084 (0.0138), depth per watt 0.967 (0.954); second feed 0.50 to 2.00 in amplitude, -141 to 141 deg
+  bare copper, 3 % (Q 214, 317.8 mm, 30 draws): splitting 1.24 linewidths (1.95 at the 90th percentile); fixed hybrid |b/a| 0.200 (0.316), depth per watt 0.602 (10th percentile 0.433); re-solved feeds |b/a| 0.0111 (0.0265), depth per watt 0.921 (0.897); second feed 0.50 to 1.88 in amplitude, -180 to 170 deg
+  ENIG high, 2 % (Q 167, 317.8 mm, 30 draws): splitting 0.54 linewidths (1.27 at the 90th percentile); fixed hybrid |b/a| 0.091 (0.207), depth per watt 0.784 (10th percentile 0.608); re-solved feeds |b/a| 0.0091 (0.0192), depth per watt 0.950 (0.934); second feed 0.50 to 2.00 in amplitude, -131 to 170 deg
+  ENIG low, 2 % (Q 45, 317.8 mm, 30 draws): splitting 0.16 linewidths (0.35 at the 90th percentile); fixed hybrid |b/a| 0.037 (0.066), depth per watt 0.888 (10th percentile 0.838); re-solved feeds |b/a| 0.0142 (0.0265), depth per watt 0.955 (0.941); second feed 0.62 to 2.00 in amplitude, -112 to 122 deg
+  bare copper, 2 %, split etched 20 % (Q 214, 317.8 mm, 30 draws): splitting 0.97 linewidths (1.74 at the 90th percentile); fixed hybrid |b/a| 0.160 (0.285), depth per watt 0.678 (10th percentile 0.472); re-solved feeds |b/a| 0.0124 (0.0205), depth per watt 0.938 (0.922); second feed 0.50 to 1.75 in amplitude, -131 to 161 deg
+  joints alone, bare copper (Q 214, 317.8 mm, 30 draws): splitting 0.28 linewidths (0.70 at the 90th percentile); fixed hybrid |b/a| 0.046 (0.114), depth per watt 0.904 (10th percentile 0.776); re-solved feeds |b/a| 0.0060 (0.0113), depth per watt 0.983 (0.975); second feed 0.50 to 1.75 in amplitude, -112 to 151 deg
+  as drawn before the revision: n 1.067, Q 338, 2 % (Q 338, 307.1 mm, 30 draws): splitting 1.29 linewidths (2.10 at the 90th percentile); fixed hybrid |b/a| 0.213 (0.343), depth per watt 0.584 (10th percentile 0.370); re-solved feeds |b/a| 0.0111 (0.0263), depth per watt 0.937 (0.926); second feed 0.50 to 2.00 in amplitude, -180 to 161 deg
+  the 2.45 GHz strips, m = 2, as the lens ran it (Q 250, n 1.0670, 12 draws at 2.92 % of h): median 2Q|c_2m| 0.993, so 2Q|c_2m| <= 1 in the median allows 2.9 % (20 um of the 2h gap); depth per watt, fixed hybrid 0.654, two re-solved feeds 0.934
+  the 2.45 GHz strips, m = 2, Q by Wheeler's rule (Q 134, n 1.0655, 12 draws at 2.92 % of h): median 2Q|c_2m| 0.534, so 2Q|c_2m| <= 1 in the median allows 5.5 % (37 um of the 2h gap); depth per watt, fixed hybrid 0.806, two re-solved feeds 0.946
+  [10 s]
+  spacer rule 2 Q S sigma / sqrt(N) at Q 214, S 0.5, 24 spacers and 2 %: 0.87 linewidths; fed at one place the depth falls by 1 - exp(-2 pi m / Q) = 2.9 % a lap
+  [ring: 10.1 s]
 
 == held: the energy a bend holds, the facing boards' well, the energy held along the knot ==
   four rods on the trefoil (276.5 mm, bend 16.6 mm), q = 0.3: depth 0.32 eV, rule 5.2 eV; held up to 3.5 eV (0.67 of the rule, 0.96 of the static limit), lost from 3.75 eV
   four rods on the trefoil (276.5 mm, bend 16.6 mm), q = 0.6: depth 1.26 eV, rule 20.9 eV; held up to 9 eV (0.43 of the rule, 0.61 of the static limit), lost from 10 eV
   four rods on the ring (276.5 mm, bend 44.0 mm), q = 0.3: depth 0.32 eV, rule 13.9 eV; held up to 12 eV (0.86 of the rule, 1.23 of the static limit), lost from 14 eV
   four rods on the ring (276.5 mm, bend 44.0 mm), q = 0.6: depth 1.26 eV, rule 55.6 eV; held up to 32 eV (0.58 of the rule, 0.82 of the static limit), lost from 36 eV
-  [15 s on 11 processes]
+  [16 s on 11 processes]
   static force maxima: four rods' weak diagonal 0.6997 D/r0, facing boards in their plane 1.209 D/h; toward a board q0 sec^2 reaches 0.908 at y = 0.468 h for q0 = 0.5, where the force is 5.16 D/h
   T915-S by the in-plane static limit 0.605 D R/h: whole bend in the plane: least 10.1 eV per eV, k = 0: least 12.3 eV per eV, k = -1: least 10.3 eV per eV
-  [held: 15.6 s]
+  [held: 15.9 s]
 
 == stopbands: joints as resonances, on the unrolled guide and on the trefoil against the ring ==
   secular frequency at q = 0.6, 1 GHz: the integrator's 231.60 MHz, Mathieu's 231.12, first order 212.1
@@ -113,14 +186,116 @@ knotted guide study: full run of arrangements, knots, strips, ramp, joints, driv
   six 8 mm joints, 15 % dip: 0 of 241 lost in 40 laps, median reach 21 um
   fine scan on the trefoil (six 4 mm joints, the null stepped 1 um): 2 raised band(s) at tunes 54.04 to 54.08, 53.52 to 53.56
   fine scan on the ring (six 4 mm joints, the null stepped 1 um): 1 raised band(s) at tunes 53.85 to 54.07
-  [stopbands: 95.5 s]
+  [stopbands: 95.1 s]
 
 == acceleration: the joints as gaps, a chirp, and the bands crossed on the way ==
-  T915-S6 (318 mm): 10 mV gaps at 30 deg, 60 meV a lap: 1 -> 8.02 eV in 117 laps, 32.7 us, chirp 3 f_rev 5.60 -> 15.85 MHz, captured 50 %
+  T915-S6 (318 mm): 10 mV gaps at 30 deg, 60 meV a lap: 1 -> 8.02 eV in 117 laps, 32.7 us, chirp 3 f_rev 5.60 -> 15.86 MHz, captured 50 %
   the first run's guide (277 mm): 10 mV gaps at 30 deg, 60 meV a lap: 1 -> 8.02 eV in 117 laps, 28.4 us, chirp 3 f_rev 6.43 -> 18.22 MHz, captured 48 %
-  T915-S6 at q = 0.5 (exact Mathieu f_s 171.0 MHz): the tune falls from 91.7 to 32.4
+  T915-S6 at q = 0.5 (exact Mathieu f_s 171.0 MHz): the tune falls from 91.6 to 32.4
   six 1 mm dips of 15 %: eps_k = 2 g_k = 0.0029 at k = 108, G = pi^2 nu eps^2 W / (2 dW) = 0.15 a crossing at 60 meV a lap
   [acceleration: 0.1 s]
+
+== beam: a bunch's multipoles on T915-S's trefoil and on the ring; the control curves ==
+  trefoil (317.8 mm): vector area 2971 mm^2 along the axis (components 0.0, 0.0, 2970.7); per harmonic k of f_rev, |p_k|/Q, its axial part, and |(1/2) oint r x T e ds|: k = 1: 4.750 mm (0.000), 1046.2 mm^2; k = 2: 15.489 mm (0.000), 487.5 mm^2; k = 3: 4.597 mm (4.597), 774.7 mm^2; k = 4: 0.280 mm (0.000), 109.3 mm^2; k = 5: 1.648 mm (0.000), 64.9 mm^2; k = 6: 0.678 mm (0.678), 113.9 mm^2
+  ring (317.8 mm): vector area 8037 mm^2 along the axis (components 0.0, 0.0, 8036.6); per harmonic k of f_rev, |p_k|/Q, its axial part, and |(1/2) oint r x T e ds|: k = 1: 35.764 mm (0.000), 0.0 mm^2; k = 2: 0.000 mm (0.000), 0.0 mm^2; k = 3: 0.000 mm (0.000), 0.0 mm^2; k = 4: 0.000 mm (0.000), 0.0 mm^2; k = 5: 0.000 mm (0.000), 0.0 mm^2; k = 6: 0.000 mm (0.000), 0.0 mm^2
+  a steady 11.6 nA beam's magnetic moment: trefoil 3.45e-11 A m^2, ring of the same length 9.32e-11 A m^2 (L^2 / 4 pi = 8037 mm^2): 0.37 of the ring's; the trefoil's writhe -3.425
+  T915-S's strands pass 18.53 mm apart at their centre lines; strips 7.32 mm wide
+  flat ring at 317.8 mm: radius 50.58 mm
+  lifted figure of eight, b 0.5, lift 0.2 at 317.8 mm: tightest bend 11.32 mm, total curvature 2.989 pi, holonomy -101.9 deg
+  lifted figure of eight, b 0.6, lift 0.25 at 317.8 mm: tightest bend 9.21 mm, total curvature 3.099 pi, holonomy -121.9 deg
+  lifted figure of eight, b 0.7, lift 0.3 at 317.8 mm: tightest bend 7.61 mm, total curvature 3.189 pi, holonomy -141.6 deg
+  lifted figure of eight, b 0.8, lift 0.3 at 317.8 mm: tightest bend 6.23 mm, total curvature 3.270 pi, holonomy -139.7 deg
+  4₁, common form at 317.8 mm: tightest bend 6.10 mm, total curvature 6.610 pi, holonomy 31.1 deg, writhe 0.086, strands 8.44 mm apart; by ropelength 1.29 times the trefoil's length for the same tube
+  T(2, 5) at r/R 0.3 at 317.8 mm: tightest bend 12.37 mm, total curvature 7.374 pi, holonomy 18.6 deg
+  T(2, 5) at r/R 0.45 at 317.8 mm: tightest bend 9.86 mm, total curvature 9.035 pi, holonomy 123.0 deg
+  T(3, 4) at r/R 0.3 at 317.8 mm: tightest bend 13.50 mm, total curvature 6.350 pi, holonomy -60.7 deg
+  T(3, 4) at r/R 0.45 at 317.8 mm: tightest bend 11.00 mm, total curvature 7.299 pi, holonomy -150.5 deg
+  T(1, 3) at r/R 0.1 at 317.8 mm: tightest bend 31.48 mm, total curvature 2.409 pi, holonomy -41.4 deg, framed k = 0 its in-plane radius 60.09 mm: 2.06 times T915-S's tightest bend, 3.24 times its in-plane radius
+  T(1, 3) at r/R 0.15 at 317.8 mm: tightest bend 28.06 mm, total curvature 3.024 pi, holonomy -88.2 deg, framed k = 0 its in-plane radius 39.01 mm: 1.84 times T915-S's tightest bend, 2.10 times its in-plane radius
+  T(1, 3) at r/R 0.2 at 317.8 mm: tightest bend 25.05 mm, total curvature 3.644 pi, holonomy -145.7 deg, framed k = 0 its in-plane radius 29.14 mm: 1.64 times T915-S's tightest bend, 1.57 times its in-plane radius
+  T(1, 3) at r/R 0.3 at 317.8 mm: tightest bend 20.15 mm, total curvature 4.633 pi, holonomy 89.0 deg, framed k = 0 its in-plane radius 21.06 mm: 1.32 times T915-S's tightest bend, 1.13 times its in-plane radius
+  [beam: 1.1 s]
+
+== numbers: the revision's arithmetic, from the study's own solves ==
+  Mathieu beta at q 0.5: 0.3737 (first order 0.3536); f_s at 915 MHz 171.0 MHz; 1 eV at q 0.5 on facing boards: 50.27 V; D0 at 40 V and h 0.5 mm: 2.129 eV
+  length bound:
+    h 0.500 mm: bend rule 8 pi h = 12.57 mm per unit W/D; with 0.77 to 0.38 of it held 16.3 to 33.1 mm; facing boards' static limit 4 pi h / 0.605 = 10.4 mm
+    h 0.915 mm: bend rule 8 pi h = 23.00 mm per unit W/D; with 0.77 to 0.38 of it held 29.9 to 60.5 mm; facing boards' static limit 4 pi h / 0.605 = 19.0 mm
+    W/D 16.6 at h 0.5 mm: 209 mm by the rule, 271 to 549 mm by tracking
+  T915-S at 317.8 mm, held energy per eV of depth (static 0.605 R/h):
+    tightest bend as if in the plane 15.29 mm: static 10.11; x0.61 6.2, x0.95 9.6; rule R/2h 8.35
+    in-plane radius, k = 0 18.57 mm: static 12.28; x0.61 7.5, x0.95 11.7; rule R/2h 10.15
+    flat ring of 317.8 mm: radius 50.58 mm, static 33.4; 2.72 (in-plane) to 3.31 (tightest) times T915-S
+    T(1, 3) at r/R 0.2, tightest bend 25.05 mm: static 16.6; 1.35 (over the in-plane radius) to 1.64 (over the tightest bend) times T915-S
+    T(1, 3) at r/R 0.15, tightest bend 28.06 mm: static 18.6; 1.51 (over the in-plane radius) to 1.84 (over the tightest bend) times T915-S
+  power, Q and heat on section B at 317.8 mm (n_eff 1.0311, share 0.0737, Z0 41.65 ohm, C' 82.57 pF/m, Q_d 3394 at tan delta 0.004):
+    bare copper: Q_c 228, Q 214, R 1417 ohm, 1 eV (50.27 V) takes 0.891 W (pi f C' V^2 L / Q 0.891 W), amplifier 30.0 to 30.5 dBm, radiation-only rise 34 K; two feeds couple critically through 0.466 pF each in series (0.93 pF a balun arm); linewidth 4.28 MHz
+    ENIG, mild: Q_c 176, Q 167, R 1106 ohm, 1 eV (50.27 V) takes 1.142 W (pi f C' V^2 L / Q 1.142 W), amplifier 31.0 to 31.5 dBm, radiation-only rise 42 K; two feeds couple critically through 0.529 pF each in series (1.06 pF a balun arm); linewidth 5.48 MHz
+    ENIG, severe: Q_c 46, Q 45, R 299 ohm, 1 eV (50.27 V) takes 4.232 W (pi f C' V^2 L / Q 4.232 W), amplifier 36.7 to 37.2 dBm, radiation-only rise 112 K; two feeds couple critically through 1.052 pF each in series (2.10 pF a balun arm); linewidth 20.32 MHz
+    to the half decibel: bare copper +30.0 dBm, ENIG +31.0 to +37.0 dBm; from the HackRF's 5 to 15 dBm an amplifier of 15.0 to 32.0 dB
+    section B at 2450 MHz, m = 2 (229.7 mm, Q 134, Z0 39.1 ohm): R 418 ohm, 1 eV takes 3.02 W, a radiation-only rise of 200 K with the faces' area scaled by width and length (143 K at the lens's 1.7 W)
+    radiating eps A 36.3 cm^2 (the hardware lens's 24 K at 0.58 W on 307 mm); quarter guided wave 79.4 mm; fill time Q / (pi f) 74 ns
+  T915-S: its tightest bend 15.29 mm meets the 2W rule by 0.65 mm; in-plane radius 5.07 half-widths; split 0.3h = 0.275 mm; 0.970 of a free-space wavelength round; pickups a sixth of a guided wave apart 53.0 mm; a 1 eV lap 0.54 us
+  at 6.3e-05 mbar a 1 eV electron lives 10.7 us between collisions: 3.4e4 held takes 3.2e+09 captured a second, 0.51 nA
+  at 1.0e-06 mbar a 1 eV electron lives 674 us between collisions: 3.4e4 held takes 5e+07 captured a second, 0.0081 nA
+  3.4e4 electrons dumped: 5.45 fC, 5.45 mV on 1 pF
+  joints, kicks and tunes at 915 MHz and q 0.5:
+    1 eV: v 5.931e+05 m/s, v/f 0.65 mm, 3v/(f(1 - beta)) 3.1 mm, secular wavelength 3.47 mm, three of them 10.4 mm, tune on 317.8 mm 91.6
+    2 eV: v 8.388e+05 m/s, v/f 0.92 mm, 3v/(f(1 - beta)) 4.4 mm, secular wavelength 4.91 mm, three of them 14.7 mm, tune on 317.8 mm 64.8
+    4 eV: v 1.186e+06 m/s, v/f 1.30 mm, 3v/(f(1 - beta)) 6.2 mm, secular wavelength 6.94 mm, three of them 20.8 mm, tune on 317.8 mm 45.8
+    8 eV: v 1.678e+06 m/s, v/f 1.83 mm, 3v/(f(1 - beta)) 8.8 mm, secular wavelength 9.81 mm, three of them 29.4 mm, tune on 317.8 mm 32.4
+    W = 2 D: omega h / v = 6.28; 1 % common mode at 50 V: 1.9 meV
+    W = 8 D: omega h / v = 3.14; 1 % common mode at 50 V: 43.2 meV
+    0.2h both ways kicks 69 meV at 2 eV and 0.55 eV at 8 eV (K 0.0014 and 0.011): 7 % of the well at 8 eV takes 0.071 h = 65 um; a 6 mm straight meets 3v/(f(1 - beta)) up to 3.73 eV
+  pressure (mean free path 0.4 m at 1e-3 mbar, an estimate):
+    20 laps of 318 mm: 6.36 m; a mean free path that long at 6.3e-05 mbar, ten times it at 6.3e-06 mbar
+    10 laps: 3.18 m; a mean free path that long at 1.3e-04 mbar, ten times it at 1.3e-05 mbar
+    1 to 8 eV, 117 laps: 37.18 m; a mean free path that long at 1.1e-05 mbar, ten times it at 1.1e-06 mbar
+    one lap: 0.32 m; a mean free path that long at 1.3e-03 mbar, ten times it at 1.3e-04 mbar
+    at 1e-02 mbar the mean free path is 0.04 m, 0.13 laps
+    at 1e-03 mbar the mean free path is 0.40 m, 1.26 laps
+  T915-S6: f_rev 1.866 to 5.279 MHz, chirp 3 f_rev 5.60 to 15.84 MHz; 60 meV a lap takes 117 laps, 32.7 us, 4 slots of 10 us; segments 53.0 mm; two tones: the sideband 5.60 to 15.84 MHz above the carrier, tuned 7.92 MHz above 915 MHz
+  Earth's 50 uT at 1 eV: gyroradius 67 mm; v x B over 2W/R on the 15.29 mm bend 0.227; equilibrium moved 4.5 um, the bend's own 19.9 um; 2R/r_g 0.45
+  Earth's 50 uT at 8 eV: gyroradius 191 mm; v x B over 2W/R on the 15.29 mm bend 0.080; equilibrium moved 12.8 um, the bend's own 159.5 um; 2R/r_g 0.16
+  contact potential 0.01 V across 1.83 mm: 5.5 V/m, a 1 eV electron moved 0.8 um
+  contact potential 0.1 V across 1.83 mm: 54.6 V/m, a 1 eV electron moved 8.3 um
+  steering: DC 12.0 mV per um, RF at 50 V 86 mV per um
+  space charge at q 0.5, 1 eV, a 50 um beam: limit 7.25e+14 per m^3 = 1.81e+06 electrons on 318 mm (with first-order f_s 6.49e+14 per m^3)
+    3.40e+04 electrons: 10.2 nA; image tune shift 0.0032 coherent, 0.0011 incoherent; bunched, -120 dBm on a 50 ohm pickup coupling 30 %; micromotion current 18.4 nA detuning the ring 1 Hz, 2.6e-07 of its linewidth
+    1.35e+05 electrons: 40.4 nA; image tune shift 0.0126 coherent, 0.0042 incoherent; bunched, -108 dBm on a 50 ohm pickup coupling 30 %; micromotion current 72.9 nA detuning the ring 4 Hz, 1.0e-06 of its linewidth
+    1.81e+06 electrons: 541.3 nA; image tune shift 0.1688 coherent, 0.0563 incoherent; bunched, -86 dBm on a 50 ohm pickup coupling 30 %; micromotion current 977.7 nA detuning the ring 59 Hz, 1.4e-05 of its linewidth
+  one board, the null 0.500 mm up: centre strip 0.35 mm, rails 1.27 mm; q 0.5 at 38.0 V, a 0.0701 eV well
+  one board, the null 0.575 mm up: centre strip 0.40 mm, rails 1.46 mm; q 0.5 at 50.2 V, a 0.0927 eV well
+  one board at 1 eV and q 0.5: 542 V, the null 1.89 mm up at 915 MHz; at 0.5 mm up the same 1 eV needs q 1.89
+    rails' 0.0927 eV well round 31.8 mm: 2.56 eV by the rule
+    rails' 0.0927 eV well round 15.3 mm: 1.23 eV by the rule
+    rails' 0.0927 eV well round 50.6 mm: 4.08 eV by the rule
+  a rolled four-strip tube: 1 eV at q 0.5 takes 16 V with r0 0.58 mm at 915 MHz; at r0 1 mm and q 0.5, 2.94 eV at 47 V; bent to 15.29 mm its wall strains 0.038 at r0 and 0.065 at 1 mm
+  S2-C3 at 40 V (D0 2.13 eV, floor 0.23 G0 flush, clearance 0.87 h), its lobes bent 30.0 and 42.2 mm:
+    ramps on the outer lobes (30.0 mm): 2.9 eV; with the floor doubled 11.7 eV
+    ramps on the inner lobes (42.2 mm): 4.1 eV; with the floor doubled 16.5 eV
+    ramps on the climb alone (242.0 mm): 23.7 eV; with the floor doubled 94.8 eV
+    a level of 0.1 D0 = 0.21 eV: on the outer lobes by the rule 6.4 eV, tracked 0.43 to 0.72 of it 2.7 to 4.6 eV; round R0 = 33.2 mm by the rule 7.1 eV
+    a level of 0.14 D0 = 0.30 eV: on the outer lobes by the rule 8.9 eV, tracked 0.43 to 0.72 of it 3.8 to 6.4 eV; round R0 = 33.2 mm by the rule 9.9 eV
+  95 % at 95 % confidence: 59 draws with at most 0 failures, 93 draws with at most 1 failure, 124 draws with at most 2 failures
+  S2-C3 on FR-4 0.8 mm, 0.5 mm strips, m = 1: 192 mm (R0 15.0 mm, outer lobes bent 12.9 mm, with a = 4 mm; 418.1 mm at R0 = 33 mm), R 412 ohm, 40 V takes 1.94 W
+  S2-C3 on FR-4 0.8 mm, 0.5 mm strips, m = 2: 384 mm (R0 30.3 mm, outer lobes bent 27.1 mm, with a = 4 mm; 418.1 mm at R0 = 33 mm), R 206 ohm, 40 V takes 3.89 W
+  S2-C3 on RO4003C 0.813 mm, 0.5 mm strips, m = 1: 210 mm (R0 16.5 mm, outer lobes bent 14.2 mm, with a = 4 mm; 418.1 mm at R0 = 33 mm), R 1243 ohm, 40 V takes 0.64 W
+  S2-C3 on RO4003C 0.813 mm, 0.5 mm strips, m = 2: 421 mm (R0 33.2 mm, outer lobes bent 30.0 mm, with a = 4 mm; 418.1 mm at R0 = 33 mm), R 621 ohm, 40 V takes 1.29 W
+  L26 at 915 MHz on facing rigid boards (24 steps, 14 corners):
+    straights 6.0 mm, pitch 26 mm: corners 10.0 mm, length 564 mm
+    straights 6.0 mm, pitch 32 mm: corners 13.0 mm, length 690 mm
+    straights 6.0 mm, pitch 40 mm: corners 17.0 mm, length 858 mm
+    straights 10.4 mm, pitch 26 mm: corners 7.8 mm, length 577 mm
+    straights 10.4 mm, pitch 32 mm: corners 10.8 mm, length 703 mm
+    straights 10.4 mm, pitch 40 mm: corners 14.8 mm, length 871 mm
+    straights 29.4 mm, pitch 32 mm: corners 1.3 mm, length 760 mm
+    straights 29.4 mm, pitch 40 mm: corners 5.3 mm, length 928 mm
+  bias, 1 Mohm resistors (1000.0 kohm): 7.5 mW for the 24 strips, 1 % of the ring's 0.89 W
+  bias, 100 kohm resistors (100.0 kohm): 75.0 mW for the 24 strips, 8 % of the ring's 0.89 W
+  bias, the star inductors (34.5 kohm): 217.4 mW for the 24 strips, 24 % of the ring's 0.89 W
+  a strip segment holds 4.4 pF (C' L / 6); with 1 Mohm its bias corner is 36 kHz; the star's inductors 100 nH are 3.5 to 10.0 ohm across the chirp
+  [numbers: 0.1 s]
 
 == figures ==
   wrote arrangements.png
@@ -130,8 +305,10 @@ knotted guide study: full run of arrangements, knots, strips, ramp, joints, driv
   wrote joints.png
   wrote drive.png
   wrote laminate.png
+  wrote line.png
+  wrote ring.png
   wrote held.png
   wrote stopbands.png
   wrote acceleration.png
 
-done in 170 s
+done in 302 s

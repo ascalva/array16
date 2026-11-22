@@ -49,10 +49,10 @@ as hardware, from the fab's rules to the vacuum, on a simulated bench before any
 - **Fields are exact where symmetry holds:** a piece keeping one mirror antisymmetry has an exact null without axial
   field.
 - **The drive is the first compile problem.** The knot is a ring resonator of shunt resistance Z₀Q/(2πm). On the lead
-  design at 2 % rms spacer error, two re-solved feeds leave a backward wave of 0.011 of the forward in the median (0.022
-  at the 90th percentile) and keep 0.94 of a perfect ring's depth per watt, where a fixed hybrid leaves 0.22 and 0.58
-  (checked, 60 draws); one feed makes a standing wave. A 1 eV well at 915 MHz takes 0.50 W on bare copper and 0.63 to
-  2.3 W on the fab's gold over nickel (ENIG): an amplifier of +27.5 to +34.5 dBm.
+  design at 2 % rms spacer error, two re-solved feeds leave a backward wave of 0.013 of the forward in the median (0.020
+  at the 90th percentile) and keep 0.94 of a perfect ring's depth per watt, where a fixed hybrid leaves 0.13 and 0.74
+  (checked, 60 draws); one feed makes a standing wave. A 1 eV well at 915 MHz takes 0.89 W on bare copper and 1.1 to
+  4.2 W on the fab's gold over nickel (ENIG): an amplifier of +30.0 to +37.0 dBm.
 - **Particles:** facing boards hold 0.605·D·R/h bent in their plane by the static balance, which E2-9 tracks, where four
   rods held 0.61 to 0.95 of their static limit; joints heat unless smooth over 3v/(f(1 − β)) and, for the null-step
   family, three secular wavelengths, 29 mm at 8 eV; cut into six DC-isolated segments the strips' joints double as gaps,
@@ -64,7 +64,7 @@ as hardware, from the fab's rules to the vacuum, on a simulated bench before any
 - **The hardware is modelled before it is built,** from one geometry source, through a review of fifteen checks on a
   twin bench (section 8). Its first findings change the designs: at 915 MHz the 25 µm polyimide holds 7 % of the flex
   strips' field, n_eff = 1.031, so their m = 1 ring takes 318 mm (307 mm would resonate at 947 MHz, outside the band);
-  the stacked boards' slot guide holds 85 % of its field in the laminate, Q 49 on FR-4 and 180 on RO4003C; the twist
+  the stacked boards' slot guide holds 85 % of its field in the laminate, Q 43 on FR-4 and 117 on RO4003C; the twist
   that closes the strips makes them non-developable, and their two plates differ in length by 23 mm; copper multipacts
   above wells of 2 to 3 eV (Hypothesis), and the fab's flex surface is gold over nickel as received.
 - **Lead designs:** T915-S, flex strips on an r/R = 0.45 trefoil at 915 MHz, m = 1, and T915-S6, the same cut into six
@@ -91,7 +91,7 @@ mm round allows, its rounded path then 198 mm. Top right: L26, the 24-step latti
 rounded to 7.9 mm for a 581 mm path, one facing pair to each of its 8 planar runs, handing over by polarity swaps
 (diamonds). Bottom left: T915-S, facing flex strips 7.32 mm wide on the r/R = 0.45 trefoil at 318 mm, framed with k = 0
 (+0.48°/mm) so that the in-plane radius stays at 18.6 mm or more, the halves at +V/2 orange and −V/2 blue, the gap drawn
-×4; the two closing joints, scarfed over 29.4 mm and 79.5 mm apart (black), and the 24 spacer stations. Bottom middle:
+×4; the two closing joints, scarfed over 29.4 mm and 79.4 mm apart (black), and the 24 spacer stations. Bottom middle:
 T915-R, one flex ribbon carrying the rails along the same trefoil and framing, the null 0.575 mm above it (drawn ×4).
 Bottom right: R1, the channel ring 210 mm round on one RO4003C board (thickness ×8), copper on both faces either side of
 the channel, its island held by three posts to a carrier board below (three does not divide 2m) and the frame by three
@@ -161,7 +161,7 @@ Costs are entry prices plus an allowance, rough estimates.
 | Tightest bend | 30.0 mm | 8.0 mm | 7.9 mm | 15.3 mm | 15.3 mm | the ring's radius |
 | Total curvature | 4π in the plane, plus the climbs | 4.29π | 7π | 5.37π | 5.37π | 2π |
 | Length, m | 420 mm, m = 2 | 291 mm, m = 1 | 582 mm, m = 2 | 318 mm, m = 1 | about 318 mm, m = 1 | 210 mm (channel), about 200 mm (rails), m = 1 |
-| Well and power | 0.21 to 0.30 eV at 40 V, 0.84 W | 1 eV at 54.9 V, 0.67 W | 1 eV at 54.9 V, 1.34 W | 1 eV at 50.3 V, 0.50 W (ENIG 0.63 to 2.3 W) | 0.093 eV at 50 V | 0.093 eV at 50 V (rails); 0.21 to 0.30 eV at 40 V, 0.42 W (channel) |
+| Well and power | 0.21 to 0.30 eV at 40 V, 1.29 W | 1 eV at 54.9 V, 0.51 W | 1 eV at 54.9 V, 1.03 W | 1 eV at 50.3 V, 0.89 W (ENIG 1.1 to 4.2 W) | 0.093 eV at 50 V | 0.093 eV at 50 V (rails); 0.21 to 0.30 eV at 40 V, 0.64 W (channel) |
 | Route, rough cost | rigid, routed slots: $100 to $250 on RO4003C, $40 to $80 on FR-4 | rigid, printed brackets, flex straights: $60 to $100 | rigid, printed frame: $40 to $70 | flex on a former: $60 to $120 | flex: $30 to $60 | one rigid board |
 | Field | levels 0.26 to 0.34 D₀ flush, 0.10 to 0.14 D₀ set back; ramps ≥ 0.23 G₀ flush | facing wells; twisted handovers | facing wells; polarity-swap handovers | full facing well | rails, 0.0091 of four rods | rails 0.0091 of four rods; channel as S2-C3's levels |
 | Drive | 2 feeds; ramp rails up to 2V | 6 segments | 8 runs; all modes couple | 2 feeds; 6 segments in T915-S6 | 2 feeds | 2 feeds |
@@ -170,7 +170,7 @@ Costs are entry prices plus an allowance, rough estimates.
 **Other routes, with what each takes.**
 
 - *A flex rolled into a tube with four strips* is a printed four-rod quadrupole, share near 1 instead of ¼: 1 eV at q =
-  0.5 and 915 MHz takes 16 V with r₀ = 0.58 mm, and a tube of 1 mm radius holds 3.0 eV at 48 V. Bent to 15.3 mm its wall
+  0.5 and 915 MHz takes 16 V with r₀ = 0.58 mm, and a tube of 1 mm radius holds 2.9 eV at 47 V. Bent to 15.3 mm its wall
   strains by r₀/R, 3.8 to 6.5 %, past what flex copper takes, so the tube takes slits or pleats every few millimetres,
   or bends of R ≥ 100·r₀ (checked).
 - *Rigid-flex* orders feeds, baluns and connectors on rigid islands and the knot on flex as one piece, at a few times
@@ -197,29 +197,29 @@ to FR-4). The copper's set-back from the routed wall moves it most: at the usual
 0.15 D₀ with it 3 mm off (checked). A plated slot would short top to bottom; single-board electron traps exist (Luo et
 al.). **Claim (the slot guide as a line; checked).** The quadrupole puts opposite volts on the top and bottom copper of
 each side, so the laminate between them holds 81 to 89 % of the field energy. With 0.5 mm strips set back 0.2 mm, FR-4
-0.8 mm gives n_eff 1.71, Z₀ 60 Ω, Q 49 (its loss tangent sets it) and λg 189 to 192 mm at 915 MHz; RO4003C 0.813 mm
-gives n_eff 1.56, Z₀ 67 Ω, Q 179 and λg 208 to 210 mm; wider strips add capacitance and lower R. These come from a
-finite-volume section solve made for this revision, its copper-loss rule (surface current from the air problem's charge)
-calibrated on the flex strips' section to 8 %. **Design (resonance; checked).** The drawn layout is 2.0 guided waves on
-RO4003C: S2-C3 runs at m = 2 at about 420 mm (R₀ = 33.2 mm, set from a coupon's index), R = Z₀Q/(2πm) = 0.95 kΩ, so
-40 V, a 0.21 to 0.30 eV level at q = 0.44, takes 0.84 W; m = 1 at 210 mm takes 0.42 W with a 14 mm bend. On FR-4 the
-same 40 V takes 1.7 W at m = 1 (190 mm) and 3.4 W at m = 2 (380 mm): the cheaper board is the dearer drive. **Claim (the
-ramp that must fail).** A straight cut-out of a gapless stack's middle board makes the null jump half the rise at each
-end and sit between at (h/(2h + t/2))²·G₀. **Claim (compiled ramp).** Bounded least squares over 1 mm segments on two
-slotted boards' four layers carries the null up a quintic climb as a sign pattern shifting up one layer at a time,
-mostly −1, 0 and +1: rail assignment and tapered strip ends. At rail volts the gradient has a floor where the null
-crosses an inner copper plane, 0.23 G₀ for 0.8 mm boards 1.0 mm apart and 0.45 G₀ for 0.4 mm boards 0.6 mm apart (with
-levels of 0.12 D₀); twice the rail doubles it. These floors come from flush copper planes; E2-4 compiles the ramp with
-the 0.2 mm set-back the levels use. **Layout (checked):** ρ = R₀ + a·cos(3φ/2) over two turns with R₀ = 33.2 mm and a =
-4 mm is a six-ramp trefoil 420 mm long whose tightest bend, 30.0 mm, lies on its three outer lobes, 42 mm on the three
-inner ones and about 33 mm at the crossings, which meet at 20.5°; the six ramps centre on the lobes. **Hypotheses.**
-*Ramp energy:* a ramp holds about (G/G₀)²·(clearance/h)·R/(2h)·D₀, R its bend radius. At 40 V (D₀ = 2.13 eV), with the
-flush floor 0.23 G₀ and the lens's clearance of about 0.87h, that is 2.9 eV on the three ramps on the 30 mm outer lobes
-and 4.1 eV on the 42 mm inner ones, against 7 to 10 eV on the levels by the bend rule, so the ramps limit S2-C3 unless
-their rails run at up to twice the rail (11.7 and 16.5 eV); loose by π²/4 (E2-5). *Modes by layout:* identical ramps
-from p over-arcs split modes with p | m, unequal ones p | 2m, so six ramps keep m = 1 and 2 (E2-24). *Crossings:*
-crossings at 90° do not couple differentially; S2-C3's at 20.5° do, by an amount the boundary-element solve sets
-(E2-19), and reshaping them to 90° costs about 2π more total curvature, 120 to 190 mm of path at its bends. At a
+0.8 mm gives n_eff 1.71, Z₀ 60 Ω, Q 43 (its loss tangent sets it) and λg 189 to 192 mm at 915 MHz; RO4003C 0.813 mm
+gives n_eff 1.56, Z₀ 67 Ω, Q 117 and λg 208 to 210 mm; wider strips add capacitance and lower R. These come from a
+finite-volume section solve made for this revision, the copper's loss by Wheeler's incremental-inductance rule on 35 µm
+copper, calibrated on stripline's closed form to 1 %. **Design (resonance; checked).** The drawn layout is 2.0 guided
+waves on RO4003C: S2-C3 runs at m = 2 at about 420 mm (R₀ = 33.2 mm, set from a coupon's index), R = Z₀Q/(2πm) =
+0.62 kΩ, so 40 V, a 0.21 to 0.30 eV level at q = 0.44, takes 1.29 W; m = 1 at 210 mm takes 0.64 W with a 14 mm bend. On
+FR-4 the same 40 V takes 1.9 W at m = 1 (192 mm) and 3.9 W at m = 2 (384 mm): the cheaper board is the dearer drive.
+**Claim (the ramp that must fail).** A straight cut-out of a gapless stack's middle board makes the null jump half the
+rise at each end and sit between at (h/(2h + t/2))²·G₀. **Claim (compiled ramp).** Bounded least squares over 1 mm
+segments on two slotted boards' four layers carries the null up a quintic climb as a sign pattern shifting up one layer
+at a time, mostly −1, 0 and +1: rail assignment and tapered strip ends. At rail volts the gradient has a floor where the
+null crosses an inner copper plane, 0.23 G₀ for 0.8 mm boards 1.0 mm apart and 0.45 G₀ for 0.4 mm boards 0.6 mm apart
+(with levels of 0.12 D₀); twice the rail doubles it. These floors come from flush copper planes; E2-4 compiles the ramp
+with the 0.2 mm set-back the levels use. **Layout (checked):** ρ = R₀ + a·cos(3φ/2) over two turns with R₀ = 33.2 mm and
+a = 4 mm is a six-ramp trefoil 420 mm long whose tightest bend, 30.0 mm, lies on its three outer lobes, 42 mm on the
+three inner ones and about 33 mm at the crossings, which meet at 20.5°; the six ramps centre on the lobes.
+**Hypotheses.** *Ramp energy:* a ramp holds about (G/G₀)²·(clearance/h)·R/(2h)·D₀, R its bend radius. At 40 V (D₀ =
+2.13 eV), with the flush floor 0.23 G₀ and the lens's clearance of about 0.87h, that is 2.9 eV on the three ramps on the
+30 mm outer lobes and 4.1 eV on the 42 mm inner ones, against 7 to 10 eV on the levels by the bend rule, so the ramps
+limit S2-C3 unless their rails run at up to twice the rail (11.7 and 16.5 eV); loose by π²/4 (E2-5). *Modes by layout:*
+identical ramps from p over-arcs split modes with p | m, unequal ones p | 2m, so six ramps keep m = 1 and 2 (E2-24).
+*Crossings:* crossings at 90° do not couple differentially; S2-C3's at 20.5° do, by an amount the boundary-element solve
+sets (E2-19), and reshaping them to 90° costs about 2π more total curvature, 120 to 190 mm of path at its bends. At a
 crossing the upper guide's floor is the lower board's slot, not copper, which moves the on-axis escape saddle that sets
 the level's depth (E2-3). *A four-layer board* holds three levels, but its closed slot frees c + 2 pieces (E2-27).
 Printed ion tracks already climb between levels (`docs/PRIOR_ART.md`).
@@ -255,8 +255,8 @@ three secular wavelengths (section 6.2), 10.4 mm for 1 eV and 29.4 mm for 8 eV a
 sticks or more (Huh and Oh); the one found here has 14 sticks in 8 planar runs and 7π of curvature, and corners of
 radius R with straights s need a pitch of 2R + s (checked). **Design (L26; checked).** On section A at 915 MHz (h =
 0.92 mm) m = 2 takes 582 mm: 24 steps of 26.2 mm with 10.4 mm straights and corners of 7.9 mm. A 1 eV well at q = 0.5
-(54.9 V) takes 1.34 W through 1.12 kΩ and holds about 5 eV per eV of depth by the static rule at its corners; m = 3
-takes 873 mm, a 40 mm pitch and 14.8 mm corners, and 2.0 W. With no symmetry every perturbation couples ±m, so L26
+(54.9 V) takes 1.03 W through 1.47 kΩ and holds about 5 eV per eV of depth by the static rule at its corners; m = 3
+takes 873 mm, a 40 mm pitch and 14.8 mm corners, and 1.5 W. With no symmetry every perturbation couples ±m, so L26
 travels on compiled feeds alone.
 
 ### 3.5 Flex strips and their framing
@@ -281,7 +281,7 @@ lay-up).** Cut as the planform of its centre line's geodesic curvature, the clos
 flat to the 37 µm rms the gap budget allows; the shell model of section 8.1 and a coupon settle it (E2-23). **Claim (the
 two plates; checked).** The plates' centre lines at ±h along the board normal differ in length by 2h·∮κ_n ds to first
 order, and the curvature toward the boards keeps one sign over most of the lap (∮κ_n ds = −12.8 rad), so the outer plate
-is 329.5 mm and the inner 306.1 mm: two different pieces, their planforms about 21 × 316 and 21 × 292 mm in their
+is 329.5 mm and the inner 306.1 mm: two different pieces, their planforms about 21 × 315 and 21 × 292 mm in their
 smallest boxes, both fitting a 234 × 490 mm panel. **Claim (odd k; checked).** k = −3 (−1.22°/mm) turns 3π against the
 Frenet frame and keeps C3, keeps an in-plane radius of 29.0 mm or more with its six curvature maxima 0.89 toward the
 boards, has plates of equal length (∮κ_n ds near zero), and makes both plates one band of 2L, 639 mm, with one closing
@@ -305,12 +305,12 @@ finish takes another fab (section 5.4).
 ±0.2 per mm) and 1/|d(τ/κ)/ds|, the distance at which a straight (rectifying) strip folds, along the first run's r/R =
 0.30 trefoil at 276.5 mm, near the flat point 4/13, where the torsion spikes and the strip folds 1.5 × 10⁻⁴ mm from the
 curve, and along T915-S's r/R = 0.45 trefoil at 318 mm, where it folds 0.46 mm out, inside its half-width of 3.66 mm.
-Middle: T915-S's strips framed with k = 0 (+0.481°/mm) and k = −1 (−0.085°/mm), their curvature in the boards' plane and
+Middle: T915-S's strips framed with k = 0 (+0.482°/mm) and k = −1 (−0.085°/mm), their curvature in the boards' plane and
 toward the boards: k = 0 keeps C3 and an in-plane radius of 18.6 mm or more, κ_n changing sign six times a lap; k = −1
 keeps 15.6 mm, and eight; right, the closures' in-plane radii (k = −3: 29.0 mm) and the compression their twist puts at
 a strip's centre over the wrinkling scale (t/W)² of 43 µm flex 7.32 mm wide, 4.6 for k = 0 and 29 for k = −3. Bottom:
-the plates laid flat on the fab's 234 × 490 mm panel: k = 0's two, 329.7 and 306.3 mm long in boxes 21 × 315 and 21 ×
-292 mm (∮κ_n ds = −12.8 rad), and one lap of k = −1 in a box 72 × 187 mm.
+the plates laid flat on the fab's 234 × 490 mm panel: k = 0's two, 329.5 and 306.1 mm long in boxes 21 × 315 and 21 ×
+292 mm (∮κ_n ds = −12.8 rad), and one lap of k = −1 in a box 72 × 186 mm.
 
 ### 3.6 One board
 
@@ -318,10 +318,10 @@ the plates laid flat on the fab's 234 × 490 mm panel: k = 0's two, 329.7 and 30
 at 50 V puts the null 0.575 mm up, over rails 1.46 mm wide either side of a 0.40 mm grounded strip, in a 0.093 eV well;
 a 1 eV well at q = 0.5 takes 543 V with the null 1.89 mm up, and at 1 eV with the null 0.5 mm up q is 1.89, past 0.908.
 A rail ring one guided wave round, about 200 mm on 1.6 mm FR-4 (n_eff ≈ √((1 + ε_r)/2), an estimate) and 32 mm in
-radius, holds about 2.5 eV by the bend rule and 1.5 to 2.2 eV by what rings tracked (section 6.1): the twin's first
+radius, holds about 2.6 eV by the bend rule and 1.5 to 2.2 eV by what rings tracked (section 6.1): the twin's first
 calibration rung, with no island to hold. *Channel:* the board's own copper round a routed channel is the slot guide of
 section 3.3; a channel ring m = 1 round on RO4003C is 210 mm (radius 33.4 mm), its 0.21 to 0.30 eV level at 40 V taking
-0.42 W. A tab across the channel would cross the null at mid-thickness, so the island is held by a carrier board a few
+0.64 W. A tab across the channel would cross the null at mid-thickness, so the island is held by a carrier board a few
 millimetres below, joined to island and frame by posts where the guide's even disturbance has faded (exp(−πs/2h)); each
 post is a joint whose count must not divide 2m. The same board carries resonator, feeds and pickups. *Control:* a flat
 facing-board ring of T915-S's 318 mm (radius 50.6 mm) holds 33.4 eV per eV of depth by the static rule, 2.7 to 3.3 times
@@ -431,15 +431,16 @@ HackRF's one channel.
 ### 5.1 The line
 
 Four strips carry three quasi-TEM modes, and only the quadrupole has no field on the axis. A quadrant solve calibrated
-on ELE-2, with Wheeler's rule for copper loss, gives Z₀, n_eff and Q (conductor Q to ±30 %) for two sections: A, rigid,
-strips 1.5h wide either side of a split g = h routed as a slot; B, flex, width 8h, split 0.3h, 25 µm polyimide. S2-C3's
-own line, the slot guide, is in section 3.3. **Claim (index by band; checked).** At 915 MHz (h = 0.915 mm) section B's
-polyimide holds 7.2 % of the field energy and n_eff = 1.031; at 2.45 GHz (h = 0.343 mm) 16.6 % and 1.072, on cells of 11
-and 4 µm. A 307 mm ring drawn with the 2.45 GHz index resonates at 947 MHz; m = 1 at 915 MHz takes 318 mm on the
-polyimide alone and about 312 mm with 25 µm of adhesive behind it (n_eff near 1.05), so the length is set from a
-coupon's measured index. Its gap sensitivity d ln Z₀/d ln h is 0.39 to 0.51 (this solve and the buildability lens's),
-and its Z₀ is 41.9 Ω. **Hypothesis (straps).** The left-right mode runs within 0.1 % of the quadrupole on slotted
-boards; straps joining diagonal strips at the joints short it, if their count does not divide 2m (E2-17).
+on ELE-2, with Wheeler's rule for copper loss on the copper's thickness (calibrated on stripline to 1 %), gives Z₀,
+n_eff and Q for two sections: A, rigid, 35 µm copper strips 1.5h wide either side of a split g = h routed as a slot; B,
+flex, 18 µm copper 8h wide, split 0.3h, on 25 µm polyimide. S2-C3's own line, the slot guide, is in section 3.3. **Claim
+(index by band; checked).** At 915 MHz (h = 0.915 mm) section B's polyimide holds 7.4 % of the field energy and n_eff =
+1.031; at 2.45 GHz (h = 0.343 mm) 15.2 % and 1.065, on grids that resolve the copper's 18 µm and the polyimide's 25 µm.
+A 307 mm ring drawn with the 2.45 GHz index resonates at 947 MHz; m = 1 at 915 MHz takes 318 mm on the polyimide alone
+and about 312 mm with 25 µm of adhesive behind it (n_eff near 1.05), so the length is set from a coupon's measured
+index. Its gap sensitivity d ln Z₀/d ln h is 0.40 to 0.51 (this solve and the buildability lens's), and its Z₀ is
+41.7 Ω. **Hypothesis (straps).** The left-right mode runs within 0.1 % of the quadrupole on slotted boards; straps
+joining diagonal strips at the joints short it, if their count does not divide 2m (E2-17).
 
 ### 5.2 The ring
 
@@ -455,102 +456,109 @@ perturbations a quarter guided wavelength apart cancel: two closing joints so pl
 depth per watt, against 0.66 side by side. **Claim (backscatter).** A net reflection S builds a backward wave
 |S|·Q/(2πm) (Kippenberg et al.), and impedance varying round the ring splits ±m by Δf/f = 2|c₂ₘ| (Little, Laine and
 Chu), c₂ₘ the lap harmonic 2m of ln Z. **Hypothesis (spacer tolerance).** N spacers of independent relative gap error σ
-give |c₂ₘ| ≈ S·σ/√N in rms, S = d ln Z₀/d ln h, so 2Q|c₂ₘ| is about 1.5 linewidths in rms at Q 381, S 0.5, 24 spacers
-and 2 % (37 µm); the ring model's 60 draws on T915-S give a median of 1.40 and 2.57 at the 90th percentile, the closing
-joints' ±1 % adding about 0.6 (checked). Splitting past a linewidth defeats a fixed hybrid and not re-solved feeds
+give |c₂ₘ| ≈ S·σ/√N in rms, S = d ln Z₀/d ln h, so 2Q|c₂ₘ| is about 0.9 linewidths in rms at Q 214, S 0.5, 24 spacers
+and 2 % (37 µm); the ring model's 60 draws on T915-S give a median of 0.78 and 1.44 at the 90th percentile, the closing
+joints' ±1 % alone 0.28 (checked). Splitting past a linewidth defeats a fixed hybrid and not re-solved feeds
 (section 5.3), so the spacers are held to 2 % rms on the strength of the compiled drive rather than of 2Q|c₂ₘ| ≤ 1;
 whether balls in their seats hold 37 µm rms on an assembled flex pair is a metrology check, a feeler or capacitance
 gauge at each station (DR-14). **Hypothesis (curvature backscatter).** Curvature changes the impedance at order (hκ)²,
 and k = −1 strips carry it at 2m on every torus knot; k = 0 removes it (E2-7), and the two sensitivities of Z₀ to κ_n
 and κ_g come from bent-section solves in stage 0. **Proposition (loss ripple).** Fed at one place the depth falls by 1 −
-e^(−2πm/Q) a lap, 1.6 % at 915 MHz with Q 381 (checked).
+e^(−2πm/Q) a lap, 2.9 % at 915 MHz with Q 214 (checked).
 
 ### 5.3 K feeds: the first compile problem
 
 A ring model closes line matrices round the knot with toleranced joints and capacitive feeds, giving V(sᵢ) = Σ Gᵢₖwₖ
 over 240 samples. The compile minimises ‖Gw − V₀·e^(−i2πms/L)‖² + μ‖w‖², relaxes the target's phase and repeats, scoring
 the least ripple at efficiency ≥ 0.8. **Claim (two cheap modes).** On section A's ring at 915 MHz (slotted RO4003C, Q
-193, 290 mm, R 2248 Ω, six joints of 3 mm at 1.4 Z₀, ±10 % in impedance, ±0.5 mm in position) with K = 6 the singular
-values are 2778, 2778, 27.5, 9.4, 9.4 and 4.9 V/A: the ±m modes over a floor 101 times lower. **Claim (ripple against K,
-section A).** Medians of 20 tolerance draws on that ring:
+251, 290 mm, R 2934 Ω, six joints of 3 mm at 1.4 Z₀, ±10 % in impedance, ±0.5 mm in position) with K = 6 the singular
+values are 3632, 3632, 29.3, 10.0, 10.0 and 5.3 V/A: the ±m modes over a floor 124 times lower. **Claim (ripple against
+K, section A).** Medians of 20 tolerance draws on that ring:
 
 | Case | K = 1 | 2 | 6 | 12 | Feeds at the joints | Untuned hybrid |
 | --- | --- | --- | --- | --- | --- | --- |
-| 915 MHz, m = 1 | 0.98 | 0.039 | 0.011 | 0.007 | 0.005 | 0.46 |
-| the same, feed susceptance compensated | | 0.009 | 0.005 | | 0.005 | 0.28 |
-| 2450 MHz flex, m = 2 | | 0.100 | 0.051 | | 0.015 | |
-| must fail: m = 3, three joints, 2450 MHz | 0.54 | 0.70 | 0.76 | | 0.96 | 0.64 |
+| 915 MHz, m = 1 | 0.99 | 0.037 | 0.010 | 0.007 | 0.006 | 0.40 |
+| the same, feed susceptance compensated | | 0.009 | 0.007 | | 0.006 | 0.38 |
+| 2450 MHz flex, m = 2 | | 0.100 | 0.054 | | 0.012 | |
+| must fail: m = 3, three joints, 2450 MHz | 0.54 | 0.69 | 0.76 | | 0.97 | 0.66 |
 
-Two compiled feeds remove the resonant backward wave in the median, one draw in ten keeping 0.2 to 0.4 at 2450 MHz;
-feeds at the joints have no such tail. An untuned network starts at 0.19 with plain coupling capacitors, so the weights
-are compiled from the built ring's measured G. **Claim (T915-S; checked).** Section B at 318 mm (n_eff 1.031, Q 381 on
-bare copper), 24 spacers at σ rms gap error, two closing joints of 29.4 mm at −2 ± 1 % in impedance placed a quarter
-guided wave (79.5 mm) apart with ±0.5 mm, feeds a quarter guided wave apart, the laminate ±10 %; the buildability lens's
-nodal-admittance ring with d ln Z₀/d ln h = 0.5; medians, the 90th percentile in brackets:
+Two compiled feeds remove the resonant backward wave in the median, one draw in ten keeping 0.2 to 0.4 (at 915 MHz with
+two, three, six and eight feeds, at 2450 MHz with four); feeds at the joints have no such tail. An untuned network
+starts at 0.19 with plain coupling capacitors, so the weights are compiled from the built ring's measured G. **Claim
+(T915-S; checked).** Section B at 318 mm (n_eff 1.031, Q 214 on bare copper), 24 spacers at σ rms gap error, two closing
+joints of 29.4 mm at −2 ± 1 % in impedance placed a quarter guided wave (79.4 mm) apart with ±0.5 mm, feeds a quarter
+guided wave apart, the laminate ±10 %; the buildability lens's nodal-admittance ring with d ln Z₀/d ln h = 0.5; medians,
+the 90th percentile in brackets:
 
 | Case | Draws | Splitting, linewidths | Fixed hybrid: \|b/a\|; depth per watt | Re-solved feeds: \|b/a\|; depth per watt |
 | --- | --- | --- | --- | --- |
-| bare copper, σ = 1 % | 30 | 1.08 (1.53) | 0.17 (0.25); 0.66 | 0.008 (0.014); 0.96 |
-| bare copper, σ = 2 % | 60 | 1.40 (2.57) | 0.22 (0.36); 0.58 | 0.011 (0.022); 0.94 |
-| bare copper, σ = 3 % | 30 | 2.21 (3.48) | 0.30 (0.39); 0.44 | 0.017 (0.030); 0.91 |
-| ENIG, Q 300, σ = 2 % | 30 | 0.97 (2.28) | 0.16 (0.36); 0.67 | 0.011 (0.019); 0.95 |
-| ENIG, Q 84, σ = 2 % | 30 | 0.29 (0.64) | 0.05 (0.11); 0.87 | 0.012 (0.020); 0.95 |
-| bare copper, σ = 2 %, split etched ±20 % | 30 | 1.72 (3.10) | 0.28 (0.37); 0.47 | 0.014 (0.023); 0.94 |
+| bare copper, σ = 1 % | 30 | 0.60 (0.86) | 0.10 (0.14); 0.80 | 0.008 (0.014); 0.97 |
+| bare copper, σ = 2 % | 60 | 0.78 (1.44) | 0.13 (0.24); 0.74 | 0.013 (0.020); 0.94 |
+| bare copper, σ = 3 % | 30 | 1.24 (1.95) | 0.20 (0.32); 0.60 | 0.011 (0.026); 0.92 |
+| ENIG, Q 167, σ = 2 % | 30 | 0.54 (1.27) | 0.09 (0.21); 0.78 | 0.009 (0.019); 0.95 |
+| ENIG, Q 45, σ = 2 % | 30 | 0.16 (0.35) | 0.04 (0.07); 0.89 | 0.014 (0.027); 0.95 |
+| bare copper, σ = 2 %, split etched ±20 % | 30 | 0.97 (1.74) | 0.16 (0.28); 0.68 | 0.012 (0.021); 0.94 |
 
-Depth per watt is the weakest point's, relative to a perfect ring; at σ = 2 % its 10th percentile is 0.92 with re-solved
-feeds and 0.37 with the hybrid. The re-solved second feed reached the search's ±6 dB bounds in some draws, so it spans
+Depth per watt is the weakest point's, relative to a perfect ring; at σ = 2 % its 10th percentile is 0.93 with re-solved
+feeds and 0.55 with the hybrid. The re-solved second feed reached the search's ±6 dB bounds in some draws, so it spans
 at least ±6 dB and 360°. **Claim (re-solved weights).** On the 2.45 GHz strips at 2.9 % rms spacer error two re-solved
-weights keep 0.93 of a perfect ring's depth per watt against a fixed hybrid's 0.65, the solve holding the direction of
+weights keep 0.95 of a perfect ring's depth per watt against a fixed hybrid's 0.81, the solve holding the direction of
 travel.
 
 ![|V(s)| on the trefoil for three drives, ripple against K, singular values of G](../experiments/knotted_guide/drive.png)
 
 **Figure 6.** Driving the knot (section 5.3), from a ring of transmission line closed on itself with joints and
 capacitively coupled Norton feeds, the drive lens's ring model typed. Top: one tolerance draw of section A's ring at 915
-MHz (290 mm, n 1.13, Q 193, Z₀ 73 Ω, six 3 mm joints at 1.4 Z₀ drawn ±10 % and ±0.5 mm), |V(s)| over its rms on the
-trefoil for one feed (ripple 0.98: a standing wave), the untuned 90° hybrid (0.57) and two compiled feeds (0.046); feeds
+MHz (290 mm, n 1.13, Q 251, Z₀ 73.5 Ω, six 3 mm joints at 1.4 Z₀ drawn ±10 % and ±0.5 mm), |V(s)| over its rms on the
+trefoil for one feed (ripple 0.98: a standing wave), the untuned 90° hybrid (0.65) and two compiled feeds (0.56); feeds
 red, joints black. Bottom left: ripple against the number of feeds, medians of 20 draws shaded to the 90th percentile:
-at 915 MHz and m = 1, 0.985 for one feed, 0.041 for two, 0.011 for six and 0.007 for twelve, 0.006 with the feeds at the
-joints and 0.32 for the untuned hybrid; with the feeds' susceptance compensated, 0.009 for two and 0.006 for six (the
-hybrid 0.29); at 2450 MHz and m = 2, 0.100 and 0.054 (0.012 at the joints); and m = 3 on a trefoil with three strong
+at 915 MHz and m = 1, 0.986 for one feed, 0.037 for two, 0.010 for six and 0.007 for twelve, 0.006 with the feeds at the
+joints and 0.40 for the untuned hybrid; with the feeds' susceptance compensated, 0.009 for two and 0.007 for six (the
+hybrid 0.38); at 2450 MHz and m = 2, 0.100 and 0.054 (0.012 at the joints); and m = 3 on a trefoil with three strong
 joints, the case that must fail, 0.54 to 0.76 whatever the feeds and 0.97 with them at the joints. Bottom right: the
-singular values of G for six feeds at the resonance: two cheap modes, ±m, at 2783 V/A with capacitor-coupled feeds and
-2775 compensated (√K·R/2 = 2746), over a floor 95 to 99 times lower.
+singular values of G for six feeds at the resonance: two cheap modes, ±m, at 3642 V/A with capacitor-coupled feeds and
+3632 compensated (√K·R/2 = 3594), over a floor 124 to 128 times lower.
 
 ### 5.4 Q and volts per watt by laminate
 
-For a 1 eV well near q = 0.5 (f·h = 0.839 MHz·m), bare copper faces unless stated:
+For a 1 eV well near q = 0.5 (f·h = 0.839 MHz·m), bare copper faces, 18 µm thick on flex and 35 µm on rigid boards,
+unless stated:
 
 | Section, band, m | Laminate | Field energy in it | Q | R | Power for 1 eV |
 | --- | --- | --- | --- | --- | --- |
-| A, 915 MHz, 1 | FR-4 0.8 mm, solid; slotted | 0.62; 0.25 | 59; 103 | 539; 1136 Ω | 2.8; 1.3 W |
-| A, 915 MHz, 1 | RO4003C 0.51 mm, slotted | 0.19 | 193 | 2248 Ω | 0.67 W |
-| A, 915 MHz, 1 | polyimide 50 µm in air | 0.11 | 181 | 2269 Ω | 0.68 W |
-| B, 915 MHz, 1, 318 mm | polyimide 25 µm; bare copper, ENIG | 0.072 | 381; 300 to 84 | 2.54; 2.0 to 0.56 kΩ | 0.50; 0.63 to 2.26 W |
-| B, 2450 MHz, 2, 229 mm | polyimide 25 µm; rigid FR-4 | 0.17; 0.62 | about 225; 62 | 730 Ω | 1.7; about 8 W |
-| slot guide, 915 MHz, 1 | FR-4 0.8 mm; RO4003C 0.813 mm, 0.5 mm strips | 0.85; 0.81 | 49; 179 | 470; 1902 Ω | 0.21 to 0.30 eV at 40 V: 1.7; 0.42 W |
+| A, 915 MHz, 1 | FR-4 0.8 mm, solid; slotted | 0.59; 0.24 | 65; 121 | 611; 1336 Ω | 2.5; 1.1 W |
+| A, 915 MHz, 1 | RO4003C 0.51 mm, slotted | 0.19 | 251 | 2934 Ω | 0.51 W |
+| A, 915 MHz, 1 | polyimide 50 µm in air | 0.11 | 241 | 3066 Ω | 0.49 W |
+| B, 915 MHz, 1, 318 mm | polyimide 25 µm; bare copper, ENIG | 0.074 | 214; 167 to 45 | 1.42; 1.11 to 0.30 kΩ | 0.89; 1.14 to 4.23 W |
+| B, 2450 MHz, 2, 230 mm | polyimide 25 µm; rigid FR-4 | 0.15; 0.62 | 134; 52 | 418; 117 Ω | 3.0; 10.8 W |
+| slot guide, 915 MHz, 1 | FR-4 0.8 mm; RO4003C 0.813 mm, 0.5 mm strips | 0.85; 0.81 | 43; 117 | 412; 1243 Ω | 0.21 to 0.30 eV at 40 V: 1.9; 0.64 W |
 
 Solid laminate holds half or more of the field energy, a slot between facing boards or thin flex a fifth or less, and a
 slot guide four-fifths, its quadrupole putting the laminate between opposite volts: a field mostly in the air gap is a
 design result. The rigid fab's rules (slots ≥ 1.0 mm, copper 0.2 mm back) widen section A's split to about 1.5h at
-915 MHz, for the solver to re-score. **Hypothesis (finish).** The fab's flex is ENIG only, whose nickel raises the
+915 MHz, for the solver to re-score. **Claim (the split as a lever; checked).** The copper's loss sits at the split's
+edges, so at the same 1 eV well at q = 0.5 and 915 MHz, the well solved at each split, a wider split buys the power
+back: from 0.3h to h the strips' Q rises from 210 to 290 and the null's gradient falls from 0.77 to 0.61 V/h², so the
+gap closes to keep q (h from 0.90 to 0.72 mm) and the volts fall from 49.5 to 39.6 V, and the well takes 0.88 W at 0.3h,
+0.51 W at 0.6h, 0.33 W at h and 0.26 W at 1.25h; at 1.5h it leaks through the split, its depth share falling from 0.248
+to 0.189 of four rods', and takes 0.31 W. **Hypothesis (finish).** The fab's flex is ENIG only, whose nickel raises the
 faces' surface resistance 1.3 to 5 times at 915 MHz by a layered skin-depth estimate (Coonrod measured ENIG's added
-loss): the conductor Q falls from 428 to between 329 and 86, Q to between 300 and 84, and 1 eV on T915-S takes 0.63 to
-2.26 W (checked). Two ring coupons settle it (DR-13), and the feed capacitors follow them, critical coupling moving from
-0.35 to 0.75 pF in series across that range.
+loss): the conductor Q falls from 228 to between 176 and 46, Q to between 167 and 45, and 1 eV on T915-S takes 1.14 to
+4.23 W (checked). Two ring coupons settle it (DR-13), and the feed capacitors follow them, critical coupling moving from
+0.47 to 1.05 pF in series across that range.
 
 ### 5.5 The frequency
 
-At 915 MHz, m = 1 (318 mm) takes 0.50 W for 1 eV on bare copper and 0.63 to 2.26 W on the fab's ENIG, holds 6 to 10 eV
+At 915 MHz, m = 1 (318 mm) takes 0.89 W for 1 eV on bare copper and 1.14 to 4.23 W on the fab's ENIG, holds 6 to 10 eV
 per eV of depth (the static in-plane limit discounted as four rods tracked, section 6.1, until E2-9 tracks facing
-boards), tolerates 2 % (37 µm) of gap error with re-solved feeds and rises 20 K on radiation cooling (25 to 72 K on
-ENIG); at 2450 MHz, m = 2 (229 mm) takes 1.7 W on bare copper, holds 12 to 19 eV per eV on the same terms, allows 3 %
-(21 µm) by a 12-draw Monte Carlo and rises 150 K; at 5800 MHz, m = 5 takes about 10 W by the line solver at 12 cells
-across h, a figure that waits for DR-0's calibration at that size. **The first trefoil runs at 915 MHz, m = 1**, for the
-least power, millimetre tolerances 1.8 to 2.7 times looser and a 0.27 mm split (2.45 GHz's 0.10 mm clears the fab's
+boards), tolerates 2 % (37 µm) of gap error with re-solved feeds and rises 34 K on radiation cooling (42 to 112 K on
+ENIG); at 2450 MHz, m = 2 (230 mm) takes 3.0 W on bare copper, holds 12 to 19 eV per eV on the same terms, allows 5.5 %
+(37 µm) by a 12-draw Monte Carlo and rises 200 K; at 5800 MHz, m = 5 takes about 13 W by the line solver with its copper
+resolved, a figure that waits for DR-0's calibration at that size. **The first trefoil runs at 915 MHz, m = 1**, for the
+least power, millimetre tolerances 1.0 to 2.7 times looser and a 0.27 mm split (2.45 GHz's 0.10 mm clears the fab's
 0.089 mm flex rule by 0.011 mm, inside the ±20 % etch), at the cost of an in-plane radius of 5.1 half-widths and a 2W
-rule met by 0.65 mm (checked). On ENIG the same choice takes the amplifier of section 5.6 to +34.5 dBm; a bare-copper
-fab keeps it at +27.5 dBm.
+rule met by 0.65 mm (checked). On ENIG the same choice takes the amplifier of section 5.6 to +37.0 dBm; a bare-copper
+fab keeps it at +30.0 dBm.
 
 **Proposition (impact bound).** In a uniform field E₀·cos(ωt + φ) an electron's speed changes by at most 2eE₀/(mω), so
 impacts between facing strips carry at most (√W₀ + √(8D))². **Proposition (frequency drops out).** At fixed q, V =
@@ -567,31 +575,33 @@ below its 50 V.
 
 ![Q by split and laminate, power for 1 eV against frequency, the multipactor chart](../experiments/knotted_guide/laminate.png)
 
-**Figure 7.** Laminate and band (sections 5.4 and 5.5), from finite-volume sections of the facing strips 8h wide, their
-edge fields cut off at the copper's 18 µm, the copper's loss from the air problem's surface charge. Left: Q of the
-quadrupole mode on bare copper against the split g/h, for the copper alone, behind 25 µm polyimide and behind 0.8 mm
+**Figure 7.** Laminate and band (sections 5.4 and 5.5), from finite-volume sections of the facing strips 8h wide with
+the copper's thickness resolved, 18 µm on flex and 35 µm on FR-4, the copper's loss by Wheeler's rule. Top left: Q of
+the quadrupole mode on bare copper against the split g/h, for the copper alone, behind 25 µm polyimide and behind 0.8 mm
 FR-4, at 915 MHz (solid) and 2450 MHz (dashed), shaded for polyimide at 915 MHz with ENIG's surface resistance 1.3 to 5
-times copper's; the star, section B at g = 0.3h: n_eff 1.034, polyimide share 0.078, Z₀ 42.1 Ω, Q_c 449 and Q 394
-(section 5.1's solve: 1.031, 0.072, 41.9 Ω, 428 and 381). Middle: the power a 1 eV well takes at q = 0.5 (50.3 V) on
-section B closed as a ring of m guided waves, against frequency: 0.48 W at 915 MHz and m = 1, 1.39 W at 2450 MHz and m =
-2, 5.2 W at 5800 MHz and m = 5 on this solve; the bend holds, by the static limit discounted as four rods tracked, 6.0
-to 9.3 eV per eV at m = 1 and 11.9 to 18.6 at m = 2, growing with m alone while the power grows as m√f. Right:
-ECSS-E-ST-20-01C's copper boundary with the operating lines V = 35.7·q·(fd)² at q = 0.3, 0.5 and 0.7 (D =
-1.42·q²·(fd)²): at 1 eV and q = 0.5 the line sits 5.2 dB below the boundary, which it crosses near 3 eV. The markers are
-a one-dimensional two-surface Monte Carlo on copper's yield standing in for level 2's two-dimensional tracker (filled:
-the population grows; open: it decays). On ECSS's boundary itself (squares) this model decays between 0.9 and 2.9
-GHz·mm, so there it is not conservative; along q = 0.5 its population decays from 0.5 to 2 eV, is marginal at 3 eV and
-grows from 4 eV.
+times copper's; the star, section B at g = 0.3h: n_eff 1.031, polyimide share 0.074, Z₀ 41.7 Ω, Q_c 229 and Q 214
+(section 5.1's solve: 1.031, 0.074, 41.7 Ω, 228 and 214). Top right: the power the same 1 eV well takes at q = 0.5 and
+915 MHz against the split, the well solved at each split and h set for that q: 2.3 W at 0.1h, 0.88 W at 0.3h, 0.51 W at
+0.6h, 0.33 W at h and 0.26 W at 1.25h, the well leaking through the split at 1.5h (0.31 W). Bottom left: the power a
+1 eV well takes at q = 0.5 (50.3 V) on section B closed as a ring of m guided waves, against frequency: 0.89 W at
+915 MHz and m = 1, 3.02 W at 2450 MHz and m = 2, 12.8 W at 5800 MHz and m = 5; the bend holds, by the static limit
+discounted as four rods tracked, 6.0 to 9.4 eV per eV at m = 1 and 12.0 to 18.7 at m = 2, growing with m alone while the
+power grows as m√f. Bottom right: ECSS-E-ST-20-01C's copper boundary with the operating lines V = 35.7·q·(fd)² at q =
+0.3, 0.5 and 0.7 (D = 1.42·q²·(fd)²): at 1 eV and q = 0.5 the line sits 5.2 dB below the boundary, which it crosses near
+3 eV. The markers are a one-dimensional two-surface Monte Carlo on copper's yield standing in for level 2's
+two-dimensional tracker (filled: the population grows; open: it decays). On ECSS's boundary itself (squares) this model
+decays between 0.9 and 2.9 GHz·mm, so there it is not conservative; along q = 0.5 its population decays from 0.5 to
+2 eV, is marginal at 3 eV and grows from 4 eV.
 
 ### 5.6 The drive chain with the HackRF Pro alone
 
 The HackRF Pro sends one CW tone; its maker publishes no transmit power (the HackRF One gives 5 to 15 dBm at 915 MHz),
-so the first bench session measures it. An amplifier of 13 to 30 dB on its own supply reaches the +27.5 dBm that 1 eV on
-bare copper takes after the coupling and the +28.5 to +34.5 dBm that ENIG takes (checked); hobby 915 MHz modules of a
+so the first bench session measures it. An amplifier of 15 to 32 dB on its own supply reaches the +30.0 dBm that 1 eV on
+bare copper takes after the coupling and the +31.0 to +37.0 dBm that ENIG takes (checked); hobby 915 MHz modules of a
 few watts cost about $20 to $60 and lab amplifiers $300 and more (rough), and DR-5 measures the one chosen. A 90° hybrid
 printed on the feed board serves two feeds, and a vector modulator on the second (an ADL5390-class part, about $20 to
 $40) spans at least ±6 dB and 360°, errors ε and φ in its ratio leaving |b/a| = ε/2 and φ/2. Each feed is a balun and
-two 0.69 pF capacitors (0.35 pF in series for 2.54 kΩ, checked), the ring drawn for the loaded line. Pickups feed
+two 0.93 pF capacitors (0.47 pF in series for 1.42 kΩ, checked), the ring drawn for the loaded line. Pickups feed
 detector diodes on the controller's ADC, since the half-duplex HackRF cannot listen while it drives: three a sixth of a
 guided wave apart (53 mm) give b/a, and from magnitudes alone four states per pickup (each feed alone, both in phase,
 both in quadrature) fix the ratio of its two entries of G, the 4K − 4 count of `docs/VIRTUAL_ANTENNA.md` section 4.9 for
@@ -601,11 +611,11 @@ mode radiates as a one-wavelength loop, and keeping that under 1 % of the loss t
 
 ```mermaid
 flowchart LR
-  H["HackRF Pro: one 915 MHz tone"] --> A["amplifier: +27.5 dBm bare copper, up to +34.5 dBm ENIG"]
+  H["HackRF Pro: one 915 MHz tone"] --> A["amplifier: +30.0 dBm bare copper, up to +37.0 dBm ENIG"]
   A --> Y["90-degree hybrid, printed"]
-  Y --> F1["feed 1: balun, 2 x 0.69 pF"]
+  Y --> F1["feed 1: balun, 2 x 0.93 pF"]
   Y --> M["vector modulator: at least 6 dB either way, 360 degrees"]
-  M --> F2["feed 2: balun, 2 x 0.69 pF, 79.5 mm on"]
+  M --> F2["feed 2: balun, 2 x 0.93 pF, 79.4 mm on"]
   F1 --> R(("T915-S ring, m = 1, 318 mm"))
   F2 --> R
   R --> P["three pickups, 53 mm apart"]
@@ -617,7 +627,7 @@ flowchart LR
 ```
 
 **Figure 8.** The drive chain with the HackRF Pro alone: one 915 MHz tone, an amplifier on its own supply, a printed 90°
-hybrid and a vector modulator on the second feed, each feed a balun and two 0.69 pF capacitors into T915-S's strips;
+hybrid and a vector modulator on the second feed, each feed a balun and two 0.93 pF capacitors into T915-S's strips;
 three pickups 53 mm apart through detector diodes to the controller's ADC, which re-solves the second feed's weight;
 dashed, T915-S6's chirp into the segments' bias stars.
 
@@ -737,7 +747,7 @@ one orbit of the trefoil's D3 and drive lap harmonics 6n. Each cut is bridged at
 |Γ| ≈ 0.02 a cut), which at the chirp's 5.6 to 15.8 MHz is 25 to 71 Ω a joint; so the segments' common mode is driven
 from a low-impedance source through a star of four chip inductors per segment (about 100 nH, self-resonant above
 1.5 GHz, Q about 60) whose centre is the quadrupole's RF ground: 3.5 to 10 Ω across the chirp, and about 0.22 W of added
-RF loss for the 24 strips, 45 % of the ring's 0.50 W, the price of acceleration. DC references and DC steering alone
+RF loss for the 24 strips, 24 % of the ring's 0.89 W, the price of acceleration. DC references and DC steering alone
 take 1 MΩ resistors instead, 7.5 mW. Each cut is a joint for the particles as well, scarfed like the closing joints. At
 60 meV a lap (V_a = 10 mV) the chirp runs 3f_rev from 5.60 to 15.84 MHz over 117 laps, 32.7 µs on 318 mm, while the tune
 falls from 92 to 32 and crosses the cuts' bands at ν = 6n and 3n.
@@ -750,7 +760,7 @@ falls from 92 to 32 and crosses the cuts' bands at ν = 6n and 3n.
    controller's RAM; the 256-word, 10 µs sequencer gives one trigger word and holds the confinement state for the ramp's
    four slots.
 2. *Two tones from the one radio:* the HackRF sends the carrier and a sideband 5.60 to 15.84 MHz above it, both inside
-   its 20 MHz with the tuning 7.9 MHz above 915 MHz; the ring's 2.4 MHz linewidth keeps the sideband out of the ring,
+   its 20 MHz with the tuning 7.9 MHz above 915 MHz; the ring's 4.3 MHz linewidth keeps the sideband out of the ring,
    and a zero-bias Schottky detector on the feed board, fed through a coupler, recovers the beat as the gaps'
    common-mode volts. No second source; the chirp is computed in the HackRF's baseband, and the sequencer works as in 1.
 3. *A synthesiser for the confinement tone:* an ADF4351-class module (about $15 to $30) locked to the HackRF's 10 MHz
@@ -772,8 +782,8 @@ and resonance crossing in a Paul trap (Takeuchi et al.) are precedents.
 **Figure 11.** Acceleration by the joints (section 6.4), from kick-drift and lap maps. Left: T915-S6, six π-mode gaps
 round 318 mm at ±10 mV and a synchronous phase of 30°, 60 meV a lap: of 4000 electrons spread over an RF period and by
 0.02 eV, 50 % are captured (blue; 48 % on the first run's guide, whose chirp runs 6.43 to 18.22 MHz) and taken from 1 to
-8 eV in 117 laps (32.7 µs) on one chirp of 3f_rev from 5.60 to 15.85 MHz (top axis); the exact Mathieu tune falls from
-91.7 to 32.4, crossing the cuts' null-step bands at ν = 6n (orange) and their gradient bands at ν = 3n (green, dotted).
+8 eV in 117 laps (32.7 µs) on one chirp of 3f_rev from 5.60 to 15.86 MHz (top axis); the exact Mathieu tune falls from
+91.6 to 32.4, crossing the cuts' null-step bands at ν = 6n (orange) and their gradient bands at ν = 3n (green, dotted).
 Right: Λ, the log of the amplitude gain through one gradient band (ν = 54) crossed while the energy ramps, for ε_k =
 0.002, 0.005 and 0.01: a lap map of six thin lenses (dots) against cosh Λ = e^G with G = π²·ν·ε_k²·W/(2ΔW) (lines); the
 star, six 1 mm dips of 15 % (ε_k = 0.0029) at 60 meV a lap, G = 0.15 a crossing.
@@ -812,7 +822,7 @@ inside a centred beam, defocusing toward the boards and focusing across them (La
 tune shift; checked).** On T915-S at 1 eV and q = 0.5 that is 0.0032 coherent and 0.0011 incoherent at 3.4 × 10⁴
 electrons, and 0.17 and 0.056 at the 1.8 × 10⁶ limit, splitting the tunes toward and across the boards. **Claim (beam
 loading; checked).** Unbunched at 915 MHz, the beam loads the ring through its micromotion, a current in quadrature with
-the drive: 18 nA at 3.4 × 10⁴ electrons, detuning the ring by about 1 Hz (5 × 10⁻⁷ of its linewidth) and by 59 Hz at the
+the drive: 18 nA at 3.4 × 10⁴ electrons, detuning the ring by about 1 Hz (3 × 10⁻⁷ of its linewidth) and by 59 Hz at the
 limit, so the beam is heard at its own lines, k·f_rev and f_s ± k·f_rev, on the pickups. **Linked rings.** Two R1 rings
 interlocked as a Hopf link carry beams whose magnetic fields link, their mutual helicity twice the linking number times
 the two fluxes, a field topology one ring cannot make. A many-particle run in the solved field, the boards as its
@@ -850,7 +860,7 @@ the generic process of that document's section 3.4, step by step:
   boundary-element windows (DC references and steering), the chirp's common-mode operator at 5.6 to 15.8 MHz, and the
   ring's G at 915 MHz from the ring model. This is step 9's band in a new form: one geometry, three operators at once,
   each with its own price list.
-- *Step 3, spectrum:* the ring's G has two cheap modes, ±m, over a floor about 100 times lower (section 5.3); the
+- *Step 3, spectrum:* the ring's G has two cheap modes, ±m, over a floor about 125 times lower (section 5.3); the
   electrostatic operator prices steering at 12.0 mV per micrometre at DC and 86 mV per micrometre at RF (section 4.6); a
   gradient correction costs its fraction of a segment's drive at RF, which one channel buys only in copper.
 - *Step 4, targets:* linear where structure allows (zero transverse and axial field, a target gradient, uniform
@@ -956,7 +966,7 @@ and ledger rows, before E2 registers:
 
 | Instrument | Module | Held to |
 | --- | --- | --- |
-| 2-D sections by finite volumes (facing strips, slot guide, rails): Z₀, n_eff, share, Q, gradient, escape | `array16/guide/sections.py` | ELE-1 to ELE-3; section B's 1.031 and 1.072; the slot line of section 3.3 |
+| 2-D sections by finite volumes (facing strips, slot guide, rails): Z₀, n_eff, share, Q, gradient, escape | `array16/guide/sections.py` | ELE-1 to ELE-3; section B's 1.031 and 1.065; the slot line of section 3.3 |
 | boundary-element windows, null tracker, mirrored and unsymmetrised meshes | `array16/guide/bem.py` | the accuracies of section 4.5; E2-1 |
 | axisymmetric bend reference by quadrature | `array16/guide/axisym.py` | 0.1405 and 0.318 to 0.1 % |
 | ring model (line matrices and nodal admittance), feed compile, tolerance draws | `array16/guide/ring.py` | RNG-1 to RNG-6; the tables of section 5.3 |
@@ -996,10 +1006,10 @@ a failure, or 93 with one (checked).
 **Designs that must fail, and what makes each work:** one board's rails at 1 eV and 915 MHz (q = 1.89), which work at
 0.093 eV at 50 V with the null 0.575 mm up or at 1 eV with 543 V and the null 1.89 mm up; straight strips on r/R = 0.30,
 which the twist-free or k = 0 framing makes; a 5 eV copper strip guide, which a low-yield surface or a shallower well
-makes; rigid FR-4 strips at 2.45 GHz on printed mounts (about 8 W), which flex makes at 1.7 W; the sharp six-stick
+makes; rigid FR-4 strips at 2.45 GHz on printed mounts (about 11 W), which flex makes at 3.0 W; the sharp six-stick
 trefoil, which rounding to 8 mm with twisted straights makes; m = 3 on a trefoil with three strong joints, which weak
 joints (2Q|c₆| ≤ 1) or feeds compiled at the joints make. **First findings:** T915-S's index at 915 MHz is 1.031, so m =
-1 takes 318 mm; the slot guide holds 85 % of its field in the laminate (Q 49 on FR-4, 179 on RO4003C) and the copper
+1 takes 318 mm; the slot guide holds 85 % of its field in the laminate (Q 43 on FR-4, 117 on RO4003C) and the copper
 set-back halves its depth; k = 0 keeps the trefoil's symmetry, but its twist makes the strip non-developable (edges
 +3.2 × 10⁻⁴) and its plates 329.5 and 306.1 mm long; the 915 MHz strips meet DR-1's 2W rule by 0.65 mm; the 2.45 GHz
 strips miss DR-11 with fab-drilled pins (up to 0.44h between boards); the 1 eV design keeps 5.2 dB at level 1 and about
@@ -1092,28 +1102,28 @@ control loop through `fwsim`, and the hardware bench takes their place at the bu
 1. **T915-S: facing flex strips on the r/R = 0.45 trefoil, 915 MHz, m = 1.** 318 mm (n_eff 1.031 by the section solve,
    the length set from a coupon) on 25 µm polyimide, gap 1.83 mm, width 8h (6h in the sweep), split 0.27 mm, closed with
    k = 0 at +0.48°/mm (in-plane radius ≥ 18.6 mm), plates of 329.5 and 306.1 mm each cut from its own planform, two
-   compensated feeds and two closing joints each a quarter guided wave (79.5 mm) apart, the joints scarfed over 29.4 mm,
-   sapphire spacers at 24 stations to 2 % rms: 0.50 W for 1 eV on bare copper (0.63 to 2.26 W on ENIG), 6 to 10 eV per
-   eV of depth (by the discounted static limit until E2-9), the re-solved feeds' backward wave 0.011 in the median. The
+   compensated feeds and two closing joints each a quarter guided wave (79.4 mm) apart, the joints scarfed over 29.4 mm,
+   sapphire spacers at 24 stations to 2 % rms: 0.89 W for 1 eV on bare copper (1.14 to 4.23 W on ENIG), 6 to 10 eV per
+   eV of depth (by the discounted static limit until E2-9), the re-solved feeds' backward wave 0.013 in the median. The
    fewest joints, the full facing well, and a travelling wave its symmetry protects.
 2. **T915-S6: T915-S cut into six segments** 53.0 mm long, each cut 100 pF a strip and scarfed, the common mode driven
    through inductor stars (0.22 W more), the chirp 5.60 to 15.84 MHz over 32.7 µs from a DDS, two tones or a board
    synthesiser: the acceleration design, at q = 0.5.
 3. **S2-C3: two slotted RO4003C 0.813 mm boards 1.0 mm apart with the six-ramp trefoil, m = 2:** about 420 mm (R₀ =
-   33.2 mm), 0.5 mm strips set back 0.2 mm; 40 V, a 0.21 to 0.30 eV level at q = 0.44, takes 0.84 W; bends in the plane,
+   33.2 mm), 0.5 mm strips set back 0.2 mm; 40 V, a 0.21 to 0.30 eV level at q = 0.44, takes 1.29 W; bends in the plane,
    C3 by construction and the compiler's first frozen-pattern solve, at the price of shallow levels and ramps that may
-   limit it near 3 eV unless their rails reach twice the rail. On FR-4 it is the cheapest board and a 3.4 W drive at m =
-   2 (380 mm), or 1.7 W at m = 1 (190 mm).
-4. **L26: the rounded lattice trefoil, 24 steps of 26.2 mm,** on slotted RO4003C at 915 MHz, m = 2 (582 mm): 1.34 W for
+   limit it near 3 eV unless their rails reach twice the rail. On FR-4 it is the cheapest board and a 3.9 W drive at m =
+   2 (384 mm), or 1.9 W at m = 1 (192 mm).
+4. **L26: the rounded lattice trefoil, 24 steps of 26.2 mm,** on slotted RO4003C at 915 MHz, m = 2 (582 mm): 1.03 W for
    1 eV, corners of 7.9 mm, 10.4 mm straights, no symmetry, compiled feeds.
 5. **R1: the single-board line:** the rail ring (0.093 eV at 50 V, the null 0.575 mm up, about 200 mm at m = 1) as the
-   twin's first calibration rung; the channel ring (210 mm on RO4003C, 0.42 W for 40 V) with its island on a carrier;
+   twin's first calibration rung; the channel ring (210 mm on RO4003C, 0.64 W for 40 V) with its island on a carrier;
    the flat facing-board ring of 318 mm, the control for the knot's price; and the (1, 3) helix at r/R = 0.2, the
    control for leaving the plane.
 6. **T915-R: one flex ribbon carrying rails** along T915-S's trefoil: one piece, no gap to hold, a 0.093 eV well at 50 V
    and about 1.2 eV by the bend rule round 15.3 mm; the one-piece route to a knot, and a test of how far one surface
    reaches.
-7. **T2450-S: the strips at 2.45 GHz, m = 2,** for 12 to 19 eV per eV of depth, against 1.7 W, 150 K of heating and
+7. **T2450-S: the strips at 2.45 GHz, m = 2,** for 12 to 19 eV per eV of depth, against 3.0 W, 200 K of heating and
    fab-pin alignment.
 
 The sharp six-stick trefoil runs beside them as the case that must fail.
@@ -1163,8 +1173,8 @@ topology restores it; the failure is recorded with what would restore it, and th
 | E2-18 | at m = 1 the common mode radiates under 1 % of the loss with 36 dB of balun rejection, and in proportion to the rejection's power below it | openEMS on ring and feeds | a factor 2 |
 | E2-19 | at S2-C3's 20.5° crossings the lower guide puts under 1 % of the upper gradient times h on the upper null; T915-S's strands, 18.5 mm apart at their centres, couple under −40 dB | boundary elements; openEMS | the bands |
 | E2-20 | a perpendicular facing-board butt joint with a 0.1h gap keeps the null and at least 0.5 G₀ | boundary elements | 0.5 G₀ |
-| E2-21 | R1's rail ring at 915 MHz (null 0.575 mm, 50 V, q 0.5) holds its 0.093 eV well and electrons to 0.58 to 0.86 of the bend rule's 2.5 eV round its 32 mm radius | tracker on the ELE-1 field swept round the ring | the band |
-| E2-22 | at the same section, volts and q, the flat facing-board ring of 318 mm holds 2.7 to 3.3 times what T915-S holds, and the (1, 3) helix at r/R = 0.2 1.5 to 1.8 times | tracker | the bands |
+| E2-21 | R1's rail ring at 915 MHz (null 0.575 mm, 50 V, q 0.5) holds its 0.093 eV well and electrons to 0.58 to 0.86 of the bend rule's 2.6 eV round its 32 mm radius | tracker on the ELE-1 field swept round the ring | the band |
+| E2-22 | at the same section, volts and q, the flat facing-board ring of 318 mm holds 2.7 to 3.3 times what T915-S holds, and the (1, 3) helix at r/R = 0.2 1.4 to 1.6 times | tracker | the bands |
 | E2-23 | the shell model seats the k = 0 strip between its spacers flat to 37 µm rms | CalculiX shells | 37 µm |
 | E2-24 | six identical ramps split m = 3 and leave m = 1 and 2 under 0.1 linewidth | ring model with the ramps' solved impedance | 0.1 linewidth |
 | E2-25 | pieces of different symmetry 4h apart keep under 10⁻³ of their co-located axial field; 4 mm dips on the trefoil's symmetry orbit lose energies at tunes 57, 54 and 51 where the unrolled guide loses none; a joint turning by α over h to 2h hands over 0.4 to 0.75 of W·sin²α | boundary elements; tracker | the bands |
@@ -1174,7 +1184,7 @@ topology restores it; the failure is recorded with what would restore it, and th
 **Replication criteria**, kept apart because the lens runs and this revision computed them: the joint losses of section
 6.2, the tracked bend thresholds, the ring model's two tables, 50 ± 4 % capture, the straight slot guide's 2-D depths
 reproduced in 3-D, T915-S's frames, plates and strains (section 3.5), the slot line's constants (section 3.3), and the
-radiation-balance heating (20 K at 0.50 W on 318 mm; 150 ± 40 K for the 2.45 GHz strips) against Elmer's conduction and
+radiation-balance heating (34 K at 0.89 W on 318 mm; 200 ± 40 K for the 2.45 GHz strips) against Elmer's conduction and
 radiation. **Controls:** without joints no excursion above the smooth trend of reach against energy (71 to 107 µm over
 3.4 to 4.6 eV on the trefoil); the null tracker reading 0.32·V·dx·dy/h³ on an offset joint; m = 3 on a trefoil with
 three strong joints reaching no ripple under 0.5; E2-15 without the field. **The case that must fail:** the sharp
