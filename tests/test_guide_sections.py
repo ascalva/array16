@@ -112,7 +112,7 @@ def test_section_b_converged() -> None:
 @pytest.mark.parametrize(
     ("width", "thick", "spacing"), [(1.0e-3, 35e-6, 1.6e-3), (2.0e-3, 18e-6, 1.0e-3), (1.0e-3, 18e-6, 1.0e-3)]
 )
-def test_wheeler_rule_on_stripline(width: float, thick: float, spacing: float) -> None:
+def test_lin_2_wheeler_rule_on_stripline(width: float, thick: float, spacing: float) -> None:
     # section 3.3's calibration: Wheeler's rule on the converged grid, the strip's and the planes' copper receded,
     # against stripline's closed form (Pozar eq. 3.198), within 1 %; the control, with the planes ideal, misses it by
     # more than a tenth, the planes' part of the loss
@@ -131,7 +131,7 @@ def test_wheeler_rule_on_stripline(width: float, thick: float, spacing: float) -
     ],
     ids=["section B", "slot guide", "rails"],
 )
-def test_the_laminate_share_is_d_ln_c_over_d_ln_er(section: gs.Section) -> None:
+def test_lin_1_the_laminate_share_is_d_ln_c_over_d_ln_er(section: gs.Section) -> None:
     # DR-0: the laminate's share of the field energy equals d ln C'/d ln eps_r within 2 % (central differences at
     # +-1 % in eps_r), on a thin film, a laminate holding most of the field, and a board under rails
     laminate = section.laminate
@@ -140,6 +140,20 @@ def test_the_laminate_share_is_d_ln_c_over_d_ln_er(section: gs.Section) -> None:
     up, down = (gs.solve(replace(section, laminate=replace(laminate, er=laminate.er * k))) for k in (1.01, 0.99))
     slope = math.log(up.capacitance / down.capacitance) / math.log(1.01 / 0.99)
     assert slope == pytest.approx(share, rel=0.02)
+
+
+def test_lin_1_control_the_filling_factor_is_not_the_slope() -> None:
+    # the control: section B's filling factor, (C'/C'_air - 1)/(eps_r - 1), counts the laminate by what it adds to the
+    # capacitance and not by the energy it holds; it is under half the share, and under half d ln C'/d ln eps_r
+    section = gs.section_b(grid=gs.COARSE)
+    laminate = section.laminate
+    assert laminate is not None
+    solved = gs.solve(section)
+    filling = (solved.capacitance / solved.air_capacitance - 1) / (laminate.er - 1)
+    up, down = (gs.solve(replace(section, laminate=replace(laminate, er=laminate.er * k))) for k in (1.01, 0.99))
+    slope = math.log(up.capacitance / down.capacitance) / math.log(1.01 / 0.99)
+    assert filling < 0.5 * solved.share
+    assert filling < 0.5 * slope
 
 
 def test_the_split_as_a_lever() -> None:

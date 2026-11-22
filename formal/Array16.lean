@@ -8,3 +8,7 @@ public import Array16.Electrode
 public import Array16.Electrode.Defs
 public import Array16.Guide
 public import Array16.Guide.Defs
+public import Array16.Line
+public import Array16.Line.Defs
+public import Array16.Ring
+public import Array16.Ring.Defs

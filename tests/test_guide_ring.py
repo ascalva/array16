@@ -13,7 +13,7 @@ from hypothesis import strategies as st
 from hypothesis.extra import numpy as hnp
 
 from array16.guide import ring
-from array16.particles import C0, Arr
+from array16.particles import C0, Arr, CArr
 
 # The line study's sections (experiments/knotted_guide/results.json): section B at 915 MHz on bare copper, Q by
 # Wheeler's rule on its 18 um; section A on slotted RO4003C, its Q and Z0 on 35 um copper.
@@ -54,8 +54,8 @@ def profiles(draw: st.DrawFn, sizes: tuple[int, ...] = (16, 32, 48)) -> tuple[Ar
     return 50.0 * np.exp(lnz), index
 
 
-def test_a_perfect_ring_travels_under_quadrature_feeds_and_stands_under_one() -> None:
-    # RNG-1 and section 5.2 on the ring of segments: two current feeds a quarter guided wave apart at +-90 degrees
+def test_rng_2_3_4_a_perfect_ring_travels_under_quadrature_feeds_and_stands_under_one() -> None:
+    # RNG-3 and section 5.2 on the ring of segments: two current feeds a quarter guided wave apart at +-90 degrees
     # leave no component of order -m (|b/a| = 0) at any frequency, one feed a standing wave (|b/a| = 1); the travelling
     # wave takes mean |V|^2 / (2R) watts, R = Z0 Q / (2 pi m) (RNG-2), and ring_score's weakest depth per watt sits
     # below 2R by less than a lap's loss, the wave fed at one place losing 1 - exp(-2 pi m / Q) (RNG-4)
@@ -80,6 +80,67 @@ def test_a_perfect_ring_travels_under_quadrature_feeds_and_stands_under_one() ->
 
 @settings(max_examples=100, deadline=None)
 @given(
+    st.sampled_from([1, 2, 3]),
+    st.floats(0.1, 10.0),
+    st.floats(0.0, 1.0),
+    st.floats(0.0, 2 * math.pi),
+    st.integers(0, ring.RING_NODES - 1),
+)
+def test_rng_1_the_ripple_of_two_waves_is_the_smaller_amplitude_over_the_larger(
+    m: int, size: float, ratio: float, phase: float, crest: int
+) -> None:
+    # RNG-1: a e^(-i theta) + b e^(i theta) runs in size between |a| - |b| and |a| + |b|, so its ripple is |b/a|, the
+    # backward wave ring_purity reads from the same volts: none for one wave, one for two equal waves. The crest is
+    # put on a node, and the trough then falls on one a quarter wave on
+    nodes = ring.RING_NODES
+    theta = 2 * math.pi * m * np.arange(nodes) / nodes
+    a = size * np.exp(1j * phase)
+    b = ratio * a * np.exp(-2j * theta[crest])
+    v = a * np.exp(-1j * theta) + b * np.exp(1j * theta)
+    assert float(np.abs(v).max()) == pytest.approx(size * (1 + ratio), rel=1e-12)
+    assert float(np.abs(v).min()) == pytest.approx(size * (1 - ratio), abs=1e-12 * size)
+    assert ring.ripple(v) == pytest.approx(ratio, abs=1e-12)
+    assert ring.ring_purity(v, m) == pytest.approx(ratio, abs=1e-12)
+
+
+def test_rng_1_control_the_ripple_is_not_the_backward_wave_s_power() -> None:
+    # the control: a backward wave of 0.3 in amplitude, 0.09 in power, ripples the size by 0.3
+    theta = 2 * math.pi * np.arange(ring.RING_NODES) / ring.RING_NODES
+    v: CArr = np.asarray(np.exp(-1j * theta) + 0.3 * np.exp(1j * theta), dtype=np.complex128)
+    assert ring.ripple(v) == pytest.approx(0.3, abs=1e-12)
+    assert abs(ring.ripple(v) - 0.3**2) > 0.2
+
+
+@settings(max_examples=60, deadline=None)
+@given(st.sampled_from([1, 2]), st.floats(20.0, 1000.0), st.floats(20.0, 120.0))
+def test_rng_4_each_wave_of_one_feed_keeps_exp_minus_2_pi_m_over_q_of_its_depth_a_lap(
+    m: int, q0: float, z0: float
+) -> None:
+    # RNG-4 on the ring of segments: one current feed sends a wave each way, and each keeps e^(-2 pi m / Q) of its
+    # size squared a lap. At the resonance the volts are those two waves, lap after lap: V(s) / V(0) = (d(s) +
+    # d(L - s)) / (1 + d(L)), d(s) = e^(-(pi m / Q + 2 pi i m) s / L), to 1e-9 at every node; half a lap from the feed
+    # the depth is 4 sqrt(k) / (1 + sqrt(k))^2 of the feed's, k = e^(-2 pi m / Q). The control: a line losing twice as
+    # much a lap is not this ring
+    nodes = ring.RING_NODES
+    length = m * L915
+    z, n, _ = ring.perfect_ring(ring.N915, nodes, z0)
+    v = ring.ring_response(m * C0 / (ring.N915 * length), length, z, n, q0, (0,))[:, 0]
+    s = np.arange(nodes) / nodes
+
+    def two_waves(kept: float) -> CArr:
+        """V(s) / V(0) of the two waves of one feed, each keeping `kept` of its size squared a lap."""
+        gamma = -math.log(kept) / 2 + 2j * math.pi * m
+        out: CArr = (np.exp(-gamma * s) + np.exp(-gamma * (1 - s))) / (1 + np.exp(-gamma))
+        return out
+
+    kept = math.exp(-2 * math.pi * m / q0)
+    assert np.abs(v / v[0] - two_waves(kept)).max() < 1e-9
+    assert abs(v[nodes // 2] / v[0]) ** 2 == pytest.approx(4 * math.sqrt(kept) / (1 + math.sqrt(kept)) ** 2, rel=1e-9)
+    assert np.abs(v / v[0] - two_waves(kept**2)).max() > 1e-7
+
+
+@settings(max_examples=100, deadline=None)
+@given(
     st.integers(1, 6),
     st.integers(1, 3),
     st.floats(-3.0, 3.0),
@@ -87,7 +148,7 @@ def test_a_perfect_ring_travels_under_quadrature_feeds_and_stands_under_one() ->
     st.floats(20.0, 120.0),
     st.floats(0.0, 2 * math.pi),
 )
-def test_equal_feeds_reach_the_backward_wave_only_when_their_count_divides_2m(
+def test_rng_3_equal_feeds_reach_the_backward_wave_only_when_their_count_divides_2m(
     k: int, m: int, detune: float, q0: float, z0: float, phase: float
 ) -> None:
     # RNG-3: K equal feeds spaced L/K and phased for the travelling wave reach -m only when K divides 2m, and then
@@ -101,7 +162,7 @@ def test_equal_feeds_reach_the_backward_wave_only_when_their_count_divides_2m(
     assert ring.ring_purity(g @ weights, m) == pytest.approx(1.0 if (2 * m) % k == 0 else 0.0, abs=1e-9)
 
 
-def test_one_fourier_component_of_the_impedance_splits_the_pair_by_twice_itself() -> None:
+def test_rng_5_one_fourier_component_of_the_impedance_splits_the_pair_by_twice_itself() -> None:
     # section 5.2 and DR-0: ln Z = eps cos(2 pi 2m s / L + phi) splits +-m by Delta f / f = 2|c_2m| (Little, Laine and
     # Chu) to 1 %, and to 1e-5 once the segments' sampling of the profile, sin(x)/x at x = 2 pi m / N, is counted, in
     # linewidths 2Q|c_2m|; both keep Q0, and the lossy admittance is singular at both; drawn T915-S rings split by
@@ -132,12 +193,13 @@ def test_one_fourier_component_of_the_impedance_splits_the_pair_by_twice_itself(
         assert pair.linewidths == pytest.approx(2 * Q_BARE * ring.ring_harmonic(z), rel=0.01)
 
 
-def test_a_weak_reflection_builds_a_backward_wave_of_the_splitting_in_linewidths() -> None:
+def test_rng_5_a_weak_reflection_builds_a_backward_wave_of_the_splitting_in_linewidths() -> None:
     # section 5.2's backscatter on the ring of segments: one segment of Z0 (1 + delta) reflects S = G (1 - e^(-2i beta
     # l)) / (1 - G^2 e^(-2i beta l)), G = delta / (2 + delta); driven by the quadrature pair at the pair's centre it
     # leaves |b/a| = |S| Q / (pi m) to 1 %, the splitting in linewidths 2Q|c_2m|: Kippenberg, Spillane and Vahala's
     # coupled modes, Q = omega tau with tau the whole lifetime (the full linewidth f / Q), |b/a| the backscatter rate
-    # over the half linewidth. Section 5.2's Claim writes |S| Q / (2 pi m), Q counted on the half linewidth.
+    # over the half linewidth. Section 5.2's Claim writes |S| Q / (pi m) with that Q, f over the full linewidth;
+    # counted on the half linewidth the same wave reads |S| Q / (2 pi m).
     nodes = ring.RING_NODES
     for m, q0, delta in ((1, Q_BARE, 1e-3), (1, 60.0, 1e-2), (2, Q_BARE, 1e-2)):
         length = m * L915
@@ -160,7 +222,7 @@ def test_a_weak_reflection_builds_a_backward_wave_of_the_splitting_in_linewidths
     st.floats(30.0, 1000.0),
     st.sampled_from([3, 4, 5, 6, 8]),
 )
-def test_a_profile_splits_the_pair_only_through_a_harmonic_dividing_2m(
+def test_rng_5_a_profile_splits_the_pair_only_through_a_harmonic_dividing_2m(
     m: int, eps: float, phi: float, q0: float, other: int
 ) -> None:
     # section 5.2's selection rule: a profile of period L/h couples +-m only when h divides 2m. One component at 2m
@@ -260,7 +322,7 @@ def test_the_scored_drive_turns_with_the_ring() -> None:
         assert np.abs(there.v - np.roll(here.v, 37)).max() <= 1e-9 * np.abs(here.v).max()
 
 
-def test_the_t915s_monte_carlo_at_2_percent_is_the_study_s() -> None:
+def test_rng_h5_the_t915s_monte_carlo_at_2_percent_is_the_study_s() -> None:
     # section 5.3: the first three draws of T915-S's 2 % case (seed 7) at the line study's Q 213.8, drawn and scored by
     # the module with the lens's figures, are the study's ring_draw, ring_score and ring_harmonic's on the same seed,
     # number for number; on them the re-solved feeds hold E2-8's band (|b/a| <= 0.03, 0.9 of a perfect ring's depth per
@@ -334,7 +396,7 @@ def test_the_strips_at_2450_mhz_as_the_lens_ran_them() -> None:
     assert (lens["resolved_depth_median"], lens["hybrid_depth_median"]) == pytest.approx((0.9342, 0.6543), abs=1e-4)
 
 
-def test_the_drive_lens_ring() -> None:
+def test_rng_5_the_drive_lens_ring() -> None:
     # section 5.3 and figure 6: section A's ring at 915 MHz (Q 250.8 and Z0 73.5 ohm by the line study, 290 mm, R =
     # Z0 Q / (2 pi m) = 2934 ohm); with six feeds two cheap modes near sqrt(K) R / 2 over a floor 124 times lower, as
     # results.json holds them; one tolerance draw (seed 3) driven by one feed, the untuned hybrid and two compiled feeds
@@ -393,7 +455,7 @@ def test_the_line_matrices_and_the_nodal_admittance_are_one_model() -> None:
         assert np.abs(between - between.T).max() <= 1e-11 * np.abs(g).max()
 
 
-def test_compiled_feeds_remove_the_backward_wave_the_hybrid_leaves() -> None:
+def test_rng_5_compiled_feeds_remove_the_backward_wave_the_hybrid_leaves() -> None:
     # section 5.3 on the ring of segments: on T915-S's 2 % draws two or three current feeds compiled from the ring's
     # own G at its pair's centre leave |b/a| under 0.003, against the fixed hybrid's 0.07 to 0.15, and keep 0.9 of a
     # perfect ring's depth per watt; on a perfect ring three equal feeds compile to the travelling wave's phases
@@ -413,7 +475,7 @@ def test_compiled_feeds_remove_the_backward_wave_the_hybrid_leaves() -> None:
     assert three.weights == pytest.approx(np.exp(-2j * math.pi * np.arange(3) / 3), abs=1e-9)
 
 
-def test_each_tolerance_draws_what_it_says() -> None:
+def test_rng_h5_each_tolerance_draws_what_it_says() -> None:
     # ring_draw's parts one at a time on T915-S's ring: no tolerance is the ring as drawn; the closing joints alone are
     # two steps of joint_dz a scarf long; the spacers' errors give 2Q|c_2m| near 2Q S sigma / sqrt(N) in rms (section
     # 5.2's spacer rule, 0.87 linewidths at Q 214 and 2 %); the split's stations and the laminate draw their sd; one
