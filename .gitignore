@@ -15,6 +15,9 @@ __pycache__/
 # Build output (regenerable: firmware/README.md)
 firmware/build/
 
+# The twin bench's solved sections, cached by content hash (array16/twin): regenerable
+.twin_cache/
+
 # Runtime leftovers
 *.pid
 

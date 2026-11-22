@@ -1,0 +1,73 @@
+twin bench, stage 0: R1's rail line in openEMS against its 2-D section (docs/KNOTTED_GUIDE.md 8.1, DR-0)
+registered before any run (DR-0): the resonance within 0.5% and Q within 15% of full wave
+run: full; engine gpu; seconds section 65, straight 1101, ring 675
+
+== the section as modelled ==
+  one 1.6 mm FR-4 board (er 4.4, tan d 0.02) with 35 um copper: a centre strip and rails of 0.25 and 1.31 mm of copper between 0.15 mm gaps centred on ELE-1's edges c1 = 0.20 and c2 = 1.66 mm (a = 0.40, b = 1.46 mm); a ground plane under the board, via walls on the centre plane and 1.0 mm beyond the outer gap, a grounded shield 25 mm out
+  the null 0.571 mm above the copper's top face (ELE-1's gapless sqrt(c1 c2) = 0.576 mm over the plane), its gradient 1.039 of ELE-1's: q 0.5 takes 48.1 V where ELE-1 says 50 V
+  left floating, the strip takes 0.850 of the rails' volts on this board and 0.923 on the board as written (no plane); the null then sits 0.087 mm above the copper on this board and nowhere on that one: the via wall that holds the strip at 0 V is part of the design. Floating, the line has two modes, n_eff 1.5634 and 1.6695
+
+== calibration (rule 5) ==
+  Wheeler's rule on stripline 1.0, 0.035, 1.6 mm (width, thickness, spacing): Z0 84.2 ohm, alpha_c 1.010 of Pozar's closed form
+  Wheeler's rule on stripline 2.0, 0.018, 1.0 mm (width, thickness, spacing): Z0 37.5 ohm, alpha_c 0.993 of Pozar's closed form
+  Wheeler's rule on stripline 1.0, 0.018, 1.0 mm (width, thickness, spacing): Z0 63.1 ohm, alpha_c 0.999 of Pozar's closed form
+  Pozar's eq. 3.198 is itself Wheeler's rule applied to a closed-form Z0(t): the stripline agreement shows the receded solve's numerical derivative right, so the copper's loss is held to Wheeler's closed form only
+  the ring-down fit (matrix pencil) on a damped tone, Q 60, with a second tone and 1e-3 noise: f to +2.5e-06, Q to -6.2e-04
+  the face integral of the static field, R_s |E_n|^2 on the edge beside each copper face (the 3-D integral's quasi-static twin), against the cell at the copper: Q_c 119.9 at 4.37 um, Q_c 112.8 at 2.19 um, Q_c 107.8 at 1.09 um, Q_c 103.9 at 0.55 um; Wheeler's rule 93.5. The face integral converges slowly, the corners' fields going as r^(-1/3), so a copper loss read off a grid's faces is calibrated by its static twin on those cells
+  extrapolated to no cell: its differences fall 0.78 per halving at the finest (2^(-1/3) is 0.79, the corners' r^(-2/3)); Richardson at 2^(-1/3) puts its limit at 88.8 and Aitken's on the last three at 90.3, 5.0% and 3.5% under Wheeler's rule's 93.5: the one check of the copper's loss here that does not use the rule; a surface-impedance solve (Palace) is DR-0's item for it
+  Wheeler's rule moves 0.03% with far cells of 0.5 mm instead of 1 mm or the shield at 50 mm
+
+== the decomposed model: the 2-D section on the study's converged grading ==
+  even mode (the rails in phase, as the guide drives it): C' 258.0 pF/m, n_eff 1.6599, Z0 21.46 ohm, the laminate 0.823 of the field energy: Q_d 60.7; Q_c 93.5 by Wheeler's rule; Q 36.8
+  odd mode (the rails apart): C' 268.8 pF/m, n_eff 1.6041, Z0 19.91 ohm, the laminate 0.790 of the field energy: Q_d 63.3; Q_c 104.4 by Wheeler's rule; Q 39.4
+  the rails as two conductors: C12/C11 -0.0204 with the laminate, -0.0546 in air: the strip and its via wall screen one rail from the other
+  m = 1 on this line is 197.4 mm round; R = Z0 Q / 2 pi = 125.8 ohm, so 50 V takes 9.9 W (RFG-3; the laminate's Q_d 61 and the low Z0 set it)
+  the board as written (no plane, the strip held at 0 V): n_eff 1.5554, Z0 26.37 ohm, share 0.754, Q_d 66.3, Q_c 80.3, Q 36.3; m = 1 takes 210.6 mm (section 3.6's estimate sqrt((1 + er)/2) = 1.6432: 199.4 mm); its null 0.564 mm up, gradient 1.062 of ELE-1's
+  lever, the gaps at 0.10 mm: n_eff 1.6378, Z0 19.01 ohm, Q_c 68.9, Q 32.5, the null 0.577 mm up
+  lever, the gaps at 0.20 mm: n_eff 1.6742, Z0 23.47 ohm, Q_c 114.1, Q 39.4, the null 0.573 mm up
+  lever, the board RO4003C 1.524 mm (er 3.55, tan d 0.0027): n_eff 1.5230, Z0 23.34 ohm, Q_d 468, Q_c 93.6, Q 78.0: R 290 ohm, 50 V takes 4.3 W
+  the shield at 50 mm instead of 25: n_eff +0.0084%, Z0 +0.0180%, Q -0.0163%
+
+== the straight line between magnetic walls, full wave (fine mesh) ==
+  5 um at the copper growing 0.3 per mm, 98.70 mm between the walls in 1.50 mm cells: 0.74 M cells, 3.12 M steps, 11.4 min; 263 ring-down samples after the pulse, fit residual 2.4e-05
+  resonance 913.786 MHz: n_eff 1.66207 (its own cells' 2-D twin 1.66155, +0.031%; the converged section 1.65986, +0.133%)
+  dt 9.62273e-15 s: the laminate's damping per step, 1 - VV, is 18.563 units of 2^-24 and openEMS's single precision holds 19: the run's laminate loses 1.0235 of the given loss
+  Q_d 59.06 by the ring-down, 59.14 at tan d 0.02 as the run rounded it, 60.53 with the rounding taken out (twin 60.66, -0.21%; converged 60.75, -0.36%); Z0 21.206 ohm (twin 21.220, -0.07%; converged 21.458, -1.18%)
+  Q_c 121.0 from the H dump's |H_t|^2 over the copper (twin 121.1, -0.06%; Wheeler's rule converged 93.5, +29.4%); the dump puts 0.0e+00 of |H|^2 inside the copper
+  checks: the far wall's volts 1.0000 of the near wall's at -180.0 deg (m = 1's cos); the strip's gap 1.0016 of the ground's (one mode); the middle 0.0238 of the end where cos puts 0.0238; other poles 1.826, 4.982, 5.660 GHz
+  DR-0, straight (fine): resonance, decomposed 915.000 MHz, full wave 913.786 MHz: -0.13%: pass (band 0.5%)
+  DR-0, straight (fine): Q, decomposed 36.83, full wave 40.35 with the copper read off these cells: +9.57%: pass (band 15.0%); with that reading calibrated by its twin (x0.772), 36.74: -0.24%: pass (band 15.0%). Q_d sets most of Q; the full wave's copper is PEC, its loss read off the cells, and the calibration is Wheeler's rule again: this holds n_eff, Z0 and Q_d to full wave, and the copper's loss to Wheeler's closed form only
+
+== the straight line between magnetic walls, full wave (coarse mesh) ==
+  10 um at the copper growing 0.3 per mm, 98.70 mm between the walls in 1.50 mm cells: 0.53 M cells, 2.92 M steps, 7.0 min; 263 ring-down samples after the pulse, fit residual 2.3e-05
+  resonance 912.008 MHz: n_eff 1.66531 (its own cells' 2-D twin 1.66479, +0.031%; the converged section 1.65986, +0.328%)
+  dt 1.02673e-14 s: the laminate's damping per step, 1 - VV, is 19.806 units of 2^-24 and openEMS's single precision holds 20: the run's laminate loses 1.0098 of the given loss
+  Q_d 59.81 by the ring-down, 60.01 at tan d 0.02 as the run rounded it, 60.60 with the rounding taken out (twin 60.49, +0.18%; converged 60.75, -0.25%); Z0 21.009 ohm (twin 21.024, -0.07%; converged 21.458, -2.09%)
+  Q_c 131.0 from the H dump's |H_t|^2 over the copper (twin 131.1, -0.06%; Wheeler's rule converged 93.5, +40.1%); the dump puts 0.0e+00 of |H|^2 inside the copper
+  checks: the far wall's volts 1.0000 of the near wall's at 180.0 deg (m = 1's cos); the strip's gap 1.0016 of the ground's (one mode); the middle 0.0238 of the end where cos puts 0.0238; other poles 5.661, 1.823, 2.599 GHz
+  DR-0, straight (coarse): resonance, decomposed 915.000 MHz, full wave 912.008 MHz: -0.33%: pass (band 0.5%)
+  DR-0, straight (coarse): Q, decomposed 36.83, full wave 41.43 with the copper read off these cells: +12.50%: pass (band 15.0%); with that reading calibrated by its twin (x0.714), 36.76: -0.17%: pass (band 15.0%). Q_d sets most of Q; the full wave's copper is PEC, its loss read off the cells, and the calibration is Wheeler's rule again: this holds n_eff, Z0 and Q_d to full wave, and the copper's loss to Wheeler's closed form only
+
+== R1's ring, full wave (fine mesh, cylindrical: every edge on a mesh line, no staircase) ==
+  centre-line radius 31.416 mm, 197.39 mm round (m = 1 at 915 MHz by the even mode's n_eff); a quarter between a magnetic wall at alpha 0 and an electric wall at pi/2, 35 alpha lines: 0.75 M cells, 3.22 M steps, 11.3 min
+  dt 9.30837e-15 s: the laminate's damping per step 17.957 units of 2^-24, held as 18: the run's laminate loses 1.0024 of the given loss
+  the single-mode decomposed model puts m = 1 at 915.000 MHz with the rails in phase; full wave finds no such mode:
+    mode A: 899.310 MHz (-1.71% from 915), the inner rail at +0.287 of the outer (-0.4 deg); Q_d 60.09 (61.29 at tan d 0.02, the rounding out), Q_c 124.2 (H dump), Q 41.04; each rail's two gaps 1.0004 apart; fit residual 2.0e-05
+    mode B: 962.161 MHz (+5.15% from 915), the inner rail at -3.943 of the outer (-179.5 deg); Q_d 65.61 (62.55 at tan d 0.02, the rounding out), Q_c 130.5 (H dump), Q 42.28; each rail's two gaps 0.9971 apart; fit residual 3.0e-05
+  why: the rails' centre lines are 191.5 and 203.2 mm round (-+2.96%), while the strip's via wall leaves them coupled by C12/C11 -0.020 and their even and odd indices 1.6599 and 1.6041 differ by 3.36%: curvature mixes the even mode with the odd as strongly as the section separates them, so each ring mode lives mostly on one rail
+  the two-rail decomposed model (the rails' 2 x 2 line matrices from the converged section, each rail per radian on its own radius):
+    mode A: 899.866 MHz, the inner rail at +0.285 of the outer, Q_d 61.36, Q_c 96.0 (Wheeler), Q 37.44; full wave against it: f -0.062%, the rails' ratio +0.002, Q_d -0.13%; on its own cells' twin: f +0.043%, Q_d +0.03%, Q_c +0.07%
+    mode B: 963.592 MHz, the inner rail at -3.997 of the outer, Q_d 62.63, Q_c 101.4 (Wheeler), Q 38.72; full wave against it: f -0.149%, the rails' ratio +0.054, Q_d -0.13%; on its own cells' twin: f -0.037%, Q_d +0.04%, Q_c -0.17%
+  DR-0, ring mode A, single-mode model: resonance -1.71%: FAIL (band 0.5%); the rails not in phase
+  DR-0, ring mode A, two-rail model: resonance -0.06%: pass (band 0.5%); Q, the copper off these cells: +9.62%: pass (band 15.0%); calibrated (x0.773): -0.05%: pass (band 15.0%)
+  DR-0, ring mode B, single-mode model: resonance +5.15%: FAIL (band 0.5%); the rails not in phase
+  DR-0, ring mode B, two-rail model: resonance -0.15%: pass (band 0.5%); Q, the copper off these cells: +9.19%: pass (band 15.0%); calibrated (x0.776): -0.15%: pass (band 15.0%)
+  Hypothesis (read from these results, not yet tested): the null needs the rails in phase, so R1's ring needs them held together against the curvature: bridges joining the rails across the strip at N >= 3 stations a lap (N not dividing 2m), the rails then slipping apart in phase by at most 2 pi m (c1 + c2) / (2 R N) midway between bridges, 0.031 rad at N = 6; or two compiled feeds that drive both ring modes into the in-phase pattern at 915 MHz (section 5.3), at the power the off-resonant mode costs
+
+== what limits the agreement ==
+  staircasing: none; the straight line's copper and the ring's (in r and z, the cylindrical mesh) lie on mesh lines, and the magnetic walls sit on dual lines placed at the centre plane and the line's ends (openEMS puts a magnetic wall half a cell inside the boundary)
+  mesh: the FDTD's cells at the copper set n_eff, Z0 and the face integral; its own 2-D twin on the same cells carries the same error (the full wave adds the rest)
+  ports: none; a soft source and probes, the line closed by mirror walls, so no end correction enters: the two walls' volts agree to 1e-6 and the middle reads what cos puts there
+  precision: openEMS keeps its update coefficients in single precision, so a lossy cell's damping per step is a whole number of 2^-24 and the laminate's loss is off by up to 2^-25 / (dt sigma / eps) of itself: 2.7 % for FR-4 at the fine mesh's dt, growing as tan d times dt falls (low-loss laminates, finer cells); computed from dt and taken out above, it is a limit to register for every lossy openEMS run
+  the copper: openEMS holds PEC copper of its real thickness; its loss is the surface integral of the full-wave H, which on 5 to 10 um cells reads the copper's Q high (its static twin shows by how much), and the via walls and the shield carry none in either model; the shield's PEC carries no radiation either. The copper's treated face, its roughness of the order of the 2.2 um skin depth, takes Hammerstad's factor on its share of the loss (array16.guide.sections, Section.rough), and the unbacked board as R1 draws it is the next full-wave ring
+  wrote twin_openems_line.png

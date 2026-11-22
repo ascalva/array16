@@ -1,0 +1,45 @@
+# The flat facing-board ring of 318 mm (docs/KNOTTED_GUIDE.md sections 3.6 and 9 item 5): T915-S's section closed in
+# the boards' own plane at T915-S's length, the control for the knot's price (E2-22). Read by array16.twin.Design.
+#
+# Radius 50.6 mm, the bend wholly in the boards' plane: 33.4 eV per eV of depth by the static rule 0.605 R/h, 2.7 to
+# 3.3 times T915-S.
+name = "flat ring 318"
+about = "T915-S's facing flex strips on a flat ring of its length, bent in their plane"
+seed = 318
+
+[band]
+f = 915e6
+m = 1
+
+[section]               # section B, as T915-S
+kind = "facing"
+gap = 1.83e-3
+width = 7.32e-3
+split = 0.2745e-3
+margin = 1.83e-3
+laminate = "polyimide"
+thickness = 25e-6
+copper = 18e-6
+grid = "default"
+aperture = 4.0
+
+[path]
+kind = "circle"
+samples = 4000
+
+[frame]
+theta_deg = 180.0       # u inward and v up: the boards horizontal, the ring bent in their plane
+
+[drive]
+volts = 50.0
+feeds = 2
+
+[tolerance]             # built as T915-S is
+spacers = 0.02
+stations = 24
+joint_dz = -0.02
+joint_sd = 0.01
+scarf = 29.4e-3
+split_sd = 0.2
+eps = 0.1
+earth = 50e-6

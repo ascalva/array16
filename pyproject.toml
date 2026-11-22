@@ -13,7 +13,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["array16", "array16.particles"]
+packages = ["array16", "array16.particles", "array16.guide", "array16.twin"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -45,6 +45,16 @@ include = [
     "tests/test_beam_lifecycle_study.py",
     "experiments/knotted_guide_study.py",
     "tests/test_knotted_guide_study.py",
+    "array16/guide/*.py",
+    "array16/twin/*.py",
+    "tests/test_guide_sections.py",
+    "tests/test_guide_ring.py",
+    "tests/test_guide_multipactor.py",
+    "tests/test_particle_sections.py",
+    "tests/test_twin.py",
+    "tests/test_twin_dr0.py",
+    "experiments/twin_openems_line.py",
+    "tests/test_twin_openems_line.py",
 ]
 
 [tool.ruff.lint]
@@ -75,4 +85,14 @@ files = [
     "tests/test_beam_lifecycle_study.py",
     "experiments/knotted_guide_study.py",
     "tests/test_knotted_guide_study.py",
+    "array16/guide",
+    "array16/twin",
+    "tests/test_guide_sections.py",
+    "tests/test_guide_ring.py",
+    "tests/test_guide_multipactor.py",
+    "tests/test_particle_sections.py",
+    "tests/test_twin.py",
+    "tests/test_twin_dr0.py",
+    "experiments/twin_openems_line.py",
+    "tests/test_twin_openems_line.py",
 ]

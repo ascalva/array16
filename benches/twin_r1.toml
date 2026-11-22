@@ -1,0 +1,22 @@
+# The twin bench of experiment 2's calibration rung: R1's rail ring at 915 MHz (E2-21), its guide, detector and vacuum
+# simulated (docs/KNOTTED_GUIDE.md sections 8.3 and 10; array16/twin). Hardware takes their place at the build stage,
+# as a change of this file. Workers left out: all this machine's cores but two.
+name = "twin-r1"
+
+[device.array]          # the HackRF Pro alone; the controller emulated by fwsim
+driver = "array16.sim:SimBackend"
+radio = "hackrf"
+
+[device.guide]          # R1's resonance, drive and field in one tolerance realisation
+driver = "array16.twin:TwinGuide"
+design = "designs/r1_rail_ring.toml"
+realisation = 1
+
+[device.detector]       # two pickups a quarter lap apart, the dump's collector at 1 pF
+driver = "array16.twin:TwinDetector"
+pickups = [0.0, 0.25]
+collector = 1e-12
+
+[device.vacuum]         # 1e-6 mbar: an electron's mean free path 400 m, 1900 laps of R1
+driver = "array16.twin:TwinVacuum"
+pressure = 1e-6

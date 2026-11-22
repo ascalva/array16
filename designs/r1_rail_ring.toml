@@ -1,0 +1,52 @@
+# R1, the single-board line (docs/KNOTTED_GUIDE.md sections 3.6 and 9 item 5): two rails driven in common either side
+# of a grounded centre strip on one 1.6 mm FR-4 board, closed into a ring one guided wave round at 915 MHz. The twin's
+# first calibration rung (E2-21). Read by array16.twin.Design; realisation k draws from (seed, k).
+#
+# The solved section (default grid): n_eff 1.555, Z0 26.4 ohm, the laminate 0.754 of the field energy, Q_d 66, Q_c 80
+# by Wheeler's rule on smooth 35 um copper, Q 36.4, so the ring is 210.7 mm round (radius 33.5 mm) and 50 V takes
+# 8.2 W. The copper's faces on the FR-4, its treated side, carry 0.27 of its loss: with Hammerstad's factor for 1.5 um
+# rms on them (rough = 1.37) Q_c is 73.0, Q 34.8 and 50 V takes 8.6 W; for 2 um (1.55) 70.0, 34.1 and 8.7 W.
+# The null stands 0.564 mm up, its q 0.51 and the pseudopotential's depth 0.095 eV at 50 V (0.091 eV at the station
+# electrons start from). The exact motion on the axis loses electrons sent at the saddle from 0.012 eV, 0.13 of that,
+# within 40 RF periods, and half of them by 0.034 eV (the local q reaches 0.908 0.20h under the null, where the
+# pseudopotential is 0.75 of the depth): the well an electron keeps at 50 V is 0.01 to 0.03 eV, and at q 0.3 (30 V)
+# the 0.032 eV the pseudopotential gives (experiments/twin_rung1, E2-21).
+# The full-wave script's own 2-D solve of this board agrees to 0.1 % (experiments/twin_openems_line); on its backed
+# board with via walls, full wave finds the closed ring's two rails resonating apart, at 899 and 962 MHz, so the
+# single-mode ring the twin drives, both rails in phase, is the ideal drive E2-21 is stated for (a Hypothesis there:
+# bridges across the strip or two compiled feeds hold the rails in phase).
+name = "R1"
+about = "R1's rail ring: one FR-4 board, m = 1 at 915 MHz, 50 V for q 0.5 at the null"
+seed = 21
+
+[band]
+f = 915e6               # Hz
+m = 1
+
+[section]               # array16.guide.sections.Rails on the laminate
+kind = "rails"
+gap = 0.40e-3           # m: the grounded centre strip, ELE-1's a
+rail = 1.46e-3          # m: each rail, ELE-1's b; the gapless null sqrt(c1 c2) = 0.576 mm up
+space = 0.15e-3         # m: each rail's etched isolation, centred on its edges (the full-wave model's 0.15 mm)
+backed = false          # no plane under the board, as section 3.6 draws it; the strip held at ground along the line
+walls = 43.4            # null heights: a grounded shield 25 mm out, the full-wave model's
+laminate = "FR-4"
+thickness = 1.6e-3      # m
+copper = 35e-6          # m: 1 oz
+grid = "default"        # the knotted study's converged grid
+aperture = 4.0          # null heights either way of the null: the region a held electron stays in
+
+[path]
+kind = "circle"         # in the board's plane, m guided waves round at the band on the solved index
+samples = 2000
+
+[frame]
+theta_deg = 180.0       # u inward, v up from the board
+
+[drive]
+volts = 50.0            # V, peak, rails to ground (E2-21)
+feeds = 2               # current feeds compiled for the travelling wave, a quarter guided wave apart
+
+[tolerance]             # what a realisation draws; realisation 0 is the design as drawn
+eps = 0.1               # sd of FR-4's permittivity
+earth = 50e-6           # T: Earth's field, in an orientation drawn uniformly

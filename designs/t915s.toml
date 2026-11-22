@@ -1,0 +1,53 @@
+# T915-S (docs/KNOTTED_GUIDE.md section 9 item 1): facing flex strips on the r/R = 0.45 trefoil at 915 MHz, m = 1,
+# framed k = 0; section B, 18 um copper 8h wide split 0.3h on 25 um polyimide, the gap 1.83 mm (h = 0.915 mm). The knot
+# E2-22 sets the flat ring and the (1, 3) helix against, at the same section, volts and q. Read by array16.twin.Design.
+#
+# The solved section (default grid): n_eff 1.0311, Z0 41.65 ohm, the polyimide 0.074 of the field energy, Q_c 228 by
+# Wheeler's rule on smooth copper, Q 213.7, so the ring is 317.8 mm round and 50 V takes 0.88 W; at 50 V the null's q
+# is 0.49 and the well 0.98 eV. The copper's face on the polyimide, its treated side, carries 0.28 of its loss: with
+# Hammerstad's factor for 1 um rms on it (rough = 1.18) Q_c is 217, Q 204 and 50 V takes 0.92 W; for 1.5 um (1.37)
+# 207, 195 and 0.97 W. Framed k = 0 its tightest radius in the boards' plane is 18.6 mm (the trefoil's tightest bend
+# 15.3 mm).
+name = "T915-S"
+about = "facing flex strips on the r/R = 0.45 trefoil, framed k = 0, m = 1 at 915 MHz"
+seed = 915
+
+[band]
+f = 915e6
+m = 1
+
+[section]               # array16.guide.sections.FacingStrips: section_b()
+kind = "facing"
+gap = 1.83e-3           # m: 2h between the copper faces
+width = 7.32e-3         # m: 8h, outer edge to outer edge
+split = 0.2745e-3       # m: 0.3h
+margin = 1.83e-3        # m: the polyimide 2h beyond the copper
+laminate = "polyimide"
+thickness = 25e-6       # m
+copper = 18e-6          # m: the flex fab's copper
+grid = "default"
+aperture = 4.0          # h either way of the null; the trefoil's thickness, half its closest approach, is 8.7 mm
+
+[path]
+kind = "torus"
+ratio = 0.45            # r/R
+p = 2
+q = 3
+samples = 4000
+
+[frame]
+k = 0                   # the strips close on themselves; the start keeps the largest in-plane radius
+
+[drive]
+volts = 50.0            # V, peak, half to half
+feeds = 2
+
+[tolerance]             # sapphire spacers to 2 % rms at 24 stations, two closing joints scarfed over 29.4 mm, the
+spacers = 0.02          # split's etch, the laminate and Earth's field (sections 5.3 and 8.3, DR-4, DR-14)
+stations = 24
+joint_dz = -0.02
+joint_sd = 0.01
+scarf = 29.4e-3
+split_sd = 0.2
+eps = 0.1
+earth = 50e-6
