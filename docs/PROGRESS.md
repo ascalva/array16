@@ -29,7 +29,7 @@ test; ideas may stay theoretical but must be physically and experimentally plaus
 ## 2. What exists
 
 **Repository.** Public at github.com/ascalva/array16, AGPL-3.0, CI on every push (ruff, strict mypy, pytest;
-`formal/check.sh` for the proofs). 221 tests (`uv run pytest -q`, about 21 s). History starts from the tree as it
+`formal/check.sh` for the proofs). 244 tests (`uv run pytest -q`, about 25 s). History starts from the tree as it
 stood on 2026-11-16.
 
 **Radio side** (as imported; see `README.md`, `ARCHITECTURE.md`, `REDESIGN.md`).
@@ -116,6 +116,16 @@ about 170 s, and `tests/test_knotted_guide_study.py` holds its numbers to the do
 numbers were checked by scratch scripts and are not yet in the study's `run.log`: the strips' section solve (n_eff
 1.031), T915-S as a ring (Q 381, R 2.54 kΩ) with its 60-draw spacer Monte Carlo, and the slot guide's section (Q 49
 on FR-4, 179 on RO4003C); section 5 folds them in.
+
+**Cavity knots and the beam's lifecycle** (`docs/CAVITY_KNOTS.md`, `docs/BEAM_LIFECYCLE.md`, 2026-11-21). The owner's
+questions of that day, from two theory memos, their adversarial verification, the two documents with their figures,
+and a review that re-derived the results with independent code and corrected what did not reproduce. The cavity
+study: the mode bases of a sphere and a cylinder, where a real TE field vanishes, the loops, links and knots of its
+nulls, their weak points, a worked copper cylinder, numbers for a build, the Sun, and 21 rows proposed for the ledger
+(CAV). The beam study: getting electrons in, acceleration, their fields, relativity, resonances, ejecting and sensing
+them, and what they measure, with 26 rows proposed (INJ, ACC, BMF, RES, SNS). `experiments/cavity_knots_study.py`
+(about 25 s) and `experiments/beam_lifecycle_study.py` (a few seconds) draw their figures into
+`experiments/cavity_knots/` and `experiments/beam_lifecycle/`, and their tests hold the documents' numbers.
 
 **Prior art** (`docs/PRIOR_ART.md`, 2026-11-21). Four sweeps (prior art, applications, lessons, novelty), each checked
 by an adversarial verifier, then a synthesis over 35 re-checked sources. Printed ion tracks with turns, switches and
@@ -265,6 +275,40 @@ magnetic guide wound on five closed curves, 142 shots, ten criteria fixed before
   steering, the megahertz chirp, the 915 MHz ring), each with its own price list. The ring's G has two cheap modes, ±m,
   over a floor about a hundred times lower.
 
+**Cavity knots** (`docs/CAVITY_KNOTS.md`, its labels kept).
+- **A perfect sphere gives rays.** A real standing TE field is `E = ∇ψ × r` in a sphere and `∇Π × ẑ` in a cylinder, so
+  it vanishes at the critical points of ψ on concentric spheres (of Π on horizontal slices): curves, generically.
+  Within one degenerate family the nulls are diameters and zero-field shells, and a perfect sphere's families never
+  share a frequency (Propositions).
+- **Loops, links and knots.** Two radial (axial) profiles at one frequency give closed null loops, all unlinked; a
+  link or a knot takes at least three (Proposition). None turned up in about 4,300 random cavity fields or 96
+  compiled targets: whether a real TE cavity field can hold one is open (Hypothesis), and a threading rule asks about
+  half a turn of the field's principal axes along each loop (Claim).
+- **Folds.** A null curve of knot or link type K has at least 2b(K) folds against height, 4 for a trefoil
+  (Proposition). The wall softens there only along the curve; the leaks are the lowest saddle of |E|² and
+  near-reconnections.
+- **A worked cylinder:** copper, 13.8 cm in radius and 19.0 cm tall, TE113 and TE221 with real weights from two feeds
+  driven as sum and difference, Q 81,658. Three closed null loops 32 to 34 cm long, at least 1.9 cm from every wall,
+  sit in a well of 375 µeV per watt, 4.8 times RFG-2's ceiling; board electrodes behind a resonator reach 22 to
+  89 eV per watt (RFG-3). 1 eV takes 2.66 kW at 1.49 MV/m peak. The two families stay within half a linewidth for
+  about 1 µm on the radius, or with a tuning screw or pre-compensation in the compile.
+
+**The beam's lifecycle** (`docs/BEAM_LIFECYCLE.md`, its labels kept).
+- **Capture.** A closed guide that keeps phase-space volume captures only a set of zero volume from outside
+  (Proposition): capture takes electrons made inside, a guide that changes while they arrive, or cooling. A 265 nm LED
+  on a magnesium pad photoemits 4.3 nA per milliwatt; 10⁷ electrons in one 1 eV turn of the 932 mm ring take 1.0 µA,
+  0.24 W of UV or a 2000 K filament.
+- **Acceleration.** A bunch oscillates about the synchronous phase at 0.852 MHz at every energy, the drive chirps
+  linearly at 2.63 MHz per µs, the spread grows as W^½, bends ask a deeper guide (4.2 eV for 185 eV round 43.8 mm),
+  gas heats held electrons, and joints act as stopbands.
+- **Their fields:** 62 V/m and 5.5 nT at 0.5 mm from 10⁷ electrons; a resonance shift N⟨U⟩/W, 89 kHz for 1.5 × 10⁷
+  electrons; 1.1 × 10⁻²⁴ W of radiation each; Smith-Purcell emission at v/d. β is 0.0020 at 1 eV and 0.027 at
+  185 eV; speed shows first as the drive's Doppler shift, raising an electron's q by 3 to 6 % at 185 eV.
+- **Out, sensed, and what it measures:** a gate, a junction or the guide's volts send electrons to a Faraday pad, a
+  retarding barrier or an MCP; left in place, the electrodes read number, energy, spread and secular frequency. The
+  beam measures stray fields, surface field noise, the vacuum and cross-sections, and as a wave the Earth's rotation
+  (0.057 rad round 932 mm) and magnetic flux (1 rad per 9.5 fT).
+
 **What the prior art sets** (`docs/PRIOR_ART.md`).
 - Built board resonators reach Q 35 to 41 and about 1 kΩ; 100 kΩ asks Q near 3,000 on a 50 Ω half-wave line. Depth
   per watt on built boards sits about ten times below the 10 kΩ examples above.
@@ -307,7 +351,9 @@ ELE-1. The theory of the virtual antenna itself, with the laws it proposes and t
    drive's distance to the nearest wall is its knot's margin. Milnor polynomials `uᵖ − v^q` give knotted nulls in
    closed form (the trefoil is p = 2, q = 3). Next: fit a Milnor field's linear conditions on a curve, trace the
    drive's nulls with the tracer of `experiments/local_fields.py` and read the type; the walls are a discriminant in
-   the drive's coefficients, a statement for algebraic geometry.
+   the drive's coefficients, a statement for algebraic geometry. These are zero lines of one complex component;
+   whole-vector nulls of a real standing field are another object, and the cavity study (`docs/CAVITY_KNOTS.md`)
+   finds they need three profiles at one frequency for a link or a knot, with none found yet.
 4. **N6. An RF guide needs no twist** (argued; its cost rests on CUR-3). A pseudo-potential pulls back from every
    side, so an RF guide holds a particle round a flat ring; the twist rule of experiment 1 belongs to magnetic
    guides. A knot only costs an RF guide: its largest curvature exceeds 4π/L against a ring's 2π/L (CUR-3), so by the

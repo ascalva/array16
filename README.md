@@ -20,6 +20,8 @@ predictions are committed before the runs that test them, and every tool used or
 | Virtual antenna | `docs/VIRTUAL_ANTENNA.md` | The theory of the field compiler, the generic process that makes a field from the board and one radio: synthesis, time modulation, near fields, consequences, 68 laws proposed |
 | Knotted guide | `docs/KNOTTED_GUIDE.md` | How boards make a knot; its fields, drive and particles; a design review each board passes in simulation; seven lead designs |
 | Ring on one board | `docs/KNOTTED_GUIDE.md` §3.6, design R1 | An option kept open beside the knots: a rail ring, a channel routed through one board, a flat facing-board ring |
+| Cavity knots | `docs/CAVITY_KNOTS.md` | Where a resonant cavity's real field vanishes, and when its null curves loop, link or knot; a worked copper cylinder |
+| Beam lifecycle | `docs/BEAM_LIFECYCLE.md` | Electrons from source to detector: capture, acceleration, their own fields, resonances, ejection, sensing, what they measure |
 | Prior art | `docs/PRIOR_ART.md` | Who builds particle tracks on boards and chips, and the numbers that sets for the designs |
 | Particle core, harness | `array16/particles/`, `array16/lab.py`, `benches/` | A tracker for any electric and magnetic fields, curves, rods, windings and board electrodes, calibrated against closed forms; predict, run and report on a bench of compute or devices |
 | Laws and proofs | `docs/LAWS.md`, `formal/` | 27 laws, each tied to its code and to a test that would catch it false; 12 Propositions proved in Lean |
@@ -44,6 +46,15 @@ predictions are committed before the runs that test them, and every tool used or
   re-solved feeds leave a backward wave of 0.011 of the forward, where a fixed hybrid leaves 0.22. The lead design,
   facing flex strips on a trefoil at 915 MHz, takes 0.50 W for a 1 eV well on bare copper; cut into six segments, one
   chirp of 5.6 to 15.8 MHz takes electrons from 1 to 8 eV in 117 laps.
+- **A cavity's nulls close into loops only where its symmetry is broken.** In a perfect sphere a real TE field's nulls
+  are diameters. Closed null loops take two mode families with different radial profiles at one frequency, which a
+  deformed sphere or a tuned cylinder supplies: a copper cylinder tuned that way holds three null loops in a well
+  4.8 times the free-space ceiling. A link or a knot takes at least three profiles; none turned up in about 4,300
+  random cavity fields or 96 compiled targets, so whether a real cavity field can knot its nulls is open.
+- **Capture takes electrons made inside the guide, a guide that changes while they arrive, or cooling:** a guide that
+  keeps phase-space volume captures a set of zero volume from outside. On the board, a 265 nm LED on a magnesium pad
+  photoemits about 4.3 nA per milliwatt; the electrodes read the beam's number, energy and secular frequency, and the
+  beam measures stray fields, the vacuum and, as a wave, rotation and magnetic flux.
 - **For a magnetic guide, the twist of the path holds an electron and its knot does not** (experiment 1). The
   first-order theory called held or lost correctly in 92 cases of 93; its laws are proved (GDE-1 to GDE-7).
 - **The pieces exist in other fields:** printed ion tracks with turns and levels, electrons guided and trapped on
@@ -66,7 +77,7 @@ predictions are committed before the runs that test them, and every tool used or
 ## Run it
 
     uv sync --extra dev                  # the environment, from uv.lock
-    uv run pytest -q                     # the tests, about 20 s
+    uv run pytest -q                     # the tests, about 25 s
     uv run ruff check && uv run mypy     # lint and strict types, for the files named in pyproject.toml
     (cd formal && lake exe cache get) && ./formal/check.sh    # the proofs; needs elan, and about 7 GB for Mathlib
 
@@ -76,6 +87,8 @@ pass):
 
     uv run python experiments/virtual_antenna_study.py   # about 25 s
     uv run python experiments/knotted_guide_study.py     # about 3 min
+    uv run python experiments/cavity_knots_study.py      # about 25 s
+    uv run python experiments/beam_lifecycle_study.py    # a few seconds
 
 An experiment on the harness runs in three steps, the second once the first is committed:
 
@@ -111,7 +124,7 @@ linted (`ruff`), tested (pytest, Hypothesis) and run through `uv`.
 | `array16/` | The radio's host library and simulator, `board.py` (the one description of the hardware), the particle core (`particles/`) and the harness (`lab.py`) |
 | `benches/` | Resource setups: compute, and devices by role |
 | `experiments/` | Studies and experiments, each a script, its outputs and a report |
-| `docs/` | The theory (`VIRTUAL_ANTENNA`, `KNOTTED_GUIDE`), `PRIOR_ART`, the ledger (`LAWS`), the state and plan (`PROGRESS`) |
+| `docs/` | The theory (`VIRTUAL_ANTENNA`, `KNOTTED_GUIDE`, `CAVITY_KNOTS`, `BEAM_LIFECYCLE`), `PRIOR_ART`, the ledger (`LAWS`), the state and plan (`PROGRESS`) |
 | `formal/` | The Lean proofs behind the ledger, and their gate, `check.sh` |
 | `firmware/` | The RP2040 beam controller: a portable core, and PIO, DMA, clocks and USB around it |
 | `hw/` | The circuit as a script (`design.py`) and the KiCad project it generates |
