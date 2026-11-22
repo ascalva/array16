@@ -39,6 +39,8 @@ include = [
     "tests/test_guide_record.py",
     "experiments/virtual_antenna_study.py",
     "tests/test_virtual_antenna_study.py",
+    "experiments/knotted_guide_study.py",
+    "tests/test_knotted_guide_study.py",
 ]
 
 [tool.ruff.lint]
@@ -63,4 +65,6 @@ files = [
     "tests/test_guide_record.py",
     "experiments/virtual_antenna_study.py",
     "tests/test_virtual_antenna_study.py",
+    "experiments/knotted_guide_study.py",
+    "tests/test_knotted_guide_study.py",
 ]
