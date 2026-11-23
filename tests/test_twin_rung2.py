@@ -178,6 +178,26 @@ def test_the_exact_motion_loses_on_a_knot_what_the_tracker_loses_where_it_loses_
             assert r2.past(float(losses.s[r]) / losses.length % 1.0, sense, lobe) <= r2.LOBE_REACH
 
 
+def test_the_wells_motion_in_a_field_is_stage_1s_without_one_and_meets_the_benchs_record_with_it(coarse: Path) -> None:
+    # with no field the exact motion on the axis is twin_rung1.section_flights; R1 on the bench's realisation, at its
+    # own band, first loses an electron at 0.01208 eV with Earth's field removed, and in the drawn 50 uT, which turns
+    # the electron's velocity partly along the path, at 0.01547 eV: stage 1's bench record, which it was computed
+    # after (PROTOCOL.md section 6)
+    design, cache = _design(coarse, "r1"), _cache(coarse)
+    th = r2.theory(design, 0, None, cache)
+    grid, solved = th.guide.grid(), th.guide.solved
+    aim = np.array(solved.saddle) - np.array(solved.null)
+    aim /= np.linalg.norm(aim)
+    energies = (0.012, 0.02, 0.05)
+    omega = 2 * math.pi * th.driven.f
+    old = rung.section_flights(grid, abs(th.phasor), np.array([omega]), energies, rung.WELL_PHASES, 6, (aim[0], aim[1]))
+    new = r2.axis_flights(grid, abs(th.phasor), omega, energies, rung.WELL_PHASES, 6, (aim[0], aim[1]))
+    assert np.array_equal(old[0], new)
+    wells = {s.earth: r2.predict_well(s, None).value for s in r2.shots() if s.kind == "well"}
+    assert wells["none"] == pytest.approx(0.0120828, rel=1e-5)
+    assert wells["drawn"] == pytest.approx(0.015467, rel=1e-5)
+
+
 # ---- the shots and the predictions file ---------------------------------------------------------------------------
 def test_the_shots_are_named_once_and_the_pairs_share_their_launch() -> None:
     # thirty shots in the protocol's order, seeded from the master seed; the bend's pair and the must-fail pair each

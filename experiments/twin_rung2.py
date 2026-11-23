@@ -66,7 +66,7 @@ from array16.guide import emission as em
 from array16.guide import multipactor as mp
 from array16.guide.sections import section_b
 from array16.lab import Check
-from array16.particles import Arr, BoolArr, IntArr
+from array16.particles import Arr, BoolArr, IntArr, SectionGrid
 from array16.twin import CACHE, Driven, Losses, TwinField, TwinGuide, TwinVacuum, Watch, solver_version
 from array16.twin.records import LEFT, STRUCK
 
@@ -793,7 +793,7 @@ def _realisation(shot: Shot) -> int:
     return 1 if shot.realisation is None else shot.realisation
 
 
-def _earth_vector(shot: Shot, guide: TwinGuide) -> tuple[float, float, float]:
+def motion_earth(shot: Shot, guide: TwinGuide) -> tuple[float, float, float]:
     """The uniform field a shot runs in (T)."""
     if isinstance(shot.earth, tuple):
         return (float(shot.earth[0]), float(shot.earth[1]), float(shot.earth[2]))
@@ -812,7 +812,7 @@ def motion_spec(shot: Shot, cache: str | None) -> MotionSpec:
         shot.design,
         realisation,
         shot.q,
-        _earth_vector(shot, guide),
+        motion_earth(shot, guide),
         _start_index(shot, guide.design.path.samples),
         shot.energies,
         shot.senses,
@@ -953,32 +953,115 @@ def _in_lobes(m: Motion, stretches: Sequence[tuple[float, float]]) -> float:
     return inside / count if count else math.nan
 
 
-def well_theory(shot: Shot, cache: str | None) -> tuple[rung.Theory, float, BoolArr]:
-    """The exact motion on the axis (twin_rung1.section_flights) at the realisation's own band and the start station's
-    volts: which of the shot's electrons leave the well."""
+def axis_flights(
+    grid: SectionGrid,
+    amplitude: float,
+    omega: float,
+    energies: Sequence[float],
+    phases: Sequence[float],
+    periods: int,
+    aim: tuple[float, float],
+    field: tuple[float, float, float] = (0.0, 0.0, 0.0),
+    steps: int = rung.MODEL_STEPS,
+) -> BoolArr:
+    """twin_rung1.section_flights at one band, in a uniform magnetic field: electrons from the null toward the saddle,
+    (len(phases), len(energies)) whether each was lost within `periods` RF periods, by RK4 at `steps` an RF period on
+
+        r'' = |q/m| V(t) grad phi (r),      v' = -|q/m| v x B,
+
+    r in the section and v = (u', v', s') with the velocity along the path, B = (B_u, B_v, B_T) in the station's
+    frame (first, second, tangent; T, its components along them): the field turns the electron's velocity in the
+    section partly along the path, where the section's field does not reach it, and back (R1's drawn 50 uT turns it by
+    0.39 rad over 40 RF periods at 915 MHz). The path along which it then drifts, under a millimetre, is the station's:
+    the drive's ripple round the ring and the bend are left out there. With no field it is section_flights."""
+    u0, v0 = grid.null
+    turn = np.asarray(phases, dtype=np.float64)[:, None]
+    speed = np.array([pt.v_of(e) for e in energies], dtype=np.float64)[None, :]
+    shape = (turn.shape[0], speed.shape[1])
+    r = np.stack([np.full(shape, u0), np.full(shape, v0)])
+    dr = np.stack(
+        [
+            np.broadcast_to(aim[0] * speed / omega, shape),
+            np.broadcast_to(aim[1] * speed / omega, shape),
+            np.zeros(shape),
+        ]
+    )
+    scale = QM * amplitude / omega**2
+    bu, bv, bt = (QM * b / omega for b in field)
+    lost: BoolArr = np.zeros(shape, dtype=np.bool_)
+    h = 2 * math.pi / steps
+
+    def pull(at: Arr, pace: Arr, tau: float) -> tuple[Arr, BoolArr]:
+        du, dv, on = grid.gradient_at(at[0].ravel(), at[1].ravel())
+        kick = scale * np.cos(tau + turn)
+        out = np.stack(
+            [
+                kick * du.reshape(shape) - (pace[1] * bt - pace[2] * bv),
+                kick * dv.reshape(shape) - (pace[2] * bu - pace[0] * bt),
+                -(pace[0] * bv - pace[1] * bu),
+            ]
+        )
+        return out, on.reshape(shape)
+
+    for n in range(periods * steps):
+        tau = n * h
+        a1, on = pull(r, dr, tau)
+        lost |= ~on
+        v2 = dr + h / 2 * a1
+        a2, _ = pull(r + h / 2 * dr[:2], v2, tau + h / 2)
+        v3 = dr + h / 2 * a2
+        a3, _ = pull(r + h / 2 * v2[:2], v3, tau + h / 2)
+        v4 = dr + h * a3
+        a4, _ = pull(r + h * v3[:2], v4, tau + h)
+        r_next = r + h / 6 * (dr[:2] + 2 * v2[:2] + 2 * v3[:2] + v4[:2])
+        dr_next = dr + h / 6 * (a1 + 2 * a2 + 2 * a3 + a4)
+        r, dr = np.where(lost, r, r_next), np.where(lost, dr, dr_next)
+    _, on = pull(r, dr, periods * steps * h)
+    out: BoolArr = lost | ~on
+    return out
+
+
+def well_theory(shot: Shot, cache: str | None) -> tuple[rung.Theory, float, tuple[float, float, float], BoolArr]:
+    """The exact motion on the axis (axis_flights) at the realisation's own band and the start station's volts, in the
+    shot's uniform field taken in the station's frame: which of the shot's electrons leave the well."""
     th = theory(shot.design, _realisation(shot), shot.q, cache)
     solved = th.guide.solved
     du, dv = solved.saddle[0] - solved.null[0], solved.saddle[1] - solved.null[1]
     size = math.hypot(du, dv)
-    omegas = np.array([2 * math.pi * th.driven.f])
-    lost = rung.section_flights(
-        th.guide.grid(), abs(th.phasor), omegas, shot.energies, rung.WELL_PHASES, shot.periods, (du / size, dv / size)
+    tangent, first, second, _, _ = frame_of(shot.design, _realisation(shot), cache)
+    b = np.asarray(motion_earth(shot, th.guide), dtype=np.float64)
+    local = (float(b @ first[0]), float(b @ second[0]), float(b @ tangent[0]))
+    lost = axis_flights(
+        th.guide.grid(),
+        abs(th.phasor),
+        2 * math.pi * th.driven.f,
+        shot.energies,
+        rung.WELL_PHASES,
+        shot.periods,
+        (du / size, dv / size),
+        local,
     )
-    return th, abs(th.phasor), lost[0]
+    return th, abs(th.phasor), local, lost
 
 
 def predict_well(shot: Shot, cache: str | None) -> Prediction:
-    th, volts, lost = well_theory(shot, cache)
+    th, volts, local, lost = well_theory(shot, cache)
+    size = math.hypot(*local)
     first = rung.lowest_lost(shot.energies, lost.any(axis=0).tolist())
     depth = pt.ponderomotive_ev(th.guide.solved.escape * volts, th.driven.f)
     room = shot.ratio ** (WELL_STEPS + 0.5)
-    basis = _common(th) | {"depth_start_eV": sig(depth), "volts_at_start": sig(volts), "model_first_D": first / depth}
+    basis = _common(th) | {
+        "depth_start_eV": sig(depth),
+        "volts_at_start": sig(volts),
+        "model_first_D": sig(first / depth),
+        "field_uT": sig(size * 1e6),
+        "field_along_uT": sig(local[2] * 1e6),
+    }
     claim = (
         f"electrons sent from {th.guide.design.name}'s null up its axis toward the saddle at the drive's zero "
-        "crossings, "
-        f"on the bench's realisation at its own band, {th.driven.f / 1e6:.3f} MHz, are first lost at {first:.4g} eV, "
-        f"{first / depth:.2f} of the depth there, as the exact motion on the solved axis loses them in {shot.periods} "
-        "RF periods"
+        f"crossings, on the bench's realisation at its own band, {th.driven.f / 1e6:.3f} MHz, in a field of "
+        f"{size * 1e6:.3g} uT, are first lost at {first:.4g} eV, {first / depth:.2f} of the depth there, as "
+        f"the exact motion on the solved axis loses them in {shot.periods} RF periods"
     )
     return Prediction(claim, sig(first), sig(first / room), sig(first * room), "eV", basis)
 
@@ -1302,7 +1385,7 @@ def shot_field(guide: TwinGuide, shot: Shot) -> tuple[Driven, TwinField]:
     and Earth's field as the shot gives it."""
     driven = guide.drive() if shot.q is None else guide.drive(q=shot.q)
     field = guide.field(driven, bend=True if shot.bend else None)
-    b = np.asarray(_earth_vector(shot, guide), dtype=np.float64)
+    b = np.asarray(motion_earth(shot, guide), dtype=np.float64)
     return driven, replace(field, earth=b if bool(np.any(b)) else None)
 
 

@@ -1,0 +1,1919 @@
+{
+ "apparatus": {
+  "bench": "benches/twin_r2.toml",
+  "criteria": {
+   "across_band": [
+    0.985,
+    1.035
+   ],
+   "band_steps": 2,
+   "coarse_ratio": 1.025,
+   "fine_ratio": 1.01,
+   "laps": 20.0,
+   "lobe_reach": 0.07,
+   "long_laps": 100.0,
+   "master_seed": 20261123,
+   "motion_band": [
+    0.975,
+    1.035
+   ],
+   "mpc_seeds": [
+    4,
+    5,
+    6,
+    7
+   ],
+   "onset_count": 2,
+   "out_of_plane_band": [
+    0.845,
+    0.89
+   ],
+   "phases": 8,
+   "plane_band": [
+    0.975,
+    1.03
+   ],
+   "sense_steps": 2,
+   "shift_tolerance": 0.02,
+   "split_band": [
+    0.5,
+    2.0
+   ],
+   "spreads": 2.0,
+   "steps_per_period": 120,
+   "toward_ratio": 2.0,
+   "well_steps": 2,
+   "window": 5,
+   "worst_orientation": [
+    0.234856,
+    -0.116608,
+    0.96501
+   ]
+  },
+  "designs": {
+   "designs/ellipse_318.toml": {
+    "drive": {
+     "q": 0.487973,
+     "volts": 50.0,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/ellipse_318.toml",
+     "name": "ellipse 318",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "dde2878542c80843a440cb0a6305b86011bc8a72d49b14e740f1476556481bc2",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [
+     [
+      0.0,
+      0.5
+     ]
+    ],
+    "ring": {
+     "bend_mm": 18.5701,
+     "f_MHz": 914.995,
+     "length_mm": 317.759
+    },
+    "static": {
+     "across_eV": 11.9191,
+     "at": 0.0,
+     "limit_eV": 11.9191
+    }
+   },
+   "designs/flat_ring_318.toml": {
+    "drive": {
+     "q": 0.487973,
+     "volts": 50.0,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/flat_ring_318.toml",
+     "name": "flat ring 318",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "35cf8e33d5d46ff845e6c0b94f3f3d32914d5718d73c4e7f1127038dd4cf449b",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [],
+    "ring": {
+     "bend_mm": 50.573,
+     "f_MHz": 914.995,
+     "length_mm": 317.759
+    },
+    "static": {
+     "across_eV": 32.4332,
+     "at": 0.8045,
+     "limit_eV": 32.4332
+    }
+   },
+   "designs/flat_ring_318_stiff.toml": {
+    "drive": {
+     "q": 0.487973,
+     "volts": 50.0,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/flat_ring_318_stiff.toml",
+     "name": "flat ring 318, stiff",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "8f2d5c91b8171c4f46c832e7875e8b975ceef0a73c8458da59c735a0654412c8",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [],
+    "ring": {
+     "bend_mm": 50.573,
+     "f_MHz": 914.995,
+     "length_mm": 317.759
+    },
+    "static": {
+     "across_eV": 32.4332,
+     "at": 0.8045,
+     "limit_eV": 146.651
+    }
+   },
+   "designs/helix_13.toml": {
+    "drive": {
+     "q": 0.487973,
+     "volts": 50.0,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/helix_13.toml",
+     "name": "helix (1, 3)",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "75ef704a36a7d1cf55b577887c714d164b747a6b04ca472c8d4252ac02e5e58f",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [
+     [
+      0.1193,
+      0.214
+     ],
+     [
+      0.4527,
+      0.5473
+     ],
+     [
+      0.786,
+      0.8807
+     ]
+    ],
+    "ring": {
+     "bend_mm": 25.0461,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 29.141,
+     "length_mm": 317.759
+    },
+    "static": {
+     "across_eV": 16.0785,
+     "at": 0.7827,
+     "limit_eV": 18.451
+    }
+   },
+   "designs/helix_13_r010.toml": {
+    "drive": {
+     "q": 0.487973,
+     "volts": 50.0,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/helix_13_r010.toml",
+     "name": "helix (1, 3), r/R 0.1",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "d4a744ffc557d519ec58fab5a16c774b06070be9eb6129ce1b5e54fcb22bcf77",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [
+     [
+      0.109,
+      0.2243
+     ],
+     [
+      0.4423,
+      0.5577
+     ],
+     [
+      0.7757,
+      0.891
+     ]
+    ],
+    "ring": {
+     "bend_mm": 31.4747,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 60.0795,
+     "length_mm": 317.759
+    },
+    "static": {
+     "across_eV": 20.2019,
+     "at": 0.7693,
+     "limit_eV": 34.7195
+    }
+   },
+   "designs/helix_13_r030.toml": {
+    "drive": {
+     "q": 0.487973,
+     "volts": 50.0,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/helix_13_r030.toml",
+     "name": "helix (1, 3), r/R 0.3",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "055d4d86117fae32169dc1d87208e79decd6d7f246e0b2770f0f1d17135e1cef",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [],
+    "ring": {
+     "bend_mm": 20.1526,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 21.0595,
+     "length_mm": 317.759
+    },
+    "static": {
+     "across_eV": 12.9277,
+     "at": 0.2463,
+     "limit_eV": 13.6209
+    }
+   },
+   "designs/r1_rail_ring.toml at realisation 1": {
+    "drive": {
+     "q": 0.51097,
+     "volts": 50.0,
+     "weakest_eV": 0.0913155
+    },
+    "earth_uT": [
+     -29.3749,
+     -27.096,
+     -30.0487
+    ],
+    "identity": {
+     "design": "designs/r1_rail_ring.toml",
+     "name": "R1",
+     "realisation": 1,
+     "section": "673cc8028c920ed3",
+     "sha256": "b9baedd0b9527ca28ae61033fbd1e909b3c124ad135d78bdd646891095af9ed3",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [],
+    "ring": {
+     "bend_mm": 33.5294,
+     "f_MHz": 909.984,
+     "length_mm": 210.672
+    },
+    "static": {
+     "across_eV": 9.40634,
+     "at": 0.8035,
+     "limit_eV": 9.40634
+    }
+   },
+   "designs/t915s.toml": {
+    "drive": {
+     "q": 0.487973,
+     "volts": 50.0,
+     "weakest_eV": 0.978673
+    },
+    "identity": {
+     "design": "designs/t915s.toml",
+     "name": "T915-S",
+     "realisation": 0,
+     "section": "c19807834a83dc9d",
+     "sha256": "f30531d452865fc2a72bb1d9bf85c3f7308164a10450291e42d561e1b25cf902",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [
+     [
+      0.1385,
+      0.1948
+     ],
+     [
+      0.472,
+      0.528
+     ],
+     [
+      0.8053,
+      0.8615
+     ]
+    ],
+    "ring": {
+     "bend_mm": 15.285,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759
+    },
+    "static": {
+     "across_eV": 9.80339,
+     "at": 0.8033,
+     "limit_eV": 11.6427
+    }
+   },
+   "designs/t915s.toml at realisation 1, the bench's guide": {
+    "drive": {
+     "q": 0.488023,
+     "volts": 50.0,
+     "weakest_eV": 0.920237
+    },
+    "earth_uT": [
+     34.9836,
+     19.7704,
+     -29.7537
+    ],
+    "identity": {
+     "design": "designs/t915s.toml",
+     "name": "T915-S",
+     "realisation": 1,
+     "section": "c19807834a83dc9d",
+     "sha256": "f30531d452865fc2a72bb1d9bf85c3f7308164a10450291e42d561e1b25cf902",
+     "solver": "d7362bdb13fc2b19"
+    },
+    "lobes": [
+     [
+      0.1385,
+      0.1948
+     ],
+     [
+      0.472,
+      0.528
+     ],
+     [
+      0.8053,
+      0.8615
+     ]
+    ],
+    "ring": {
+     "bend_mm": 15.285,
+     "f_MHz": 914.948,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759
+    },
+    "static": {
+     "across_eV": 9.46435,
+     "at": 0.1968,
+     "limit_eV": 10.822
+    }
+   }
+  }
+ },
+ "shots": [
+  {
+   "ident": "H1 hold, ellipse 318, realisation 0",
+   "prediction": {
+    "basis": {
+     "DRh_eV": 19.8623,
+     "H1_high_eV": 12.2767,
+     "H1_low_eV": 11.6211,
+     "H1b_high_eV": 12.3363,
+     "H1b_low_eV": 11.7403,
+     "across_eV": 11.9191,
+     "bend_mm": 18.5701,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "length_mm": 317.759,
+     "motion_against_eV": 11.4201,
+     "motion_against_edge_eV": 11.477,
+     "motion_against_onset_eV": 11.477,
+     "motion_fraction": 0.958132,
+     "motion_limit_eV": 11.4201,
+     "motion_with_eV": 11.4201,
+     "motion_with_edge_eV": 12.3049,
+     "motion_with_onset_eV": 11.477,
+     "null_mm": 0.915,
+     "planar": 1.0,
+     "q_null": 0.487973,
+     "static_at": 0.0,
+     "static_eV": 11.9191,
+     "volts_mean": 50.0
+    },
+    "claim": "ellipse 318 holds electrons for 20 laps to 11.42 eV (0.958 of its static limit, 11.92 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it; H1 has it hold 0.975 to 1.03 of its static limit, H1b 0.985 to 1.035 of its bound with every bend counted across the boards' plane, 11.92 eV",
+    "high": 11.8198,
+    "low": 11.1346,
+    "unit": "eV",
+    "value": 11.4201
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/ellipse_318.toml",
+    "earth": "drawn",
+    "high": 12.7,
+    "kind": "hold",
+    "label": "ellipse 318",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 9.5,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261123,
+    "start": 0.25,
+    "steps": 120,
+    "test": "H1"
+   }
+  },
+  {
+   "ident": "H1 hold, flat ring 318, realisation 0",
+   "prediction": {
+    "basis": {
+     "DRh_eV": 54.0923,
+     "H1_high_eV": 33.4062,
+     "H1_low_eV": 31.6224,
+     "H1b_high_eV": 33.5684,
+     "H1b_low_eV": 31.9467,
+     "across_eV": 32.4332,
+     "bend_mm": 50.573,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "length_mm": 317.759,
+     "motion_against_eV": 32.5158,
+     "motion_against_edge_eV": 32.6779,
+     "motion_against_onset_eV": 32.6779,
+     "motion_fraction": 1.00254,
+     "motion_limit_eV": 32.5158,
+     "motion_with_eV": 32.5158,
+     "motion_with_edge_eV": 32.6779,
+     "motion_with_onset_eV": 32.6779,
+     "null_mm": 0.915,
+     "planar": 1.0,
+     "q_null": 0.487973,
+     "static_at": 0.8045,
+     "static_eV": 32.4332,
+     "volts_mean": 50.0
+    },
+    "claim": "flat ring 318 holds electrons for 20 laps to 32.52 eV (1.003 of its static limit, 32.43 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it; H1 has it hold 0.975 to 1.03 of its static limit, H1b 0.985 to 1.035 of its bound with every bend counted across the boards' plane, 32.43 eV",
+    "high": 33.6538,
+    "low": 31.7029,
+    "unit": "eV",
+    "value": 32.5158
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/flat_ring_318.toml",
+    "earth": "drawn",
+    "high": 34.5,
+    "kind": "hold",
+    "label": "flat ring 318",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 29.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261124,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H1"
+   }
+  },
+  {
+   "ident": "H1 hold, flat ring 318, stiff, realisation 0",
+   "prediction": {
+    "basis": {
+     "DRh_eV": 54.0923,
+     "H1_high_eV": 151.051,
+     "H1_low_eV": 142.985,
+     "H1b_high_eV": 33.5684,
+     "H1b_low_eV": 31.9467,
+     "across_eV": 32.4332,
+     "bend_mm": 50.573,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "length_mm": 317.759,
+     "motion_against_eV": 110.235,
+     "motion_against_edge_eV": 157.694,
+     "motion_against_onset_eV": 55.9002,
+     "motion_fraction": 0.706681,
+     "motion_limit_eV": 103.636,
+     "motion_with_eV": 97.4317,
+     "motion_with_edge_eV": null,
+     "motion_with_onset_eV": 50.6428,
+     "null_mm": 0.915,
+     "planar": 1.0,
+     "q_null": 0.487973,
+     "static_at": 0.8045,
+     "static_eV": 146.651,
+     "volts_mean": 50.0
+    },
+    "claim": "flat ring 318, stiff holds electrons for 20 laps to 103.6 eV (0.707 of its static limit, 146.7 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it; H1 has it hold 0.975 to 1.03 of its static limit, H1b 0.985 to 1.035 of its bound with every bend counted across the boards' plane, 32.43 eV",
+    "high": 107.263,
+    "low": 101.045,
+    "unit": "eV",
+    "value": 103.636
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/flat_ring_318_stiff.toml",
+    "earth": "drawn",
+    "high": 165.0,
+    "kind": "hold",
+    "label": "flat ring 318, stiff",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 26.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261125,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H1"
+   }
+  },
+  {
+   "ident": "H1 hold, helix (1, 3), r/R 0.1, realisation 0",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 30.9004,
+     "H1_low_eV": 29.338,
+     "H1b_high_eV": 20.9089,
+     "H1b_low_eV": 19.8988,
+     "across_eV": 20.2019,
+     "bend_mm": 31.4747,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 60.0795,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion_against_eV": 27.5445,
+     "motion_against_edge_eV": 30.2753,
+     "motion_against_onset_eV": 27.4078,
+     "motion_fraction": 0.797301,
+     "motion_in_lobes": 0.668305,
+     "motion_limit_eV": 27.6819,
+     "motion_with_eV": 27.82,
+     "motion_with_edge_eV": 30.2753,
+     "motion_with_onset_eV": 27.6819,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.7693,
+     "static_eV": 34.7195,
+     "volts_mean": 50.0
+    },
+    "claim": "helix (1, 3), r/R 0.1 holds electrons for 20 laps to 27.68 eV (0.797 of its static limit, 34.72 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it; H1 has it hold 0.845 to 0.89 of its static limit, H1b 0.985 to 1.035 of its bound with every bend counted across the boards' plane, 20.2 eV",
+    "high": 28.6508,
+    "low": 26.9899,
+    "unit": "eV",
+    "value": 27.6819
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/helix_13_r010.toml",
+    "earth": "drawn",
+    "high": 36.5,
+    "kind": "hold",
+    "label": "helix (1, 3), r/R 0.1",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 17.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261126,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H1"
+   }
+  },
+  {
+   "ident": "H1 hold, helix (1, 3), r/R 0.2, realisation 0",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 16.4214,
+     "H1_low_eV": 15.5911,
+     "H1b_high_eV": 16.6412,
+     "H1b_low_eV": 15.8373,
+     "across_eV": 16.0785,
+     "bend_mm": 25.0461,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 29.141,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion_against_eV": 15.9088,
+     "motion_against_edge_eV": 15.9881,
+     "motion_against_onset_eV": 14.6186,
+     "motion_fraction": 0.862219,
+     "motion_in_lobes": 0.969697,
+     "motion_limit_eV": 15.9088,
+     "motion_with_eV": 15.9088,
+     "motion_with_edge_eV": 16.148,
+     "motion_with_onset_eV": 14.6186,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.7827,
+     "static_eV": 18.451,
+     "volts_mean": 50.0
+    },
+    "claim": "helix (1, 3) holds electrons for 20 laps to 15.91 eV (0.862 of its static limit, 18.45 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it; H1 has it hold 0.845 to 0.89 of its static limit, H1b 0.985 to 1.035 of its bound with every bend counted across the boards' plane, 16.08 eV",
+    "high": 16.4656,
+    "low": 15.511,
+    "unit": "eV",
+    "value": 15.9088
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/helix_13.toml",
+    "earth": "drawn",
+    "high": 19.5,
+    "kind": "hold",
+    "label": "helix (1, 3), r/R 0.2",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 13.5,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261127,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H1"
+   }
+  },
+  {
+   "ident": "H1 hold, helix (1, 3), r/R 0.3, realisation 0",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 12.1226,
+     "H1_low_eV": 11.5096,
+     "H1b_high_eV": 13.3802,
+     "H1b_low_eV": 12.7338,
+     "across_eV": 12.9277,
+     "bend_mm": 20.1526,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 21.0595,
+     "length_mm": 317.759,
+     "lobes": 0.0,
+     "motion_against_eV": 12.3854,
+     "motion_against_edge_eV": 12.5716,
+     "motion_against_onset_eV": 12.2019,
+     "motion_fraction": 0.904781,
+     "motion_limit_eV": 12.3239,
+     "motion_with_eV": 12.2628,
+     "motion_with_edge_eV": 12.5716,
+     "motion_with_onset_eV": 12.2019,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.2463,
+     "static_eV": 13.6209,
+     "volts_mean": 50.0
+    },
+    "claim": "helix (1, 3), r/R 0.3 holds electrons for 20 laps to 12.32 eV (0.905 of its static limit, 13.62 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it; H1 has it hold 0.845 to 0.89 of its static limit, H1b 0.985 to 1.035 of its bound with every bend counted across the boards' plane, 12.93 eV",
+    "high": 12.7553,
+    "low": 12.0158,
+    "unit": "eV",
+    "value": 12.3239
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/helix_13_r030.toml",
+    "earth": "drawn",
+    "high": 14.3,
+    "kind": "hold",
+    "label": "helix (1, 3), r/R 0.3",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 10.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261128,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H1"
+   }
+  },
+  {
+   "ident": "E2-9 hold, flat ring 318, realisation 0 at q 0.3",
+   "prediction": {
+    "basis": {
+     "DRh_eV": 20.445,
+     "H1_high_eV": 12.6264,
+     "H1_low_eV": 11.9522,
+     "H1b_high_eV": 12.6877,
+     "H1b_low_eV": 12.0748,
+     "across_eV": 12.2586,
+     "bend_mm": 50.573,
+     "depth_weakest_eV": 0.369904,
+     "f_MHz": 914.995,
+     "length_mm": 317.759,
+     "motion_against_eV": 12.2592,
+     "motion_against_edge_eV": 12.4435,
+     "motion_against_onset_eV": 12.3203,
+     "motion_fraction": 1.00004,
+     "motion_limit_eV": 12.2592,
+     "motion_with_eV": 12.2592,
+     "motion_with_edge_eV": 12.3203,
+     "motion_with_onset_eV": 12.3203,
+     "null_mm": 0.915,
+     "planar": 1.0,
+     "q_null": 0.3,
+     "static_at": 0.8045,
+     "static_eV": 12.2586,
+     "volts_mean": 30.7394
+    },
+    "claim": "flat ring 318 holds electrons for 20 laps to 12.26 eV (1.000 of its static limit, 12.26 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 12.6882,
+    "low": 11.9527,
+    "unit": "eV",
+    "value": 12.2592
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/flat_ring_318.toml",
+    "earth": "drawn",
+    "high": 13.1,
+    "kind": "hold",
+    "label": "flat ring 318",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 10.3,
+    "periods": 0,
+    "phases": 8,
+    "q": 0.3,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261129,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-9"
+   }
+  },
+  {
+   "ident": "E2-9 hold, flat ring 318, stiff, realisation 0 at q 0.3",
+   "prediction": {
+    "basis": {
+     "DRh_eV": 20.445,
+     "H1_high_eV": 62.998,
+     "H1_low_eV": 59.634,
+     "H1b_high_eV": 12.6877,
+     "H1b_low_eV": 12.0748,
+     "across_eV": 12.2586,
+     "bend_mm": 50.573,
+     "depth_weakest_eV": 0.369904,
+     "f_MHz": 914.995,
+     "length_mm": 317.759,
+     "motion_against_eV": 67.7692,
+     "motion_against_edge_eV": 68.6111,
+     "motion_against_onset_eV": 65.3051,
+     "motion_fraction": 1.08098,
+     "motion_limit_eV": 66.1163,
+     "motion_with_eV": 64.5037,
+     "motion_with_edge_eV": 65.3051,
+     "motion_with_onset_eV": 65.3051,
+     "null_mm": 0.915,
+     "planar": 1.0,
+     "q_null": 0.3,
+     "static_at": 0.8045,
+     "static_eV": 61.1631,
+     "volts_mean": 30.7394
+    },
+    "claim": "flat ring 318, stiff holds electrons for 20 laps to 66.12 eV (1.081 of its static limit, 61.16 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 68.4304,
+    "low": 64.4634,
+    "unit": "eV",
+    "value": 66.1163
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/flat_ring_318_stiff.toml",
+    "earth": "drawn",
+    "high": 69.0,
+    "kind": "hold",
+    "label": "flat ring 318, stiff",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 19.0,
+    "periods": 0,
+    "phases": 8,
+    "q": 0.3,
+    "ratio": 1.025,
+    "realisation": 0,
+    "seed": 20261130,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-9"
+   }
+  },
+  {
+   "ident": "H2 hold, T915-S, realisation 0, 100 laps",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 10.362,
+     "H1_low_eV": 9.83805,
+     "H1b_high_eV": 10.1465,
+     "H1b_low_eV": 9.65634,
+     "across_eV": 9.80339,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion20_against_eV": 9.20259,
+     "motion20_fraction": 0.794362,
+     "motion20_limit_eV": 9.24849,
+     "motion20_with_eV": 9.29462,
+     "motion_against_eV": 7.84817,
+     "motion_against_edge_eV": 10.0148,
+     "motion_against_onset_eV": 7.2838,
+     "motion_fraction": 0.647784,
+     "motion_in_lobes": 0.957602,
+     "motion_limit_eV": 7.54193,
+     "motion_with_eV": 7.24765,
+     "motion_with_edge_eV": 8.7125,
+     "motion_with_onset_eV": 7.21168,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.8033,
+     "static_eV": 11.6427,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 100 laps to 7.542 eV (0.648 of its static limit, 11.64 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 7.8059,
+    "low": 7.35338,
+    "unit": "eV",
+    "value": 7.54193
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": "drawn",
+    "high": 11.9,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 100.0,
+    "launch_seed": null,
+    "low": 6.4,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261131,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H2"
+   }
+  },
+  {
+   "ident": "H2 hold, T915-S, realisation 0, 100 laps, 240 steps an RF period",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 10.362,
+     "H1_low_eV": 9.83805,
+     "H1b_high_eV": 10.1465,
+     "H1b_low_eV": 9.65634,
+     "across_eV": 9.80339,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion20_against_eV": 9.20259,
+     "motion20_fraction": 0.794362,
+     "motion20_limit_eV": 9.24849,
+     "motion20_with_eV": 9.29462,
+     "motion_against_eV": 8.66926,
+     "motion_against_edge_eV": 10.4214,
+     "motion_against_onset_eV": 7.80922,
+     "motion_fraction": 0.737239,
+     "motion_in_lobes": 0.961131,
+     "motion_limit_eV": 8.58342,
+     "motion_with_eV": 8.49844,
+     "motion_with_edge_eV": 10.3182,
+     "motion_with_onset_eV": 7.35663,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.8033,
+     "static_eV": 11.6427,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 100 laps to 8.583 eV (0.737 of its static limit, 11.64 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 8.88384,
+    "low": 8.36884,
+    "unit": "eV",
+    "value": 8.58342
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": "drawn",
+    "high": 11.9,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 100.0,
+    "launch_seed": null,
+    "low": 6.4,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261132,
+    "start": 0.0,
+    "steps": 240,
+    "test": "H2"
+   }
+  },
+  {
+   "ident": "H2 hold, T915-S, realisation 0 at q 0.3, 100 laps",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 3.91646,
+     "H1_low_eV": 3.71844,
+     "H1b_high_eV": 3.83502,
+     "H1b_low_eV": 3.64976,
+     "across_eV": 3.70534,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.369904,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion20_against_eV": 3.89854,
+     "motion20_fraction": 0.88153,
+     "motion20_limit_eV": 3.87919,
+     "motion20_with_eV": 3.85994,
+     "motion_against_eV": 3.19502,
+     "motion_against_edge_eV": 3.7651,
+     "motion_against_onset_eV": 2.87806,
+     "motion_fraction": 0.722453,
+     "motion_in_lobes": 0.994024,
+     "motion_limit_eV": 3.17917,
+     "motion_with_eV": 3.16339,
+     "motion_with_edge_eV": 3.69092,
+     "motion_with_onset_eV": 2.87806,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.3,
+     "static_at": 0.8033,
+     "static_eV": 4.40052,
+     "volts_mean": 30.7394
+    },
+    "claim": "T915-S holds electrons for 100 laps to 3.179 eV (0.722 of its static limit, 4.401 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 3.29044,
+    "low": 3.09969,
+    "unit": "eV",
+    "value": 3.17917
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": "drawn",
+    "high": 4.5,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 100.0,
+    "launch_seed": null,
+    "low": 2.2,
+    "periods": 0,
+    "phases": 8,
+    "q": 0.3,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261133,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H2"
+   }
+  },
+  {
+   "ident": "E2-15 hold, T915-S, realisation 0, 50 uT at the worst orientation",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 10.362,
+     "H1_low_eV": 9.83805,
+     "H1b_high_eV": 10.1465,
+     "H1b_low_eV": 9.65634,
+     "across_eV": 9.80339,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.978673,
+     "earth_uT": 50.0,
+     "f_MHz": 914.995,
+     "field_against_eV": 11.4718,
+     "field_split": -0.0197372,
+     "field_with_eV": 11.7005,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion_against_eV": 9.25838,
+     "motion_against_edge_eV": 10.6954,
+     "motion_against_onset_eV": 8.17557,
+     "motion_fraction": 0.787338,
+     "motion_in_lobes": 0.986523,
+     "motion_limit_eV": 9.16672,
+     "motion_with_eV": 9.07596,
+     "motion_with_edge_eV": 10.8023,
+     "motion_with_onset_eV": 9.12122,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.8033,
+     "static_eV": 11.6427,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 20 laps to 9.167 eV (0.787 of its static limit, 11.64 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 9.48755,
+    "low": 8.93755,
+    "unit": "eV",
+    "value": 9.16672
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": [
+     1.17428e-05,
+     -5.8304e-06,
+     4.82505e-05
+    ],
+    "high": 12.1,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 7.55,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261134,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-15"
+   }
+  },
+  {
+   "ident": "E2-15 hold, T915-S, realisation 0, 500 uT at the worst orientation",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 10.362,
+     "H1_low_eV": 9.83805,
+     "H1b_high_eV": 10.1465,
+     "H1b_low_eV": 9.65634,
+     "across_eV": 9.80339,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.978673,
+     "earth_uT": 500.0,
+     "f_MHz": 914.995,
+     "field_against_eV": 9.01278,
+     "field_split": -0.121293,
+     "field_with_eV": 10.175,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion_against_eV": 6.5048,
+     "motion_against_edge_eV": 7.58954,
+     "motion_against_onset_eV": 6.03704,
+     "motion_fraction": 0.587204,
+     "motion_in_lobes": 0.91901,
+     "motion_limit_eV": 6.83661,
+     "motion_with_eV": 7.18535,
+     "motion_with_edge_eV": 8.46741,
+     "motion_with_onset_eV": 7.0789,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.8033,
+     "static_eV": 11.6427,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 20 laps to 6.837 eV (0.587 of its static limit, 11.64 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 7.0759,
+    "low": 6.6657,
+    "unit": "eV",
+    "value": 6.83661
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": [
+     0.000117428,
+     -5.8304e-05,
+     0.00048250500000000004
+    ],
+    "high": 12.1,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 5.2,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261135,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-15"
+   }
+  },
+  {
+   "ident": "E2-15 hold, T915-S, on the bench",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 9.63156,
+     "H1_low_eV": 9.14457,
+     "H1b_high_eV": 9.7956,
+     "H1b_low_eV": 9.32238,
+     "across_eV": 9.46435,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.920237,
+     "earth_uT": 50.0,
+     "f_MHz": 914.948,
+     "field_against_eV": 10.8317,
+     "field_split": 0.00405372,
+     "field_with_eV": 10.7879,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion_against_eV": 8.49894,
+     "motion_against_edge_eV": 9.72083,
+     "motion_against_onset_eV": 8.29013,
+     "motion_fraction": 0.777565,
+     "motion_in_lobes": 0.98022,
+     "motion_limit_eV": 8.41479,
+     "motion_with_eV": 8.33148,
+     "motion_with_edge_eV": 9.81804,
+     "motion_with_onset_eV": 7.28423,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.488023,
+     "static_at": 0.1968,
+     "static_eV": 10.822,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 20 laps to 8.415 eV (0.778 of its static limit, 10.82 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 8.70931,
+    "low": 8.20442,
+    "unit": "eV",
+    "value": 8.41479
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": "drawn",
+    "high": 11.3,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 7.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": null,
+    "seed": 20261136,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-15"
+   }
+  },
+  {
+   "ident": "E2-15 hold, T915-S, on the bench, Earth's field removed",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 9.63156,
+     "H1_low_eV": 9.14457,
+     "H1b_high_eV": 9.7956,
+     "H1b_low_eV": 9.32238,
+     "across_eV": 9.46435,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.920237,
+     "f_MHz": 914.948,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion_against_eV": 8.41479,
+     "motion_against_edge_eV": 9.81804,
+     "motion_against_onset_eV": 8.37303,
+     "motion_fraction": 0.769866,
+     "motion_in_lobes": 0.978814,
+     "motion_limit_eV": 8.33148,
+     "motion_with_eV": 8.24899,
+     "motion_with_edge_eV": 9.06679,
+     "motion_with_onset_eV": 7.6558,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.488023,
+     "static_at": 0.1968,
+     "static_eV": 10.822,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 20 laps to 8.331 eV (0.770 of its static limit, 10.82 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 8.62308,
+    "low": 8.12319,
+    "unit": "eV",
+    "value": 8.33148
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": "none",
+    "high": 11.3,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 7.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": null,
+    "seed": 20261137,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-15"
+   }
+  },
+  {
+   "ident": "E2-2 shift, section B on a ring of R = 40h, bent in the boards' plane",
+   "prediction": {
+    "basis": {
+     "first_order": 0.140461,
+     "gradient": 0.999948,
+     "radius_h": 40.0
+    },
+    "claim": "the twin moves section B's null toward the centre of a ring of R = 40h by 0.140473 h^2/R in the boards plane, the axisymmetric reference's (first order 0.140461; E2-2's 0.1405)",
+    "high": 0.143282,
+    "low": 0.137663,
+    "unit": "h^2/R",
+    "value": 0.140473
+   },
+   "shot": {
+    "bend": false,
+    "design": "experiments/twin_rung2/ring_40h_inplane.toml",
+    "earth": "drawn",
+    "high": 0.0,
+    "kind": "shift",
+    "label": "section B on a ring of R = 40h, bent in the boards' plane",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261138,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-2"
+   }
+  },
+  {
+   "ident": "E2-2 shift, section B on a ring of R = 40h, bent toward the boards",
+   "prediction": {
+    "basis": {
+     "first_order": 0.31831,
+     "gradient": 1.00004,
+     "radius_h": 40.0
+    },
+    "claim": "the twin moves section B's null toward the centre of a ring of R = 40h by 0.318364 h^2/R toward the boards, the axisymmetric reference's (first order 0.318310; E2-2's 0.318)",
+    "high": 0.324732,
+    "low": 0.311997,
+    "unit": "h^2/R",
+    "value": 0.318364
+   },
+   "shot": {
+    "bend": false,
+    "design": "experiments/twin_rung2/ring_40h_toward.toml",
+    "earth": "drawn",
+    "high": 0.0,
+    "kind": "shift",
+    "label": "section B on a ring of R = 40h, bent toward the boards",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261139,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-2"
+   }
+  },
+  {
+   "ident": "E2-2 hold, T915-S, realisation 0, the bend's shift on",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 10.362,
+     "H1_low_eV": 9.83805,
+     "H1b_high_eV": 10.1465,
+     "H1b_low_eV": 9.65634,
+     "across_eV": 9.80339,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion_against_eV": 9.13805,
+     "motion_against_edge_eV": 10.8762,
+     "motion_against_onset_eV": 9.0927,
+     "motion_fraction": 0.788791,
+     "motion_in_lobes": 0.985549,
+     "motion_limit_eV": 9.18362,
+     "motion_with_eV": 9.22943,
+     "motion_with_edge_eV": 10.8762,
+     "motion_with_onset_eV": 9.0927,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.8033,
+     "static_eV": 11.6427,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 20 laps to 9.184 eV (0.789 of its static limit, 11.64 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 9.50505,
+    "low": 8.95403,
+    "unit": "eV",
+    "value": 9.18362
+   },
+   "shot": {
+    "bend": true,
+    "design": "designs/t915s.toml",
+    "earth": "drawn",
+    "high": 12.1,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 20.0,
+    "launch_seed": 20261223,
+    "low": 8.15,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261140,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-2"
+   }
+  },
+  {
+   "ident": "E2-2 hold, T915-S, realisation 0",
+   "prediction": {
+    "basis": {
+     "H1_high_eV": 10.362,
+     "H1_low_eV": 9.83805,
+     "H1b_high_eV": 10.1465,
+     "H1b_low_eV": 9.65634,
+     "across_eV": 9.80339,
+     "bend_mm": 15.285,
+     "depth_weakest_eV": 0.978673,
+     "f_MHz": 914.995,
+     "inplane_radius_mm": 18.57,
+     "length_mm": 317.759,
+     "lobes": 3.0,
+     "motion_against_eV": 9.13805,
+     "motion_against_edge_eV": 10.8762,
+     "motion_against_onset_eV": 9.0927,
+     "motion_fraction": 0.788791,
+     "motion_in_lobes": 0.985549,
+     "motion_limit_eV": 9.18362,
+     "motion_with_eV": 9.22943,
+     "motion_with_edge_eV": 10.8762,
+     "motion_with_onset_eV": 9.0927,
+     "null_mm": 0.915,
+     "planar": 0.0,
+     "q_null": 0.487973,
+     "static_at": 0.8033,
+     "static_eV": 11.6427,
+     "volts_mean": 50.0
+    },
+    "claim": "T915-S holds electrons for 20 laps to 9.184 eV (0.789 of its static limit, 11.64 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 9.50505,
+    "low": 8.95403,
+    "unit": "eV",
+    "value": 9.18362
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": "drawn",
+    "high": 12.1,
+    "kind": "hold",
+    "label": "T915-S",
+    "laps": 20.0,
+    "launch_seed": 20261223,
+    "low": 8.15,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261141,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-2"
+   }
+  },
+  {
+   "ident": "H4 hold, R1, realisation 1, Earth's field removed",
+   "prediction": {
+    "basis": {
+     "DRh_eV": 5.42684,
+     "H1_high_eV": 9.68853,
+     "H1_low_eV": 9.17118,
+     "H1b_high_eV": 9.73556,
+     "H1b_low_eV": 9.26525,
+     "across_eV": 9.40634,
+     "bend_mm": 33.5294,
+     "depth_weakest_eV": 0.0913155,
+     "f_MHz": 909.984,
+     "length_mm": 210.672,
+     "motion_against_eV": 9.32503,
+     "motion_against_edge_eV": 9.46525,
+     "motion_against_onset_eV": 9.37154,
+     "motion_fraction": 0.9963,
+     "motion_limit_eV": 9.37154,
+     "motion_with_eV": 9.41828,
+     "motion_with_edge_eV": 9.46525,
+     "motion_with_onset_eV": 9.37154,
+     "null_mm": 0.564188,
+     "planar": 1.0,
+     "q_null": 0.51097,
+     "static_at": 0.8035,
+     "static_eV": 9.40634,
+     "volts_mean": 50.0
+    },
+    "claim": "R1 holds electrons for 20 laps to 9.372 eV (0.996 of its static limit, 9.406 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 9.69954,
+    "low": 9.13725,
+    "unit": "eV",
+    "value": 9.37154
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/r1_rail_ring.toml",
+    "earth": "none",
+    "high": 10.85,
+    "kind": "hold",
+    "label": "R1",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 6.55,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 1,
+    "seed": 20261142,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H4"
+   }
+  },
+  {
+   "ident": "H4 hold, R1, realisation 1",
+   "prediction": {
+    "basis": {
+     "DRh_eV": 5.42684,
+     "H1_high_eV": 9.68853,
+     "H1_low_eV": 9.17118,
+     "H1b_high_eV": 9.73556,
+     "H1b_low_eV": 9.26525,
+     "across_eV": 9.40634,
+     "bend_mm": 33.5294,
+     "depth_weakest_eV": 0.0913155,
+     "earth_uT": 50.0,
+     "f_MHz": 909.984,
+     "field_against_eV": 9.25394,
+     "field_split": 0.178368,
+     "field_with_eV": 7.74217,
+     "length_mm": 210.672,
+     "motion_against_eV": 9.12737,
+     "motion_against_edge_eV": 9.26462,
+     "motion_against_onset_eV": 8.90312,
+     "motion_fraction": 0.896094,
+     "motion_limit_eV": 8.42897,
+     "motion_with_eV": 7.78401,
+     "motion_with_edge_eV": 7.82284,
+     "motion_with_onset_eV": 7.74538,
+     "null_mm": 0.564188,
+     "planar": 1.0,
+     "q_null": 0.51097,
+     "static_at": 0.8035,
+     "static_eV": 9.40634,
+     "volts_mean": 50.0
+    },
+    "claim": "R1 holds electrons for 20 laps to 8.429 eV (0.896 of its static limit, 9.406 eV), the exact motion in the section on the shot's own launch, within 0.975 to 1.035 of it",
+    "high": 8.72398,
+    "low": 8.21825,
+    "unit": "eV",
+    "value": 8.42897
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/r1_rail_ring.toml",
+    "earth": "drawn",
+    "high": 10.85,
+    "kind": "hold",
+    "label": "R1",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 6.1,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 1,
+    "seed": 20261143,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H4"
+   }
+  },
+  {
+   "ident": "H4 well, R1, realisation 1, Earth's field removed",
+   "prediction": {
+    "basis": {
+     "bend_mm": 33.5294,
+     "depth_start_eV": 0.0918882,
+     "depth_weakest_eV": 0.0913155,
+     "f_MHz": 909.984,
+     "field_along_uT": 0.0,
+     "field_uT": 0.0,
+     "length_mm": 210.672,
+     "model_first_D": 0.131494,
+     "null_mm": 0.564188,
+     "q_null": 0.51097,
+     "static_at": 0.8035,
+     "static_eV": 9.40634,
+     "volts_at_start": 48.9497,
+     "volts_mean": 50.0
+    },
+    "claim": "electrons sent from R1's null up its axis toward the saddle at the drive's zero crossings, on the bench's realisation at its own band, 909.984 MHz, in a field of 0 uT, are first lost at 0.01208 eV, 0.13 of the depth there, as the exact motion on the solved axis loses them in 40 RF periods",
+    "high": 0.0128522,
+    "low": 0.0113595,
+    "unit": "eV",
+    "value": 0.0120828
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/r1_rail_ring.toml",
+    "earth": "none",
+    "high": 0.14,
+    "kind": "well",
+    "label": "R1",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0045,
+    "periods": 40,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 1,
+    "seed": 20261144,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H4"
+   }
+  },
+  {
+   "ident": "H4 well, R1, realisation 1",
+   "prediction": {
+    "basis": {
+     "bend_mm": 33.5294,
+     "depth_start_eV": 0.0918882,
+     "depth_weakest_eV": 0.0913155,
+     "f_MHz": 909.984,
+     "field_along_uT": -27.096,
+     "field_uT": 50.0,
+     "length_mm": 210.672,
+     "model_first_D": 0.168324,
+     "null_mm": 0.564188,
+     "q_null": 0.51097,
+     "static_at": 0.8035,
+     "static_eV": 9.40634,
+     "volts_at_start": 48.9497,
+     "volts_mean": 50.0
+    },
+    "claim": "electrons sent from R1's null up its axis toward the saddle at the drive's zero crossings, on the bench's realisation at its own band, 909.984 MHz, in a field of 50 uT, are first lost at 0.01547 eV, 0.17 of the depth there, as the exact motion on the solved axis loses them in 40 RF periods",
+    "high": 0.0164519,
+    "low": 0.0145411,
+    "unit": "eV",
+    "value": 0.015467
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/r1_rail_ring.toml",
+    "earth": "drawn",
+    "high": 0.14,
+    "kind": "well",
+    "label": "R1",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0045,
+    "periods": 40,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.025,
+    "realisation": 1,
+    "seed": 20261145,
+    "start": 0.0,
+    "steps": 120,
+    "test": "H4"
+   }
+  },
+  {
+   "ident": "E2-13 multipactor, T915-S's section B at 50.3 V",
+   "prediction": {
+    "basis": {
+     "chart_effective_yield": 0.825788,
+     "chart_growth": -0.0988778,
+     "fd_GHz_mm": 1.67445,
+     "margin_dB": 5.18468,
+     "volts": 50.3
+    },
+    "claim": "T915-S section B at 50.3 V at 50.3 V: +5.18 dB, -0.099 Np a period: positive, so the population decays on every surface and laminate model",
+    "high": 0.0,
+    "low": null,
+    "unit": "Np",
+    "value": -0.0988778
+   },
+   "shot": {
+    "bend": false,
+    "design": "t915s",
+    "earth": "drawn",
+    "high": 0.0,
+    "kind": "multipactor",
+    "label": "T915-S's section B at 50.3 V",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261146,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-13"
+   }
+  },
+  {
+   "ident": "E2-13 multipactor, section B, split h, refitted for 1 eV at q 0.5, 39.6 V",
+   "prediction": {
+    "basis": {
+     "chart_effective_yield": 0.854706,
+     "chart_growth": -0.104901,
+     "fd_GHz_mm": 1.31359,
+     "margin_dB": 3.16933,
+     "volts": 39.6198
+    },
+    "claim": "section B, split h, 1 eV at q 0.5 at 39.62 V: +3.17 dB, -0.105 Np a period: positive, so the population decays on every surface and laminate model",
+    "high": 0.0,
+    "low": null,
+    "unit": "Np",
+    "value": -0.104901
+   },
+   "shot": {
+    "bend": false,
+    "design": "lever",
+    "earth": "drawn",
+    "high": 0.0,
+    "kind": "multipactor",
+    "label": "section B, split h, refitted for 1 eV at q 0.5, 39.6 V",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261147,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-13"
+   }
+  },
+  {
+   "ident": "E2-13 multipactor, R1's rails at 50 V",
+   "prediction": {
+    "basis": {
+     "chart_effective_yield": 1.2579,
+     "chart_growth": 0.569101,
+     "fd_GHz_mm": 0.7,
+     "margin_dB": -5.22439,
+     "volts": 50.0
+    },
+    "claim": "R1's rails at 50 V at 50 V: -5.22 dB, +0.569 Np a period (the parallel-plate bound on the rails' arcs): in the rails' own field the population grows no faster; Hypothesis (read from the emission module's own readings): it dies, its electrons leaving the rails' field before they multiply",
+    "high": 0.569101,
+    "low": null,
+    "unit": "Np",
+    "value": 0.569101
+   },
+   "shot": {
+    "bend": false,
+    "design": "r1",
+    "earth": "drawn",
+    "high": 0.0,
+    "kind": "multipactor",
+    "label": "R1's rails at 50 V",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261148,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-13"
+   }
+  },
+  {
+   "ident": "E2-13 multipactor, section B at 160 V, the control",
+   "prediction": {
+    "basis": {
+     "chart_effective_yield": 2.12589,
+     "chart_growth": 1.51366,
+     "fd_GHz_mm": 1.67445,
+     "margin_dB": -4.86636,
+     "volts": 160.0
+    },
+    "claim": "the control: section B at 160 V at 160 V: -4.87 dB, +1.514 Np a period; in its own field the population grows on every surface and laminate model",
+    "high": null,
+    "low": 0.0,
+    "unit": "Np",
+    "value": 1.51366
+   },
+   "shot": {
+    "bend": false,
+    "design": "overdriven",
+    "earth": "drawn",
+    "high": 0.0,
+    "kind": "multipactor",
+    "label": "section B at 160 V, the control",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261149,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-13"
+   }
+  },
+  {
+   "ident": "E2-13 multipactor, facing strips at q 0.5 fitted to 1.5 to 3 eV, the onset",
+   "prediction": {
+    "basis": {
+     "1.5eV_chart_effective_yield": 0.839912,
+     "1.5eV_chart_growth": -0.0880951,
+     "1.5eV_fd_GHz_mm": 2.01489,
+     "1.5eV_margin_dB": 4.39135,
+     "1.5eV_volts": 74.1778,
+     "2.5eV_chart_effective_yield": 0.929311,
+     "2.5eV_chart_growth": -0.0433032,
+     "2.5eV_fd_GHz_mm": 2.60122,
+     "2.5eV_margin_dB": 2.22662,
+     "2.5eV_volts": 123.611,
+     "2eV_chart_effective_yield": 0.878202,
+     "2eV_chart_growth": -0.0707208,
+     "2eV_fd_GHz_mm": 2.3266,
+     "2eV_margin_dB": 3.45765,
+     "2eV_volts": 98.8952,
+     "3eV_chart_effective_yield": 0.987429,
+     "3eV_chart_growth": -0.00815741,
+     "3eV_fd_GHz_mm": 2.84949,
+     "3eV_margin_dB": 0.189494,
+     "3eV_volts": 148.326
+    },
+    "claim": "the level-1 chart puts the onset on facing strips at q 0.5 above 3 eV (facing strips, 1.5 eV at q = 0.5 at 74.18 V: +4.39 dB, -0.088 Np a period; facing strips, 2 eV at q = 0.5 at 98.9 V: +3.46 dB, -0.071 Np a period; facing strips, 2.5 eV at q = 0.5 at 123.6 V: +2.23 dB, -0.043 Np a period; facing strips, 3 eV at q = 0.5 at 148.3 V: +0.19 dB, -0.008 Np a period); Hypothesis (MPC-H1, E2-13): in the strips' own field the population decays at 1.5 eV and grows at 3 eV on copper's yield, in both laminate models",
+    "high": 3.0,
+    "low": 1.5,
+    "unit": "eV",
+    "value": 1.5
+   },
+   "shot": {
+    "bend": false,
+    "design": "onset",
+    "earth": "drawn",
+    "high": 0.0,
+    "kind": "multipactor",
+    "label": "facing strips at q 0.5 fitted to 1.5 to 3 eV, the onset",
+    "laps": 20.0,
+    "launch_seed": null,
+    "low": 0.0,
+    "periods": 0,
+    "phases": 8,
+    "q": null,
+    "ratio": 1.01,
+    "realisation": 0,
+    "seed": 20261150,
+    "start": 0.0,
+    "steps": 120,
+    "test": "E2-13"
+   }
+  },
+  {
+   "ident": "must fail, T915-S, realisation 0 at q 1.2",
+   "prediction": {
+    "basis": {
+     "depth_eV": 5.96697,
+     "q_null": 1.2,
+     "volts": 122.959
+    },
+    "claim": "driven to 123.0 V the null's q is 1.2, past Mathieu's 0.908: no well forms, and no electron launched near the null is held",
+    "high": 0.0,
+    "low": 0.0,
+    "unit": "held",
+    "value": 0.0
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": "drawn",
+    "high": 4.0,
+    "kind": "fail",
+    "label": "T915-S",
+    "laps": 20.0,
+    "launch_seed": 20261123,
+    "low": 0.5,
+    "periods": 200,
+    "phases": 4,
+    "q": 1.2,
+    "ratio": 2.0,
+    "realisation": 0,
+    "seed": 20261151,
+    "start": 0.0,
+    "steps": 120,
+    "test": "must fail"
+   }
+  },
+  {
+   "ident": "must fail control, T915-S, realisation 0",
+   "prediction": {
+    "basis": {
+     "q_null": 0.487973,
+     "static_eV": 11.6427,
+     "volts": 50.0
+    },
+    "claim": "the must-fail launch at the design's 50 V (q 0.49): every electron held for 200 RF periods, 4 eV being 0.34 of the static limit",
+    "high": 0.0,
+    "low": 0.0,
+    "unit": "lost",
+    "value": 0.0
+   },
+   "shot": {
+    "bend": false,
+    "design": "designs/t915s.toml",
+    "earth": "drawn",
+    "high": 4.0,
+    "kind": "control",
+    "label": "T915-S",
+    "laps": 20.0,
+    "launch_seed": 20261123,
+    "low": 0.5,
+    "periods": 200,
+    "phases": 4,
+    "q": null,
+    "ratio": 2.0,
+    "realisation": 0,
+    "seed": 20261152,
+    "start": 0.0,
+    "steps": 120,
+    "test": "must fail"
+   }
+  }
+ ]
+}
