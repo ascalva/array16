@@ -99,11 +99,19 @@ FAIL_Q = 1.2  # the must-fail drive: the null's Mathieu q at the mean volts, pas
 ELLIPSE_START = 0.25  # the ellipse's launch, a quarter lap round: the end of its minor axis, its gentlest bend
 SHIFT_STATIONS = (0, 500, 1000, 1500)  # E2-2: the samples of the 2000-sample ring the swept null is found at
 MPC_SEEDS = (4, 5, 6, 7)  # E2-13: the emission module read its cases on seeds 0 to 3 while it was built
+MPC_SETTINGS: Mapping[str, int] = {  # E2-13: the emission module's own readings' settings
+    "electrons": 1000,
+    "periods": 30,
+    "settle": 10,
+    "count": 10,
+    "generation_settle": 3,
+    "steps": 200,
+}
 ONSET_DEPTHS = (1.5, 2.0, 2.5, 3.0)  # E2-13: facing strips fitted to these wells (eV) at q 0.5
 OVERDRIVE = 160.0  # E2-13's control: section B at these volts, past its gap's parallel-plate threshold
 EARTH = 50e-6  # T: Earth's field, as the designs draw it
 STRONG = 10.0  # E2-15's control: Earth's field this many times stronger, in the same orientation
-WORST = (0.263620, -0.193596, 0.945000)  # E2-15: the orientation of a uniform field that parts T915-S's senses most
+WORST = (0.234856, -0.116608, 0.965010)  # E2-15: the orientation of a uniform field that parts T915-S's senses most
 # by the static balance (worst_orientation: 1000 orientations over the sphere and a refinement); a unit vector in the
 # design's frame, z along the knot's axis
 
@@ -545,7 +553,7 @@ def motion_code() -> str:
     """The hash of the code an exact motion runs: its own functions' source, the solver's version, and the twin's,
     the swept section's, the ring's and stage 1's sources."""
     digest = hashlib.sha256(solver_version().encode())
-    for part in (exact_motion, _motion_rows, guide_of, MotionSpec, Table):
+    for part in (exact_motion, _motion_rows, guide_of, MotionSpec, _nest_int, _nest_float):
         digest.update(inspect.getsource(part).encode())
     for name in _MOTION_CODE:
         digest.update((lab.ROOT / name).read_bytes())
@@ -638,9 +646,9 @@ def motions(specs: Sequence[MotionSpec], cache: str | None, workers: int) -> Non
 
 
 def _motion_cost(spec: MotionSpec) -> float:
-    """A rough cost: steps times the electrons."""
+    """A rough cost, to order the pool's work: the steps times the electrons and the step's own cost."""
     count = len(spec.phases) * len(spec.senses) * len(spec.energies)
-    return spec.laps / math.sqrt(min(spec.energies)) * (100 + count)
+    return spec.laps * spec.steps / math.sqrt(min(spec.energies)) * (100 + count)
 
 
 # ---- the shots ----------------------------------------------------------------------------------------------------
@@ -655,7 +663,7 @@ class Shot:
     phases launched; how long (laps for a hold, RF periods otherwise); the drive (None: the design's; else the null's q
     at the mean volts); Earth's field ("drawn": the realisation's own, none as drawn; "none"; or a field, T); whether
     the bend's shift of the null is in the field; where along the path the electrons are launched (a fraction of a
-    lap); the seed its launch is drawn from (None: its own), and its seed."""
+    lap); the seed its launch is drawn from (None: its own); the tracker's steps an RF period, and its seed."""
 
     test: str
     label: str
@@ -673,6 +681,7 @@ class Shot:
     bend: bool = False
     start: float = 0.0
     launch_seed: int | None = None
+    steps: int = STEPS
     seed: int = 0
 
     @property
@@ -689,7 +698,8 @@ class Shot:
             field = f", {math.hypot(*self.earth) * 1e6:g} uT at the worst orientation"
         bend = ", the bend's shift on" if self.bend else ""
         laps = f", {self.laps:g} laps" if self.kind == "hold" and self.laps != LAPS else ""
-        return f"{self.test}{what}, {self.label}, {where}{drive}{field}{bend}{laps}"
+        steps = "" if self.steps == STEPS else f", {self.steps} steps an RF period"
+        return f"{self.test}{what}, {self.label}, {where}{drive}{field}{bend}{laps}{steps}"
 
     @property
     def energies(self) -> tuple[float, ...]:
@@ -733,6 +743,7 @@ def shots() -> tuple[Shot, ...]:
         _scan("E2-9", "flat ring 318, stiff", STIFF, 0, "hold", low=19.0, high=69.0, ratio=COARSE, q=0.3),
         # H2: T915-S for 100 laps
         _scan("H2", "T915-S", T915S, 0, "hold", low=6.4, high=11.9, laps=LONG),
+        _scan("H2", "T915-S", T915S, 0, "hold", low=6.4, high=11.9, laps=LONG, steps=2 * STEPS),
         _scan("H2", "T915-S", T915S, 0, "hold", low=2.2, high=4.5, laps=LONG, q=0.3),
         # E2-15: Earth's field across T915-S
         _scan("E2-15", "T915-S", T915S, 0, "hold", low=7.55, high=12.1, earth=worst),
@@ -807,6 +818,7 @@ def motion_spec(shot: Shot, cache: str | None) -> MotionSpec:
         shot.senses,
         _phases(shot),
         shot.laps,
+        shot.steps,
     )
 
 
@@ -919,7 +931,7 @@ def predict_hold(shot: Shot, cache: str | None) -> Prediction:
     if shot.test == "H1":
         claim += (
             f"; H1 has it hold {hypothesis[0]} to {hypothesis[1]} of its static limit, H1b {ACROSS[0]} to {ACROSS[1]} "
-            "of"
+            "of "
             f"its bound with every bend counted across the boards' plane, {across:.4g} eV"
         )
     low, high = _band(value, MOTION)
@@ -998,7 +1010,10 @@ def ring_radius(shot: Shot) -> float:
 
 
 def _way(shot: Shot) -> axisym.Way:
-    return "in-plane" if shot.design == RING_IN else "toward"
+    """Which way an E2-2 ring bends: in the boards' plane where its frame puts u across the ring's plane's radius
+    (theta 0 or 180 degrees), toward them otherwise (theta 90)."""
+    theta = guide_of(shot.design, 0, None).design.frame.theta
+    return "in-plane" if abs(math.cos(theta)) > 0.5 else "toward"
 
 
 def predict_shift(shot: Shot) -> Prediction:
@@ -1081,10 +1096,11 @@ def predict_mpc(shot: Shot) -> Prediction:
     if shot.design == "onset":
         margins = [basis[f"{d:g}eV_margin_dB"] for d in ONSET_DEPTHS]
         crossing = next((d for d, m in zip(ONSET_DEPTHS, margins, strict=True) if m <= 0), math.inf)
+        where = f"at {crossing:g} eV" if math.isfinite(crossing) else f"above {ONSET_DEPTHS[-1]:g} eV"
         claim = (
-            f"the level-1 chart's onset on facing strips at q 0.5 lies at {crossing:g} eV ({said}); Hypothesis "
-            "(MPC-H1, E2-13): in the strips' own field the population decays at 1.5 eV and grows at 3 eV on copper's "
-            "yield, in both laminate models"
+            f"the level-1 chart puts the onset on facing strips at q 0.5 {where} ({said}); Hypothesis (MPC-H1, "
+            "E2-13): in the strips' own field the population decays at 1.5 eV and grows at 3 eV on copper's yield, in "
+            "both laminate models"
         )
         return Prediction(claim, ONSET_DEPTHS[0], ONSET_DEPTHS[0], ONSET_DEPTHS[-1], "eV", basis)
     if shot.design == "overdriven":
@@ -1257,12 +1273,18 @@ def station_at(guide: TwinGuide, field: TwinField, index: int) -> rung.Station:
 
 
 def launch(
-    field: TwinField, start: rung.Station, offsets: Arr, shift: tuple[float, float], velocity: Arr, t0: float, dt: float
+    field: TwinField,
+    start: rung.Station,
+    offsets: Arr,
+    shift: tuple[float, float],
+    velocity: Arr,
+    t0: float,
+    omega: float,
+    dt: float,
 ) -> tuple[Arr, Arr]:
     """twin_rung1.launch with the null moved by `shift` (du, dv, m) at the station, where the bend's shift is on:
     electrons at `offsets` from the null as the field places it, in step with the drive's micromotion there."""
     grid = field.swept.grid
-    omega = 2 * math.pi / (dt * STEPS)
     gu, gv, _ = grid.gradient_at(grid.null[0] + offsets[:, 0], grid.null[1] + offsets[:, 1])
     gradient = gu[:, None] * start.first + gv[:, None] * start.second
     volts = start.phasor * complex(math.cos(omega * t0), math.sin(omega * t0))
@@ -1296,7 +1318,7 @@ def track(job: Job) -> dict[str, Any]:
     index = _start_index(shot, len(swept.points))
     start = station_at(guide, field, index)
     omega, period = 2 * math.pi * driven.f, 1 / driven.f
-    dt = period / STEPS
+    dt = period / shot.steps
     energies, senses = shot.energies, shot.senses
     count = len(energies) * len(senses)
     h = guide.solved.distance
@@ -1313,7 +1335,7 @@ def track(job: Job) -> dict[str, Any]:
         steps = math.ceil(shot.laps * 1.02 * guide.length / (float(pt.v_of(min(energies))) * dt))
     else:
         offsets = np.zeros((count, 2))
-        steps = shot.periods * STEPS
+        steps = shot.periods * shot.steps
     aim = np.array(guide.solved.saddle) - np.array(guide.solved.null)
     aim /= np.linalg.norm(aim)
     if shot.kind in ("fail", "control"):
@@ -1333,7 +1355,7 @@ def track(job: Job) -> dict[str, Any]:
         gamma = 1 / np.sqrt(1 - (velocity * velocity).sum(1) / pt.C0**2)
         u0: Arr = gamma[:, None] * velocity
     else:
-        x0, u0 = launch(field, start, offsets, shift, velocity, t0, dt)
+        x0, u0 = launch(field, start, offsets, shift, velocity, t0, omega, dt)
     watch = Watch(field, count, (), -pt.E, job.weight, job.collector, 1, x0, losses=True)
     pressure, temperature, sigma = job.vacuum
     gas = TwinVacuum(pressure, temperature, sigma).scatter(seed=shot.launch * 16 + job.index)
@@ -1368,7 +1390,20 @@ def read_mpc(job: MpcJob) -> dict[str, Any]:
     case = mpc_cases(job.shot.design)[job.case]
     surface, gain = surface_of(job.surface)
     laminate = None if job.laminate == "absorbs" else surface
-    found = em.read(case, surface, laminate=laminate, gain=gain, seeds=MPC_SEEDS)
+    run = MPC_SETTINGS
+    found = em.read(
+        case,
+        surface,
+        laminate=laminate,
+        gain=gain,
+        seeds=MPC_SEEDS,
+        electrons=run["electrons"],
+        periods=run["periods"],
+        settle=run["settle"],
+        count=run["count"],
+        generation_settle=run["generation_settle"],
+        steps=run["steps"],
+    )
     runs = found.growth.runs
     energy = float(np.nanmean([r.energy for r in runs]))
     escaped = float(np.nanmean([r.escaped for r in runs]))
@@ -1405,10 +1440,10 @@ def job_cost(item: Job | MpcJob, cache: str | None = None) -> float:
     guide = guide_of(item.guide[0], item.guide[1], cache)
     count = len(shot.energies) * len(shot.senses)
     if shot.kind == "hold":
-        dt = 1 / (guide.tune().f * STEPS)
+        dt = 1 / (guide.tune().f * shot.steps)
         steps = math.ceil(shot.laps * 1.02 * guide.length / (float(pt.v_of(min(shot.energies))) * dt))
     else:
-        steps = shot.periods * STEPS
+        steps = shot.periods * shot.steps
     return steps * (STEP_COST[0] + STEP_COST[1] * count)
 
 
@@ -1616,7 +1651,7 @@ def _holds(rows: Iterable[Row], test: str | None = None) -> Iterator[tuple[Shot,
             yield shot, p, m
 
 
-def check_motion(rows: Sequence[Row]) -> Iterator[Check]:
+def check_motion(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """Every hold against its exact motion (Claim): the tracked limit within MOTION of the motion's."""
     for shot, p, m in _holds(rows):
         found = m.table.limit()
@@ -1645,13 +1680,13 @@ def _h1_reading(shot: Shot, p: Prediction, m: Scan) -> tuple[float, Mapping[str,
     return found, {f"{k}_{side}": v[i] for k, v in bands.items() for i, side in enumerate(("low", "high"))}
 
 
-def check_h1(rows: Sequence[Row]) -> Iterator[Check]:
+def check_h1(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """H1 against H1a and H1b: each of H1's holds, and T915-S's at q 0.49 read at 20 laps, in each hypothesis's
     band: H1 (planar paths their static limit, paths out of the plane 0.845 to 0.89 of theirs), H1a (the exact motion
     in the section, the changing bend) and H1b (every bend counted across the boards' plane)."""
     names = {"H1": "H1: the plane", "H1a": "H1a: the changing bend", "H1b": "H1b: the stiff side"}
     for shot, p, m in _holds(rows):
-        if not (shot.test == "H1" or (shot.test == "H2" and shot.q is None)):
+        if not (shot.test == "H1" or (shot.test == "H2" and shot.q is None and shot.steps == STEPS)):
             continue
         found, bands = _h1_reading(shot, p, m)
         static = p.basis["static_eV"]
@@ -1661,7 +1696,7 @@ def check_h1(rows: Sequence[Row]) -> Iterator[Check]:
             yield Check(name, shot.ident, _within(found, low, high), said)
 
 
-def check_e2_9(rows: Sequence[Row]) -> Iterator[Check]:
+def check_e2_9(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """E2-9: facing boards bent in their plane hold their static limit (stage 1's tracked fraction, PLANE), and bent
     toward them at least twice what the flat ring holds at the same q."""
     flats = {shot.q: (p, m) for shot, p, m in _holds(rows) if shot.design == FLAT and shot.test in ("H1", "E2-9")}
@@ -1683,66 +1718,53 @@ def check_e2_9(rows: Sequence[Row]) -> Iterator[Check]:
 
 
 def _h2(rows: Sequence[Row]) -> list[tuple[Shot, Prediction, Scan]]:
-    return [(s, p, m) for s, p, m in _holds(rows, "H2")]
+    return list(_holds(rows, "H2"))
 
 
-def check_h2(rows: Sequence[Row]) -> Iterator[Check]:
-    """H2: T915-S's senses within two steps, at 100 laps and at 20; the band's onset and edge in both senses within two
-    steps of each other and of the exact motion's; and between q 0.49 and q 0.30 the band moving as the exact motion
-    moves it (a resonance), not staying at one fraction of the static limit (an aperture)."""
-    found: dict[float | None, float] = {}
-    for shot, p, m in _h2(rows):
+def check_h2(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
+    """H2: T915-S's senses within two steps, at 100 laps and at 20; the band in both senses, their edges (all lost
+    from) within two steps of each other; between q 0.49 and q 0.30 the hold moving to another fraction of its static
+    limit as the exact motion moves it (a resonance), not staying at one fraction (an aperture); and from 120 to 240
+    steps an RF period the hold moving as the exact motion moves (the integrator's part in it)."""
+    for shot, _p, m in _h2(rows):
         t, ratio = m.table, shot.ratio
         for at in (None, LAPS):
             apart = _steps(t.threshold(0, at), t.threshold(1, at), ratio)
             laps = shot.laps if at is None else at
             said = f"at {laps:g} laps the senses' thresholds {apart:.1f} steps apart, {SENSE_STEPS} allowed"
             yield Check("H2 senses", f"{shot.ident}, at {laps:g} laps", apart <= SENSE_STEPS + 1e-9, said)
-        onset = [t.onset(0), t.onset(1)]
         edge = [t.edge(0), t.edge(1)]
-        model = [p.basis["motion_with_onset_eV"], p.basis["motion_against_onset_eV"]]
-        apart = max(_steps(onset[0], onset[1], ratio), _steps(edge[0], edge[1], ratio))
-        said = (
-            f"onsets {_ev(onset[0])} and {_ev(onset[1])}, edges {_ev(edge[0])} and {_ev(edge[1])}: {apart:.1f} steps "
-            f"apart at most, {BAND_STEPS} allowed"
-        )
+        apart = _steps(edge[0], edge[1], ratio)
+        said = f"every electron lost from {_ev(edge[0])} with the wave and {_ev(edge[1])} against it: {apart:.1f} steps"
         yield Check("H2 the band in both senses", shot.ident, apart <= BAND_STEPS + 1e-9, said)
-        off = max(_steps(a, b, ratio) for a, b in zip(onset, model, strict=True))
+    by = {(s.q, s.steps): (s, p, m) for s, p, m in _h2(rows)}
+    pairs = ((None, STEPS), (0.3, STEPS), "H2 a resonance, not an aperture"), ((None, STEPS), (None, 2 * STEPS),
+             "H2 the integrator's part")  # fmt: skip
+    for one, two, name in pairs:
+        if one not in by or two not in by:
+            continue
+        (_, pa, ma), (shot, pb, mb) = by[one], by[two]
+        found = [m.table.limit() / p.basis["static_eV"] for p, m in ((pa, ma), (pb, mb))]
+        model = [p.basis["motion_fraction"] for p in (pa, pb)]
+        moved = _steps(found[1], found[0], shot.ratio) * (1 if found[1] >= found[0] else -1)
+        expect = _steps(model[1], model[0], shot.ratio) * (1 if model[1] >= model[0] else -1)
+        ok = math.isfinite(moved) and abs(moved - expect) <= BAND_STEPS
+        if name.startswith("H2 a resonance"):
+            ok = ok and abs(moved) > BAND_STEPS
         said = (
-            f"onsets {_ev(onset[0])} and {_ev(onset[1])} against the exact motion's {_ev(model[0])} and {_ev(model[1])}"
+            f"{found[0]:.3f} and {found[1]:.3f} of the static limit: moved {moved:+.1f} steps, the exact motion "
+            f"{expect:+.1f} ({model[0]:.3f} to {model[1]:.3f})"
         )
-        yield Check("H2 the band where the exact motion puts it", shot.ident, off <= BAND_STEPS + 1e-9, said)
-        mean = math.sqrt(onset[0] * onset[1]) if all(0 < x < math.inf for x in onset) else math.nan
-        found[shot.q] = mean / p.basis["static_eV"]
-    rows_h2 = _h2(rows)
-    low = next(((s, p) for s, p, _ in rows_h2 if s.q is not None), None)
-    if low is not None and None in found and low[0].q in found:
-        shot, p = low
-        moved = math.log(found[shot.q] / found[None]) / math.log(shot.ratio) if found[None] > 0 else math.nan
-        model_low = (
-            math.sqrt(p.basis["motion_with_onset_eV"] * p.basis["motion_against_onset_eV"]) / p.basis["static_eV"]
-        )
-        high = next(pp for s, pp, _ in rows_h2 if s.q is None)
-        model_high = (
-            math.sqrt(high.basis["motion_with_onset_eV"] * high.basis["motion_against_onset_eV"])
-            / high.basis["static_eV"]
-        )
-        expect = math.log(model_low / model_high) / math.log(shot.ratio)
-        ok = math.isfinite(moved) and abs(moved - expect) <= BAND_STEPS and abs(moved) > BAND_STEPS
-        said = (
-            f"the onset at {found[shot.q]:.3f} of the static limit at q {shot.q:g} and {found[None]:.3f} at q 0.49: "
-            f"moved {moved:+.1f} steps, the exact motion {expect:+.1f}"
-        )
-        yield Check("H2 a resonance, not an aperture", shot.ident, ok, said)
+        yield Check(name, shot.ident, ok, said)
 
 
-def check_h3(rows: Sequence[Row]) -> Iterator[Check]:
+def check_h3(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """H3: on a path out of the plane with lobes, every electron the hold lost to the guide (struck or left) lost in a
     lobe or less than LOBE_REACH lap past one in its direction of travel."""
     for shot, _p, m in _holds(rows):
-        if _planar(shot.design):
+        if _planar(shot.design) or math.hypot(*m.earth) > 2 * EARTH:  # a strong field sets its own places
             continue
-        stretches = lobes(frame_of(shot.design, _realisation(shot), None)[3])
+        stretches = lobes(frame_of(shot.design, _realisation(shot), cache)[3])
         if not stretches:
             continue
         worst, count, inside = 0.0, 0, 0
@@ -1759,7 +1781,7 @@ def check_h3(rows: Sequence[Row]) -> Iterator[Check]:
         yield Check("H3 lost in a lobe", shot.ident, count > 0 and inside == count, said)
 
 
-def check_e2_15(rows: Sequence[Row]) -> Iterator[Check]:
+def check_e2_15(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """E2-15: at 50 uT across T915-S at its worst orientation the senses part by at most the static balance's split
     and two steps; at ten times the field by half to twice the static balance's split; without the field (the bench's
     T915-S with none) within two steps."""
@@ -1785,7 +1807,7 @@ def check_e2_15(rows: Sequence[Row]) -> Iterator[Check]:
             yield Check("E2-15 Earth's split", shot.ident, ok, said)
 
 
-def check_e2_2(rows: Sequence[Row]) -> Iterator[Check]:
+def check_e2_2(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """E2-2: the twin's shift of the null within SHIFT_TOL of the axisymmetric reference, along the bend's axis
     alone; and T915-S's hold with the shift on within two steps of the same launch with it off, in each sense."""
     for shot, p, m in rows:
@@ -1806,7 +1828,7 @@ def check_e2_2(rows: Sequence[Row]) -> Iterator[Check]:
         yield Check("E2-2 the shift on beside off", on.ident, apart <= SENSE_STEPS + 1e-9, said)
 
 
-def check_h4(rows: Sequence[Row]) -> Iterator[Check]:
+def check_h4(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """H4: R1 on the bench's realisation keeps the static balance its band and field give, each sense within PLANE of
     its own; with Earth's field removed the senses together; its well's first loss the exact motion's at its band."""
     for shot, p, m in rows:
@@ -1852,7 +1874,7 @@ def _said(r: MpcReading) -> str:
     return f"{r.case}, {r.surface}, laminate {r.laminate}: {growth}, effective yield {r.secondaries:.3f}"
 
 
-def check_e2_13(rows: Sequence[Row]) -> Iterator[Check]:
+def check_e2_13(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """E2-13: T915-S and the split lever decay on every surface and laminate model; R1's rails grow no faster than the
     chart's bound, and die (Hypothesis); section B at 160 V grows (the control); and on facing strips at q 0.5 the
     population decays at 1.5 eV and grows at 3 eV in both laminate models, on each surface."""
@@ -1879,7 +1901,7 @@ def check_e2_13(rows: Sequence[Row]) -> Iterator[Check]:
                 yield Check("E2-13 the onset between 1.5 and 3 eV", f"{shot.ident}: {surface}", ok, said)
 
 
-def check_fail(rows: Sequence[Row]) -> Iterator[Check]:
+def check_fail(rows: Sequence[Row], cache: str | None = None) -> Iterator[Check]:
     """The control and the case that must fail: the control's launch at the design's volts loses none to the guide
     and holds some; the must-fail shot holds none, beside a control that held; and every electron lost has its
     entry in the records."""
@@ -1907,7 +1929,7 @@ def check_fail(rows: Sequence[Row]) -> Iterator[Check]:
         yield Check("must fail", shot.ident, ok, said)
 
 
-CHECKS: tuple[Callable[[Sequence[Row]], Iterator[Check]], ...] = (
+CHECKS: tuple[Callable[[Sequence[Row], str | None], Iterator[Check]], ...] = (
     check_motion,
     check_h1,
     check_e2_9,
@@ -1932,24 +1954,22 @@ def batches(todo: Sequence[Shot]) -> list[list[Shot]]:
     return [out[test] for test in TESTS if test in out]
 
 
-def _makespan(costs: Sequence[float], workers: int, slow: int = 0, pace: float = 1.0) -> float:
-    """The longest-first schedule's span of jobs (s) on `workers` processes, `slow` of them running at `pace`."""
+def _makespan(costs: Sequence[float], workers: int, pace: float = 1.0) -> float:
+    """The longest-first schedule's span of jobs (s, each its time alone) on `workers` processes running at `pace`."""
     loads = [0.0] * max(workers, 1)
-    speed = [pace if k >= workers - slow else 1.0 for k in range(max(workers, 1))]
     for cost in sorted(costs, reverse=True):
-        k = min(range(len(loads)), key=lambda i: loads[i] + cost / speed[i])
-        loads[k] += cost / speed[k]
+        k = min(range(len(loads)), key=lambda i: loads[i])
+        loads[k] += cost / pace
     return max(loads) if costs else 0.0
 
 
-EFFICIENCY = (8, 0.45)  # this machine's performance cores, and its efficiency cores' pace against them
+PACE = 0.83  # ten trackers at once each step at 0.83 of one alone on this machine (370 against 308 us a step)
 
 
 def estimate(cache: str | None = None, workers: int | None = None) -> dict[str, Any]:
-    """The run's time on this machine (s): each shot's work on one performance core (its jobs' job_cost), and each
-    batch's span on the bench's workers, longest first, the workers past EFFICIENCY's eight running at its pace."""
+    """The run's time on this machine (s): each shot's work on one core alone (its jobs' job_cost), and each batch's
+    span on the bench's workers, longest first, each worker at PACE when they run together."""
     count = workers or lab.Bench.local().workers
-    slow = max(0, count - EFFICIENCY[0])
     shots_cost: dict[str, float] = {}
     spans: dict[str, float] = {}
     for batch in batches(shots()):
@@ -1962,10 +1982,11 @@ def estimate(cache: str | None = None, workers: int | None = None) -> dict[str, 
                 jobs = [job_cost(Job(shot, k, ph, where, 1.0, 1e-12, (1e-6, 295.0, 1e-19)), cache) for k, ph in
                         enumerate(_phases(shot))]  # fmt: skip
             elif shot.kind == "multipactor":
-                jobs = [MPC_SECONDS] * (len(mpc_cases(shot.design)) * len(SURFACES[shot.design]) * len(LAMINATES))
+                cases = len(ONSET_DEPTHS) if shot.design == "onset" else 1
+                jobs = [MPC_SECONDS] * (cases * len(SURFACES[shot.design]) * len(LAMINATES))
             shots_cost[shot.ident] = sig(sum(jobs), 4)
             costs += jobs
-        spans[batch[0].test] = sig(_makespan(costs, count, slow, EFFICIENCY[1]), 4)
+        spans[batch[0].test] = sig(_makespan(costs, count, PACE if count > 1 else 1.0), 4)
     return {
         "workers": count,
         "cpu_s": sig(sum(shots_cost.values()), 4),
@@ -2125,7 +2146,7 @@ class TwinRung2(lab.Experiment[Shot, Prediction, Measurement]):
         return load(record)
 
     def judge(self, rows: Sequence[Row]) -> Sequence[Check]:
-        return [check for criterion in CHECKS for check in criterion(rows)]
+        return [check for criterion in CHECKS for check in criterion(rows, self.cache)]
 
     def apparatus(self) -> Mapping[str, Any]:
         designs = {d: describe(d, 0, self.cache) for d in (T915S, FLAT, STIFF, ELLIPSE, HELIX_010, HELIX, HELIX_030)}

@@ -65,6 +65,8 @@ include = [
     "tests/test_particle_bend.py",
     "tests/test_guide_emission.py",
     "tests/test_twin_designs.py",
+    "experiments/twin_rung2.py",
+    "tests/test_twin_rung2.py",
 ]
 
 [tool.ruff.lint]
@@ -115,4 +117,6 @@ files = [
     "tests/test_particle_bend.py",
     "tests/test_guide_emission.py",
     "tests/test_twin_designs.py",
+    "experiments/twin_rung2.py",
+    "tests/test_twin_rung2.py",
 ]
