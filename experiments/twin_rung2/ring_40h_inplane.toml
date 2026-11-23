@@ -1,0 +1,40 @@
+# E2-2's ring (experiments/twin_rung2/PROTOCOL.md section 2.6): T915-S's section B on a circle of R = 40h, the radius at
+# which E2-2 states the bend's shift of the null, bent in the boards' plane (u inward, v up), as the flat ring, with the twin's first-order shift
+# of the null on ([bend] shift = true: the facing boards' 2 ln 2/pi^2 and 1/pi over h^2/R). Read by array16.twin.Design.
+# Its length is 2 pi 40h at h = 0.915 mm; the ring is not tuned to it, and E2-2 sweeps the solved section with a static
+# volt: what is measured is where the swept field vanishes, the null moved toward the centre by 3.21 um in the boards'
+# plane or 7.28 um toward them by the axisymmetric reference.
+name = "section B on a ring of R = 40h, theta 180.0 deg"
+about = "section B on a circle of R = 40h with the bend's shift of the null on, for E2-2"
+seed = 40
+
+[band]
+f = 915e6
+m = 1
+
+[section]               # section B, as T915-S
+kind = "facing"
+gap = 1.83e-3
+width = 7.32e-3
+split = 0.2745e-3
+margin = 1.83e-3
+laminate = "polyimide"
+thickness = 25e-6
+copper = 18e-6
+grid = "default"
+aperture = 4.0
+
+[path]
+kind = "circle"
+length = 0.22996458224277286
+samples = 2000
+
+[frame]
+theta_deg = 180.0
+
+[bend]
+shift = true
+
+[drive]
+volts = 50.0
+feeds = 2
